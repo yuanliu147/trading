@@ -1,0 +1,2 @@
+status,reason
+invalid_superseded,此前五股组合存在缺失报价估值与跌停挂单问题，本轮只验证每只独立全仓账户，不再引用旧组合结果
