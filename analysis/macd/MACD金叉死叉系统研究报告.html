@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MACD 金叉死叉系统 · 研究总报告 (2017–2026)</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#ffffff; --ink:#1a2233; --sub:#5b6472; --line:#e6e9ee;
+    --blue:#2563eb; --green:#059669; --red:#dc2626; --amber:#d97706; --gray:#8a93a3;
+    --greenbg:#e7f6ef; --redbg:#fdeaea; --amberbg:#fdf3e3; --bluebg:#eaf1fe;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+       background:var(--bg);color:var(--ink);line-height:1.65;font-size:15px}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px 80px}
+  header.hero{background:linear-gradient(135deg,#16233f 0%,#1f3a6e 100%);color:#fff;padding:44px 20px 36px;margin-bottom:24px}
+  header.hero .wrap{padding-bottom:0}
+  h1{font-size:26px;font-weight:700;letter-spacing:.5px}
+  .hero-sub{margin-top:10px;font-size:13px;color:#b9c6de}
+  .hero-sub span{margin-right:16px}
+  nav.toc{position:sticky;top:0;z-index:9;background:rgba(255,255,255,.94);backdrop-filter:blur(6px);
+          border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:28px}
+  nav.toc .wrap{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:0}
+  nav.toc a{font-size:13px;color:var(--sub);text-decoration:none;padding:5px 11px;border-radius:16px}
+  nav.toc a:hover{background:var(--bluebg);color:var(--blue)}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px 30px;margin-bottom:26px}
+  h2{font-size:19px;font-weight:700;margin-bottom:4px;padding-bottom:12px;border-bottom:2px solid var(--ink);display:flex;align-items:center;gap:10px}
+  h2 .no{background:var(--ink);color:#fff;font-size:12px;border-radius:6px;padding:2px 8px;font-weight:600}
+  h3{font-size:15px;font-weight:700;margin:22px 0 10px;color:#243044}
+  p.lead{color:var(--sub);font-size:13.5px;margin-bottom:16px}
+  /* KPI 卡 */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
+  .kpi{background:#fafbfd;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi .k{font-size:12px;color:var(--sub)}
+  .kpi .v{font-size:24px;font-weight:700;margin-top:2px}
+  .kpi .d{font-size:12px;color:var(--sub);margin-top:2px}
+  .up{color:var(--green)} .down{color:var(--red)} .mid{color:var(--amber)}
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+  th{background:#f2f4f7;text-align:left;padding:8px 10px;font-weight:600;color:#39434f;border-bottom:2px solid var(--line);white-space:nowrap}
+  td{padding:7px 10px;border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .hl{background:#fffbe8}
+  .hlrow td{background:#f0f7ff}
+  /* 结论徽章 */
+  .badge{display:inline-block;font-size:11.5px;font-weight:600;border-radius:5px;padding:1px 8px;vertical-align:1px}
+  .b-ok{background:var(--greenbg);color:var(--green)}
+  .b-no{background:var(--redbg);color:var(--red)}
+  .b-warn{background:var(--amberbg);color:var(--amber)}
+  .b-info{background:var(--bluebg);color:var(--blue)}
+  .b-gray{background:#eef0f3;color:var(--sub)}
+  /* 条形图 */
+  .bars{margin:14px 0 6px}
+  .brow{display:grid;grid-template-columns:150px 1fr 96px;align-items:center;gap:10px;font-size:13px;padding:4px 0}
+  .brow .lb{color:#39434f;text-align:right}
+  .btrack{position:relative;height:20px;background:#f0f2f5;border-radius:5px;overflow:hidden}
+  .bpos{position:absolute;left:50%;top:0;height:100%;background:linear-gradient(90deg,#34b98a,#059669)}
+  .bneg{position:absolute;right:50%;top:0;height:100%;background:linear-gradient(270deg,#ef6a6a,#dc2626)}
+  .bflat{position:absolute;left:0;top:0;height:100%;background:#c3cbd8}
+  .bval{font-variant-numeric:tabular-nums;font-weight:600;font-size:12.5px}
+  .axis-note{font-size:11.5px;color:var(--gray);text-align:center;margin-top:2px}
+  /* callout */
+  .callout{border-left:4px solid var(--blue);background:var(--bluebg);border-radius:0 8px 8px 0;
+           padding:12px 16px;margin:16px 0;font-size:13.5px}
+  .callout.red{border-color:var(--red);background:var(--redbg)}
+  .callout.green{border-color:var(--green);background:var(--greenbg)}
+  .callout.amber{border-color:var(--amber);background:var(--amberbg)}
+  .callout b.tag{display:block;font-size:12px;margin-bottom:4px;letter-spacing:1px}
+  /* 两列 */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  /* 规则卡 */
+  .rule{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:12px 0}
+  .rule .rh{background:#1f2c47;color:#fff;padding:8px 14px;font-size:13.5px;font-weight:600;display:flex;justify-content:space-between}
+  .rule .rb{padding:12px 16px;font-size:13.5px}
+  .rule .rb li{margin:5px 0 5px 18px}
+  .vs{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:stretch;margin:16px 0;text-align:center}
+  .vs .side{border:1px solid var(--line);border-radius:10px;padding:16px}
+  .vs .side h4{font-size:13px;color:var(--sub);margin-bottom:8px}
+  .vs .side .big{font-size:22px;font-weight:700}
+  .vs .side .sm{font-size:12.5px;color:var(--sub);margin-top:4px}
+  .vs .arrow{display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--gray)}
+  footer{color:var(--sub);font-size:12.5px;padding:10px 6px}
+  footer code{background:#eef0f3;border-radius:4px;padding:1px 6px;font-size:11.5px}
+  ul.tight li{margin:4px 0 4px 18px}
+  .small{font-size:12.5px;color:var(--sub)}
+  html{scroll-behavior:smooth}
+  section{scroll-margin-top:64px}
+  a.term{color:var(--blue);text-decoration:none;border-bottom:1px dotted var(--blue)}
+  a.term:hover{background:var(--bluebg);border-bottom-style:solid}
+  .hero a.term{color:#a9c6ff;border-bottom-color:#a9c6ff}
+  .rh a.term{color:#cfe0ff;border-bottom-color:#cfe0ff}
+  #glossary dl{display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;margin-top:14px}
+  #glossary .titem{background:#fafbfd;border:1px solid var(--line);border-radius:8px;padding:10px 14px;scroll-margin-top:70px}
+  #glossary dt{font-weight:700;font-size:13px;color:var(--blue)}
+  #glossary dd{font-size:12.5px;color:var(--sub);margin-top:3px}
+  @media(max-width:760px){#glossary dl{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>MACD 金叉死叉系统 · 研究总报告</h1>
+    <div class="hero-sub">
+      <span>样本：20只活跃龙头股 · 2017–2026</span>
+      <span>1,724 笔已平仓交易（逐笔复核）</span>
+      <span>扣费 0.15% 往返 · <a class="term" href="#term-fuquan">前复权</a> · <a class="term" href="#term-t1">T+1</a></span>
+      <span>生成：2026-10-15</span>
+    </div>
+    <div class="hero-sub" style="margin-top:6px">性质：<b>诊断性研究</b>（非预注册检验）· 非投资建议 · 每节均标注证据等级</div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#s0">一页结论</a><a href="#s1">系统解剖</a><a href="#s2">失效解剖</a>
+  <a href="#s3">亏损单画像</a><a href="#s4">转折点发现</a><a href="#s5">转折点系统</a>
+  <a href="#s6">空仓与择时</a><a href="#s7">指标版图</a><a href="#s8">纪律</a><a href="#glossary">术语表</a>
+</div></nav>
+
+<div class="wrap">
+
+<!-- ================= S0 一页结论 ================= -->
+<section id="s0">
+  <h2><span class="no">0</span>一页结论</h2>
+  <p class="lead">五句话讲完：MACD 金叉死叉不是"不赚钱"，是"结构错"——机械地见叉就买，让少数大趋势单的利润被大量短命磨损单吃掉。出路不是换指标、不是择时空仓，而是把金叉降级为"跌透后的转折确认器"。</p>
+  <div class="kpis">
+    <div class="kpi"><div class="k">原系统 期末中位数（1万起步）</div><div class="v mid">16,160 <span style="font-size:14px">(+61.6%)</span></div><div class="d"><a class="term" href="#term-ann">年化</a>约 5.2%，仅 6/20 跑赢买入持有</div></div>
+    <div class="kpi"><div class="k"><a class="term" href="#term-mdd">最大回撤</a>中位数</div><div class="v down">−59.2%</div><div class="d">和满仓躺平同量级的风险</div></div>
+    <div class="kpi"><div class="k">逐笔<a class="term" href="#term-sl">胜率</a> / <a class="term" href="#term-plb">盈亏比</a></div><div class="v">35.6% / 2.46</div><div class="d"><a class="term" href="#term-pf">PF</a> 1.37，靠<a class="term" href="#term-plb">盈亏比</a>撑，不靠胜率</div></div>
+    <div class="kpi"><div class="k">利润全部来自</div><div class="v up">持有&gt;20天</div><div class="d">胜率 82%，平均 +12.9%/笔</div></div>
+    <div class="kpi"><div class="k">转折点过滤后 <a class="term" href="#term-pf">PF</a></div><div class="v up">2.52</div><div class="d"><a class="term" href="#term-ladder">阶梯解除</a>+金叉（<a class="term" href="#term-oos">样本内</a>，164笔）</div></div>
+  </div>
+  <div class="callout">
+    <b class="tag">核心机制</b>
+    同一个金叉，在不同状态下是两个不同的指标：<b>跌透后的第一次金叉</b>（<a class="term" href="#term-pf">PF</a> 2.2~2.5）和<b>趋势中段的第N次金叉</b>（PF 1.0~1.3，不如不做）。这不是巧合——大盘过滤、个股均线、<a class="term" href="#term-chan">缠论趋势</a>、<a class="term" href="#term-weekly">周线状态</a>四条独立证据链全部指向同一条 A 股定律：<b>20日尺度，<a class="term" href="#term-mr">强势必回归</a></b>。
+  </div>
+</section>
+
+<!-- ================= S1 系统解剖 ================= -->
+<section id="s1">
+  <h2><span class="no">1</span>系统解剖 —— 钱从哪来，亏到哪去 <span class="badge b-gray">逐笔实测</span></h2>
+  <p class="lead">把 1,724 笔已平仓交易按持有期分桶，系统的"收入结构"一目了然。</p>
+
+  <h3>按持有期分桶：全系统收益的来源与漏洞</h3>
+  <table>
+    <tr><th>持有期</th><th class="num">笔数</th><th class="num">占比</th><th class="num">胜率</th><th class="num">平均收益</th><th class="num">收益合计</th><th>角色</th></tr>
+    <tr><td>1–2 天</td><td class="num">250</td><td class="num">15%</td><td class="num">3.2%</td><td class="num down">−3.83%</td><td class="num down">−958%</td><td rowspan="3" style="vertical-align:middle">磨损区：占一半笔数，<br>胜率 3~10%，净贡献约 <b class="down">−3,000%</b></td></tr>
+    <tr><td>3–5 天</td><td class="num">272</td><td class="num">16%</td><td class="num">2.6%</td><td class="num down">−5.27%</td><td class="num down">−1,433%</td></tr>
+    <tr><td>6–10 天</td><td class="num">343</td><td class="num">20%</td><td class="num">10.5%</td><td class="num down">−4.43%</td><td class="num down">−1,521%</td></tr>
+    <tr><td>11–20 天</td><td class="num">476</td><td class="num">28%</td><td class="num">52.3%</td><td class="num up">+1.85%</td><td class="num up">+882%</td><td>过渡区</td></tr>
+    <tr class="hlrow"><td><b>&gt;20 天</b></td><td class="num"><b>383</b></td><td class="num"><b>22%</b></td><td class="num"><b>82.0%</b></td><td class="num"><b>+12.88%</b></td><td class="num"><b>+4,933%</b></td><td><b>利润区：22%的笔数贡献全部利润</b></td></tr>
+  </table>
+
+  <div class="bars">
+    <div class="brow"><div class="lb">1–2天</div><div class="btrack"><div class="bneg" style="width:9.3%"></div></div><div class="bval down">−958%</div></div>
+    <div class="brow"><div class="lb">3–5天</div><div class="btrack"><div class="bneg" style="width:13.9%"></div></div><div class="bval down">−1,433%</div></div>
+    <div class="brow"><div class="lb">6–10天</div><div class="btrack"><div class="bneg" style="width:14.8%"></div></div><div class="bval down">−1,521%</div></div>
+    <div class="brow"><div class="lb">11–20天</div><div class="btrack"><div class="bpos" style="width:8.6%"></div></div><div class="bval up">+882%</div></div>
+    <div class="brow"><div class="lb">&gt;20天</div><div class="btrack"><div class="bpos" style="width:48%"></div></div><div class="bval up">+4,933%</div></div>
+    <div class="axis-note">◀ 亏损 ｜ 中线 ｜ 盈利 ▶　（同一比例尺，全期合计 +1,902%）</div>
+  </div>
+
+  <div class="callout red">
+    <b class="tag">病根</b>
+    机械的"见金叉就买"让<b>利润区（22%笔数）和磨损区（51%笔数）等权发生</b>。系统的方向没错——右侧确认能吃到趋势——错在不懂挑选金叉的"出生位置"。
+  </div>
+</section>
+
+<!-- ================= S2 失效解剖 ================= -->
+<section id="s2">
+  <h2><span class="no">2</span>失效解剖 —— 中国东航 600115 <span class="badge b-gray">个案描述</span></h2>
+  <p class="lead">20只样本里失效最彻底的一只，看清系统"死法"的标准形态。</p>
+  <div class="kpis">
+    <div class="kpi"><div class="k">10年期末（1万起步）</div><div class="v down">3,196</div><div class="d">−68.4%，20股最差</div></div>
+    <div class="kpi"><div class="k">胜率 / <a class="term" href="#term-pf">PF</a></div><div class="v down">28.6% / 0.64</div><div class="d">期望为负</div></div>
+    <div class="kpi"><div class="k"><a class="term" href="#term-mdd">最大回撤</a></div><div class="v down">−70.7%</div><div class="d">且截至数据末日仍在新低</div></div>
+    <div class="kpi"><div class="k">最长连亏段</div><div class="v down">0胜10负</div><div class="d">2026-01-22 ~ 10-09，<a class="term" href="#term-fuli">复利</a> −44.5%</div></div>
+  </div>
+  <h3>2026 年失效窗口发生了什么</h3>
+  <ul class="tight">
+    <li>股价从 1 月高点 6.48 一路阴跌至 10 月的 3.3 附近，<b>途中 9 次金叉全部失败</b>；</li>
+    <li>8–9 月甚至 3–6 天就金叉死叉来回一次——系统在震荡阴跌里被"绞肉"；</li>
+    <li>连亏段前四笔：01-21→01-23（−2.3%）、02-05→02-25（−8.5%）、03-30→05-18（−6.9%）、05-26→06-04（−9.1%），此后 6 笔仍全亏；</li>
+    <li>2018 全年单独 −24.7%。两次大亏都是同一形态：<b><a class="term" href="#term-weekly">周线空头</a> + 途中反复金叉</b>。</li>
+  </ul>
+  <div class="callout amber">
+    <b class="tag">不可修复的盲区</b>
+    顶部拐头后的<b>前 2–3 笔</b>金叉，任何结构工具都拦不住（此时跌势结构尚未成型）——这是右侧系统的固有代价，只能靠仓位和止损兜底，无法靠信号消除。
+  </div>
+</section>
+
+<!-- ================= S3 亏损单画像 ================= -->
+<section id="s3">
+  <h2><span class="no">3</span>亏损单画像 —— 亏的都是什么单 <span class="badge b-gray">描述性统计</span></h2>
+  <p class="lead">亏损单 1,110 笔（平均 −4.72%，合计 −5,239%），盈利单 614 笔（平均 +11.63%）。四个特征：</p>
+
+  <div class="grid2">
+    <div>
+      <h3>① 短命：中位持有 6 天</h3>
+      <table>
+        <tr><th></th><th class="num">亏损单</th><th class="num">盈利单</th></tr>
+        <tr><td>持有中位数</td><td class="num down"><b>6 天</b></td><td class="num up">21 天</td></tr>
+        <tr><td><a class="term" href="#term-mfe">MFE</a>（买后最高浮盈）</td><td class="num down"><b>+2.2%</b></td><td class="num up">+16.1%</td></tr>
+        <tr><td><a class="term" href="#term-mae">MAE</a>（买后最大浮亏）</td><td class="num down"><b>−4.6%</b></td><td class="num">−1.6%</td></tr>
+      </table>
+      <p class="small">42% 的亏损单从头到尾浮盈没超过 2%，71% 没超过 5%——<b>不是"涨了跌回去"，是"买了就没涨过"</b>，阴跌到死叉出场。</p>
+    </div>
+    <div>
+      <h3>② 出生位置：半山腰金叉</h3>
+      <table>
+        <tr><th>信号日状态</th><th class="num">亏损单</th><th class="num">盈利单</th></tr>
+        <tr><td><a class="term" href="#term-dif">DIF 位置</a>（%价）</td><td class="num">−0.57</td><td class="num">−0.91</td></tr>
+        <tr><td><a class="term" href="#term-ret60">前60日收益</a></td><td class="num down">+1.35%</td><td class="num up">−0.20%</td></tr>
+        <tr><td><a class="term" href="#term-weekly">周线空头</a>占比</td><td class="num">50.1%</td><td class="num up">58.6%</td></tr>
+        <tr><td>MA60 下方占比</td><td class="num">49.0%</td><td class="num up">53.6%</td></tr>
+      </table>
+      <p class="small">亏损单买在<b>浅回调、前期还涨过</b>的位置；"环境差"标记在盈利组占比反而更高——超跌反转才出利润。</p>
+    </div>
+  </div>
+
+  <h3>③ 大亏尾部（最差10%，111笔）签名：下跌中继</h3>
+  <p class="small"><a class="term" href="#term-ret">ret</a>≤−9.5%：中位持有仅 6 天，<a class="term" href="#term-mae">MAE</a> 中位 <b class="down">−12.4%</b>（跌得飞快，死叉来不及救），<b><a class="term" href="#term-dif">DIF</a> 很深（−1.13）+ <a class="term" href="#term-ret60">前60日</a> +5.9%（但最近涨过）</b>——反弹之后的深回调，接飞刀形态。行业上无聚集，不是行业问题。</p>
+
+  <h3>④ MACD 形态细节完全无区分 <span class="badge b-no">细化无效</span></h3>
+  <p class="small"><a class="term" href="#term-div">背离</a>（11.0% vs 12.4%）、空中加油、二次死叉、<a class="term" href="#term-hist">绿柱</a>面积/长度、量比、波动率——在亏损组和盈利组占比几乎一样。金叉"长什么样"不含信息，"在哪儿发生"才含。</p>
+
+  <div class="callout green">
+    <b class="tag">两个杠杆的分工</b>
+    <b>−6% 止损</b>只救得了 1/3 亏损单（<a class="term" href="#term-mae">MAE</a>≤−6% 的占 35%，截断后每笔约省 0.9%，仅误伤 5% 盈利单）；<b>另外 65% 阴跌型只能靠入场端</b>（不买半山腰）。这就是出场止损与入场结构过滤必须同时上的原因——单独用哪个都不够。
+  </div>
+</section>
+
+<!-- ================= S4 转折点发现 ================= -->
+<section id="s4">
+  <h2><span class="no">4</span>转折点发现 —— 同一个金叉，两种命运 <span class="badge b-warn">样本内切片</span></h2>
+  <p class="lead">1,636 笔结构数据完整的交易，每笔信号只用当日及以前的K线重建状态（无未来函数）。基准 <a class="term" href="#term-pf">PF</a> 1.37。</p>
+
+  <h3>入场端过滤：PF 对比（越高越好）</h3>
+  <div class="bars">
+    <div class="brow"><div class="lb"><a class="term" href="#term-ladder">阶梯解除</a> + 金叉</div><div class="btrack"><div class="bpos" style="width:97%"></div></div><div class="bval up">2.52</div></div>
+    <div class="brow"><div class="lb"><a class="term" href="#term-chan">缠论下跌趋势×中枢下</a></div><div class="btrack"><div class="bpos" style="width:86%"></div></div><div class="bval up">2.24</div></div>
+    <div class="brow"><div class="lb"><a class="term" href="#term-weekly">周线空头</a> + 金叉</div><div class="btrack"><div class="bpos" style="width:56%"></div></div><div class="bval up">1.46</div></div>
+    <div class="brow"><div class="lb">基准（全部金叉）</div><div class="btrack"><div class="bflat" style="width:53%"></div></div><div class="bval" style="color:var(--sub)">1.37</div></div>
+    <div class="brow"><div class="lb">缠论上涨趋势 + 金叉</div><div class="btrack"><div class="bneg" style="width:50%"></div></div><div class="bval down">1.29</div></div>
+    <div class="brow"><div class="lb"><a class="term" href="#term-ma">收盘&gt;MA250</a> + 金叉</div><div class="btrack"><div class="bneg" style="width:48%"></div></div><div class="bval down">1.26</div></div>
+    <div class="brow"><div class="lb"><a class="term" href="#term-ladder">非下降阶梯</a>（趋势中段）</div><div class="btrack"><div class="bneg" style="width:46%"></div></div><div class="bval down">1.20</div></div>
+  </div>
+  <p class="axis-note" style="margin-bottom:14px"><a class="term" href="#term-ladder">阶梯解除</a>组详情：164 笔 / 胜率 45.1% / 平均 +3.94% —— 样本内最强做多确认</p>
+
+  <div class="callout">
+    <b class="tag">四条独立证据链，一个结论</b>
+    大盘状态、个股均线、缠论趋势、周线状态——<b>全部反向</b>："强势时金叉"更差，"跌透时金叉"更好。合在一起就是 A 股 20 日尺度<a class="term" href="#term-mr">均值回归</a>（<a class="term" href="#term-h">H0</a> 已干净证明）的具体表现：<b>跳过趋势中第N次金叉，专吃从坏到好的第一次金叉</b>。
+  </div>
+  <div class="callout red">
+    <b class="tag">已证伪的死路（别再投入）</b>
+    MACD 自身形态细化（零轴/<a class="term" href="#term-div">背离</a>/<a class="term" href="#term-hist">绿柱</a>面积/斜率，四次验证无优势）· 提前预判金叉 · 减速就卖 · 一切"顺势增强"类过滤。
+  </div>
+</section>
+
+<!-- ================= S5 转折点系统 ================= -->
+<section id="s5">
+  <h2><span class="no">5</span>转折点系统规格 <span class="badge b-warn">样本内 · 未走完整验证流程</span></h2>
+  <p class="lead">金叉是扳机，结构是地图，跌透了才扣扳机。三段式：</p>
+
+  <div class="rule">
+    <div class="rh"><span>入场（两条都满足才买）</span><span>信号极少</span></div>
+    <div class="rb"><ul>
+      <li><b>触发器</b>：日K MACD(12,26,9) <a class="term" href="#term-cross">金叉</a></li>
+      <li><b>结构前提</b>：此前处于<a class="term" href="#term-ladder">下降阶梯</a>（高点依次降低+低点依次降低），且最近一个阶梯高点<b>刚被收盘价向上突破</b>（等价<a class="term" href="#term-chan">缠论</a>口径：下跌趋势+价格在<a class="term" href="#term-chan">中枢</a>下方，<a class="term" href="#term-pf">PF</a> 2.24；阶梯版 PF 2.52 更及时，二选一）</li>
+    </ul></div>
+  </div>
+  <div class="rule">
+    <div class="rh"><span>出场（三个条件先到先出）</span><span>不对称</span></div>
+    <div class="rb"><ul>
+      <li>止损：相对入场价 <b>−6%</b>　（修左尾，不猜顶）</li>
+      <li>止盈：<b>+20%</b>　（让利润奔跑）</li>
+      <li>兜底：<a class="term" href="#term-cross">死叉</a>卖出（前两者都没触发时才轮到它——死叉从主力出场降级为保底出场）</li>
+    </ul></div>
+  </div>
+  <div class="rule">
+    <div class="rh"><span>仓位（<a class="term" href="#term-erk">等风险</a>）</span><span>压回撤</span></div>
+    <div class="rb"><ul>
+      <li>单笔最多亏账户 2% → 仓位 = 2% ÷ 6% ≈ <b>33% 封顶</b>，多股分散</li>
+      <li>默认状态是空仓：164笔 ÷ 10年 ÷ 20股 ≈ 每股每年不到 1 次信号，约 95% 时间在场外</li>
+    </ul></div>
+  </div>
+
+  <div class="vs">
+    <div class="side">
+      <h4>原机械系统</h4>
+      <div class="big down"><a class="term" href="#term-ann">年化</a> ~5.2%　<a class="term" href="#term-mdd">MDD</a> −59%</div>
+      <div class="sm">期末中位数 16,160 / 胜率 35.6% / PF 1.37</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="side" style="border-color:var(--green);background:var(--greenbg)">
+      <h4>转折点版（样本内三件套）</h4>
+      <div class="big up"><a class="term" href="#term-ann">年化</a> ~8%　<a class="term" href="#term-mdd">MDD</a> −20%区间</div>
+      <div class="sm">宽止损止盈：期末 +36%（15,547→21,202）；等风险仓位：回撤 −50.5%→−19.5%，收益只让 15%</div>
+    </div>
+  </div>
+
+  <div class="callout amber">
+    <b class="tag">证据等级声明</b>
+    以上为<b>同一段数据的样本内切片结果</b>，未走"<a class="term" href="#term-prereg">预注册</a>→训练→<a class="term" href="#term-oos">样本外</a>一次性揭封"流程。按 <a class="term" href="#term-h">H5</a> 前车之鉴（样本内优势到样本外缩水是常态），实盘前必须注册假设、冻结判据、用没见过的数据验证。
+  </div>
+</section>
+
+<!-- ================= S6 空仓与择时 ================= -->
+<section id="s6">
+  <h2><span class="no">6</span>空仓与择时 —— 测过了，方向反了 <span class="badge b-gray">122条件+29规则</span></h2>
+  <p class="lead">MACD 系统天然约 50% 时间空仓（<a class="term" href="#term-cross">死叉</a>→下个金叉之间）。"主动空仓"（环境不好就清仓/不开仓）测过三批：</p>
+  <table>
+    <tr><th>实验</th><th>规模</th><th>结果</th><th><span class="badge b-gray">判决</span></th></tr>
+    <tr><td>入场端环境过滤</td><td>122 个条件</td><td>仅 2 条正向：宽度5日回升 +5.1%、行业20日弱于大盘 +4.6%；<b>大盘MA60上方 0.80、大盘MACD多头 0.79（反向）</b></td><td><span class="badge b-warn">顺势空仓全灭</span></td></tr>
+    <tr><td>持仓中环境恶化清仓</td><td>29 条逐日退出规则</td><td>最好的一条（放量长上影+红柱缩短）每笔仅 +0.06%，其余全负</td><td><span class="badge b-no">无价值</span></td></tr>
+    <tr><td>全仓市况择时（<a class="term" href="#term-h">H1</a>）</td><td>预注册假设</td><td>市况裁判无区分度</td><td><span class="badge b-no">已证伪</span></td></tr>
+  </table>
+  <div class="callout">
+    <b class="tag">为什么"大盘不好就空仓"反向</b>
+    ① 系统的钱全来自&gt;20天大单——环境刚转好恰是大单入场点（被拦掉），大单持有途中大盘必有回调（被吓出来）；② 大盘多头状态被确认时，个股超跌反弹最好的那段已走完，此时买入的正是"强势必回归"的回归对象。
+  </div>
+  <div class="callout green">
+    <b class="tag">正确的问法</b>
+    别问"什么时候该空仓"，问"<b>什么时候才允许持仓</b>"。转折点版把这个问题在入场端消化掉了：空仓是默认状态，持仓是需要层层批准的例外。<a class="term" href="#term-h">H5</a>（已验证）同理：永远持有，靠"不买什么"防御——<b>选什么 &gt; 什么时候空仓</b>。
+  </div>
+</section>
+
+<!-- ================= S7 指标版图 ================= -->
+<section id="s7">
+  <h2><span class="no">7</span>指标版图 —— 四族盘点 <span class="badge b-gray">按信息来源分类</span></h2>
+  <p class="lead">指标按信息来源只有四族；同族加第二个指标≈白加（会在几乎相同位置发出几乎相同信号）。</p>
+  <table>
+    <tr><th>族</th><th>信息来源</th><th>成员</th><th>仓库实测判决</th></tr>
+    <tr><td><b>① 价格动量/平滑族</b></td><td>收盘价的平滑与交叉</td><td>MACD、MA、KDJ、DMI、ROC、箱体突破</td><td><span class="badge b-no">全军覆没</span> MACD出场细化15种全输给等死叉（−7.5%~−60%）；大盘<a class="term" href="#term-ma">MA60</a>过滤 <a class="term" href="#term-pf">PF</a> 0.995 反向；阶梯双K 1:1盈亏比 <a class="term" href="#term-pf">PF</a> 1.06；强势突破MA100系统10年+0.5% vs 上证+29.7%</td></tr>
+    <tr class="hlrow"><td><b>② 距离均值/超跌位置族</b></td><td>价格偏离均值多远</td><td><a class="term" href="#term-rsi">RSI</a>、BIAS、布林%B、60日新低</td><td><span class="badge b-ok">最有效</span> 系统B <a class="term" href="#term-rsi">RSI</a>超跌：40,112笔，胜率63.9%，平均<a class="term" href="#term-r">R</a> +0.15（已验证）；60日新低 +2.5~3.7% vs 市场 +0.86%</td></tr>
+    <tr><td><b>③ 量价族</b></td><td>成交量/资金行为</td><td>放量、缩量、量能扩张、长上影</td><td><span class="badge b-warn">只以否定句有效</span> 常规用法无效；有效形态：放量长上影联合退出 +3.2%、H5"放量下跌状态"回避</td></tr>
+    <tr><td><b>④ 截面/环境族</b></td><td>全市场状态</td><td>市场宽度、20日相对强弱</td><td><span class="badge b-ok">最强一族</span> 宽度回升 +5.1%；<a class="term" href="#term-h">H0→H5</a>"20日强势前20%剔除"撑起<a class="term" href="#term-oos">样本外</a> +72.6% 的系统</td></tr>
+  </table>
+  <div class="callout">
+    <b class="tag">真正的增量</b>
+    架构里只有一个岗位空着——<b>转折点扳机</b>。现有两个同族候选：系统B（<a class="term" href="#term-rsi">RSI</a>超跌，已验证）与 MACD转折点版（样本内 PF 2.52）。下一步有价值的实验是让两者<b>同场A/B + 测"互相确认"的合并版</b>，而不是引入第三个新指标（KDJ/DMI/BIAS均与在岗者同族重复）。
+  </div>
+</section>
+
+<!-- ================= S8 纪律 ================= -->
+<section id="s8">
+  <h2><span class="no">8</span>证据等级与纪律 <span class="badge b-info">强制阅读</span></h2>
+  <table>
+    <tr><th>结论</th><th>证据等级</th><th>性质</th></tr>
+    <tr><td><a class="term" href="#term-h">H5</a> 防御型负向过滤组合（年化+6.0%/+15.6%，两段）</td><td><span class="badge b-ok">样本外已验证</span></td><td>唯一走完<a class="term" href="#term-prereg">预注册</a>→训练→<a class="term" href="#term-oos">样本外</a>全流程并存活的系统</td></tr>
+    <tr><td>转折点系统（阶梯解除+金叉 + 三件套）</td><td><span class="badge b-warn">样本内切片</span></td><td>同一段数据内切出，须注册后样本外验证</td></tr>
+    <tr><td>亏损单画像 / 失效解剖</td><td><span class="badge b-gray">描述性统计</span></td><td>解释结构，不构成可交易规则</td></tr>
+    <tr><td>MACD细化/择时/顺势增强死路</td><td><span class="badge b-no">多次证伪</span></td><td>不再投入</td></tr>
+  </table>
+  <ul class="tight">
+    <li><b>假设预算</b>：仅剩 1 席（永久封存防多重检验）——任何新规则先与预算纪律对齐；</li>
+    <li><b>流程</b>：先冻结判据 → 再见新数据 → 见了新数据不许改；</li>
+    <li><b>预期管理</b>：即使全部验证通过，量级也是 H5 的同类（年化 8~10%、回撤 −20~−39%），不是印钞机；</li>
+    <li><b>定位建议</b>：H5 做底仓 β，转折点扳机做卫星战术层（信号稀少：每股每年不到 1 次）。</li>
+  </ul>
+</section>
+
+<section id="glossary">
+  <h2><span class="no">附</span>术语速查</h2>
+  <p class="lead">正文中的蓝色虚线词都可以点击，跳转到这里的对应条目；看完按浏览器返回键可回到原位置。</p>
+  <dl>
+    <div class="titem" id="term-cross"><dt>金叉 / 死叉</dt><dd>MACD 的 DIF 线上穿 DEA = 金叉（触发买入）；下穿 = 死叉（触发卖出）。原系统的全部进出场都由这两次交叉驱动。</dd></div>
+    <div class="titem" id="term-dif"><dt>DIF / DEA / DIF 位置</dt><dd>DIF = 12日指数均线 − 26日指数均线（快线）；DEA = DIF 的9日均线（慢线）。"DIF 位置（%价）" = DIF ÷ 股价，越负表示此前跌得越深：−0.91 的金叉比 −0.57 的"出生位置"更低。</dd></div>
+    <div class="titem" id="term-hist"><dt>红柱 / 绿柱</dt><dd>MACD 柱状线 = 2×(DIF−DEA)。零轴上方为红柱（多头动能），下方为绿柱。红柱面积、收缩速度等形态细节经四次实测无预测力。</dd></div>
+    <div class="titem" id="term-div"><dt>背离 / 背驰</dt><dd>价格创新低但 DIF 不创新低（底背离），缠论称"背驰"。实证：背离组未来20日收益反而更低（t=−4.10），是负信息。</dd></div>
+    <div class="titem" id="term-ret"><dt>ret · 单笔收益率</dt><dd>（卖出价 − 买入价）÷ 买入价，已含 0.15% 往返费用。ret≤−9.5% 即该笔净亏至少 9.5%。</dd></div>
+    <div class="titem" id="term-ret60"><dt>ret60 · 前60日收益</dt><dd>信号日之前 60 个交易日的累计涨跌幅，衡量"买之前这只票是涨过的还是跌过的"。亏损单 +1.35% vs 盈利单 −0.20%。</dd></div>
+    <div class="titem" id="term-mfe"><dt>MFE · 最大浮盈</dt><dd>Maximum Favorable Excursion：持仓期间相对入场价出现过的最高浮盈。亏损单中位仅 +2.2% = 买入后基本没涨过。</dd></div>
+    <div class="titem" id="term-mae"><dt>MAE · 最大浮亏</dt><dd>Maximum Adverse Excursion：持仓期间相对入场价出现过的最深浮亏。决定止损位能否"接住"这笔单子（MAE≤−6% 的单子会被 −6% 止损截断）。</dd></div>
+    <div class="titem" id="term-mdd"><dt>MDD · 最大回撤</dt><dd>净值从历史峰值跌到谷底的最大幅度。−59% 意味着需要先赚 +144% 才能回本。</dd></div>
+    <div class="titem" id="term-pf"><dt>PF · 盈利因子</dt><dd>Profit Factor = 盈利单利润合计 ÷ 亏损单亏损合计的绝对值。1.0=打平；1.37=薄利；2.5=相当强。本报告衡量"好/坏"的核心标尺。</dd></div>
+    <div class="titem" id="term-plb"><dt>盈亏比</dt><dd>平均每笔盈利 ÷ 平均每笔亏损（本系统 2.46）。与胜率互补：低胜率系统必须靠高盈亏比赚钱。</dd></div>
+    <div class="titem" id="term-sl"><dt>胜率</dt><dd>收益&gt;0 的交易占比。本系统 35.6%——低胜率 + 高盈亏比的典型右侧趋势系统。</dd></div>
+    <div class="titem" id="term-ann"><dt>年化收益</dt><dd>把整段总收益折算成"每年复利多少"，便于不同时长的系统互相比较。</dd></div>
+    <div class="titem" id="term-fuli"><dt>复利</dt><dd>每笔收益滚入本金继续计算；10笔复利−44.5% = 各笔(1+r)相乘，而非简单相加。</dd></div>
+    <div class="titem" id="term-ladder"><dt>下降阶梯 / 阶梯解除</dt><dd>源自《A股阶梯双K交易系统》：高点依次降低 + 低点依次降低 = 下降阶梯（跌势结构）；最近一个阶梯高点被收盘价向上突破 = 阶梯解除（跌势被打破）。"阶梯解除+金叉"是样本内最强做多确认（PF 2.52）。</dd></div>
+    <div class="titem" id="term-chan"><dt>缠论趋势 / 中枢</dt><dd>中枢 = 至少三笔价格重叠的区间；最近两个中枢依次降低 = 下跌趋势，依次抬高 = 上涨趋势（108课第17课定义）。本报告用笔端点近似重建，每笔信号只用当日及以前的K线。</dd></div>
+    <div class="titem" id="term-ma"><dt>MA60 / MA250</dt><dd>60日 / 250日收盘价均线，250日≈年线。实证中方向反转：均线之下的金叉反而更好。</dd></div>
+    <div class="titem" id="term-weekly"><dt>周线状态 / 周线空头</dt><dd>周K级别的 MACD 关系；周线空头 = 周K DIF&lt;DEA。实证中"周线空头+日线金叉"反而更好——超跌反弹的背景板。</dd></div>
+    <div class="titem" id="term-mr"><dt>均值回归 / 强势必回归</dt><dd>涨多了倾向跌回、跌多了倾向弹回的统计规律。H0 证明 A 股 20 日尺度"近期最强组"未来收益反而最差——四条过滤证据链全部由它解释。</dd></div>
+    <div class="titem" id="term-h"><dt>H0~H6 · 假设编号</dt><dd>仓库预注册假设的编号：H0=动量回归（成立）、H1=市况择时（证伪）、H5=防御型负向过滤组合（唯一双通过存活）、H6=微盘拥挤（不成立）。详见 FINDINGS.md。</dd></div>
+    <div class="titem" id="term-r"><dt>R · 风险倍数</dt><dd>单笔盈亏 ÷ 单笔预设风险。平均R +0.15 = 每笔平均赚 0.15 倍风险（系统B 的口径）。</dd></div>
+    <div class="titem" id="term-rsi"><dt>RSI</dt><dd>相对强弱指标（0~100），&lt;30 传统视为超卖。系统B 用 RSI&lt;30 做超跌反弹扳机：40,112 笔，胜率 63.9%。</dd></div>
+    <div class="titem" id="term-erk"><dt>等风险仓位</dt><dd>每笔预设最大亏损 = 账户固定百分比（如2%），仓位 = 2% ÷ 止损宽度；2%风险 ÷ 6%止损 ≈ 33% 仓位封顶。</dd></div>
+    <div class="titem" id="term-oos"><dt>样本内 / 样本外</dt><dd>样本内 = 用来发现规则的那批数据（容易过拟合）；样本外 = 规则冻结后新出现的数据。样本内优势到样本外缩水是常态（H5 前车之鉴）。</dd></div>
+    <div class="titem" id="term-prereg"><dt>预注册</dt><dd>先冻结规则、判据与假设预算，再跑数据；防止事后挑参数、挑窗口。仓库纪律：先冻结，再见新数据，见了新数据不许改。</dd></div>
+    <div class="titem" id="term-fuquan"><dt>前复权</dt><dd>把历史价格按分红、拆股调整到当前口径，消除除权缺口造成的假信号与假止损。</dd></div>
+    <div class="titem" id="term-t1"><dt>T+1</dt><dd>A股当天买入、次一交易日才能卖出的制度；回测执行与仓位设计都受它约束。</dd></div>
+  </dl>
+</section>
+
+<footer>
+  <p><b>数据与复现</b>：逐笔 <code>analysis/macd/MACD金叉死叉逐笔交易.csv</code> · 个股汇总 <code>MACD金叉死叉个股汇总.csv</code> · 环境/量价 <code>MACD环境与量价研究.log</code> · 出场 <code>MACD提前退出账户对比.csv</code> · 结构引擎 <code>analysis/chan_engine.py</code> · 总纪律 <code>analysis/FINDINGS.md</code> · 执行 <code>analysis/SYSTEM.md</code> · 行情库 hithink-finance DuckDB（截至 2026-10-13）</p>
+  <p style="margin-top:8px">局限：20股为"今日仍活跃的龙头"（右侧系统的幸存者样本，随机选股只会更差）；库内无退市股，弱势股一侧结果被系统性高估；转折点部分为样本内切片，未含未来数据验证。<b>本报告为研究记录，非投资建议。</b></p>
+</footer>
+
+</div>
+</body>
+</html>
