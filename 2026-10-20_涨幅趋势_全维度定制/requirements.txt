@@ -1,0 +1,7 @@
+python>=3.13
+pandas>=3.0
+numpy>=2.5
+duckdb>=1.5
+matplotlib>=3.11
+scikit-learn>=1.9
+openpyxl>=3.1
