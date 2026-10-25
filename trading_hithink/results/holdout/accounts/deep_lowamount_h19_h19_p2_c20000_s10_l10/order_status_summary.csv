@@ -1,0 +1,6 @@
+side,status,status_reason,count
+buy,filled,,25
+buy,rejected,already_held,4
+buy,rejected,insufficient_cash,3
+buy,rejected,position_limit,195
+sell,filled,,25

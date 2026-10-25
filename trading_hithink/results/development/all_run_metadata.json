@@ -1,0 +1,15 @@
+{
+  "period": "development",
+  "kind": "all",
+  "eligible_rows": 1937130,
+  "bounds": [
+    "2018-01-02",
+    "2021-09-30"
+  ],
+  "base_eligibility": "\n    listing_session >= 120\n    AND close BETWEEN 2 AND 80\n    AND amount20 >= 20000000\n    AND previous_hfq_close IS NOT NULL\n    AND next_hfq_open IS NOT NULL\n    AND next_actual_open IS NOT NULL\n    AND next_up_limit_10 IS NOT NULL\n    AND next_actual_open < next_up_limit_10 - 0.0001\n",
+  "entry_execution_diagnostic": "Signal at close, next open entry; next-open limit-up observations are not executable",
+  "cost_proxy": "60bp subtracted for diagnostics only; not a substitute for account backtest",
+  "features_sha256": "da1ebcf396b46e2f6b8a9bcbe00d2b0db5c382d12964aa2884a176d7c5374aa3",
+  "hypotheses_sha256": "6a2e6a6a915cfcd8d525261a2abcde48ca25b557af4a93d010931e5ea782982a",
+  "holdout_used": false
+}

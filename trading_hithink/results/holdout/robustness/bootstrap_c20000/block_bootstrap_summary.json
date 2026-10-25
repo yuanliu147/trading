@@ -1,0 +1,21 @@
+{
+  "method": "Circular moving-block bootstrap of daily account returns; 20-session blocks; not a trade-by-trade market resimulation",
+  "repetitions": 2000,
+  "cagr_quantiles": {
+    "0.05": -0.2810350325431714,
+    "0.25": -0.16284742793230722,
+    "0.5": -0.0801231586420893,
+    "0.75": 0.008470847628765155,
+    "0.95": 0.14319284627413864
+  },
+  "max_drawdown_quantiles": {
+    "0.05": 0.24320444635608426,
+    "0.25": 0.34704774523365367,
+    "0.5": 0.4407803716836459,
+    "0.75": 0.5475212369897928,
+    "0.95": 0.6864259447739474
+  },
+  "probability_cagr_above_zero": 0.2725,
+  "probability_cagr_above_30pct": 0.002,
+  "probability_max_drawdown_above_40pct": 0.6225
+}

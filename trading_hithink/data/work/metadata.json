@@ -1,0 +1,39 @@
+{
+  "source_snapshot": "data/snapshot/manifest.json",
+  "build_core_sql_sha256": "8c8dee5419bc025756b378c7ba4f54f056e4edb7b3f0d5b1d3784f95084c8454",
+  "features_py_sha256": "66ae4bad2c200942278a62f826218be1431ac4c4a3f1ac10ced3fe6119f3192e",
+  "remote_data_used": false,
+  "files": {
+    "core": {
+      "path": "data/work/core.parquet",
+      "rows": 6926520,
+      "bytes": 3500438112,
+      "sha256": "0252fc6ae7dd09785dde7ae550115829039af88a7b93cd2b5c371e36fcba3c52"
+    },
+    "oscillators": {
+      "path": "data/work/oscillators.parquet",
+      "rows": 6926520,
+      "bytes": 449950457,
+      "sha256": "3bb027eef2b83e8c9804f504b696abdd3a532bd23fb0f135f7b64fb7e37841a3"
+    },
+    "market_daily": {
+      "path": "data/work/market_daily.parquet",
+      "rows": 2436,
+      "bytes": 672054,
+      "sha256": "dd8c614a2f4aa2b2a81f89c53c0cc869f27508151e19f42c6714cd3d98916a0f"
+    },
+    "features": {
+      "path": "data/work/features.parquet",
+      "rows": 6926520,
+      "bytes": 4153051969,
+      "sha256": "8d7eefd1e423c24cce188ccdd2365ab140614db191e5d7d661d3903942c9e7d3"
+    }
+  },
+  "reference_price_audit": {
+    "corporate_action_rows": 23114.0,
+    "factor_only_adjustments": 192.0,
+    "median_reference_factor_error": 0.0,
+    "max_reference_factor_error": 4.440892098500626e-16,
+    "unexplained_factor_jumps": 192.0
+  }
+}

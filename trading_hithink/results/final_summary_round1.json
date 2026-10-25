@@ -1,0 +1,683 @@
+{
+  "strategy": {
+    "schema_version": 1,
+    "stage": "locked_before_holdout",
+    "locked_before_holdout": true,
+    "holdout_used_for_selection": false,
+    "candidate_id": "deep_lowamount_h19",
+    "family": "candle_volume",
+    "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000",
+    "exit": "FALSE",
+    "score": "-drawdown250",
+    "holding_sessions": 19,
+    "max_positions": 2,
+    "slot_fraction": 0.5,
+    "engine_overrides": {},
+    "capital": [
+      20000,
+      50000
+    ],
+    "costs": {
+      "commission_rate": 0.0003,
+      "minimum_commission": 5.0,
+      "stamp_duty_sell": [
+        {
+          "start": "1900-01-01",
+          "rate": 0.001
+        },
+        {
+          "start": "2023-08-28",
+          "rate": 0.0005
+        }
+      ],
+      "transfer_fee_both_sides": [
+        {
+          "start": "1900-01-01",
+          "rate": 2e-05
+        },
+        {
+          "start": "2022-04-29",
+          "rate": 1e-05
+        }
+      ],
+      "slippage_each_side_baseline": 0.001,
+      "slippage_each_side_stress": [
+        0.002,
+        0.003
+      ]
+    },
+    "execution": {
+      "signal_time": "close",
+      "fill_time": "next_session_open",
+      "same_open_sale_proceeds_reused": false,
+      "t_plus_one": true,
+      "board_lot": 100,
+      "allow_short": false,
+      "allow_leverage": false,
+      "maximum_positions_to_test": [
+        2,
+        3
+      ],
+      "opening_limit_up_buy": "reject",
+      "opening_limit_down_sell": "defer",
+      "intraday_stop_fill_from_ohlc": false,
+      "minimum_listing_sessions_baseline": 120,
+      "maximum_known_amount_participation": 0.001
+    },
+    "limit_rate": 0.1,
+    "slippage": 0.001,
+    "validation_evidence": {
+      "candidate_id": "deep_lowamount_h19",
+      "holding_sessions": 19,
+      "max_positions": 2,
+      "minimum_cagr": 0.1686437348029996,
+      "mean_cagr": 0.21219367326221025,
+      "minimum_calmar": 0.9961003595528624,
+      "maximum_drawdown": 0.1693039593708226,
+      "minimum_trades": 22,
+      "maximum_top5_profit_share": 0.6574415348364405,
+      "mean_holding_time_ratio": 0.5578512396694215,
+      "cagr_20000": 0.2557436117214209,
+      "cagr_50000": 0.1686437348029996,
+      "drawdown_20000": 0.1588431956831746,
+      "drawdown_50000": 0.1693039593708226
+    },
+    "hypotheses_sha256": "6a2e6a6a915cfcd8d525261a2abcde48ca25b557af4a93d010931e5ea782982a",
+    "round2_hypotheses_sha256": "33dc0775b50d1834d152c121595ec78cb66dc21dbb6932d051093de7894dab48",
+    "research_config_sha256": "d22315af14bef28bf350013fa31d50ba1a39ea10bac26ff8c7a50c60413dfa86",
+    "account_selection_sha256": "858cd6af1982e13fad2b3f7c05f2b5eca20aa202b8338b5aeacc6f21f6513557",
+    "engine_sha256": "5797f42291a8d5b69dcde51ebe632ca581cca4568312781ced8b95d94e86eaea",
+    "features_sha256": "8d7eefd1e423c24cce188ccdd2365ab140614db191e5d7d661d3903942c9e7d3",
+    "survivorship_bias": "current_listed_only",
+    "historical_st_known": false,
+    "return_guarantee": false
+  },
+  "data": {
+    "source": "local_hithink_duckdb_only",
+    "snapshot_path": "data/snapshot/manifest.json",
+    "rows": 6926520,
+    "symbols": 3197,
+    "start": "2016-10-13 00:00:00",
+    "end": "2026-10-23 00:00:00",
+    "remote_or_third_party_data_used": false,
+    "universe": "current_listed_mainboard",
+    "survivorship_bias": true,
+    "historical_st_known": false,
+    "official_historical_industry_available": false
+  },
+  "research_attempts": {
+    "account_variants": 92,
+    "account_variants_passing_development_gates": 20,
+    "validation_finalists": 2,
+    "holdout_strategies_run_for_selection": 1
+  },
+  "development": {
+    "20000": {
+      "account_path": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10",
+      "initial_capital": 20000,
+      "final_equity": 79720.61456000002,
+      "cagr": 0.41331205508782154,
+      "total_return": 2.9860307280000007,
+      "max_drawdown": 0.30402657011708834,
+      "calmar": 1.3594603094349438,
+      "sharpe": 1.3782400276138824,
+      "trade_count": 60,
+      "win_rate": 0.48333333333333334,
+      "profit_loss_ratio": 2.2876894938416474,
+      "holding_time_ratio": 0.7399794450154162,
+      "top_1_profit_share": 0.2687171008084777,
+      "top_5_profit_share": 0.6338840411367583,
+      "ending_open_positions": 0,
+      "factor_only_adjustment_count": 0,
+      "cagr_30pct_met": true,
+      "files": {
+        "trades": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/trades.csv",
+        "orders": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/orders.csv",
+        "daily_equity": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/daily_equity.csv"
+      },
+      "annual_returns": [
+        {
+          "year": 2018,
+          "sessions": 243,
+          "start_equity": 20000.0,
+          "end_equity": 29544.402639999997,
+          "return": 0.4772201319999998,
+          "max_drawdown": 0.2585733638228992,
+          "closed_trades": 18,
+          "net_pnl": 10055.98168,
+          "win_rate": 0.5,
+          "average_exposure": 0.6508005150730173,
+          "gross_turnover_over_average_equity": 16.904759789318394
+        },
+        {
+          "year": 2019,
+          "sessions": 244,
+          "start_equity": 29544.402639999997,
+          "end_equity": 42985.77306000001,
+          "return": 0.4549548888763726,
+          "max_drawdown": 0.1509917250857918,
+          "closed_trades": 16,
+          "net_pnl": 12929.79138,
+          "win_rate": 0.5625,
+          "average_exposure": 0.5489890516112145,
+          "gross_turnover_over_average_equity": 13.505213901305536
+        },
+        {
+          "year": 2020,
+          "sessions": 243,
+          "start_equity": 42985.77306000001,
+          "end_equity": 62242.19470000001,
+          "return": 0.4479719746605854,
+          "max_drawdown": 0.3040265701170883,
+          "closed_trades": 10,
+          "net_pnl": 23589.00852,
+          "win_rate": 0.5,
+          "average_exposure": 0.4104953819552104,
+          "gross_turnover_over_average_equity": 10.988994383992717
+        },
+        {
+          "year": 2021,
+          "sessions": 243,
+          "start_equity": 62242.19470000001,
+          "end_equity": 79720.61456000002,
+          "return": 0.2808130391970258,
+          "max_drawdown": 0.1958379022145422,
+          "closed_trades": 16,
+          "net_pnl": 13145.83298000001,
+          "win_rate": 0.375,
+          "average_exposure": 0.4606116755988937,
+          "gross_turnover_over_average_equity": 11.64259573887336
+        }
+      ],
+      "worst_year_return": 0.2808130391970258,
+      "every_full_year_30pct_met": false,
+      "every_calendar_year_including_partial_30pct_met": false,
+      "positive_years": 4,
+      "benchmark_analysis.json": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/benchmark_analysis.json",
+      "cost_analysis.json": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/cost_analysis.json",
+      "regime_attribution.csv": "results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/regime_attribution.csv"
+    },
+    "50000": {
+      "account_path": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10",
+      "initial_capital": 50000,
+      "final_equity": 152873.15466000012,
+      "cagr": 0.3225846337095455,
+      "total_return": 2.057463093200002,
+      "max_drawdown": 0.23863757458567159,
+      "calmar": 1.3517763674460104,
+      "sharpe": 1.4064551526444038,
+      "trade_count": 60,
+      "win_rate": 0.4666666666666667,
+      "profit_loss_ratio": 2.75674756206026,
+      "holding_time_ratio": 0.7399794450154162,
+      "top_1_profit_share": 0.2086971303940714,
+      "top_5_profit_share": 0.6037406193708473,
+      "ending_open_positions": 0,
+      "factor_only_adjustment_count": 0,
+      "cagr_30pct_met": true,
+      "files": {
+        "trades": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/trades.csv",
+        "orders": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/orders.csv",
+        "daily_equity": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/daily_equity.csv"
+      },
+      "annual_returns": [
+        {
+          "year": 2018,
+          "sessions": 243,
+          "start_equity": 50000.0,
+          "end_equity": 70419.05090000002,
+          "return": 0.4083810180000002,
+          "max_drawdown": 0.2386375745856715,
+          "closed_trades": 18,
+          "net_pnl": 21510.2381,
+          "win_rate": 0.4444444444444444,
+          "average_exposure": 0.5724262712474829,
+          "gross_turnover_over_average_equity": 14.77821930209438
+        },
+        {
+          "year": 2019,
+          "sessions": 244,
+          "start_equity": 70419.05090000002,
+          "end_equity": 108874.37146000004,
+          "return": 0.5460925710942806,
+          "max_drawdown": 0.1047748476809028,
+          "closed_trades": 16,
+          "net_pnl": 37364.13336000002,
+          "win_rate": 0.5625,
+          "average_exposure": 0.4241857143176553,
+          "gross_turnover_over_average_equity": 10.451411097201811
+        },
+        {
+          "year": 2020,
+          "sessions": 243,
+          "start_equity": 108874.37146000004,
+          "end_equity": 135401.0179000001,
+          "return": 0.2436445426437739,
+          "max_drawdown": 0.1906648655703843,
+          "closed_trades": 10,
+          "net_pnl": 31990.388520000022,
+          "win_rate": 0.5,
+          "average_exposure": 0.2595330181442652,
+          "gross_turnover_over_average_equity": 6.924791576215638
+        },
+        {
+          "year": 2021,
+          "sessions": 243,
+          "start_equity": 135401.0179000001,
+          "end_equity": 152873.15466000012,
+          "return": 0.1290399217892439,
+          "max_drawdown": 0.1134008579932763,
+          "closed_trades": 16,
+          "net_pnl": 12008.394680000005,
+          "win_rate": 0.375,
+          "average_exposure": 0.2603194916617684,
+          "gross_turnover_over_average_equity": 6.584578217698443
+        }
+      ],
+      "worst_year_return": 0.1290399217892439,
+      "every_full_year_30pct_met": false,
+      "every_calendar_year_including_partial_30pct_met": false,
+      "positive_years": 4,
+      "benchmark_analysis.json": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/benchmark_analysis.json",
+      "cost_analysis.json": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/cost_analysis.json",
+      "regime_attribution.csv": "results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/regime_attribution.csv"
+    }
+  },
+  "validation": {
+    "20000": {
+      "account_path": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10",
+      "initial_capital": 20000,
+      "final_equity": 31420.000029999996,
+      "cagr": 0.2557436117214209,
+      "total_return": 0.5710000014999999,
+      "max_drawdown": 0.15884319568317462,
+      "calmar": 1.6100381928321428,
+      "sharpe": 1.106804002004747,
+      "trade_count": 22,
+      "win_rate": 0.6363636363636364,
+      "profit_loss_ratio": 1.94465974926915,
+      "holding_time_ratio": 0.5537190082644629,
+      "top_1_profit_share": 0.2194525233215676,
+      "top_5_profit_share": 0.6574415348364405,
+      "ending_open_positions": 0,
+      "factor_only_adjustment_count": 0,
+      "cagr_30pct_met": false,
+      "files": {
+        "trades": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/trades.csv",
+        "orders": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/orders.csv",
+        "daily_equity": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/daily_equity.csv"
+      },
+      "annual_returns": [
+        {
+          "year": 2022,
+          "sessions": 242,
+          "start_equity": 20000.0,
+          "end_equity": 27294.55079,
+          "return": 0.3647275395,
+          "max_drawdown": 0.1489852906118441,
+          "closed_trades": 9,
+          "net_pnl": 7716.657619999998,
+          "win_rate": 0.6666666666666666,
+          "average_exposure": 0.3441893333183936,
+          "gross_turnover_over_average_equity": 8.655618940869676
+        },
+        {
+          "year": 2023,
+          "sessions": 242,
+          "start_equity": 27294.55079,
+          "end_equity": 31420.000029999996,
+          "return": 0.1511455261433154,
+          "max_drawdown": 0.158493524972391,
+          "closed_trades": 13,
+          "net_pnl": 3703.342409999996,
+          "win_rate": 0.6153846153846154,
+          "average_exposure": 0.4277458865475553,
+          "gross_turnover_over_average_equity": 11.986481795335672
+        }
+      ],
+      "worst_year_return": 0.1511455261433154,
+      "every_full_year_30pct_met": false,
+      "every_calendar_year_including_partial_30pct_met": false,
+      "positive_years": 2,
+      "benchmark_analysis.json": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/benchmark_analysis.json",
+      "cost_analysis.json": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/cost_analysis.json",
+      "regime_attribution.csv": "results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/regime_attribution.csv"
+    },
+    "50000": {
+      "account_path": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10",
+      "initial_capital": 50000,
+      "final_equity": 68111.69553999999,
+      "cagr": 0.16864373480299966,
+      "total_return": 0.36223391079999967,
+      "max_drawdown": 0.16930395937082265,
+      "calmar": 0.9961003595528625,
+      "sharpe": 0.8365094040099192,
+      "trade_count": 22,
+      "win_rate": 0.5909090909090909,
+      "profit_loss_ratio": 1.8742897785842574,
+      "holding_time_ratio": 0.5619834710743802,
+      "top_1_profit_share": 0.1860667498302168,
+      "top_5_profit_share": 0.6497956087036818,
+      "ending_open_positions": 0,
+      "factor_only_adjustment_count": 0,
+      "cagr_30pct_met": false,
+      "files": {
+        "trades": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/trades.csv",
+        "orders": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/orders.csv",
+        "daily_equity": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/daily_equity.csv"
+      },
+      "annual_returns": [
+        {
+          "year": 2022,
+          "sessions": 242,
+          "start_equity": 50000.0,
+          "end_equity": 58185.04237,
+          "return": 0.1637008474000001,
+          "max_drawdown": 0.1693039593708226,
+          "closed_trades": 9,
+          "net_pnl": 9305.873649999994,
+          "win_rate": 0.5555555555555556,
+          "average_exposure": 0.3173475274272513,
+          "gross_turnover_over_average_equity": 8.278226694384085
+        },
+        {
+          "year": 2023,
+          "sessions": 242,
+          "start_equity": 58185.04237,
+          "end_equity": 68111.69553999999,
+          "return": 0.1706048971637104,
+          "max_drawdown": 0.1593155143323419,
+          "closed_trades": 13,
+          "net_pnl": 8805.821890000007,
+          "win_rate": 0.6153846153846154,
+          "average_exposure": 0.4333750601303602,
+          "gross_turnover_over_average_equity": 12.16995930965357
+        }
+      ],
+      "worst_year_return": 0.1637008474000001,
+      "every_full_year_30pct_met": false,
+      "every_calendar_year_including_partial_30pct_met": false,
+      "positive_years": 2,
+      "benchmark_analysis.json": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/benchmark_analysis.json",
+      "cost_analysis.json": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/cost_analysis.json",
+      "regime_attribution.csv": "results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/regime_attribution.csv"
+    }
+  },
+  "holdout": {
+    "20000": {
+      "account_path": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10",
+      "initial_capital": 20000,
+      "final_equity": 15611.86782,
+      "cagr": -0.08442746042301896,
+      "total_return": -0.21940660899999997,
+      "max_drawdown": 0.42578283799999994,
+      "calmar": -0.1982876078791578,
+      "sharpe": -0.22682674288671814,
+      "trade_count": 25,
+      "win_rate": 0.36,
+      "profit_loss_ratio": 1.1357176569013023,
+      "holding_time_ratio": 0.3938053097345133,
+      "top_1_profit_share": 0.2818619571290867,
+      "top_5_profit_share": 0.851121737964556,
+      "ending_open_positions": 0,
+      "factor_only_adjustment_count": 0,
+      "cagr_30pct_met": false,
+      "files": {
+        "trades": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/trades.csv",
+        "orders": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/orders.csv",
+        "daily_equity": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/daily_equity.csv"
+      },
+      "annual_returns": [
+        {
+          "year": 2024,
+          "sessions": 242,
+          "start_equity": 20000.0,
+          "end_equity": 13741.29369,
+          "return": -0.3129353155,
+          "max_drawdown": 0.4257828379999999,
+          "closed_trades": 13,
+          "net_pnl": -7210.64309,
+          "win_rate": 0.2307692307692307,
+          "average_exposure": 0.4807125395265113,
+          "gross_turnover_over_average_equity": 12.18055807578636
+        },
+        {
+          "year": 2025,
+          "sessions": 243,
+          "start_equity": 13741.29369,
+          "end_equity": 15724.77018,
+          "return": 0.1443442324097505,
+          "max_drawdown": 0.1646141853726822,
+          "closed_trades": 4,
+          "net_pnl": 2935.413269999998,
+          "win_rate": 0.75,
+          "average_exposure": 0.1487155466068289,
+          "gross_turnover_over_average_equity": 3.3170363241663288
+        },
+        {
+          "year": 2026,
+          "sessions": 193,
+          "start_equity": 15724.77018,
+          "end_equity": 15611.86782,
+          "return": -0.0071799052518807,
+          "max_drawdown": 0.1518233842748909,
+          "closed_trades": 8,
+          "net_pnl": -112.90235999999982,
+          "win_rate": 0.375,
+          "average_exposure": 0.2443226170771546,
+          "gross_turnover_over_average_equity": 6.1782266233909455
+        }
+      ],
+      "worst_year_return": -0.3129353155,
+      "every_full_year_30pct_met": false,
+      "every_calendar_year_including_partial_30pct_met": false,
+      "positive_years": 1,
+      "benchmark_analysis.json": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/benchmark_analysis.json",
+      "cost_analysis.json": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/cost_analysis.json",
+      "regime_attribution.csv": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/regime_attribution.csv"
+    },
+    "50000": {
+      "account_path": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10",
+      "initial_capital": 50000,
+      "final_equity": 35513.38311999999,
+      "cagr": -0.11469737564639393,
+      "total_return": -0.28973233760000017,
+      "max_drawdown": 0.4705027688000002,
+      "calmar": -0.2437761969795105,
+      "sharpe": -0.3548823377527267,
+      "trade_count": 25,
+      "win_rate": 0.36,
+      "profit_loss_ratio": 0.9332428102805719,
+      "holding_time_ratio": 0.3938053097345133,
+      "top_1_profit_share": 0.34254043788053323,
+      "top_5_profit_share": 0.8941707038983109,
+      "ending_open_positions": 0,
+      "factor_only_adjustment_count": 0,
+      "cagr_30pct_met": false,
+      "files": {
+        "trades": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/trades.csv",
+        "orders": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/orders.csv",
+        "daily_equity": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/daily_equity.csv"
+      },
+      "annual_returns": [
+        {
+          "year": 2024,
+          "sessions": 242,
+          "start_equity": 50000.0,
+          "end_equity": 31023.116379999992,
+          "return": -0.3795376724000001,
+          "max_drawdown": 0.4705027688000002,
+          "closed_trades": 13,
+          "net_pnl": -21149.73974000001,
+          "win_rate": 0.2307692307692307,
+          "average_exposure": 0.4683924857435689,
+          "gross_turnover_over_average_equity": 12.155882667613607
+        },
+        {
+          "year": 2025,
+          "sessions": 243,
+          "start_equity": 31023.116379999992,
+          "end_equity": 35446.5004,
+          "return": 0.142583484064537,
+          "max_drawdown": 0.1686211595048793,
+          "closed_trades": 4,
+          "net_pnl": 6596.240139999998,
+          "win_rate": 0.75,
+          "average_exposure": 0.1476393442601,
+          "gross_turnover_over_average_equity": 3.288752328268792
+        },
+        {
+          "year": 2026,
+          "sessions": 193,
+          "start_equity": 35446.5004,
+          "end_equity": 35513.38311999999,
+          "return": 0.001886863843969,
+          "max_drawdown": 0.1600522631172529,
+          "closed_trades": 8,
+          "net_pnl": 66.88271999999506,
+          "win_rate": 0.375,
+          "average_exposure": 0.2542229536198376,
+          "gross_turnover_over_average_equity": 6.479731340183191
+        }
+      ],
+      "worst_year_return": -0.3795376724000001,
+      "every_full_year_30pct_met": false,
+      "every_calendar_year_including_partial_30pct_met": false,
+      "positive_years": 2,
+      "benchmark_analysis.json": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/benchmark_analysis.json",
+      "cost_analysis.json": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/cost_analysis.json",
+      "regime_attribution.csv": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/regime_attribution.csv"
+    }
+  },
+  "targets": {
+    "both_capitals_holdout_cagr_30pct_met": false,
+    "both_capitals_holdout_every_full_year_30pct_met": false,
+    "both_capitals_holdout_every_calendar_year_including_partial_30pct_met": false,
+    "target_is_not_a_future_return_guarantee": true
+  },
+  "robustness": {
+    "path": "results/holdout/robustness_summary.csv",
+    "runs": 24,
+    "minimum_scenario_cagr_by_capital": {
+      "20000": -0.2032434127231114,
+      "50000": -0.2210824083581499
+    },
+    "maximum_scenario_drawdown_by_capital": {
+      "20000": 0.5156014820000001,
+      "50000": 0.5446715468000001
+    }
+  },
+  "verification": {
+    "passed": true,
+    "locked_strategy": {
+      "candidate_id": "deep_lowamount_h19",
+      "holding_sessions": 19,
+      "max_positions": 2
+    },
+    "rerun": [
+      {
+        "capital": 20000,
+        "identical": true,
+        "before": {
+          "trades.csv": "36ff070ed7522d5971e3e920ce4944f55f5de221a20da809c76ba135305797a3",
+          "orders.csv": "48c0a253ff10e63bb5e167f50dac2838509b7b0313886a905faba1ee5acdd53f",
+          "daily_equity.csv": "7425104569dd944fe25beb84eb2fca1991a3bf666dce38b7746dbdcebff29186"
+        },
+        "after": {
+          "trades.csv": "36ff070ed7522d5971e3e920ce4944f55f5de221a20da809c76ba135305797a3",
+          "orders.csv": "48c0a253ff10e63bb5e167f50dac2838509b7b0313886a905faba1ee5acdd53f",
+          "daily_equity.csv": "7425104569dd944fe25beb84eb2fca1991a3bf666dce38b7746dbdcebff29186"
+        }
+      },
+      {
+        "capital": 50000,
+        "identical": true,
+        "before": {
+          "trades.csv": "76bafe396b1a7e1460b0b4416f203dfc8fb17f06034b43d40f75b560395efbad",
+          "orders.csv": "03cd250b6b1ff10b800fbc529dfb99177a0a07f1b16c51b29119ab33f0c2b647",
+          "daily_equity.csv": "d5cb2139dec24b49fa0b86436e3c69b8e0ee94361bbb945946c0f583c5099da4"
+        },
+        "after": {
+          "trades.csv": "76bafe396b1a7e1460b0b4416f203dfc8fb17f06034b43d40f75b560395efbad",
+          "orders.csv": "03cd250b6b1ff10b800fbc529dfb99177a0a07f1b16c51b29119ab33f0c2b647",
+          "daily_equity.csv": "d5cb2139dec24b49fa0b86436e3c69b8e0ee94361bbb945946c0f583c5099da4"
+        }
+      }
+    ],
+    "accounts": [
+      {
+        "account": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10",
+        "passed": true,
+        "checks": {
+          "engine_reconciliation": true,
+          "cash_flow": true,
+          "equity_identity": true,
+          "nonnegative_cash": true,
+          "daily_identity": true,
+          "trade_count": true,
+          "buy_lots": true,
+          "buy_signal_before_execution": true,
+          "sell_signal_before_execution": true,
+          "t_plus_one": true,
+          "no_negative_shares": true,
+          "minimum_buy_commission": true,
+          "minimum_sell_commission": true,
+          "mainboard_codes": true,
+          "trade_net_pnl": true,
+          "trade_return": true,
+          "buy_order_link": true,
+          "cagr_recalculation": true,
+          "drawdown_recalculation": true
+        },
+        "trades": 25,
+        "orders": 252,
+        "cagr": -0.08442746042301896,
+        "max_drawdown": 0.42578283799999994,
+        "factor_only_adjustments": 0,
+        "ending_open_positions": 0
+      },
+      {
+        "account": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10",
+        "passed": true,
+        "checks": {
+          "engine_reconciliation": true,
+          "cash_flow": true,
+          "equity_identity": true,
+          "nonnegative_cash": true,
+          "daily_identity": true,
+          "trade_count": true,
+          "buy_lots": true,
+          "buy_signal_before_execution": true,
+          "sell_signal_before_execution": true,
+          "t_plus_one": true,
+          "no_negative_shares": true,
+          "minimum_buy_commission": true,
+          "minimum_sell_commission": true,
+          "mainboard_codes": true,
+          "trade_net_pnl": true,
+          "trade_return": true,
+          "buy_order_link": true,
+          "cagr_recalculation": true,
+          "drawdown_recalculation": true
+        },
+        "trades": 25,
+        "orders": 252,
+        "cagr": -0.11469737564639393,
+        "max_drawdown": 0.4705027688000002,
+        "factor_only_adjustments": 0,
+        "ending_open_positions": 0
+      }
+    ],
+    "data_scope": "Local HiThink DuckDB snapshot only; current-listed main-board history; no delisted reconstruction",
+    "survivorship_bias_remains": true
+  },
+  "limitations": [
+    "Current-listed history excludes delisted stocks by request; reversal returns are especially exposed to survivorship bias.",
+    "Historical ST status and names are unavailable; 5% limit sensitivity is a conservative scenario, not an ST reconstruction.",
+    "Daily bars cannot prove opening-auction queue fills or intraday stop paths; fills use next-open with price limits and slippage.",
+    "Dynamic comovement clusters are not official industry indices.",
+    "Corporate-action cash availability and bonus-share sale timing use disclosed assumptions because exact payment/listing dates are unavailable.",
+    "Development tried many variants; validation and one locked holdout reduce but do not eliminate selection risk.",
+    "Research evidence only, not investment advice or a guarantee of 30% future returns."
+  ]
+}

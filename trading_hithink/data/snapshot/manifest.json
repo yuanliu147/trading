@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-24T08:44:43.696151+00:00",
+  "source": {
+    "database": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "bytes": 1863593984,
+    "mtime_ns": 1792829164052291976
+  },
+  "research_config_sha256": "d22315af14bef28bf350013fa31d50ba1a39ea10bac26ff8c7a50c60413dfa86",
+  "remote_data_used": false,
+  "legacy_panel_used": false,
+  "exports": {
+    "mainboard_daily": {
+      "path": "data/snapshot/mainboard_daily.parquet",
+      "sql_path": "sql/export_mainboard.sql",
+      "sql": "SELECT\n    d.thscode,\n    d.date,\n    d.open,\n    d.high,\n    d.low,\n    d.close,\n    d.prev_close,\n    d.volume,\n    d.amount,\n    h.open AS hfq_open,\n    h.high AS hfq_high,\n    h.low AS hfq_low,\n    h.close AS hfq_close,\n    f.forward_factor,\n    f.backward_factor\nFROM v_daily d\nJOIN v_symbol s ON s.thscode = d.thscode\nJOIN v_daily_hfq h ON h.thscode = d.thscode AND h.date = d.date\nLEFT JOIN calc_adjust_factor_daily f ON f.thscode = d.thscode AND f.date = d.date\nWHERE s.asset_type = 'a-share'\n  AND substr(s.ticker, 1, 3) IN ('600', '601', '603', '605', '000', '001', '002', '003')\nORDER BY d.thscode, d.date\n",
+      "sql_sha256": "47d7ec57b1e99c4cbcdb2f38a1dae848ec1bff13a7f2e8729aa64fd8c22a77d3",
+      "file_sha256": "96af2767e1ee8a69a69cab6a5fed0d6e25056bfe351a2ae5916ecf1c67f43b8c",
+      "bytes": 330079193,
+      "cli_response": {
+        "path": "/Users/admin/WorkSpace/trading/trading_hithink/data/snapshot/mainboard_daily.parquet",
+        "format": "parquet",
+        "count": 6926520
+      }
+    },
+    "adjustment_events": {
+      "path": "data/snapshot/adjustment_events.parquet",
+      "sql_path": "sql/export_events.sql",
+      "sql": "SELECT e.*\nFROM raw_adjustment_events e\nJOIN v_symbol s ON s.thscode = e.thscode\nWHERE s.asset_type = 'a-share'\n  AND substr(s.ticker, 1, 3) IN ('600', '601', '603', '605', '000', '001', '002', '003')\nORDER BY e.thscode, e.ex_date\n",
+      "sql_sha256": "f2bbf9117be42e7259706f2507d3217bb13387b41a06934eeab98c22056389bf",
+      "file_sha256": "d3188292370e01061fb1dc92a2cc40b7500f239cecaf5b3d185671ce7ddbe511",
+      "bytes": 248697,
+      "cli_response": {
+        "path": "/Users/admin/WorkSpace/trading/trading_hithink/data/snapshot/adjustment_events.parquet",
+        "format": "parquet",
+        "count": 43580
+      }
+    },
+    "symbols": {
+      "path": "data/snapshot/symbols.parquet",
+      "sql_path": "sql/export_symbols.sql",
+      "sql": "SELECT thscode, ticker, name, exchange, asset_type, updated_at\nFROM v_symbol\nWHERE asset_type = 'a-share'\n  AND substr(ticker, 1, 3) IN ('600', '601', '603', '605', '000', '001', '002', '003')\nORDER BY thscode\n",
+      "sql_sha256": "e64cc0cd60eec0acf90660a0261070bd55d128bd2f3ebe208159dc66fb15b630",
+      "file_sha256": "67fe5ff44ef72bbcb6cef89f3f5ba40a8ec581cdf58335f25c6ac75babed8027",
+      "bytes": 29276,
+      "cli_response": {
+        "path": "/Users/admin/WorkSpace/trading/trading_hithink/data/snapshot/symbols.parquet",
+        "format": "parquet",
+        "count": 3197
+      }
+    }
+  }
+}

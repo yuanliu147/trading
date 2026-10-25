@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "title": "Current-listed A-share main-board small-capital research",
+  "data_policy": {
+    "source": "local_hithink_duckdb_only",
+    "database": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "allow_remote": false,
+    "allow_third_party": false,
+    "allow_legacy_panels": false,
+    "mainboard_prefixes": ["600", "601", "603", "605", "000", "001", "002", "003"],
+    "asset_type": "a-share",
+    "universe": "current_listed_only",
+    "symbol_name_available": false,
+    "st_filter": "not_identifiable_in_local_data; use_5pct_limit_sensitivity",
+    "survivorship_bias_acknowledged": true
+  },
+  "sample": {
+    "warmup_start": "2016-10-13",
+    "development_start": "2018-01-01",
+    "development_end": "2021-12-31",
+    "validation_start": "2022-01-01",
+    "validation_end": "2023-12-31",
+    "holdout_start": "2024-01-01",
+    "holdout_end": "2026-10-23",
+    "label_horizons": [5, 10, 20, 60],
+    "embargo_sessions": 60,
+    "holdout_may_change_selection": false
+  },
+  "capital": [20000, 50000],
+  "execution": {
+    "signal_time": "close",
+    "fill_time": "next_session_open",
+    "same_open_sale_proceeds_reused": false,
+    "t_plus_one": true,
+    "board_lot": 100,
+    "allow_short": false,
+    "allow_leverage": false,
+    "maximum_positions_to_test": [2, 3],
+    "opening_limit_up_buy": "reject",
+    "opening_limit_down_sell": "defer",
+    "intraday_stop_fill_from_ohlc": false,
+    "minimum_listing_sessions_baseline": 120,
+    "maximum_known_amount_participation": 0.001
+  },
+  "costs": {
+    "commission_rate": 0.0003,
+    "minimum_commission": 5.0,
+    "stamp_duty_sell": [
+      {"start": "1900-01-01", "rate": 0.001},
+      {"start": "2023-08-28", "rate": 0.0005}
+    ],
+    "transfer_fee_both_sides": [
+      {"start": "1900-01-01", "rate": 0.00002},
+      {"start": "2022-04-29", "rate": 0.00001}
+    ],
+    "slippage_each_side_baseline": 0.001,
+    "slippage_each_side_stress": [0.002, 0.003]
+  },
+  "research_families": [
+    "trend_macd",
+    "candle_volume",
+    "reversal_volatility",
+    "completed_multiscale_structure",
+    "market_regime_breadth",
+    "limit_emotion",
+    "lagged_comovement_cluster",
+    "nonlinear_sparse_interactions"
+  ],
+  "selection_policy": {
+    "max_validation_finalists": 2,
+    "primary_metric": "natural_day_net_cagr_with_drawdown_and_stability_gates",
+    "annualized_return_target": 0.30,
+    "not_a_return_guarantee": true
+  }
+}

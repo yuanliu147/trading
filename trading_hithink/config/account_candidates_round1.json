@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "stage": "development_account_candidates",
+  "selection_rule": {
+    "minimum_development_signals": 80,
+    "minimum_development_positive_excess_years": 2,
+    "maximum_account_candidates_per_family": 1,
+    "maximum_account_candidates": 12,
+    "maximum_validation_finalists": 2,
+    "development_diagnostic_rank": "net_60bp_proxy_excess_20d",
+    "account_gates": {
+      "maximum_drawdown": 0.4,
+      "maximum_top5_profit_share": 0.7
+    },
+    "holdout_selection_allowed": false
+  },
+  "eligible_hypotheses": 24,
+  "rejected_hypotheses": 22,
+  "holdout_used": false,
+  "hypotheses_sha256": "6a2e6a6a915cfcd8d525261a2abcde48ca25b557af4a93d010931e5ea782982a",
+  "round2_hypotheses_sha256": "dc48fb5203aa728f96d505c7b0bccbb9c52aa69bd8da61a2c05e6b5c8bae9453",
+  "development_summary_sha256": "40012a87dd85f1bbc0022346b7c7b45e4f7e9ab1cc0c9323227a2f733dcba013",
+  "round2_summary_sha256": "c7d24a7d98d8c7c7a9c4275abeeb321c28521c2fa9abdd2eed22c2c372c46100",
+  "candidates": [
+    {
+      "id": "engulfing_deep50_lowamount_atr3",
+      "family": "candle_volume",
+      "observations": 613.0,
+      "symbols": 459.0,
+      "active_days": 130.0,
+      "positive_excess_years": 4,
+      "mean_fwd5": 0.0195416395655726,
+      "mean_fwd10": 0.0423194307384194,
+      "mean_fwd20": 0.1027135215096904,
+      "mean_fwd60": 0.0746064082801497,
+      "excess20": 0.0511300844649896,
+      "net60bp_excess20": 0.0451300844649896,
+      "holding_options": [
+        10,
+        20
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000 AND atr20_pct >= 0.03",
+      "exit": "FALSE",
+      "score": "-return_10d",
+      "research_round": 2
+    },
+    {
+      "id": "quiet_trend",
+      "family": "trend_macd",
+      "observations": 91115.0,
+      "symbols": 2301.0,
+      "active_days": 912.0,
+      "positive_excess_years": 4,
+      "mean_fwd5": 0.0041619735890281,
+      "mean_fwd10": 0.0074507380493125,
+      "mean_fwd20": 0.016143184174337,
+      "mean_fwd60": 0.0149714327811616,
+      "excess20": 0.0086176714410711,
+      "net60bp_excess20": 0.0026176714410711,
+      "holding_options": [
+        20,
+        40
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "close_ma20 > 0 AND ma20_ma60 > 0 AND ma60_slope10 > 0 AND atr20_pct < 0.04 AND drawdown60 > -0.15 AND near_limit_up_days20 = 0 AND amount20 BETWEEN 30000000 AND 150000000 AND close BETWEEN 2 AND 30",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "score": "return_60d - 0.1 * volatility20",
+      "research_round": 1
+    },
+    {
+      "id": "volatility_squeeze",
+      "family": "reversal_volatility",
+      "observations": 34573.0,
+      "symbols": 2794.0,
+      "active_days": 889.0,
+      "positive_excess_years": 3,
+      "mean_fwd5": -0.0049906489460446,
+      "mean_fwd10": -0.0034425054481765,
+      "mean_fwd20": -0.0035733442110191,
+      "mean_fwd60": 0.0187838313495383,
+      "excess20": 0.0033815589749261,
+      "net60bp_excess20": -0.0026184410250738,
+      "holding_options": [
+        10,
+        20
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "close_ma60 > 0 AND ma20_ma60 > 0 AND volatility_contraction < 0.7 AND narrow_range7 AND amount_ratio1_20 < 1.2 AND drawdown60 > -0.20",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "score": "-volatility20",
+      "research_round": 1
+    },
+    {
+      "id": "high_vol_momentum",
+      "family": "nonlinear_sparse_interactions",
+      "observations": 26729.0,
+      "symbols": 2554.0,
+      "active_days": 68.0,
+      "positive_excess_years": 2,
+      "mean_fwd5": 0.0117784255690848,
+      "mean_fwd10": 0.0259061835112779,
+      "mean_fwd20": 0.016036159660774,
+      "mean_fwd60": -0.0386616161011004,
+      "excess20": 0.0031878914546968,
+      "net60bp_excess20": -0.0028121085453031,
+      "holding_options": [
+        10,
+        20
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "market_volatility20 > 0.25 AND market_return20 > 0.05 AND close_ma20 > 0 AND ma20_ma60 > 0 AND atr20_pct < 0.06 AND breakout20 > -0.03",
+      "exit": "close_ma20 < 0 OR market_return20 < 0",
+      "score": "return_20d",
+      "research_round": 1
+    },
+    {
+      "id": "monthly_weekly_daily",
+      "family": "completed_multiscale_structure",
+      "observations": 53458.0,
+      "symbols": 2788.0,
+      "active_days": 905.0,
+      "positive_excess_years": 3,
+      "mean_fwd5": 0.0019072592551036,
+      "mean_fwd10": -0.0010511683915686,
+      "mean_fwd20": -0.0012520083057977,
+      "mean_fwd60": 0.0068702437165563,
+      "excess20": 0.0022681862236528,
+      "net60bp_excess20": -0.0037318137763471,
+      "holding_options": [
+        20,
+        40
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "month_close_ma6 > 0 AND week_close_ma4 > 0 AND close_ma60 > 0 AND return_5d BETWEEN -0.10 AND 0 AND ret1 > 0",
+      "exit": "close_ma20 < 0 OR week_close_ma4 < 0",
+      "score": "month_return12",
+      "research_round": 1
+    },
+    {
+      "id": "bull_trend",
+      "family": "market_regime_breadth",
+      "observations": 103447.0,
+      "symbols": 2818.0,
+      "active_days": 178.0,
+      "positive_excess_years": 3,
+      "mean_fwd5": 0.0033009020293338,
+      "mean_fwd10": -6.088483176597039e-05,
+      "mean_fwd20": 0.0065848790507074,
+      "mean_fwd60": -0.011215473298793,
+      "excess20": 0.001636382708096,
+      "net60bp_excess20": -0.0043636172919039,
+      "holding_options": [
+        20,
+        40
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "breadth20 > 0.60 AND breadth60 > 0.50 AND market_close_ma20 > 0 AND close_ma20 > 0 AND ma20_ma60 > 0 AND return_5d < 0.03",
+      "exit": "close_ma20 < 0 OR breadth20 < 0.35",
+      "score": "return_60d",
+      "research_round": 1
+    },
+    {
+      "id": "cluster_breadth_thrust",
+      "family": "lagged_comovement_cluster",
+      "observations": 11268.0,
+      "symbols": 860.0,
+      "active_days": 480.0,
+      "positive_excess_years": 2,
+      "mean_fwd5": 0.0040785217276657,
+      "mean_fwd10": 0.0026420438893319,
+      "mean_fwd20": -0.0007680314199271,
+      "mean_fwd60": -0.0175083732884348,
+      "excess20": -0.0021470970740403,
+      "net60bp_excess20": -0.0081470970740403,
+      "holding_options": [
+        10,
+        20
+      ],
+      "position_options": [
+        2,
+        3
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "entry": "peer_breadth20 > 0.70 AND peer_breadth60 > 0.55 AND close_ma20 > 0 AND return_5d < 0.03 AND cluster_strength > 0.35",
+      "exit": "close_ma20 < 0 OR peer_breadth20 < 0.40",
+      "score": "peer_return20 + 0.1 * cluster_strength",
+      "research_round": 1
+    }
+  ]
+}

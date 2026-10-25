@@ -1,0 +1,6 @@
+{
+  "purpose": "Post-hoc failure attribution only; not used to change the locked strategy or select another holdout winner",
+  "locked_candidate": "deep_lowamount_h19",
+  "detail_path": "results/holdout/entry_feature_attribution.csv",
+  "summary_path": "results/holdout/entry_feature_drift.csv"
+}

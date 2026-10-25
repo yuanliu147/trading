@@ -1,0 +1,16 @@
+{
+  "current_listed_equal_weight_buy_hold": {
+    "cagr": 0.00421640699385617,
+    "total_return": 0.008380844913695507,
+    "max_drawdown": 0.2461075767652241
+  },
+  "survivorship_bias": true,
+  "benchmark_costs_included": false,
+  "previous_close_ma20_gated_equal_weight": {
+    "cagr": 0.0213262770263678,
+    "total_return": 0.042745590595433924,
+    "max_drawdown": 0.11135659371178352
+  },
+  "strategy_daily_beta_to_equal_weight": 0.44009223180593315,
+  "strategy_daily_correlation_to_equal_weight": 0.3699456790161997
+}

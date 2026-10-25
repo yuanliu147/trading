@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "registered_before_factor_results": true,
+  "selection": {
+    "minimum_development_signals": 80,
+    "minimum_development_positive_excess_years": 2,
+    "maximum_account_candidates_per_family": 1,
+    "maximum_account_candidates": 12,
+    "maximum_validation_finalists": 2,
+    "development_diagnostic_rank": "net_60bp_proxy_excess_20d",
+    "account_gates": {"maximum_drawdown": 0.40, "maximum_top5_profit_share": 0.70},
+    "holdout_selection_allowed": false
+  },
+  "hypotheses": [
+    {
+      "id": "quiet_trend",
+      "family": "trend_macd",
+      "entry": "close_ma20 > 0 AND ma20_ma60 > 0 AND ma60_slope10 > 0 AND atr20_pct < 0.04 AND drawdown60 > -0.15 AND near_limit_up_days20 = 0 AND amount20 BETWEEN 30000000 AND 150000000 AND close BETWEEN 2 AND 30",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [20, 40],
+      "score": "return_60d - 0.1 * volatility20"
+    },
+    {
+      "id": "trend_breakout20",
+      "family": "trend_macd",
+      "entry": "close_ma60 > 0 AND ma20_ma60 > 0 AND breakout20 >= 0 AND amount_ratio1_20 BETWEEN 1 AND 2.5 AND atr20_pct < 0.05 AND NOT limit_up_10",
+      "exit": "close_ma20 < 0 OR breakout20 < -0.08",
+      "holding_options": [10, 20],
+      "score": "return_60d"
+    },
+    {
+      "id": "trend_breakout60",
+      "family": "trend_macd",
+      "entry": "close_ma120 > 0 AND ma20_ma60 > 0 AND breakout60 >= 0 AND amount_ratio1_20 BETWEEN 0.8 AND 2.5 AND atr20_pct < 0.05 AND NOT limit_up_10",
+      "exit": "close_ma20 < 0 OR breakout60 < -0.10",
+      "holding_options": [20, 40],
+      "score": "return_60d"
+    },
+    {
+      "id": "volatility_squeeze",
+      "family": "reversal_volatility",
+      "entry": "close_ma60 > 0 AND ma20_ma60 > 0 AND volatility_contraction < 0.7 AND narrow_range7 AND amount_ratio1_20 < 1.2 AND drawdown60 > -0.20",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "-volatility20"
+    },
+    {
+      "id": "squeeze_breakout",
+      "family": "reversal_volatility",
+      "entry": "close_ma60 > 0 AND ma20_ma60 > 0 AND volatility_contraction < 1.0 AND breakout20 >= 0 AND amount_ratio1_20 > 1.2 AND close_location > 0.65 AND NOT limit_up_10",
+      "exit": "close_ma20 < 0 OR breakout20 < -0.08",
+      "holding_options": [10, 20],
+      "score": "return_20d - 0.1 * volatility20"
+    },
+    {
+      "id": "macd_golden_trend",
+      "family": "trend_macd",
+      "entry": "macd_golden_cross = 1 AND close_ma60 > 0 AND ma20_ma60 > 0 AND atr20_pct < 0.06",
+      "exit": "macd_dead_cross = 1 OR close_ma20 < 0",
+      "holding_options": [10, 20],
+      "score": "macd_hist_delta"
+    },
+    {
+      "id": "macd_hist_turn",
+      "family": "trend_macd",
+      "entry": "macd_hist_pct < 0 AND macd_hist_delta > 0 AND close_ma60 > 0 AND close_ma20 > 0 AND return_5d < 0.03",
+      "exit": "macd_dead_cross = 1 OR close_ma20 < 0",
+      "holding_options": [10, 20],
+      "score": "macd_hist_delta"
+    },
+    {
+      "id": "weekly_pullback",
+      "family": "completed_multiscale_structure",
+      "entry": "week_close_ma4 > 0 AND week_return4 > 0 AND close_ma20 > 0 AND return_5d < 0 AND ret1 > 0",
+      "exit": "close_ma20 < 0 OR week_close_ma4 < 0",
+      "holding_options": [10, 20],
+      "score": "week_return12"
+    },
+    {
+      "id": "monthly_weekly_daily",
+      "family": "completed_multiscale_structure",
+      "entry": "month_close_ma6 > 0 AND week_close_ma4 > 0 AND close_ma60 > 0 AND return_5d BETWEEN -0.10 AND 0 AND ret1 > 0",
+      "exit": "close_ma20 < 0 OR week_close_ma4 < 0",
+      "holding_options": [20, 40],
+      "score": "month_return12"
+    },
+    {
+      "id": "swing_rebound",
+      "family": "completed_multiscale_structure",
+      "entry": "distance_swing_low BETWEEN 0 AND 0.15 AND close_ma60 > 0 AND macd_hist_delta > 0 AND lower_shadow > 0.015 AND days_since_swing_low <= 20",
+      "exit": "distance_swing_low < -0.03 OR close_ma20 < 0",
+      "holding_options": [10, 20],
+      "score": "macd_hist_delta"
+    },
+    {
+      "id": "panic_reversal",
+      "family": "market_regime_breadth",
+      "entry": "breadth20 < 0.20 AND market_return20 < -0.08 AND rsi14 < 25 AND close_ma120 > 0 AND ret1 > 0",
+      "exit": "rsi14 > 60 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "-rsi14"
+    },
+    {
+      "id": "oversold_quality",
+      "family": "reversal_volatility",
+      "entry": "rsi14 < 20 AND return_20d < -0.20 AND close_ma250 > 0 AND ret1 > 0 AND amount_ratio1_20 < 2",
+      "exit": "rsi14 > 60 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "-rsi14"
+    },
+    {
+      "id": "breadth_repair",
+      "family": "market_regime_breadth",
+      "entry": "breadth20_change5 > 0.10 AND breadth20 < 0.35 AND market_return20 < 0 AND close_ma60 > 0 AND return_5d > 0",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "return_20d"
+    },
+    {
+      "id": "market_fear_strong_stock",
+      "family": "nonlinear_sparse_interactions",
+      "entry": "market_return20 < -0.08 AND return_20d > 0 AND close_ma60 > 0 AND atr20_pct < 0.06 AND ret1 > 0",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "return_20d"
+    },
+    {
+      "id": "washout_hammer",
+      "family": "candle_volume",
+      "entry": "return_10d < -0.12 AND lower_shadow > 0.025 AND close_location > 0.70 AND ret1 > 0",
+      "exit": "rsi14 > 60 OR close_ma20 < -0.05",
+      "holding_options": [5, 10],
+      "score": "lower_shadow / (atr20_pct + 0.001)"
+    },
+    {
+      "id": "gap_down_reversal",
+      "family": "candle_volume",
+      "entry": "gap_open < -0.03 AND close_location > 0.80 AND ret1 > 0 AND close_ma120 > 0",
+      "exit": "rsi14 > 60 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "close_location - rsi14 / 100"
+    },
+    {
+      "id": "inside_trend",
+      "family": "candle_volume",
+      "entry": "inside_bar AND close_ma20 > 0 AND ma20_ma60 > 0 AND amount_ratio1_20 < 0.8",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "return_60d"
+    },
+    {
+      "id": "hammer_trend",
+      "family": "candle_volume",
+      "entry": "hammer_shape AND close_ma60 > 0 AND return_5d < 0 AND close_location > 0.55",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "lower_shadow / (atr20_pct + 0.001)"
+    },
+    {
+      "id": "engulfing_reversal",
+      "family": "candle_volume",
+      "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40",
+      "exit": "rsi14 > 60 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "-return_10d"
+    },
+    {
+      "id": "dry_pullback",
+      "family": "candle_volume",
+      "entry": "close_ma60 > 0 AND ma20_ma60 > 0 AND return_5d < 0 AND return_20d > 0 AND amount_ratio5_20 < 0.7 AND drawdown60 > -0.20",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "return_60d - 0.1 * volatility20"
+    },
+    {
+      "id": "volume_breakout",
+      "family": "candle_volume",
+      "entry": "breakout20 >= 0 AND amount_ratio1_20 BETWEEN 1.5 AND 3 AND close_location > 0.70 AND close_ma60 > 0 AND NOT limit_up_10",
+      "exit": "close_ma20 < 0 OR breakout20 < -0.08",
+      "holding_options": [10, 20],
+      "score": "amount_ratio1_20 * return_60d"
+    },
+    {
+      "id": "quiet_accumulation",
+      "family": "candle_volume",
+      "entry": "close_ma20 > 0 AND ma20_ma60 > 0 AND amount_ratio20_60 < 0.8 AND return_20d > 0.05 AND volatility20 < 0.35",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [20, 40],
+      "score": "return_60d - volatility20"
+    },
+    {
+      "id": "bull_trend",
+      "family": "market_regime_breadth",
+      "entry": "breadth20 > 0.60 AND breadth60 > 0.50 AND market_close_ma20 > 0 AND close_ma20 > 0 AND ma20_ma60 > 0 AND return_5d < 0.03",
+      "exit": "close_ma20 < 0 OR breadth20 < 0.35",
+      "holding_options": [20, 40],
+      "score": "return_60d"
+    },
+    {
+      "id": "bear_relative_strength",
+      "family": "nonlinear_sparse_interactions",
+      "entry": "breadth20 < 0.30 AND market_close_ma20 < 0 AND close_ma60 > 0 AND return_20d > 0.05 AND ret1 > 0",
+      "exit": "close_ma20 < 0 OR return_20d < 0",
+      "holding_options": [10, 20],
+      "score": "return_20d"
+    },
+    {
+      "id": "high_vol_momentum",
+      "family": "nonlinear_sparse_interactions",
+      "entry": "market_volatility20 > 0.25 AND market_return20 > 0.05 AND close_ma20 > 0 AND ma20_ma60 > 0 AND atr20_pct < 0.06 AND breakout20 > -0.03",
+      "exit": "close_ma20 < 0 OR market_return20 < 0",
+      "holding_options": [10, 20],
+      "score": "return_20d"
+    },
+    {
+      "id": "low_vol_reversal",
+      "family": "nonlinear_sparse_interactions",
+      "entry": "market_volatility20 < 0.15 AND breadth20 < 0.40 AND rsi14 < 30 AND ret1 > 0 AND close_ma120 > 0",
+      "exit": "rsi14 > 60 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "-rsi14"
+    },
+    {
+      "id": "sentiment_thaw",
+      "family": "limit_emotion",
+      "entry": "sentiment_change5 > 1 AND sentiment_score < 0 AND breadth20_change5 > 0.05 AND return_5d > 0 AND close_ma20 > 0",
+      "exit": "close_ma20 < 0 OR macd_dead_cross = 1",
+      "holding_options": [10, 20],
+      "score": "sentiment_change5 * return_20d"
+    },
+    {
+      "id": "limit_up_follow",
+      "family": "limit_emotion",
+      "entry": "limit_up_10 AND amount20 > 50000000 AND close_ma60 > 0 AND near_limit_up_days20 <= 2",
+      "exit": "close_location < 0.30 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "return_20d"
+    },
+    {
+      "id": "broken_board_strong_close",
+      "family": "limit_emotion",
+      "entry": "broken_limit_up_10 AND close_location > 0.60 AND close_ma60 > 0 AND amount_ratio1_20 < 3",
+      "exit": "close_location < 0.30 OR close_ma20 < 0",
+      "holding_options": [5, 10],
+      "score": "close_location * return_20d"
+    },
+    {
+      "id": "panic_limit_down_rebound",
+      "family": "limit_emotion",
+      "entry": "limit_down10_share > 0.02 AND rsi14 < 20 AND ret1 > 0 AND close_location > 0.65",
+      "exit": "rsi14 > 55 OR macd_dead_cross = 1",
+      "holding_options": [5, 10],
+      "score": "-rsi14"
+    },
+    {
+      "id": "strong_cluster_laggard",
+      "family": "lagged_comovement_cluster",
+      "entry": "peer_return20 > 0.08 AND peer_close_ma20 > 0.02 AND close_ma60 > 0 AND return_5d < 0 AND cluster_relative20 < -0.05 AND macd_hist_delta > 0",
+      "exit": "close_ma20 < 0 OR peer_close_ma20 < 0",
+      "holding_options": [10, 20],
+      "score": "peer_return20 - 0.1 * volatility20"
+    },
+    {
+      "id": "cluster_leader",
+      "family": "lagged_comovement_cluster",
+      "entry": "peer_return20 > 0.05 AND cluster_relative20 > 0.05 AND close_ma20 > 0 AND amount_ratio1_20 BETWEEN 0.8 AND 2",
+      "exit": "close_ma20 < 0 OR peer_close_ma20 < 0",
+      "holding_options": [10, 20],
+      "score": "cluster_relative20"
+    },
+    {
+      "id": "cluster_breadth_thrust",
+      "family": "lagged_comovement_cluster",
+      "entry": "peer_breadth20 > 0.70 AND peer_breadth60 > 0.55 AND close_ma20 > 0 AND return_5d < 0.03 AND cluster_strength > 0.35",
+      "exit": "close_ma20 < 0 OR peer_breadth20 < 0.40",
+      "holding_options": [10, 20],
+      "score": "peer_return20 + 0.1 * cluster_strength"
+    },
+    {
+      "id": "cluster_panic_reversal",
+      "family": "lagged_comovement_cluster",
+      "entry": "peer_return20 < -0.10 AND peer_return1 > 0.01 AND rsi14 < 30 AND ret1 > 0 AND close_ma120 > 0",
+      "exit": "rsi14 > 60 OR close_ma20 < 0",
+      "holding_options": [5, 10],
+      "score": "-rsi14"
+    },
+    {
+      "id": "second_drive",
+      "family": "completed_multiscale_structure",
+      "entry": "breakout60 >= 0 AND breakout120 < 0.05 AND close_ma250 > 0 AND drawdown250 > -0.35 AND ma60_slope10 > 0 AND week_return4 > 0",
+      "exit": "close_ma20 < 0 OR breakout60 < -0.10",
+      "holding_options": [20, 40],
+      "score": "return_120d"
+    },
+    {
+      "id": "first_stage_base_breakout",
+      "family": "completed_multiscale_structure",
+      "entry": "close_ma250 > 0 AND ma20_ma60 > 0 AND breakout120 >= 0 AND amount_ratio1_20 BETWEEN 1 AND 2 AND price_position60 > 0.80 AND week_return4 > 0 AND NOT limit_up_10",
+      "exit": "close_ma20 < 0 OR breakout60 < -0.10",
+      "holding_options": [20, 40],
+      "score": "return_120d"
+    }
+  ]
+}

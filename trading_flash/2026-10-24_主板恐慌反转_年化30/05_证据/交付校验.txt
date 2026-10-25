@@ -1,0 +1,12 @@
+hfq CAGR ~40.0%              PASS 40.01%
+hfq maxDD ~-16.0%            PASS -16.00%
+hfq trades 99                PASS 99
+actual CAGR ~42.6%           PASS 42.58%
+actual maxDD ~-15.9%         PASS -15.92%
+actual trades 99             PASS 99
+no same-day exit             PASS 
+entry after signal >=3 sessions PASS 
+annual all positive          PASS 
+current top2                 PASS ['603778.SH', '605376.SH']
+
+ALL PASS

@@ -1,0 +1,8 @@
+{
+  "stage": "validation_finalists",
+  "holdout_used": false,
+  "selection_config_sha256": "858cd6af1982e13fad2b3f7c05f2b5eca20aa202b8338b5aeacc6f21f6513557",
+  "development_account_summary_sha256": "a7775310c41be484cd15f0fd0effcf5a47d4a78b806a50ddf32544b2f927baa0",
+  "eligible_variants": 0,
+  "candidates": []
+}

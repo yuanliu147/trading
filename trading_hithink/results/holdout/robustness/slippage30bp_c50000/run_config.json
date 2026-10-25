@@ -1,0 +1,40 @@
+{
+  "start_date": "2024-01-01",
+  "end_date": "2026-10-23",
+  "initial_capital": 50000,
+  "max_positions": 2,
+  "slot_fraction": 0.5,
+  "holding_sessions": 19,
+  "slippage": 0.003,
+  "limit_rate": 0.1,
+  "participation": 0.001,
+  "costs": {
+    "commission_rate": 0.0003,
+    "minimum_commission": 5.0,
+    "stamp_duty_sell": [
+      {
+        "start": "1900-01-01",
+        "rate": 0.001
+      },
+      {
+        "start": "2023-08-28",
+        "rate": 0.0005
+      }
+    ],
+    "transfer_fee_both_sides": [
+      {
+        "start": "1900-01-01",
+        "rate": 2e-05
+      },
+      {
+        "start": "2022-04-29",
+        "rate": 1e-05
+      }
+    ],
+    "slippage_each_side_baseline": 0.001,
+    "slippage_each_side_stress": [
+      0.002,
+      0.003
+    ]
+  }
+}

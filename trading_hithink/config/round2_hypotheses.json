@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "stage": "development_only_nonlinear_exploration",
+  "registered_after_first_round_development_results": true,
+  "validation_or_holdout_used": false,
+  "score_rationale": "Prefer deeper completed 10-session declines, without using future returns",
+  "exit_rationale": "Fixed time exits match the pre-registered diagnostic horizons and avoid inventing intraday fills",
+  "hypotheses": [
+    {"id": "engulfing_deep50", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_lowamount", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_panic", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND market_return20 < -0.10", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_atr3", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND atr20_pct >= 0.03", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_rsi20", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND rsi14 >= 20", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_drop10", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND return_10d < -0.10", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_drop15", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND return_10d < -0.15", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_panic", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND market_return20 < -0.10", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_lowamount", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND amount20 < 50000000", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "engulfing_deep50_lowamount_atr3", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000 AND atr20_pct >= 0.03", "exit": "FALSE", "holding_options": [10, 20], "score": "-return_10d"},
+    {"id": "deep_reversal_h19", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000 AND atr20_pct >= 0.03", "exit": "FALSE", "holding_options": [19], "score": "-drawdown250", "research_round": 3, "development_evidence": "results/development/holding_trials"},
+    {"id": "deep_lowamount_h19", "family": "candle_volume", "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000", "exit": "FALSE", "holding_options": [19], "score": "-drawdown250", "research_round": 4, "development_evidence": "results/development/universe_trials/deep50_lowamount_h19"},
+    {"id": "confirm_piercing", "family": "multibar_confirmation", "entry": "(piercing) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < 40", "exit": "FALSE", "holding_options": [10, 19, 30], "score": "-drawdown250", "research_round": 5},
+    {"id": "confirm_limit_washout", "family": "multibar_confirmation", "entry": "(limit_washout_rebound) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < 50", "exit": "FALSE", "holding_options": [10, 19, 30], "score": "-drawdown250", "research_round": 5}
+  ]
+}

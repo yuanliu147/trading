@@ -1,0 +1,36 @@
+{
+  "candidate_id": "deep_reversal_h19",
+  "period": "validation",
+  "initial_capital": 50000.0,
+  "worst_annual_return": 0.127304815091432,
+  "positive_years": 2,
+  "years": 2,
+  "annual_gross_turnover_over_average_equity": 7.301933055650873,
+  "benchmark": {
+    "current_listed_equal_weight_buy_hold": {
+      "cagr": 0.00421640699385617,
+      "total_return": 0.008380844913695507,
+      "max_drawdown": 0.2461075767652241
+    },
+    "survivorship_bias": true,
+    "benchmark_costs_included": false,
+    "previous_close_ma20_gated_equal_weight": {
+      "cagr": 0.0213262770263678,
+      "total_return": 0.042745590595433924,
+      "max_drawdown": 0.11135659371178352
+    },
+    "strategy_daily_beta_to_equal_weight": 0.3620390368796461,
+    "strategy_daily_correlation_to_equal_weight": 0.31805091774018585
+  },
+  "costs": {
+    "commissions": 258.3673,
+    "stamp_duty": 390.81600000000003,
+    "transfer_fees": 10.53827,
+    "slippage_cost_informational": 1697.9999999999995,
+    "dividend_tax": 0.0,
+    "gross_traded_value": 829942.0,
+    "explicit_fees_over_initial_capital": 0.013194431400000001,
+    "slippage_over_initial_capital": 0.03395999999999999
+  },
+  "current_listed_survivorship_bias": true
+}

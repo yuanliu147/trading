@@ -1,0 +1,44 @@
+信号日 251 信号数 4195 前二行 459 数据截止 2026-10-23
+逐日首笔完成 251 天 459 只
+  cohort 25/251  17s
+  cohort 50/251  28s
+  cohort 75/251  41s
+  cohort 100/251  51s
+  cohort 125/251  60s
+  cohort 150/251  69s
+  cohort 175/251  77s
+  cohort 200/251  84s
+  cohort 225/251  91s
+  cohort 250/251  97s
+全部起点逐笔 12090
+cohort 完成 251 97s
+{
+  "start": "2017-10-19",
+  "end": "2026-10-23",
+  "n_days": 2187,
+  "n_syms": 3162,
+  "n_signals": 4195,
+  "n_signal_days": 251,
+  "n_signal_days_ge2": 208,
+  "n_pairs": 250,
+  "n_next_day": 158,
+  "n_next_day_ge2": 114,
+  "n_next_day_buy2": 113,
+  "n_complete_batches": 246,
+  "n_cohorts_with_trades": 249,
+  "n_cohorts_1y": 202,
+  "n_cohorts_3y": 146,
+  "n_cohorts_5y": 101,
+  "params": {
+    "nth": 3,
+    "hold": 15,
+    "slots": 2,
+    "tp": 0.2,
+    "cost": 0.00175,
+    "end": "2026-10-23",
+    "score": "drawdown250"
+  },
+  "first_signal": "2017-11-20",
+  "last_signal": "2026-10-23"
+}
+done

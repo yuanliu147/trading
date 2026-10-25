@@ -1,0 +1,36 @@
+{
+  "candidate_id": "deep_lowamount_h19",
+  "period": "holdout",
+  "initial_capital": 20000.0,
+  "worst_annual_return": -0.3129353155,
+  "positive_years": 1,
+  "years": 3,
+  "annual_gross_turnover_over_average_equity": 7.225273674447878,
+  "benchmark": {
+    "current_listed_equal_weight_buy_hold": {
+      "cagr": 0.09129365287985691,
+      "total_return": 0.27805166668803327,
+      "max_drawdown": 0.25534843780344985
+    },
+    "survivorship_bias": true,
+    "benchmark_costs_included": false,
+    "previous_close_ma20_gated_equal_weight": {
+      "cagr": 0.18215422447070329,
+      "total_return": 0.599870791207773,
+      "max_drawdown": 0.13578499526335308
+    },
+    "strategy_daily_beta_to_equal_weight": 0.46244752479289397,
+    "strategy_daily_correlation_to_equal_weight": 0.4233534396251894
+  },
+  "costs": {
+    "commissions": 250.0,
+    "stamp_duty": 80.08800000000001,
+    "transfer_fees": 3.2441799999999996,
+    "slippage_cost_informational": 872.0000000000038,
+    "dividend_tax": 2.8000000000000003,
+    "gross_traded_value": 324418.0,
+    "explicit_fees_over_initial_capital": 0.016806609,
+    "slippage_over_initial_capital": 0.04360000000000019
+  },
+  "current_listed_survivorship_bias": true
+}

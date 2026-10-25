@@ -1,0 +1,10 @@
+{
+  "commissions": 250.0,
+  "stamp_duty": 80.08800000000001,
+  "transfer_fees": 3.2441799999999996,
+  "slippage_cost_informational": 872.0000000000038,
+  "dividend_tax": 2.8000000000000003,
+  "gross_traded_value": 324418.0,
+  "explicit_fees_over_initial_capital": 0.016806609,
+  "slippage_over_initial_capital": 0.04360000000000019
+}

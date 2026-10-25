@@ -1,0 +1,2 @@
+date,ex_date,thscode,position_id,event_type,shares_before,available_shares_before,reference_close,previous_actual_close,cash_equivalent_per_share,dividend_per_share,per_share_bonus,rights_ratio,dividend_receivable_added,bonus_shares_added,rights_shares_added,rights_cash_paid,shares_after,available_shares_after,dividend_receivable_after,rights_action,factor_only_adjustment,adjustment_assumption
+2024-07-24,2024-07-24,600620.SH,O00000143,explicit_corporate_action,1400,1400,,,0.0,0.01,0.0,0.0,14.0,0,0,0.0,1400,1400,14.0,not_exercised,False,explicit_event_records_used

@@ -1,0 +1,57 @@
+PASS  存在 00_一页纸_250日涨幅与收益.md
+PASS  存在 01_完整报告_250日涨幅与收益.md
+PASS  存在 03_数据与复现.md
+PASS  存在 250日涨幅与收益.xlsx
+PASS  存在 README.md
+PASS  存在脚本 analyze_250d.py
+PASS  存在脚本 make_charts.py
+PASS  存在脚本 make_excel.py
+PASS  存在脚本 verify_250d.py
+PASS  前二 450 笔  got=450 want=450 tol=0
+PASS  母路径 99 笔  got=99 want=99 tol=0
+PASS  全部信号 4019 笔  got=4019 want=4019 tol=0
+PASS  r250 定义最大差 0.0  got=0.0 want=0.0 tol=1e-12
+PASS  前二全部 Pearson  got=0.05816819996188067 want=0.05816819996188067 tol=0.002
+PASS  前二全部 Spearman  got=0.08983691883163403 want=0.08983691883163403 tol=0.003
+PASS  前二_剔除2026 Pearson  got=-0.0015029608701624744 want=-0.002 tol=0.002
+PASS  前二_剔除2026 Spearman  got=0.04815708189196717 want=0.048 tol=0.003
+PASS  前二_2026 Pearson  got=0.22686089426925557 want=0.227 tol=0.002
+PASS  前二_2026 Spearman  got=0.22133336269138595 want=0.221 tol=0.003
+PASS  母路径99笔 Pearson  got=0.15402154893167772 want=0.154 tol=0.002
+PASS  母路径99笔 Spearman  got=0.0820139262360957 want=0.082 tol=0.003
+PASS  全部信号 Pearson  got=0.010532886575292983 want=0.011 tol=0.002
+PASS  全部信号 Spearman  got=0.02036921868577239 want=0.02 tol=0.003
+PASS  六档 6 行  got=6 want=6 tol=0
+PASS  六档笔数合计 450  got=450 want=450 tol=0
+PASS  0–10% 笔数  got=91 want=91 tol=0
+PASS  10–20% 笔数  got=75 want=75 tol=0
+PASS  20–50% 笔数  got=151 want=151 tol=0
+PASS  50–100% 笔数  got=85 want=85 tol=0
+PASS  100–200% 笔数  got=37 want=37 tol=0
+PASS  >200% 笔数  got=11 want=11 tol=0
+PASS  0–10% 均值 +3.37%  got=0.0336807289535941 want=0.0336807 tol=0.0002
+PASS  0–10% 止盈率 18.68%  got=0.1868131868131868 want=0.186813 tol=0.001
+PASS  100–200% 均值 +6.56%  got=0.0656484496559554 want=0.0656484 tol=0.0002
+PASS  100–200% 止盈率 45.95%  got=0.4594594594594595 want=0.459459 tol=0.001
+PASS  >200% 均值 +6.83%  got=0.0682765285824861 want=0.068343 tol=0.001
+PASS  >200% 止盈率 63.64%  got=0.6363636363636364 want=0.636364 tol=0.001
+PASS  回归 12 行  got=12 want=12 tol=0
+PASS  前二均值斜率 +1.69pp  got=1.686918363069307 want=1.6869 tol=0.01
+PASS  前二止盈 OR 1.84  got=1.8366846404715311 want=1.8367 tol=0.01
+PASS  剔除2026均值斜率 -0.47pp  got=-0.4689795511756337 want=-0.469 tol=0.02
+PASS  当前 603778.SH r250 110.63%  got=110.63218390804596 want=110.63 tol=0.02
+PASS  当前 605376.SH r250 38.21%  got=38.209410490435005 want=38.21 tol=0.02
+PASS  当前 002969.SZ r250 176.31%  got=176.3082799211042 want=176.31 tol=0.02
+PASS  当前 605117.SH r250 31.61%  got=31.61071713580432 want=31.61 tol=0.02
+PASS  当前 002796.SZ r250 9.66%  got=9.662090813093972 want=9.66 tol=0.02
+PASS  当前 6 行  got=6 want=6 tol=0
+PASS  Excel 16 个 sheet  got=16 want=16 tol=0
+PASS  Excel 含结论摘要
+PASS  Excel 含逐笔明细
+PASS  Excel 含口径
+PASS  图表 6 张  got=6 want=6 tol=0
+PASS  图表均 > 10KB
+PASS  一页纸含止盈概率结论
+PASS  一页纸含不能加过滤
+
+合计：55 PASS / 0 FAIL

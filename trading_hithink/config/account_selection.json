@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "registered_before_account_results": true,
+  "development": {
+    "required_capital_results": [20000, 50000],
+    "minimum_closed_trades_each_capital": 40,
+    "maximum_drawdown_each_capital": 0.40,
+    "maximum_top5_profit_share_each_capital": 0.70,
+    "minimum_cagr_each_capital": 0.0,
+    "ranking": ["minimum_cagr_across_capital_desc", "minimum_calmar_across_capital_desc", "maximum_drawdown_across_capital_asc"],
+    "maximum_validation_finalists": 2,
+    "one_parameter_set_per_hypothesis": true
+  },
+  "validation": {
+    "required_capital_results": [20000, 50000],
+    "minimum_closed_trades_each_capital": 20,
+    "maximum_drawdown_each_capital": 0.40,
+    "maximum_top5_profit_share_each_capital": 0.70,
+    "minimum_cagr_each_capital": 0.0,
+    "ranking": ["minimum_cagr_across_capital_desc", "minimum_calmar_across_capital_desc"],
+    "maximum_locked_strategies": 1,
+    "holdout_may_change_selection": false
+  }
+}

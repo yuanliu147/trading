@@ -1,0 +1,104 @@
+{
+  "passed": true,
+  "locked_strategy": {
+    "candidate_id": "deep_lowamount_h19",
+    "holding_sessions": 19,
+    "max_positions": 2
+  },
+  "rerun": [
+    {
+      "capital": 20000,
+      "identical": true,
+      "before": {
+        "trades.csv": "36ff070ed7522d5971e3e920ce4944f55f5de221a20da809c76ba135305797a3",
+        "orders.csv": "48c0a253ff10e63bb5e167f50dac2838509b7b0313886a905faba1ee5acdd53f",
+        "daily_equity.csv": "7425104569dd944fe25beb84eb2fca1991a3bf666dce38b7746dbdcebff29186"
+      },
+      "after": {
+        "trades.csv": "36ff070ed7522d5971e3e920ce4944f55f5de221a20da809c76ba135305797a3",
+        "orders.csv": "48c0a253ff10e63bb5e167f50dac2838509b7b0313886a905faba1ee5acdd53f",
+        "daily_equity.csv": "7425104569dd944fe25beb84eb2fca1991a3bf666dce38b7746dbdcebff29186"
+      }
+    },
+    {
+      "capital": 50000,
+      "identical": true,
+      "before": {
+        "trades.csv": "76bafe396b1a7e1460b0b4416f203dfc8fb17f06034b43d40f75b560395efbad",
+        "orders.csv": "03cd250b6b1ff10b800fbc529dfb99177a0a07f1b16c51b29119ab33f0c2b647",
+        "daily_equity.csv": "d5cb2139dec24b49fa0b86436e3c69b8e0ee94361bbb945946c0f583c5099da4"
+      },
+      "after": {
+        "trades.csv": "76bafe396b1a7e1460b0b4416f203dfc8fb17f06034b43d40f75b560395efbad",
+        "orders.csv": "03cd250b6b1ff10b800fbc529dfb99177a0a07f1b16c51b29119ab33f0c2b647",
+        "daily_equity.csv": "d5cb2139dec24b49fa0b86436e3c69b8e0ee94361bbb945946c0f583c5099da4"
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "account": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10",
+      "passed": true,
+      "checks": {
+        "engine_reconciliation": true,
+        "cash_flow": true,
+        "equity_identity": true,
+        "nonnegative_cash": true,
+        "daily_identity": true,
+        "trade_count": true,
+        "buy_lots": true,
+        "buy_signal_before_execution": true,
+        "sell_signal_before_execution": true,
+        "t_plus_one": true,
+        "no_negative_shares": true,
+        "minimum_buy_commission": true,
+        "minimum_sell_commission": true,
+        "mainboard_codes": true,
+        "trade_net_pnl": true,
+        "trade_return": true,
+        "buy_order_link": true,
+        "cagr_recalculation": true,
+        "drawdown_recalculation": true
+      },
+      "trades": 25,
+      "orders": 252,
+      "cagr": -0.08442746042301896,
+      "max_drawdown": 0.42578283799999994,
+      "factor_only_adjustments": 0,
+      "ending_open_positions": 0
+    },
+    {
+      "account": "results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10",
+      "passed": true,
+      "checks": {
+        "engine_reconciliation": true,
+        "cash_flow": true,
+        "equity_identity": true,
+        "nonnegative_cash": true,
+        "daily_identity": true,
+        "trade_count": true,
+        "buy_lots": true,
+        "buy_signal_before_execution": true,
+        "sell_signal_before_execution": true,
+        "t_plus_one": true,
+        "no_negative_shares": true,
+        "minimum_buy_commission": true,
+        "minimum_sell_commission": true,
+        "mainboard_codes": true,
+        "trade_net_pnl": true,
+        "trade_return": true,
+        "buy_order_link": true,
+        "cagr_recalculation": true,
+        "drawdown_recalculation": true
+      },
+      "trades": 25,
+      "orders": 252,
+      "cagr": -0.11469737564639393,
+      "max_drawdown": 0.4705027688000002,
+      "factor_only_adjustments": 0,
+      "ending_open_positions": 0
+    }
+  ],
+  "data_scope": "Local HiThink DuckDB snapshot only; current-listed main-board history; no delisted reconstruction",
+  "survivorship_bias_remains": true
+}

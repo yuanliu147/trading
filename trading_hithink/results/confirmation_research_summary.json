@@ -1,0 +1,33 @@
+{
+  "stage": "multibar_confirmation_development_only",
+  "patterns_tested": 8,
+  "development_account_candidates": 2,
+  "capital_runs": 12,
+  "account_variants": 6,
+  "variants_passing_development_gates": 0,
+  "validation_candidates": 0,
+  "new_holdout_run": false,
+  "best_variant": {
+    "candidate_id": "confirm_limit_washout",
+    "holding_sessions": 10,
+    "max_positions": 2,
+    "cagr_20000": 0.206316,
+    "cagr_50000": 0.196044,
+    "max_drawdown_20000": 0.124093,
+    "max_drawdown_50000": 0.125163,
+    "closed_trades_each_capital": 26,
+    "maximum_top5_profit_share": 0.513080,
+    "not_advanced_reason": "Fewer than 40 closed trades per capital in development and CAGR below the 30% research target"
+  },
+  "evidence": {
+    "pattern_diagnostics": "results/development/confirmation_summary.csv",
+    "pattern_yearly": "results/development/confirmation_yearly.csv",
+    "account_summary": "results/development/account_summary.csv",
+    "passing_variants": "results/development/account_variants_passing.csv",
+    "all_research_variants": "results/development/all_account_trials.csv",
+    "empty_validation_finalists": "config/validation_finalists.json"
+  },
+  "current_listed_survivorship_bias": true,
+  "historical_st_known": false,
+  "no_30pct_strategy_verified": true
+}

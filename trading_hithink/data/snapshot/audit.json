@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "rows": 6926520,
+    "symbols": 3197,
+    "start_date": "2016-10-13 00:00:00",
+    "end_date": "2026-10-23 00:00:00",
+    "missing_ohlc": 0,
+    "nonnull_prev_close": 0,
+    "nonpositive_ohlc": 0,
+    "invalid_ohlc": 0,
+    "negative_activity": 0,
+    "zero_volume": 0,
+    "zero_amount": 0,
+    "missing_hfq": 0,
+    "missing_factor": 0
+  },
+  "duplicate_key_groups": 0,
+  "previous_close_audit": {
+    "rows_with_previous": 6923323,
+    "prev_close_mismatch": 0,
+    "large_prev_close_mismatch": 0
+  },
+  "adjustment_factor_audit": {
+    "backward_formula_matches": 6926520.0,
+    "forward_formula_matches": 413503.0,
+    "minimum_hfq_ratio": 1.0,
+    "maximum_hfq_ratio": 17.73178544769115
+  },
+  "symbol_audit": {
+    "current_mainboard_symbols": 3197,
+    "nonnull_names": 0,
+    "excluded_current_names": 0
+  },
+  "event_audit": {
+    "rows": 43580,
+    "symbols": 3178,
+    "dividends": 39556,
+    "bonuses": 9047,
+    "rights": 973,
+    "after_last_market_date": 16
+  },
+  "scope_warning": "Current-listed main-board history only; delisted stocks are excluded and survivorship bias remains.",
+  "historical_st_available": false,
+  "historical_industry_membership_available": false,
+  "intraday_path_available": false
+}

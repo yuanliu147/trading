@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "stage": "pre_registered_multibar_confirmation_research",
+  "registered_before_any_pattern_result": true,
+  "data_source": "local_snapshot_only",
+  "base_entry": "(@PATTERN@) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < @RSI@",
+  "score": "-drawdown250",
+  "exit": "FALSE",
+  "holding_options": [10, 19, 30],
+  "position_options": [2],
+  "capital_options": [20000, 50000],
+  "selection": {
+    "minimum_development_signals": 50,
+    "minimum_positive_excess_years": 2,
+    "maximum_development_account_candidates": 2,
+    "diagnostic_rank": "net60bp_excess20",
+    "validation_selection": "existing_account_selection_gates",
+    "holdout_changes_allowed": false
+  },
+  "patterns": [
+    {"id": "confirm_morning_star", "pattern_key": "morning_star", "rsi_max": 40},
+    {"id": "confirm_three_bar_turnaround", "pattern_key": "three_bar_turnaround", "rsi_max": 40},
+    {"id": "confirm_piercing", "pattern_key": "piercing", "rsi_max": 40},
+    {"id": "confirm_bullish_harami", "pattern_key": "bullish_harami", "rsi_max": 40},
+    {"id": "confirm_two_day_recovery", "pattern_key": "two_day_recovery", "rsi_max": 50},
+    {"id": "confirm_three_white_soldiers", "pattern_key": "three_white_soldiers", "rsi_max": 60},
+    {"id": "confirm_gap_up", "pattern_key": "gap_up_confirmation", "rsi_max": 50},
+    {"id": "confirm_limit_washout", "pattern_key": "limit_washout_rebound", "rsi_max": 50}
+  ],
+  "independence_note": "A previous single-bar engulfing candidate failed the 2024-2026 holdout. No confirmation-pattern outcomes from that period have been inspected. Repeated research generations still increase researcher-degree-of-freedom risk."
+}

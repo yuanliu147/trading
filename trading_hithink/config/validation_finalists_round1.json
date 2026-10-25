@@ -1,0 +1,46 @@
+{
+  "stage": "validation_finalists",
+  "maximum_candidates": 2,
+  "holdout_used": false,
+  "selection_evidence": "results/development/all_account_trials.csv",
+  "candidates": [
+    {
+      "id": "deep_reversal_h19",
+      "holding_options": [19],
+      "position_options": [2],
+      "research_round": 3,
+      "development_evidence": {
+        "minimum_cagr_across_capital": 0.2633260777352921,
+        "cagr_20000": 0.325784378296188,
+        "cagr_50000": 0.2633260777352921,
+        "maximum_drawdown_across_capital": 0.3761492223903466,
+        "minimum_closed_trades": 57,
+        "maximum_top5_profit_share": 0.6847565443662994,
+        "worst_year_return": 0.015137,
+        "accounts": [
+          "results/development/holding_trials/h19_c20000",
+          "results/development/holding_trials/h19_c50000"
+        ]
+      }
+    },
+    {
+      "id": "deep_lowamount_h19",
+      "holding_options": [19],
+      "position_options": [2],
+      "research_round": 4,
+      "development_evidence": {
+        "minimum_cagr_across_capital": 0.3225846337095455,
+        "cagr_20000": 0.41331205508782154,
+        "cagr_50000": 0.3225846337095455,
+        "maximum_drawdown_across_capital": 0.30402657011708834,
+        "minimum_closed_trades": 60,
+        "maximum_top5_profit_share": 0.6338840411367583,
+        "worst_year_return": 0.129,
+        "accounts": [
+          "results/development/universe_trials/deep50_lowamount_h19_c20000",
+          "results/development/universe_trials/deep50_lowamount_h19_c50000"
+        ]
+      }
+    }
+  ]
+}

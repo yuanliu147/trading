@@ -1,0 +1,11 @@
+{
+  "method": "Monthly trailing-120-session standardized-return PCA; exclude first market component; dominant signed components 2-8",
+  "maximum_liquid_symbols_per_month": 800,
+  "minimum_history_observations": 100,
+  "minimum_absolute_component_correlation": 0.25,
+  "membership_uses_current_month_returns": false,
+  "official_industry_classification": false,
+  "daily_rows": 1739153,
+  "membership_sha256": "9e293931101eed6a940e57257c365c9c190f00a89b272018ba10c1ac963c5e0a",
+  "daily_sha256": "13281951884f47b808071d5175f74bd50fcb5737d0ae6eb9924367c99682505b"
+}

@@ -1,0 +1,81 @@
+{
+  "stage": "development_confirmation_candidates",
+  "holdout_used": false,
+  "source_config_sha256": "2c7c79db6a00ce9864a78124d655e9ed2ac330854781e3af21ec8e82a0d9b582",
+  "candidates": [
+    {
+      "id": "confirm_piercing",
+      "entry": "(piercing) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < 40",
+      "exit": "FALSE",
+      "score": "-drawdown250",
+      "holding_options": [
+        10,
+        19,
+        30
+      ],
+      "position_options": [
+        2
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "diagnostic_evidence": {
+        "observations": 91.0,
+        "symbols": 90.0,
+        "active_days": 26.0,
+        "mean_fwd5": 0.0313795263181928,
+        "mean_fwd10": 0.06172861179468416,
+        "mean_fwd20": 0.15669379523663918,
+        "mean_fwd60": 0.12062380923928594,
+        "median_fwd20": 0.12918660287081352,
+        "win_rate20": 0.8241758241758241,
+        "excess20": 0.08528370718934557,
+        "net60bp_excess20": 0.07928370718934556,
+        "id": "confirm_piercing",
+        "pattern_key": "piercing",
+        "entry": "(piercing) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < 40",
+        "positive_excess_years": 3,
+        "worst_year_excess20": -0.031076750410387516
+      },
+      "research_round": 5
+    },
+    {
+      "id": "confirm_limit_washout",
+      "entry": "(limit_washout_rebound) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < 50",
+      "exit": "FALSE",
+      "score": "-drawdown250",
+      "holding_options": [
+        10,
+        19,
+        30
+      ],
+      "position_options": [
+        2
+      ],
+      "capital_options": [
+        20000,
+        50000
+      ],
+      "diagnostic_evidence": {
+        "observations": 151.0,
+        "symbols": 142.0,
+        "active_days": 33.0,
+        "mean_fwd5": 0.04936559401092374,
+        "mean_fwd10": 0.08918841876092644,
+        "mean_fwd20": 0.148694603309186,
+        "mean_fwd60": 0.05472599069423337,
+        "median_fwd20": 0.07692307692307687,
+        "win_rate20": 0.8278145695364238,
+        "excess20": 0.0822014828494973,
+        "net60bp_excess20": 0.07620148284949729,
+        "id": "confirm_limit_washout",
+        "pattern_key": "limit_washout_rebound",
+        "entry": "(limit_washout_rebound) AND return_10d < -0.08 AND drawdown250 < -0.50 AND amount20 < 50000000 AND rsi14 < 50",
+        "positive_excess_years": 3,
+        "worst_year_excess20": -0.006236343952429613
+      },
+      "research_round": 5
+    }
+  ]
+}

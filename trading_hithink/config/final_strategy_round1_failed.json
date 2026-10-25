@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "stage": "locked_before_holdout",
+  "locked_before_holdout": true,
+  "holdout_used_for_selection": false,
+  "candidate_id": "deep_lowamount_h19",
+  "family": "candle_volume",
+  "entry": "bullish_engulfing AND return_10d < -0.08 AND rsi14 < 40 AND drawdown250 < -0.50 AND amount20 < 50000000",
+  "exit": "FALSE",
+  "score": "-drawdown250",
+  "holding_sessions": 19,
+  "max_positions": 2,
+  "slot_fraction": 0.5,
+  "engine_overrides": {},
+  "capital": [
+    20000,
+    50000
+  ],
+  "costs": {
+    "commission_rate": 0.0003,
+    "minimum_commission": 5.0,
+    "stamp_duty_sell": [
+      {
+        "start": "1900-01-01",
+        "rate": 0.001
+      },
+      {
+        "start": "2023-08-28",
+        "rate": 0.0005
+      }
+    ],
+    "transfer_fee_both_sides": [
+      {
+        "start": "1900-01-01",
+        "rate": 2e-05
+      },
+      {
+        "start": "2022-04-29",
+        "rate": 1e-05
+      }
+    ],
+    "slippage_each_side_baseline": 0.001,
+    "slippage_each_side_stress": [
+      0.002,
+      0.003
+    ]
+  },
+  "execution": {
+    "signal_time": "close",
+    "fill_time": "next_session_open",
+    "same_open_sale_proceeds_reused": false,
+    "t_plus_one": true,
+    "board_lot": 100,
+    "allow_short": false,
+    "allow_leverage": false,
+    "maximum_positions_to_test": [
+      2,
+      3
+    ],
+    "opening_limit_up_buy": "reject",
+    "opening_limit_down_sell": "defer",
+    "intraday_stop_fill_from_ohlc": false,
+    "minimum_listing_sessions_baseline": 120,
+    "maximum_known_amount_participation": 0.001
+  },
+  "limit_rate": 0.1,
+  "slippage": 0.001,
+  "validation_evidence": {
+    "candidate_id": "deep_lowamount_h19",
+    "holding_sessions": 19,
+    "max_positions": 2,
+    "minimum_cagr": 0.1686437348029996,
+    "mean_cagr": 0.21219367326221025,
+    "minimum_calmar": 0.9961003595528624,
+    "maximum_drawdown": 0.1693039593708226,
+    "minimum_trades": 22,
+    "maximum_top5_profit_share": 0.6574415348364405,
+    "mean_holding_time_ratio": 0.5578512396694215,
+    "cagr_20000": 0.2557436117214209,
+    "cagr_50000": 0.1686437348029996,
+    "drawdown_20000": 0.1588431956831746,
+    "drawdown_50000": 0.1693039593708226
+  },
+  "hypotheses_sha256": "6a2e6a6a915cfcd8d525261a2abcde48ca25b557af4a93d010931e5ea782982a",
+  "round2_hypotheses_sha256": "33dc0775b50d1834d152c121595ec78cb66dc21dbb6932d051093de7894dab48",
+  "research_config_sha256": "d22315af14bef28bf350013fa31d50ba1a39ea10bac26ff8c7a50c60413dfa86",
+  "account_selection_sha256": "858cd6af1982e13fad2b3f7c05f2b5eca20aa202b8338b5aeacc6f21f6513557",
+  "engine_sha256": "5797f42291a8d5b69dcde51ebe632ca581cca4568312781ced8b95d94e86eaea",
+  "features_sha256": "8d7eefd1e423c24cce188ccdd2365ab140614db191e5d7d661d3903942c9e7d3",
+  "survivorship_bias": "current_listed_only",
+  "historical_st_known": false,
+  "return_guarantee": false
+}

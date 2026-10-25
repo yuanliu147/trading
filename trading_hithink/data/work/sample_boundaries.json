@@ -1,0 +1,17 @@
+{
+  "development": {
+    "first_session": "2018-01-02 00:00:00",
+    "last_session": "2021-12-31 00:00:00",
+    "last_uncontaminated_signal_for_60d": "2021-09-30 00:00:00"
+  },
+  "validation": {
+    "first_session": "2022-01-04 00:00:00",
+    "last_session": "2023-12-29 00:00:00",
+    "last_uncontaminated_signal_for_60d": "2023-09-27 00:00:00"
+  },
+  "holdout": {
+    "first_session": "2024-01-02 00:00:00",
+    "last_session": "2026-10-23 00:00:00",
+    "last_uncontaminated_signal_for_60d": "2026-07-22 00:00:00"
+  }
+}
