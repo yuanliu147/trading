@@ -1,0 +1,42 @@
+{
+  "daily_equity.csv": {
+    "sha256": "01c5251c6a4a3d7f09eb003d9b1e337be620d457f932cef8fd07f705a973e6ba",
+    "bytes": 467811
+  },
+  "trades.csv": {
+    "sha256": "84e330190e7d73ab80282d849bb2d62938a61cd0d3c4c3d9b835232d64dbeaba",
+    "bytes": 30418
+  },
+  "orders.csv": {
+    "sha256": "12861751575569a585604785f3674a738b43a203f962b3fb838d9417cd3d2826",
+    "bytes": 50025
+  },
+  "corporate_actions.csv": {
+    "sha256": "d0bfe103f8230d6687d527a79390c01313748d0ea0db21f42c22c02f9886c612",
+    "bytes": 1161
+  },
+  "positions_daily.csv": {
+    "sha256": "0975530e2c6e39c7a6410cfba2af2627c2ae54e346f9427cf5b3e017c673ea81",
+    "bytes": 91978
+  },
+  "open_positions.csv": {
+    "sha256": "d4005820e164ebfca2888c38bc70bd0ae17641d9cb3260031e219031b457c747",
+    "bytes": 296
+  },
+  "annual.csv": {
+    "sha256": "4ff0629c832ae04b961fd94094cf0e0dfa1e6e1581f2cb82608a3b62e96a7015",
+    "bytes": 260
+  },
+  "drawdowns.csv": {
+    "sha256": "b15de623443dbeecc8d694b18786a9f9549a22aeba7fa19e7e36de45318d5259",
+    "bytes": 5199
+  },
+  "metrics.json": {
+    "sha256": "1c45b2389a7a3e2662ef62ec6ba3911f36befff28e5840b714242a9d760ccdb6",
+    "bytes": 1398
+  },
+  "run_config.json": {
+    "sha256": "010bd3f1a809d56d7a5753e652784007c2c9d1b6ee8cc879c19236eaa3da563c",
+    "bytes": 1720
+  }
+}

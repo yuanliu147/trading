@@ -1,0 +1,49 @@
+{
+  "status": "completed",
+  "completed_at": "2026-10-26T16:20:14.248229+00:00",
+  "scenario_count": 26,
+  "scenarios": [
+    "O03_c20000",
+    "O03_c50000",
+    "O03_c100000",
+    "O01_c100000",
+    "O02_c100000",
+    "O04_c100000",
+    "O05_c100000",
+    "O06_c100000",
+    "O07_c100000",
+    "O08_c100000",
+    "O09_c100000",
+    "O10_c100000",
+    "O11_c100000",
+    "O12_c100000",
+    "O13_c100000",
+    "O14_c100000",
+    "O15_c100000",
+    "O03_c20000_limit05",
+    "O03_c50000_limit05",
+    "O03_c100000_limit05",
+    "O03_c20000_tpnext",
+    "O03_c50000_tpnext",
+    "O03_c100000_tpnext",
+    "O03_c20000_liquidity001",
+    "O03_c50000_liquidity001",
+    "O03_c100000_liquidity001"
+  ],
+  "strategy_sha256": "46a75daf0d39902d5a68c93f3f5853b25616df109b00b84cd94adc0f14ebaa95",
+  "code_sha256": {
+    "flash_data.py": "aa12de45f2f971698984b782aa5c836c6d945657d45e66853d634c659bb2d3a6",
+    "flash_engine.py": "385076a608f410f6690a2063ff4a5293f3fec9618cc1a27ea4c531af6d9c51ab",
+    "migrate_initial.py": "db3cac3d72517c625550f85e151897a30871ca903c8f2710b93f61c23ba8ddcf",
+    "run_audit.py": "3cc3aebd88c09599269979b3b369d9a681b848944107320ea5db465c8f032f38",
+    "test_flash_engine.py": "745a7cf14d865916e200a5855411041bc6eaf1d1ab50f2f519dabfb8867e617f",
+    "verify_audit.py": "4b88c31e6608afc24501f930cb83e5cc4414e5d75bbd38853139f0f7d6368a66"
+  },
+  "input_sha256": {
+    "panel": "f7a3d6650f0d51c363c777e8d6f7bbf1f1bb721301706dbd11f9adc89752fa51",
+    "core": "0252fc6ae7dd09785dde7ae550115829039af88a7b93cd2b5c371e36fcba3c52",
+    "events": "d3188292370e01061fb1dc92a2cc40b7500f239cecaf5b3d185671ce7ddbe511"
+  },
+  "engine_reconciliation_passed": true,
+  "evaluation_status": "historical_repair_not_independent_holdout"
+}

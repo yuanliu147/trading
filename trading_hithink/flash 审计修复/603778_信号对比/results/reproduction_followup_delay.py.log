@@ -1,0 +1,40 @@
+delay pairs 20/50
+delay pairs 40/50
+         sample                      group  both_closed_n  signal_days  baseline_mean  delay4_mean  delay4_minus_baseline_mean  delay4_minus_baseline_median  delay4_better_share  baseline_win_rate  delay4_win_rate  baseline_worst  delay4_worst  delay4_mean_mae
+            all                        all             40           14         0.1658       0.1712                      0.0054                        0.0001               0.5500                1.0           0.9750          0.0117       -0.0101          -0.0309
+            all         next_consolidation             16            8         0.1466       0.1517                      0.0050                       -0.0001               0.5000                1.0           0.9375          0.0117       -0.0101          -0.0416
+            all     not_next_consolidation             24           10         0.1786       0.1842                      0.0056                        0.0001               0.5833                1.0           1.0000          0.0749        0.1014          -0.0238
+            all next_still_original_signal             10            9         0.1596       0.1723                      0.0127                        0.0001               0.5000                1.0           1.0000          0.0188        0.0113          -0.0423
+            all   next_not_original_signal             30           10         0.1679       0.1708                      0.0029                        0.0001               0.5667                1.0           0.9667          0.0117       -0.0101          -0.0271
+            all                  2017_2023             26            8         0.1527       0.1605                      0.0078                        0.0001               0.6154                1.0           0.9615          0.0117       -0.0101          -0.0283
+            all                  2024_2026             14            6         0.1903       0.1911                      0.0008                       -0.0002               0.4286                1.0           1.0000          0.1041        0.0675          -0.0358
+           top2                        all             17           14         0.1441       0.1498                      0.0057                       -0.0001               0.4706                1.0           0.9412          0.0117       -0.0101          -0.0355
+           top2         next_consolidation              6            6         0.1039       0.0973                     -0.0066                       -0.0147               0.3333                1.0           0.8333          0.0117       -0.0101          -0.0455
+           top2     not_next_consolidation             11            9         0.1660       0.1784                      0.0124                        0.0001               0.5455                1.0           1.0000          0.0749        0.1014          -0.0301
+           top2 next_still_original_signal              6            6         0.1440       0.1571                      0.0131                        0.0001               0.5000                1.0           1.0000          0.0188        0.0113          -0.0471
+           top2   next_not_original_signal             11           10         0.1441       0.1458                      0.0017                       -0.0001               0.4545                1.0           0.9091          0.0117       -0.0101          -0.0293
+           top2                  2017_2023             10            8         0.1146       0.1301                      0.0154                        0.0101               0.6000                1.0           0.9000          0.0117       -0.0101          -0.0373
+           top2                  2024_2026              7            6         0.1861       0.1779                     -0.0082                       -0.0003               0.2857                1.0           1.0000          0.1134        0.0675          -0.0331
+non_overlapping                        all             19            6         0.1670       0.1705                      0.0034                        0.0001               0.5263                1.0           1.0000          0.0188        0.0113          -0.0264
+non_overlapping         next_consolidation              8            4         0.1547       0.1585                      0.0039                       -0.0003               0.3750                1.0           1.0000          0.0188        0.0113          -0.0349
+non_overlapping     not_next_consolidation             11            3         0.1760       0.1791                      0.0031                        0.0003               0.6364                1.0           1.0000          0.0749        0.1014          -0.0203
+non_overlapping next_still_original_signal              3            3         0.1396       0.1340                     -0.0056                       -0.0075               0.0000                1.0           1.0000          0.0188        0.0113          -0.0320
+non_overlapping   next_not_original_signal             16            4         0.1722       0.1773                      0.0051                        0.0003               0.6250                1.0           1.0000          0.0749        0.0872          -0.0254
+non_overlapping                  2017_2023             17            4         0.1612       0.1643                      0.0031                        0.0001               0.5294                1.0           1.0000          0.0188        0.0113          -0.0241
+non_overlapping                  2024_2026              2            2         0.2163       0.2224                      0.0061                        0.0061               0.5000                1.0           1.0000          0.2049        0.1955          -0.0459
+{
+  "first_signals": 50,
+  "first_closed_baseline": 40,
+  "first_closed_delay4": 40,
+  "next_consolidation_count": 16,
+  "next_consolidation_missing": 10,
+  "source_outcomes_sha256": "0996e0750d0bc38ba8370937f68eeead4b0d63d6c9b784468e181dcbc6ba4cf6",
+  "code_sha256": "80139a188bd2df0fbd0a0e99f076caf87eda5e24b24c7179e5433e11597f0cb6",
+  "config_sha256": "01e0bbbd1b939a8da23fc465940049f2fdca72a34e25082aa9d212ffcd2310b3",
+  "historical_cutoff": "2026-10-23",
+  "current_outcomes_used": false,
+  "scope": "exploratory_not_a_new_frozen_trading_rule",
+  "load_source": {
+    "corporate_action_rows_outside_research_window": 8536
+  }
+}

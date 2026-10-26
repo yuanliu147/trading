@@ -1,0 +1,56 @@
+      date   thscode     open     high      low    close  close_location    rsi14  macd_hist_pct  amount_ratio1_20  close_ma20  drawdown250  return_250d   BOR    rank  strong_reversal
+2026-10-23 002240.SZ 19.39000 20.30000 18.79000 20.16000         0.90728 21.48786       -0.02048           1.06690    -0.15235     -0.68066      0.01511  True 6.00000             True
+2026-10-23 603778.SH  7.07000  7.38000  6.72000  7.33000         0.92424 32.24110       -0.00565           0.80795    -0.09288     -0.78611      1.10632  True 1.00000             True
+2026-10-23 605376.SH 82.81000 85.50000 77.62000 85.03000         0.94036 19.37905       -0.02816           0.69511    -0.21763     -0.71303      0.38209  True 2.00000             True
+2026-10-26 002240.SZ 20.00000 20.32000 19.41000 19.98000         0.62637 20.98190       -0.01658           0.89013    -0.14712     -0.68351      0.04882 False 2.00000            False
+2026-10-26 603778.SH  7.28000  7.41000  7.19000  7.29000         0.45455 31.79758       -0.00268           0.42806    -0.08761     -0.78728      1.11304 False 1.00000            False
+2026-10-26 605376.SH 84.37000 84.66000 79.70000 80.10000         0.08065 17.36089       -0.02758           0.59159    -0.24242     -0.72967      0.41333 False     NaN            False
+      date  market_return  market_return20  breadth20    ma20  close_ma20  ma20_slope5  advance_share  limit_down10_share  limit_up10_share
+2026-10-23        0.01253         -0.05191    0.18997 1.30005    -0.03952     -0.01160        0.75776             0.00219           0.02068
+2026-10-26       -0.00284         -0.06530    0.22404 1.29570    -0.03903     -0.01268        0.45985             0.00753           0.01600
+   target       date  cluster_id  cluster_strength  cluster_size cluster_train_end  members  peer_return5  peer_return20  peer_return60  peer_breadth20  peer_breadth60  official_industry_index                                        note
+603778.SH 2026-10-23    -1.00000           0.22289       0.00000        2026-09-30      NaN           NaN            NaN            NaN             NaN             NaN                    False                    no_lagged_PCA_peer_group
+603778.SH 2026-10-26    -1.00000           0.22289       0.00000        2026-09-30      NaN           NaN            NaN            NaN             NaN             NaN                    False                    no_lagged_PCA_peer_group
+605376.SH 2026-10-23         NaN               NaN           NaN               NaT      NaN           NaN            NaN            NaN             NaN             NaN                    False                    no_lagged_PCA_peer_group
+605376.SH 2026-10-26         NaN               NaN           NaN               NaT      NaN           NaN            NaN            NaN             NaN             NaN                    False                    no_lagged_PCA_peer_group
+002240.SZ 2026-10-23     2.00000           0.35540      48.00000        2026-09-30 47.00000      -0.02453       -0.16279       -0.16652         0.02128         0.00000                    False lagged_PCA_peer_group_not_official_industry
+002240.SZ 2026-10-26     2.00000           0.35540      48.00000        2026-09-30 47.00000      -0.03356       -0.18039       -0.14007         0.02128         0.00000                    False lagged_PCA_peer_group_not_official_industry
+audited standalone accounts 500/4195
+audited standalone accounts 1000/4195
+audited standalone accounts 1500/4195
+audited standalone accounts 2000/4195
+audited standalone accounts 2500/4195
+audited standalone accounts 3000/4195
+audited standalone accounts 3500/4195
+audited standalone accounts 4000/4195
+{
+  "signals": 4195,
+  "closed": 4010,
+  "top10": 1526,
+  "top2": 459,
+  "hfq_vs_raw_BOR_disagreements": 2,
+  "original_17_cases": 17,
+  "original_17_closed": 17,
+  "original_17_audited_mean": 0.14405605884776593,
+  "original_17_audited_win_rate": 1.0,
+  "strict_BOR_high_top2": 19,
+  "standalone_execution": "50000 initial equity, two-position slot sizing, one isolated candidate per account",
+  "note": "standalone outcomes remove slot competition; they are not account returns or an independent holdout",
+  "load_source": {
+    "corporate_action_rows_outside_research_window": 8536
+  },
+  "input_hashes": {
+    "panel": "f7a3d6650f0d51c363c777e8d6f7bbf1f1bb721301706dbd11f9adc89752fa51",
+    "core": "0252fc6ae7dd09785dde7ae550115829039af88a7b93cd2b5c371e36fcba3c52",
+    "events": "d3188292370e01061fb1dc92a2cc40b7500f239cecaf5b3d185671ce7ddbe511",
+    "raw_database": "8eef55f73109d9fc7acc65a6ed8b0da1f34cefb67dce890671bd07168630ff47"
+  },
+  "code_hash": "cf4b42d68510040816c4d6281323d5ad9b2c8bcf8574e25f0e82cd3c8f72f115",
+  "config_hash": "cd04aa4d2943112b6df9542bcc74c260ba18b8208647197aa26c5b4a57591715",
+  "current_cutoff": "2026-10-26",
+  "historical_return_cutoff": "2026-10-23",
+  "raw_database_rows_on_cutoff": 5568,
+  "raw_database_symbols_on_cutoff": 5568,
+  "raw_database_zero_activity_rows_on_cutoff": 0,
+  "remote_data_used": false
+}

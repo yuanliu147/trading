@@ -1,0 +1,13 @@
+{
+  "first_signal_date": "2026-10-23",
+  "latest_known_bar": "2026-10-26",
+  "signals": 10,
+  "higher_low": 10,
+  "above_first_open": 6,
+  "small_body_low_volume_consolidation": 4,
+  "future_return_used": false,
+  "raw_database_sha256": "8eef55f73109d9fc7acc65a6ed8b0da1f34cefb67dce890671bd07168630ff47",
+  "source_outcomes_sha256": "0996e0750d0bc38ba8370937f68eeead4b0d63d6c9b784468e181dcbc6ba4cf6",
+  "code_sha256": "259e508cf9ff33ce07fe8ef556fc820201796ef100d3f799bd5e7f361200b0a3",
+  "consolidation_config_sha256": "01e0bbbd1b939a8da23fc465940049f2fdca72a34e25082aa9d212ffcd2310b3"
+}

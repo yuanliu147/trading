@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "exploratory_not_a_new_frozen_trading_rule",
+  "created_before_running_followup": "2026-10-26",
+  "question": "For the same deep-drawdown failed-breakdown high-close signal, does entry one session later improve the audited standalone result?",
+  "first_signal": "Use strong_reversal rows from signal_outcomes_audited.csv without requiring a next-day signal.",
+  "baseline_entry_lag_sessions": 3,
+  "delayed_entry_lag_sessions": 4,
+  "comparison": "Only cases with closed outcomes under both delays; preserve rejected and pending counts separately.",
+  "comparison_tie_tolerance": 1e-12,
+  "tie_rule": "Absolute return differences at or below 1e-12 are numerical ties, not a better delayed entry.",
+  "next_day_consolidation": {
+    "higher_low_than_first_signal": true,
+    "close_above_first_signal_open": true,
+    "absolute_candle_body_lte": 0.02,
+    "amount_ratio1_20_lt": 1.0
+  },
+  "next_day_failure": "next_session_hfq_low < first_signal_hfq_low",
+  "notes": "Thresholds describe the current small-body consolidation hypothesis. This is exploratory because the hypothesis was formed after seeing the current bars; no parameter sweep is performed."
+}

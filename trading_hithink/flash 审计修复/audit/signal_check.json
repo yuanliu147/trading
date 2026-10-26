@@ -1,0 +1,12 @@
+{
+  "signal_count": 4195,
+  "candidate_rows": 1526,
+  "candidate_symbols": 611,
+  "candidate_sha256": "00a5adedb8f91d41435f7312d7bcc45e28adceb52a9907b94977d475d1442afe",
+  "last_date": "2026-10-23",
+  "last_day_top2": [
+    "603778.SH",
+    "605376.SH"
+  ],
+  "up_limit_05_semantics": "price, not a boolean; baseline preserves the effective unfiltered legacy pool"
+}

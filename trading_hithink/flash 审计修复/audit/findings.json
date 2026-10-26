@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "evaluation_status": "historical_repair_not_independent_holdout",
+  "findings": [
+    {
+      "id": "F01",
+      "severity": "high",
+      "issue": "原实际价账户有14个交易日现金为负，最低-226.93元。",
+      "repair": "买入股数同时满足滑点、佣金、过户费、整手、仓位和现金约束；逐日检查现金非负。",
+      "evidence": ["legacy/original_actual_equity.csv", "audit/baseline_evidence.json", "audit/verification.json"],
+      "status": "verified"
+    },
+    {
+      "id": "F02",
+      "severity": "high",
+      "issue": "000595.SZ在2025-01-27一字跌停时仍被按5.27元卖出。",
+      "repair": "到期卖出延期，2025-02-05开盘才以4.90元成交；无bar和零成交量同样延期，未平仓不伪造交易。",
+      "evidence": ["results/accounts/O03_c100000/orders.csv", "results/accounts/O03_c100000/positions_daily.csv"],
+      "status": "verified"
+    },
+    {
+      "id": "F03",
+      "severity": "high",
+      "issue": "原报告只有10万账户，没有完成2万和5万独立验收。",
+      "repair": "分别运行2万、5万和10万动态账户，保存所有订单与交易。605255在初始半仓预算下虽买不起，但复利到2026年已可买入，未误记为实际拒买。",
+      "evidence": ["results/summary.csv", "test_flash_engine.py"],
+      "status": "verified"
+    },
+    {
+      "id": "F04",
+      "severity": "high",
+      "issue": "历史印花税、过户费和股息税不完整，公司行动处理还有阈值遗漏。",
+      "repair": "按日期应用印花税和过户费，计入最低佣金、股息税、送转、现金分红和缺明细复权事件的明示假设。",
+      "evidence": ["config/strategy.json", "results/accounts/O03_c100000/corporate_actions.csv", "test_flash_engine.py"],
+      "status": "verified"
+    },
+    {
+      "id": "F05",
+      "severity": "high",
+      "issue": "up_limit_05是DOUBLE价格，原代码却当布尔ST代理；真正的样态布尔字段是limit_up_05。",
+      "repair": "基准明确保留旧实际股票池，不暗加新过滤；信号入口将默认123条与显式5%样态过滤122条分开输出。",
+      "evidence": ["audit/baseline_evidence.json", "audit/signal_check.json", "config/strategy.json"],
+      "status": "disclosed_historical_st_unavailable"
+    },
+    {
+      "id": "F06",
+      "severity": "high",
+      "issue": "旧校验让已作废42.6%继续通过，只验证常量一致，没有验证账户语义。",
+      "repair": "三个旧校验入口转到新独立审计；原始脚本和结果留存在legacy，不被覆盖。",
+      "evidence": ["legacy/manifest.json", "audit/verification.json", "audit/entrypoint_mother_verify.log", "audit/entrypoint_actual_verify.log", "audit/entrypoint_timing_verify.log"],
+      "status": "verified"
+    },
+    {
+      "id": "F07",
+      "severity": "medium",
+      "issue": "目录迁移破坏软链接和硬编码路径，多角度扫描还写入不存在的目录。",
+      "repair": "1425个文件原子迁移并复核哈希；修复软链接、动态路径和两个扫描脚本输出目录，实际重跑受影响流程。",
+      "evidence": ["audit/migration_manifest.json", "audit/scan_events_run.log", "audit/scan_reversal_run.log", "audit/regime_verify.log", "audit/repeat_verify.log", "audit/analog_verify.log"],
+      "status": "verified"
+    },
+    {
+      "id": "F08",
+      "severity": "high",
+      "issue": "2024–2026已被用于研究和选择，原30%以上结论缺少未触碰样本。",
+      "repair": "不通过继续调参制造新证据；所有输出标为历史修复回测，等待未来新增的本地数据做真正独立检验。",
+      "evidence": ["config/strategy.json", "audit/verification.json"],
+      "status": "open_no_untouched_sample"
+    },
+    {
+      "id": "F09",
+      "severity": "medium",
+      "issue": "复利增长后，固定10bp滑点可能低估成交冲击。",
+      "repair": "记录实际参与率并增加0.1%信号期均成交额参与率压力情景，不将它选作新策略。",
+      "evidence": ["results/summary.csv", "test_flash_engine.py"],
+      "status": "verified"
+    },
+    {
+      "id": "F10",
+      "severity": "medium",
+      "issue": "日线最高价触及止盈不能证明盘中排队成交。",
+      "repair": "保留原盘中触发口径并增加下一开盘压力情景，明确日线能力边界。",
+      "evidence": ["results/summary.csv", "config/strategy.json"],
+      "status": "disclosed_with_stress_scenario"
+    },
+    {
+      "id": "F11",
+      "severity": "medium",
+      "issue": "本地数据只有当前仍上市股票。",
+      "repair": "按用户要求不补退市股，明确幸存者偏差，不伪装成已解决。",
+      "evidence": ["audit/baseline_evidence.json", "config/strategy.json"],
+      "status": "disclosed_as_requested"
+    }
+  ]
+}

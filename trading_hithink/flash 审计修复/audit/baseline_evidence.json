@@ -1,0 +1,66 @@
+{
+  "negative_cash_days": 14,
+  "minimum_cash": -226.9287250000052,
+  "negative_cash_dates": [
+    "2019-08-15",
+    "2019-08-16",
+    "2019-08-19",
+    "2022-04-06",
+    "2022-04-07",
+    "2022-04-08",
+    "2022-04-11",
+    "2022-04-12",
+    "2024-01-24",
+    "2024-01-25",
+    "2024-01-26",
+    "2026-10-20",
+    "2026-10-21",
+    "2026-10-22"
+  ],
+  "original_capital": 100000,
+  "maximum_entry_price": 101.71,
+  "maximum_entry": {
+    "thscode": "605255.SH",
+    "entry_date": "2026-03-26 00:00:00",
+    "entry_px": 101.71
+  },
+  "up_limit_05_field": {
+    "up_limit_05_type": "DOUBLE",
+    "limit_up_05_type": "BOOLEAN",
+    "legacy_price_equal_one": 34,
+    "boolean_sample_count": 270328
+  },
+  "signal_day_2026_10_23": {
+    "legacy_unfiltered": 123,
+    "explicit_5pct_sample_filter": 122
+  },
+  "limit_down_000595": [
+    {
+      "thscode": "000595.SZ",
+      "date": "2025-01-27 00:00:00",
+      "open": 5.27,
+      "high": 5.27,
+      "low": 5.27,
+      "close": 5.27,
+      "reference_close": 5.86,
+      "down_limit_10": 5.27,
+      "down_limit_05": 5.57,
+      "volume": 8043200.0
+    },
+    {
+      "thscode": "000595.SZ",
+      "date": "2025-02-05 00:00:00",
+      "open": 4.91,
+      "high": 5.43,
+      "low": 4.91,
+      "close": 5.33,
+      "reference_close": 5.27,
+      "down_limit_10": 4.74,
+      "down_limit_05": 5.01,
+      "volume": 55480857.0
+    }
+  ],
+  "out_of_sample_note": "The 2024-2026 segment was used in grid evaluation and selection; no untouched segment remains.",
+  "wencai_note": "The manual Wencai cross-check is excluded from this local-only audit.",
+  "survivorship_note": "Delisted stocks are not reconstructed, as requested; this is disclosed rather than silently repaired."
+}

@@ -1,0 +1,62 @@
+{
+  "panic_lib.py": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/02_代码/panic_lib.py",
+    "sha256": "06407af094c64dd2d075b205aef62afcd967262e908d4286c6dd753b67254c5c",
+    "bytes": 8449
+  },
+  "actual_engine_fixed.py": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/02_代码/actual_engine_fixed.py",
+    "sha256": "85162b53ab2bf3916d478a9746fe3011b38ea5a01a7b4d66c66d67642ef459fe",
+    "bytes": 7608
+  },
+  "verify_delivery.py": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/02_代码/verify_delivery.py",
+    "sha256": "72787511ef1f3cd048e405cb1c38b6d97578d7ea2fb5754f5a8dba2589dfad83",
+    "bytes": 1597
+  },
+  "verify_actual_fixed.py": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/02_代码/verify_actual_fixed.py",
+    "sha256": "42b002edcf90d795cc069b8fc281ae4e1b104ae8e6d1de5ddb5234ea07f017d5",
+    "bytes": 3940
+  },
+  "timing_lib.py": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/不同时间入场点回测/02_代码/timing_lib.py",
+    "sha256": "9724ee4e14ddadf62b256bef55e843b54b8bdae806c9d671ee93356c033cfb6f",
+    "bytes": 14858
+  },
+  "timing_verify_delivery.py": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/不同时间入场点回测/02_代码/verify_delivery.py",
+    "sha256": "189a9f74201fcd4efc493dc0bb62fdbd17d4d733b76b4df404f79ed5dd147f49",
+    "bytes": 10422
+  },
+  "mother_README.md": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/README.md",
+    "sha256": "f17b06aa139cbbb06bf45ad565ebcf9bd30c9d32bb3b07b9bcf58739931a4bd2",
+    "bytes": 2498
+  },
+  "mother_reproduction.md": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/03_数据与复现.md",
+    "sha256": "2e4e0cb986ca6bdcf7206c8947a75790b94aa1647f8b8d7f482f7087c836644a",
+    "bytes": 6896
+  },
+  "timing_README.md": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/不同时间入场点回测/README.md",
+    "sha256": "07e9fdd5d0e914da504173f73b50637bed803e94594736651bdbc3e053c4b2c2",
+    "bytes": 5686
+  },
+  "original_actual_trades.csv": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/03_结果/实际价_修正版_逐笔.csv",
+    "sha256": "acd965d3b91885f1b6e88f74ff9affe26b4a89a743a937664789c273d685eaa5",
+    "bytes": 13893
+  },
+  "original_actual_equity.csv": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/03_结果/实际价_修正版_每日权益.csv",
+    "sha256": "5d0c68f653ec00c63ed13d406abd05dfa9b39edd284ce2040217c290e7794035",
+    "bytes": 104257
+  },
+  "original_actual_metrics.json": {
+    "source": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/03_结果/实际价_修正版_指标.json",
+    "sha256": "783fa4b00105136bb53eb94f48a9097778d4b9afac247714afecbedf104f23eb",
+    "bytes": 388
+  }
+}

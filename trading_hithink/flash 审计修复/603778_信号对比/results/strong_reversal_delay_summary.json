@@ -1,0 +1,16 @@
+{
+  "first_signals": 50,
+  "first_closed_baseline": 40,
+  "first_closed_delay4": 40,
+  "next_consolidation_count": 16,
+  "next_consolidation_missing": 10,
+  "source_outcomes_sha256": "0996e0750d0bc38ba8370937f68eeead4b0d63d6c9b784468e181dcbc6ba4cf6",
+  "code_sha256": "80139a188bd2df0fbd0a0e99f076caf87eda5e24b24c7179e5433e11597f0cb6",
+  "config_sha256": "01e0bbbd1b939a8da23fc465940049f2fdca72a34e25082aa9d212ffcd2310b3",
+  "historical_cutoff": "2026-10-23",
+  "current_outcomes_used": false,
+  "scope": "exploratory_not_a_new_frozen_trading_rule",
+  "load_source": {
+    "corporate_action_rows_outside_research_window": 8536
+  }
+}

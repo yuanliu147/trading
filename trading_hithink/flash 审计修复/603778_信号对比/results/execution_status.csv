@@ -1,0 +1,13 @@
+﻿rank_group,status,n
+above10,filled,2523
+above10,no_entry_observed,113
+above10,open_at_cutoff,15
+above10,rejected,18
+rank3_10,filled,1040
+rank3_10,no_entry_observed,8
+rank3_10,open_at_cutoff,15
+rank3_10,rejected,4
+top2,filled,447
+top2,no_entry_observed,3
+top2,open_at_cutoff,4
+top2,rejected,5

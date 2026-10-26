@@ -1,0 +1,31 @@
+{
+  "signals": 4195,
+  "closed": 4010,
+  "top10": 1526,
+  "top2": 459,
+  "hfq_vs_raw_BOR_disagreements": 2,
+  "original_17_cases": 17,
+  "original_17_closed": 17,
+  "original_17_audited_mean": 0.14405605884776593,
+  "original_17_audited_win_rate": 1.0,
+  "strict_BOR_high_top2": 19,
+  "standalone_execution": "50000 initial equity, two-position slot sizing, one isolated candidate per account",
+  "note": "standalone outcomes remove slot competition; they are not account returns or an independent holdout",
+  "load_source": {
+    "corporate_action_rows_outside_research_window": 8536
+  },
+  "input_hashes": {
+    "panel": "f7a3d6650f0d51c363c777e8d6f7bbf1f1bb721301706dbd11f9adc89752fa51",
+    "core": "0252fc6ae7dd09785dde7ae550115829039af88a7b93cd2b5c371e36fcba3c52",
+    "events": "d3188292370e01061fb1dc92a2cc40b7500f239cecaf5b3d185671ce7ddbe511",
+    "raw_database": "8eef55f73109d9fc7acc65a6ed8b0da1f34cefb67dce890671bd07168630ff47"
+  },
+  "code_hash": "cf4b42d68510040816c4d6281323d5ad9b2c8bcf8574e25f0e82cd3c8f72f115",
+  "config_hash": "cd04aa4d2943112b6df9542bcc74c260ba18b8208647197aa26c5b4a57591715",
+  "current_cutoff": "2026-10-26",
+  "historical_return_cutoff": "2026-10-23",
+  "raw_database_rows_on_cutoff": 5568,
+  "raw_database_symbols_on_cutoff": 5568,
+  "raw_database_zero_activity_rows_on_cutoff": 0,
+  "remote_data_used": false
+}

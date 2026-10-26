@@ -1,0 +1,363 @@
+O03_c20000                  CAGR=36.7013% DD=-16.3189% closed=97 open=2
+O03_c50000                  CAGR=37.0280% DD=-16.3363% closed=97 open=2
+O03_c100000                 CAGR=35.9377% DD=-16.3431% closed=97 open=2
+O01_c100000                 CAGR=23.9986% DD=-23.0442% closed=94 open=2
+O02_c100000                 CAGR=29.1187% DD=-16.9320% closed=95 open=2
+O04_c100000                 CAGR=33.4169% DD=-21.2892% closed=97 open=2
+O05_c100000                 CAGR=26.9929% DD=-28.0519% closed=95 open=2
+O06_c100000                 CAGR=23.3387% DD=-30.2762% closed=94 open=1
+O07_c100000                 CAGR=20.6101% DD=-28.2870% closed=94 open=0
+O08_c100000                 CAGR=24.6169% DD=-28.1024% closed=95 open=0
+O09_c100000                 CAGR=24.0187% DD=-31.6234% closed=95 open=0
+O10_c100000                 CAGR=15.7473% DD=-33.5034% closed=93 open=0
+O11_c100000                 CAGR=23.6580% DD=-35.9963% closed=95 open=0
+O12_c100000                 CAGR=28.5790% DD=-35.8589% closed=96 open=0
+O13_c100000                 CAGR=27.4529% DD=-38.3179% closed=93 open=0
+O14_c100000                 CAGR=15.1064% DD=-40.7243% closed=89 open=0
+O15_c100000                 CAGR=7.5022% DD=-47.8341% closed=87 open=0
+O03_c20000_limit05          CAGR=33.9129% DD=-16.3354% closed=97 open=2
+O03_c50000_limit05          CAGR=34.1794% DD=-16.3296% closed=97 open=2
+O03_c100000_limit05         CAGR=33.9195% DD=-16.3370% closed=97 open=2
+O03_c20000_tpnext           CAGR=35.1734% DD=-17.7523% closed=97 open=2
+O03_c50000_tpnext           CAGR=35.3824% DD=-17.9001% closed=97 open=2
+O03_c100000_tpnext          CAGR=37.1495% DD=-17.9100% closed=97 open=2
+O03_c20000_liquidity001     CAGR=33.3680% DD=-17.8852% closed=97 open=2
+O03_c50000_liquidity001     CAGR=31.1400% DD=-15.4646% closed=97 open=2
+O03_c100000_liquidity001    CAGR=26.5262% DD=-15.6088% closed=97 open=2
+{"status": "passed", "file_count": 1425, "remaining": ["flash 审计修复", "初始研究"]}
+{
+  "passed": true,
+  "static_checks": {
+    "run_completed": true,
+    "scenario_list": true,
+    "strategy_frozen": true,
+    "code_not_changed": true,
+    "input_not_changed": true,
+    "no_remote_or_third_party": true,
+    "legacy_preserved": true,
+    "baseline_defects_recorded": true,
+    "signals_frozen": true,
+    "candidate_file_hash": true,
+    "legacy_entrypoints_redirected": true,
+    "live_signal_modes": true,
+    "migration_integrity": true
+  },
+  "accounts": [
+    {
+      "account": "O01_c100000",
+      "passed": true,
+      "cagr": 0.23998638047106935,
+      "max_drawdown": -0.23044203757784132,
+      "final_equity": 694562.5156899998,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 112.20416999980807,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O02_c100000",
+      "passed": true,
+      "cagr": 0.2911870032860926,
+      "max_drawdown": -0.16932004009326485,
+      "final_equity": 1000096.3268649996,
+      "trade_count": 95,
+      "open_positions": 2,
+      "minimum_cash": 247.89182499988237,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c100000",
+      "passed": true,
+      "cagr": 0.35937696250400286,
+      "max_drawdown": -0.163430575197267,
+      "final_equity": 1590113.5684149994,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 31.626954999519512,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c100000_limit05",
+      "passed": true,
+      "cagr": 0.33919523247812133,
+      "max_drawdown": -0.16336955618190663,
+      "final_equity": 1389624.1397650002,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 54.8820049999631,
+      "deferred_sells": 3,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c100000_liquidity001",
+      "passed": true,
+      "cagr": 0.26526185219041154,
+      "max_drawdown": -0.15608839221782622,
+      "final_equity": 833053.3363250003,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 324.2957249999454,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c100000_tpnext",
+      "passed": true,
+      "cagr": 0.3714947834619571,
+      "max_drawdown": -0.17909989714143126,
+      "final_equity": 1722487.2069400009,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 148.84417000046233,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c20000",
+      "passed": true,
+      "cagr": 0.36701331714814467,
+      "max_drawdown": -0.16318858015511417,
+      "final_equity": 334486.5621600001,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 21.941280000006373,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c20000_limit05",
+      "passed": true,
+      "cagr": 0.33912905846769914,
+      "max_drawdown": -0.16335433672717414,
+      "final_equity": 277801.11288000003,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 60.525620000044,
+      "deferred_sells": 3,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c20000_liquidity001",
+      "passed": true,
+      "cagr": 0.333680085832206,
+      "max_drawdown": -0.1788516593030991,
+      "final_equity": 267780.46519999986,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 85.93806000000404,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c20000_tpnext",
+      "passed": true,
+      "cagr": 0.35173381855865316,
+      "max_drawdown": -0.17752348773629334,
+      "final_equity": 302269.59362000006,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 74.35528999998496,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c50000",
+      "passed": true,
+      "cagr": 0.3702799654515434,
+      "max_drawdown": -0.16336250339693492,
+      "final_equity": 854394.3934299999,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 73.26367000001483,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c50000_limit05",
+      "passed": true,
+      "cagr": 0.341794016351572,
+      "max_drawdown": -0.16329578965452674,
+      "final_equity": 707055.6627900003,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 165.9529999998631,
+      "deferred_sells": 3,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c50000_liquidity001",
+      "passed": true,
+      "cagr": 0.31139984844085,
+      "max_drawdown": -0.15464627392343167,
+      "final_equity": 575168.3052299999,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 30.260689999973692,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O03_c50000_tpnext",
+      "passed": true,
+      "cagr": 0.3538240623734501,
+      "max_drawdown": -0.1790006686437906,
+      "final_equity": 766268.2044299999,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 137.2044299999252,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O04_c100000",
+      "passed": true,
+      "cagr": 0.3341693629517062,
+      "max_drawdown": -0.2128919297266707,
+      "final_equity": 1343334.61424,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 27.66962999998941,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O05_c100000",
+      "passed": true,
+      "cagr": 0.26992920951260646,
+      "max_drawdown": -0.2805193823251966,
+      "final_equity": 861154.5693350001,
+      "trade_count": 95,
+      "open_positions": 2,
+      "minimum_cash": 149.5210350000707,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O06_c100000",
+      "passed": true,
+      "cagr": 0.23338709447784622,
+      "max_drawdown": -0.3027618771326228,
+      "final_equity": 661957.2011799997,
+      "trade_count": 94,
+      "open_positions": 1,
+      "minimum_cash": 14.296100000035947,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O07_c100000",
+      "passed": true,
+      "cagr": 0.2061012947283425,
+      "max_drawdown": -0.28286960320995247,
+      "final_equity": 541115.0529700004,
+      "trade_count": 94,
+      "open_positions": 0,
+      "minimum_cash": 197.8628799999933,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O08_c100000",
+      "passed": true,
+      "cagr": 0.2461688898333081,
+      "max_drawdown": -0.2810235592849111,
+      "final_equity": 726395.97288,
+      "trade_count": 95,
+      "open_positions": 0,
+      "minimum_cash": 84.90587999983109,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O09_c100000",
+      "passed": true,
+      "cagr": 0.24018678079313616,
+      "max_drawdown": -0.316234189867607,
+      "final_equity": 695574.5881999999,
+      "trade_count": 95,
+      "open_positions": 0,
+      "minimum_cash": 68.30970000002708,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O10_c100000",
+      "passed": true,
+      "cagr": 0.15747251353301306,
+      "max_drawdown": -0.335033639991982,
+      "final_equity": 373463.56635,
+      "trade_count": 93,
+      "open_positions": 0,
+      "minimum_cash": 165.80769000013242,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O11_c100000",
+      "passed": true,
+      "cagr": 0.23657976213701715,
+      "max_drawdown": -0.3599632282549994,
+      "final_equity": 677557.3334750001,
+      "trade_count": 95,
+      "open_positions": 0,
+      "minimum_cash": 152.29511500008812,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "O12_c100000",
+      "passed": true,
+      "cagr": 0.28578959965559636,
+      "max_drawdown": -0.3585894501734248,
+      "final_equity": 963052.622195,
+      "trade_count": 96,
+      "open_positions": 0,
+      "minimum_cash": 160.96177499995974,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O13_c100000",
+      "passed": true,
+      "cagr": 0.27452937727680804,
+      "max_drawdown": -0.3831789349195176,
+      "final_equity": 889672.7166800004,
+      "trade_count": 93,
+      "open_positions": 0,
+      "minimum_cash": 17.368360000051325,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O14_c100000",
+      "passed": true,
+      "cagr": 0.15106391839536615,
+      "max_drawdown": -0.40724302022384007,
+      "final_equity": 355240.33402,
+      "trade_count": 89,
+      "open_positions": 0,
+      "minimum_cash": 191.03578000006385,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "O15_c100000",
+      "passed": true,
+      "cagr": 0.07502162181189242,
+      "max_drawdown": -0.4783405948915216,
+      "final_equity": 191901.05039000005,
+      "trade_count": 87,
+      "open_positions": 0,
+      "minimum_cash": 69.4965600000287,
+      "deferred_sells": 1,
+      "failed_checks": []
+    }
+  ],
+  "rerun": {
+    "identical": true,
+    "changed_files": []
+  }
+}

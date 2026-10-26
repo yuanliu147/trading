@@ -1,0 +1,3 @@
+date,thscode,position_id,shares,available_shares,buy_date,holding_sessions,last_close,market_value,dividend_receivable,stale_valuation
+2026-10-23,600783.SH,O00000197,13300,13300,2026-10-19,5,13.33,177289.0,0.0,False
+2026-10-23,603778.SH,O00000198,56100,56100,2026-10-20,4,7.33,411213.0,0.0,False

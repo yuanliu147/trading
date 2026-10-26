@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "created_before_running_analysis": "2026-10-26",
+  "purpose": "Compare the 2026-10-23 and 2026-10-26 signal cohorts without treating current outcomes as known.",
+  "data": {
+    "historical_signal_panel_end": "2026-10-23",
+    "current_raw_duckdb_cutoff": "2026-10-26",
+    "remote_or_third_party_data": false,
+    "delisted_stocks_reconstructed": false,
+    "current_stock": "603778.SH",
+    "comparison_symbols": ["603778.SH", "605376.SH", "002240.SZ"]
+  },
+  "samples": {
+    "primary": "all original eligible signals ranked in the daily top 10, including the top-2 subset",
+    "supplementary": "all original eligible signals, including ranks above 10",
+    "maximum_rank": 10,
+    "time_segments": ["2017-2023", "2024-2026-10-23"],
+    "episode_gap_sessions": 3,
+    "independent_signal_gap_sessions": 18
+  },
+  "fixed_conditions": {
+    "deep_drawdown250_lte": -0.65,
+    "high_close_location_gt": 0.8,
+    "bor": "hfq_low < previous_hfq_low AND hfq_close > previous_hfq_close AND hfq_close > hfq_open",
+    "strong_reversal": "deep drawdown AND BOR AND high close location",
+    "comparison": "deep drawdown without the complete strong reversal condition",
+    "large_prior_250d_gain_gt": 1.0,
+    "near_ma20_gte": -0.1,
+    "volume_ratio_threshold": 1.0,
+    "rsi_threshold": 30.0,
+    "macd_threshold": 0.0,
+    "confirmation_threshold": 0.0
+  },
+  "execution": {
+    "source": "../config/strategy.json",
+    "entry_lag_sessions": 3,
+    "holding_sessions": 15,
+    "profit_target": 0.2,
+    "standalone_capital": 50000,
+    "max_positions": 2,
+    "single_candidate_per_account": true,
+    "participation_cap": null,
+    "only_closed_trades_used_for_return_comparisons": true,
+    "pending_or_unfilled_candidates_retained_in_counts": true
+  },
+  "validation": {
+    "date_cluster_bootstrap_repetitions": 4000,
+    "bootstrap_seed": 603778,
+    "time_segments_are_robustness_checks_not_unseen_holdout": true,
+    "all_feature_results_reported_not_only_winners": true
+  }
+}

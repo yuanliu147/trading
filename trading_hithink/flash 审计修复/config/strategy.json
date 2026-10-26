@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "strategy_id": "flash_panic_reversal_fixed_o03",
+  "selection_policy": "frozen_before_repair_no_parameter_search",
+  "signal": {
+    "mainboard_prefixes": ["600", "601", "603", "605", "000", "001", "002", "003"],
+    "minimum_amount20": 10000000,
+    "exclude_signal_day_up_limit_05_sample": false,
+    "stock_pool_note": "legacy_effective_unfiltered; up_limit_05_is_price_not_boolean; no_historical_st_identification",
+    "return_250d_gt": 0.0,
+    "drawdown250_lt": -0.45,
+    "rsi14_lt": 35.0,
+    "close_location_gt": 0.45,
+    "market_return20_lt": -0.05,
+    "rank": "drawdown250_ascending_then_thscode",
+    "candidates_per_day": 10
+  },
+  "execution": {
+    "initial_capital": 100000,
+    "max_positions": 2,
+    "entry_lag_sessions": 3,
+    "holding_sessions": 15,
+    "profit_target": 0.20,
+    "take_profit_mode": "intraday",
+    "limit_rate": 0.10,
+    "reject_open_limit_down": false,
+    "slippage": 0.001,
+    "commission_rate": 0.00025,
+    "minimum_commission": 5.0,
+    "max_participation": null,
+    "stamp_duty_sell": [
+      {"start": "1900-01-01", "rate": 0.001},
+      {"start": "2023-08-28", "rate": 0.0005}
+    ],
+    "transfer_fee_both_sides": [
+      {"start": "1900-01-01", "rate": 0.00002},
+      {"start": "2022-04-29", "rate": 0.00001}
+    ],
+    "same_open_sale_proceeds_reused": false,
+    "allow_leverage": false,
+    "allow_short": false
+  },
+  "data": {
+    "start": "2017-01-01",
+    "end": "2026-10-23",
+    "expected_first_panel_date": "2017-10-19",
+    "expected_panel_rows": 6133972,
+    "expected_panel_symbols": 3162,
+    "expected_sessions": 2187,
+    "expected_signal_count": 4195,
+    "expected_candidate_rows": 1526,
+    "expected_candidate_symbols": 611,
+    "price_for_execution": "unadjusted_actual",
+    "price_for_continuous_signal_and_target": "backward_adjusted",
+    "remote_data_used": false,
+    "third_party_data_used": false
+  },
+  "evaluation": {
+    "status": "historical_repair_not_independent_holdout",
+    "survivorship": "current_listed_only_delisted_not_reconstructed_as_requested",
+    "historical_st_known": false,
+    "intraday_path_known": false,
+    "industry_membership_known": false,
+    "return_target_used_for_selection": false,
+    "note": "2024-2026 was already used for research and selection; no untouched out-of-sample remains."
+  }
+}

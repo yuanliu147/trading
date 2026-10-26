@@ -1,0 +1,23 @@
+{
+  "top2": {
+    "bootstrap_n": 4000,
+    "difference_p025": 0.02115161522759473,
+    "difference_median": 0.06252965366985858,
+    "difference_p975": 0.10208579068240874,
+    "scope": "resample_signal_days_descriptive_not_strategy_selection_inference"
+  },
+  "top10_non_overlapping": {
+    "bootstrap_n": 3986,
+    "difference_p025": -0.0006337003576009012,
+    "difference_median": 0.08609020317798863,
+    "difference_p975": 0.14204355805481256,
+    "scope": "resample_signal_days_descriptive_not_strategy_selection_inference"
+  },
+  "all_non_overlapping": {
+    "bootstrap_n": 3990,
+    "difference_p025": 0.00530591107300667,
+    "difference_median": 0.08916773247566087,
+    "difference_p975": 0.14048418444625016,
+    "scope": "resample_signal_days_descriptive_not_strategy_selection_inference"
+  }
+}

@@ -1,0 +1,7 @@
+﻿target,date,cluster_id,cluster_strength,cluster_size,cluster_train_end,members,peer_return5,peer_return20,peer_return60,peer_breadth20,peer_breadth60,official_industry_index,note
+603778.SH,2026-10-23,-1.0,0.22289419775070135,0.0,2026-09-30,,,,,,,False,no_lagged_PCA_peer_group
+603778.SH,2026-10-26,-1.0,0.22289419775070135,0.0,2026-09-30,,,,,,,False,no_lagged_PCA_peer_group
+605376.SH,2026-10-23,,,,,,,,,,,False,no_lagged_PCA_peer_group
+605376.SH,2026-10-26,,,,,,,,,,,False,no_lagged_PCA_peer_group
+002240.SZ,2026-10-23,2.0,0.3553975585339559,48.0,2026-09-30,47.0,-0.024526413125002727,-0.16279319651922333,-0.16652237362599484,0.02127659574468085,0.0,False,lagged_PCA_peer_group_not_official_industry
+002240.SZ,2026-10-26,2.0,0.3553975585339559,48.0,2026-09-30,47.0,-0.03356369375811177,-0.1803919618037588,-0.1400691898052143,0.02127659574468085,0.0,False,lagged_PCA_peer_group_not_official_industry

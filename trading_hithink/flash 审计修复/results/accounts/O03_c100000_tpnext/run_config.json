@@ -1,0 +1,61 @@
+{
+  "strategy_id": "flash_panic_reversal_fixed_o03",
+  "scenario": {
+    "scenario": "O03_c100000_tpnext",
+    "kind": "execution_stress",
+    "capital": 100000,
+    "entry_lag_sessions": 3,
+    "limit_rate": 0.1,
+    "take_profit_mode": "next_open"
+  },
+  "execution": {
+    "initial_capital": 100000,
+    "max_positions": 2,
+    "entry_lag_sessions": 3,
+    "holding_sessions": 15,
+    "profit_target": 0.2,
+    "take_profit_mode": "next_open",
+    "limit_rate": 0.1,
+    "reject_open_limit_down": false,
+    "slippage": 0.001,
+    "commission_rate": 0.00025,
+    "minimum_commission": 5.0,
+    "max_participation": null,
+    "stamp_duty_sell": [
+      {
+        "start": "1900-01-01",
+        "rate": 0.001
+      },
+      {
+        "start": "2023-08-28",
+        "rate": 0.0005
+      }
+    ],
+    "transfer_fee_both_sides": [
+      {
+        "start": "1900-01-01",
+        "rate": 2e-05
+      },
+      {
+        "start": "2022-04-29",
+        "rate": 1e-05
+      }
+    ],
+    "same_open_sale_proceeds_reused": false,
+    "allow_leverage": false,
+    "allow_short": false
+  },
+  "source": {
+    "panel": "/Users/admin/WorkSpace/trading/trading_flash/2026-10-24_主板恐慌反转_年化30/01_数据/research_panel.parquet",
+    "core": "/Users/admin/WorkSpace/trading/trading_hithink/初始研究/data/work/core.parquet",
+    "events": "/Users/admin/WorkSpace/trading/trading_hithink/初始研究/data/snapshot/adjustment_events.parquet",
+    "panel_rows": 6133972,
+    "panel_symbols": 3162,
+    "signal_count": 4195,
+    "candidate_rows": 1526,
+    "candidate_symbols": 611,
+    "joined_bar_rows": 1241757,
+    "reference_price_max_error": 0.0
+  },
+  "evaluation_status": "historical_repair_not_independent_holdout"
+}

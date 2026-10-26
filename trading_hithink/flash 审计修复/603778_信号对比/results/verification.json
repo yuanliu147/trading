@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "checks": 119,
+  "failures": [],
+  "signals": 4195,
+  "closed_accounts_verified": 4010,
+  "delay_accounts_verified": 40,
+  "historical_return_cutoff": "2026-10-23",
+  "current_bar_cutoff": "2026-10-26",
+  "rerun": {
+    "executed": true,
+    "returncodes": {
+      "analyze_signals.py": 0,
+      "followup_delay.py": 0,
+      "current_followthrough.py": 0
+    },
+    "identical": true,
+    "changed_files": []
+  },
+  "hashes": {
+    "current_stock_snapshots.csv": "b88e53e1e4c710d7a2536a308ea68b853b4fc1f06ae02b34dfd1ca425dd6129b",
+    "current_two_cohorts.csv": "3cbc99a6d6f105e2dbd5d2f1f236504fb76b05540c3821388fab6c561244464e",
+    "current_market.csv": "71098bbd8f8d3f4838f12d835339084a21bf3f13ff4ab89c8263ce101839806b",
+    "current_peer_proxy.csv": "d082d8f5d0281ad6867517b168f7ab3139e19a340353845668fbd8ee7306bc9e",
+    "signal_outcomes_audited.csv": "0996e0750d0bc38ba8370937f68eeead4b0d63d6c9b784468e181dcbc6ba4cf6",
+    "fixed_condition_stats.csv": "00619e1e309012fb93171ded96597e83039dfcd5a3cfb316c5ae2392b5448d68",
+    "strong_reversal_date_bootstrap.json": "59ba8d9ae6ec906eca3f63426bd3ba4612c7a1256cef224d43ba72a2c56ca44f",
+    "fixed_feature_stats.csv": "0286d7d926b0dcf4d4530a398f3998f1b01fc2f63dd8bebfe872cefd20b544b0",
+    "adjacent_signal_pairs.csv": "72d077947672fae30488aa95c91f5dab6bc3a9a282cd34ff5d38a2f9797b4bc4",
+    "adjacent_signal_pair_stats.csv": "0b821ab755c749ca70920cba72c2478b45c740333df6a1e92a17f8cda8f9a712",
+    "market_phase_stats.csv": "755b7a4f20813ff3d03290cf043712240fc83c1cab37a79239aae90d7ad0b9e9",
+    "original_17_case_reconciliation.csv": "2ee19078a08c8db437deabb8d46e013ff29579eb5c923ffe653c4f83df00ca60",
+    "execution_status.csv": "e3494f90f0a6b34960c15c5173becd56c1115b5c46016e5a53546a911cff20a1",
+    "analysis_summary.json": "d2c0d2d3ffb44f0214e4762a2aa0a4ca9427fa659264cbe065506fad7e22f1d0",
+    "strong_reversal_delay_pairs.csv": "6cb4db6c5c0ecc13add3df8b2f004d75b96601d59313a02fff62a4ca50a212cf",
+    "strong_reversal_delay_stats.csv": "bbce68b9eba74427f0d234f56cbe51fd7ddddcead87c0b88f8a7dde6c94f0d30",
+    "strong_reversal_delay_summary.json": "e7dc5708c374c03d29b68af9917e2ac055e8a80ac3aa561d7b74835790f22def",
+    "current_strong_cohort_followthrough.csv": "4f8b0ddf0addac28c045fcd88c58798c87bf8c8398528c46babb22a70880e1d5",
+    "current_followthrough_summary.json": "187628b4eadec794b3c2315d4b70f6a98c45660b1e7371b3e4887974db6aa172"
+  },
+  "code_sha256": {
+    "analyze_signals.py": "cf4b42d68510040816c4d6281323d5ad9b2c8bcf8574e25f0e82cd3c8f72f115",
+    "followup_delay.py": "80139a188bd2df0fbd0a0e99f076caf87eda5e24b24c7179e5433e11597f0cb6",
+    "current_followthrough.py": "259e508cf9ff33ce07fe8ef556fc820201796ef100d3f799bd5e7f361200b0a3",
+    "verify_analysis.py": "d986f9138c66a169e3dc31a025c0762a28ff4f92e541e8d276ffc64f3ae4ebeb"
+  },
+  "scope": "Local DuckDB only; standalone candidates, not a new portfolio or independent out-of-sample proof."
+}
