@@ -90,5 +90,5 @@ for name,mask in C.items():
         if st: rows.append(dict(event=name,h=h,**st))
 res=pd.DataFrame(rows)
 res=res.sort_values(['h','all_ex'],ascending=[True,False])
-res.to_csv('results/development/event_scan.csv',index=False)
+res.to_csv('03_结果/event_scan.csv',index=False)
 print(res[res.h==10][['event','train_n','train_r','train_ex','val_n','val_r','val_ex','test_n','test_r','test_ex','all_n','all_r','all_ex','all_win']].to_string(index=False))

@@ -32,7 +32,7 @@ sys.path.insert(0, str(ROOT / '02_代码'))
 import timing_lib as tl  # noqa: E402
 
 PANEL = MOTHER / '01_数据' / 'research_panel.parquet'
-MARKET = Path('/Users/admin/WorkSpace/trading/trading_hithink/data/work/market_daily.parquet')
+MARKET = ROOT.parent.parent / 'trading_hithink' / '初始研究' / 'data' / 'work' / 'market_daily.parquet'
 NTH, HOLD, TP, COST = 3, 15, 0.20, 0.00175
 GAP = 3  # 同一股票两次信号间隔 <=3 个交易日，算同一段“持续信号”
 

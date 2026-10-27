@@ -91,7 +91,7 @@ summary = pd.DataFrame([
 ], columns=['项目', '内容'])
 
 notes = pd.DataFrame([
-    ('数据源', '同花顺本地 DuckDB；沪深主板等权指数来自 trading_hithink/data/work/market_daily.parquet。'),
+    ('数据源', '同花顺本地 DuckDB；沪深主板等权指数来自 trading_hithink/初始研究/data/work/market_daily.parquet。'),
     ('样本', '251 个信号日；459 条信号日逐只；450 条完整；9 条未完成（1 条一字涨停、8 条持有未满/数据结束）。'),
     ('2026 样本', '49 个信号日；92 条逐只；84 条完整（3-7 月）；10 月 8 条未完成，不计入完整统计。'),
     ('口径', '信号日收盘确认，T+3 开盘买；2 仓、每仓 50% 当前权益；+20% 盘中止盈；15 个交易日到期卖；成本 0.175%/边；一字涨停/停牌不买、不递补。'),

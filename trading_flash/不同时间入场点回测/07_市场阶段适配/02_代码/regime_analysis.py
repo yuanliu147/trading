@@ -5,7 +5,7 @@
 输入（只读）：
 - 2026-10-24_主板恐慌反转_年化30/03_结果/最终_每日权益.csv、最终_年度.csv、最终_逐笔.csv
 - 06_不同信号日起点/03_结果/逐日首笔_逐只.csv、起点汇总.csv、起点固定持有期.csv
-- trading_hithink/data/work/market_daily.parquet（沪深主板等权市场）
+- trading_hithink/初始研究/data/work/market_daily.parquet（沪深主板等权市场）
 
 输出：
 - 03_结果/*.csv、指标.json
@@ -27,7 +27,7 @@ SRC06 = ROOT / '06_不同信号日起点' / '03_结果'
 RES = OUT / '03_结果'
 RES.mkdir(parents=True, exist_ok=True)
 
-MARKET = Path('/Users/admin/WorkSpace/trading/trading_hithink/data/work/market_daily.parquet')
+MARKET = FLASH.parent / 'trading_hithink' / '初始研究' / 'data' / 'work' / 'market_daily.parquet'
 
 # ------------------------------------------------------------------ 市场
 m = pd.read_parquet(MARKET, columns=[

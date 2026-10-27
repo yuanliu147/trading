@@ -1,0 +1,6 @@
+01_数据/*.parquet
+01_数据/*.db
+01_数据/*.sqlite
+__pycache__/
+*.pyc
+.DS_Store

@@ -59,7 +59,7 @@ for name,mask in C.items():
     for h in [5,10,20]:
         st=stats(mask,h); rows.append(dict(event=name,h=h,**st))
 r=pd.DataFrame(rows)
-r.to_csv('results/development/reversal_scan.csv',index=False)
+r.to_csv('03_结果/reversal_scan.csv',index=False)
 print(r[r.h==10].sort_values('ex',ascending=False).to_string(index=False))
 print('\n=== yearly rev_panic 10d ===')
 s=base[C['rev_panic']]

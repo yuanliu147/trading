@@ -1,0 +1,12 @@
+{
+  "period": [
+    "2005-01-01",
+    "2026-10-23"
+  ],
+  "top2_a": 1269,
+  "top2_b": 1333,
+  "top2_overlap": 1118,
+  "top2_jaccard": 0.7533692722371967,
+  "signal_days_a": 693,
+  "signal_days_b": 730
+}

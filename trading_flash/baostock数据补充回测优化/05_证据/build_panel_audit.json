@@ -1,0 +1,37 @@
+{
+  "stocks": 3489,
+  "delisted": 295,
+  "extract": {
+    "skipped": true
+  },
+  "repair": {
+    "repaired": 16,
+    "codes": 14
+  },
+  "panel": {
+    "rows_n": 12394196,
+    "codes": 3473,
+    "first_date": "2004-01-02",
+    "last_date": "2026-10-26"
+  },
+  "rsi": {
+    "rows_n": 12394196,
+    "nulls": 56143
+  },
+  "market": {
+    "rows_n": 12394196,
+    "null_all": 26368,
+    "null_listed": 26368
+  },
+  "start": "2004-01-01",
+  "prefixes": [
+    "600",
+    "601",
+    "603",
+    "605",
+    "000",
+    "001",
+    "002",
+    "003"
+  ]
+}

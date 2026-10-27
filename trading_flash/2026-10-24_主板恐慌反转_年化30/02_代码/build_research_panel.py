@@ -1,8 +1,11 @@
 import duckdb, os, time
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
 con=duckdb.connect()
 con.execute("PRAGMA threads=8; PRAGMA memory_limit='8GB';")
-src="data/work/features.parquet"
-out="01_数据/research_panel.parquet"
+src=str(ROOT / '01_数据' / 'features.parquet')
+out=str(ROOT / '01_数据' / 'research_panel.parquet')
 if os.path.exists(out): os.remove(out)
 cols = """
 thscode,date,open,high,low,close,volume,amount,listing_session,

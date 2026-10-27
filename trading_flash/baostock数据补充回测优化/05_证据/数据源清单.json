@@ -1,0 +1,22 @@
+{
+  "bars": {
+    "path": "/Users/admin/WorkSpace/trading/trading_flash/baostock数据补充回测优化/01_数据/bars.parquet",
+    "bytes": 766255544
+  },
+  "panel": {
+    "path": "/Users/admin/WorkSpace/trading/trading_flash/baostock数据补充回测优化/01_数据/panel.parquet",
+    "bytes": 2399543701
+  },
+  "baostock_db": {
+    "path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "bytes": 10310381568
+  },
+  "hithink_db": {
+    "path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "bytes": 1863593984
+  },
+  "panel_rows": 12394196,
+  "bars_rows": 12884255,
+  "panel_symbols": 3473,
+  "panel_dates": 5538
+}
