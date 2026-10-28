@@ -1,0 +1,43 @@
+{
+  "window": {
+    "start": "2016-10-13",
+    "end": "2026-10-23"
+  },
+  "unadjusted_price_comparison": {
+    "union_rows": 7008899.0,
+    "baostock_rows": 7008899.0,
+    "duckdb_rows": 6926520.0,
+    "matched_rows": 6926520.0,
+    "baostock_only_rows": 82379.0,
+    "duckdb_only_rows": 0.0,
+    "ohlc_mismatch_rows": 4.0,
+    "max_close_abs_diff": 0.03999999999999204,
+    "volume_mismatch_rows": 13581.0,
+    "amount_mismatch_rows": 1408750.0,
+    "max_amount_abs_diff": 485.6699981689453
+  },
+  "backward_adjusted_close_comparison": {
+    "matched_rows": 6926508.0,
+    "median_close_relative_diff": 1.220132694155375,
+    "p99_close_relative_diff": 37.54577383797729,
+    "max_close_relative_diff": 10764.421466000002,
+    "close_relative_diff_gt_1e5": 6259091.0
+  },
+  "candidate_baostock_coverage": {
+    "candidates": 1526.0,
+    "matched": 1526.0,
+    "st_candidates": 35.0,
+    "st_symbols": 15.0,
+    "missing_turn": 0.0,
+    "min_turn": 0.2246,
+    "median_turn": 2.1988,
+    "max_turn": 34.7557
+  },
+  "delisted_mainboard_symbols": 295,
+  "delisted_with_bars": 206,
+  "delisted_with_bars_in_window": 206,
+  "notes": [
+    "Baostock suspended sessions may be absent from the DuckDB trading-only panel.",
+    "This audit does not establish independent out-of-sample evidence."
+  ]
+}

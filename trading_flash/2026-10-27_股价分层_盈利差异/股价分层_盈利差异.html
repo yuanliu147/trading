@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>股价分层：低价真的更赚吗？｜当前策略 O03</title>
+<style>
+:root{
+  --paper:#f2eee6; --card:#fffdf8; --ink:#211f1b; --ink2:#4d473d; --muted:#756d60;
+  --faint:#9b9181; --line:#ded5c6; --line2:#c9bda9; --accent:#a93426; --soft:#f3e3dc;
+  --green:#2e6b55; --green-soft:#e6efe9; --amber:#9a6a18; --amber-soft:#faf1dd;
+  --blue:#3d5b72; --blue-soft:#edf3f7; --sage:#7d8f7a;
+  --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC",Georgia,serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Source Han Sans SC","Microsoft YaHei",sans-serif;
+  --mono:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); font-family:var(--sans); font-size:15px; line-height:1.65;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(169,52,38,.05), transparent 30%),
+    radial-gradient(circle at 94% 6%, rgba(61,91,114,.05), transparent 26%),
+    var(--paper);
+}
+.wrap{max-width:1060px;margin:0 auto;padding:44px 28px 80px}
+.kicker{font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.6vw,46px);line-height:1.18;margin:10px 0 14px;letter-spacing:-.01em}
+.lead{font-size:17px;color:var(--ink2);max-width:860px;margin:0}
+.lead strong{color:var(--ink);font-weight:600}
+.hero{padding-bottom:30px;border-bottom:2px solid var(--ink)}
+.verdict{
+  display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:26px;padding:18px 22px;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 1px 0 rgba(33,31,27,.03)
+}
+.verdict .num{font-family:var(--serif);font-size:30px;line-height:1.1;display:block}
+.verdict .lbl{font-size:12px;color:var(--muted);display:block;margin-top:2px}
+.verdict .vs{font-family:var(--serif);color:var(--faint);font-size:18px}
+.verdict .note{margin-left:auto;font-size:13px;color:var(--muted);border-left:1px solid var(--line);padding-left:22px}
+.verdict .note b{color:var(--accent);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0 6px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .v{font-family:var(--serif);font-size:24px;line-height:1.2}
+.kpi .k{font-size:12px;color:var(--muted);margin-top:2px}
+section{margin-top:52px}
+h2{font-family:var(--serif);font-size:26px;font-weight:600;margin:0 0 10px;letter-spacing:-.01em}
+h3{font-size:16px;margin:26px 0 8px}
+p{margin:0 0 12px;color:var(--ink2)}
+.muted{color:var(--muted)}
+.small{font-size:12.5px;color:var(--muted);line-height:1.6}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-top:16px}
+.chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+svg{display:block;width:100%;height:auto;margin-top:10px}
+.grid{stroke:#e7dfd1;stroke-width:1}
+.zero{stroke:#b9ad99;stroke-width:1.2}
+.axis{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.axislab{font-family:var(--sans);font-size:11.5px;fill:var(--muted)}
+.bar-label{font-family:var(--mono);font-size:10.5px;fill:var(--ink2);paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
+.band-bad{fill:rgba(169,52,38,.045)}
+.whisker{stroke:#5c5346;stroke-width:1.1}
+.whisker-cap{stroke:#5c5346;stroke-width:1.1}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+th{font-weight:500;color:var(--muted);font-size:11.5px;letter-spacing:.04em;text-align:right;padding:8px 8px;border-bottom:1.5px solid var(--line2);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:hover{background:rgba(169,52,38,.03)}
+tr.row-bad td{background:rgba(169,52,38,.055)}
+tr.row-low td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+.up{color:var(--accent)}
+.down{color:var(--green)}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;line-height:1.7;background:var(--soft);color:var(--accent);white-space:nowrap}
+.tag.gray{background:#eee8dc;color:var(--muted)}
+.tag.green{background:var(--green-soft);color:var(--green)}
+.table-wrap{overflow-x:auto;margin-top:4px}
+.note{margin-top:10px;font-size:12.5px;color:var(--muted);line-height:1.65}
+.quart{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.q .qt{font-size:12px;color:var(--muted)}
+.q .qv{font-family:var(--serif);font-size:23px;line-height:1.3}
+.q .qs{font-size:11.5px;color:var(--muted)}
+.split-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.mini .v{font-family:var(--serif);font-size:26px;line-height:1.2}
+.mini .k{font-size:12px;color:var(--muted)}
+details{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+summary{cursor:pointer;font-size:13px;color:var(--blue)}
+.callout{border-left:3px solid var(--accent);background:var(--soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14px;color:var(--ink2)}
+.callout b{color:var(--ink)}
+ul.clean{margin:8px 0 0;padding-left:20px;color:var(--ink2)}
+ul.clean li{margin:8px 0}
+ul.clean li b{color:var(--ink)}
+.footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line2);font-size:12px;color:var(--muted);line-height:1.7}
+@media (max-width:820px){
+  .wrap{padding:28px 16px 60px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .quart{grid-template-columns:repeat(2,1fr)}
+  .split-grid{grid-template-columns:1fr}
+  .verdict .note{margin-left:0;border-left:none;padding-left:0}
+  .verdict{gap:16px}
+  th,td{padding:7px 6px;font-size:12.5px}
+}
+@media print{
+  body{background:#fff}
+  .wrap{max-width:none;padding:16px}
+  section{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">当前策略 · 主板恐慌洗盘反转 O03 · 实际价账户 · 97 笔已平仓</div>
+  <h1>股价分层：低价真的更赚吗？</h1>
+  <p class="lead">把交易按<strong>实际成交价</strong>分成六档后，结论是：<strong>没有稳定的“低于 15 元更赚”</strong>。低于 15 元与 15 元以上的每笔平均净收益几乎一样；按投入资金加权，低价档反而更低。真正难看的是 &lt;5 元档，而它主要被 2026 年 6–7 月的三笔亏损拖累。</p>
+  <p class="small" style="margin-top:10px">范围：本页只分析 <b>trading_flash</b> 的当前策略 O03（主板恐慌洗盘反转，实际价账户）。21 号 45 仓位主系统、70/15 子池是另一套信号与持有期，结论不可直接互推。</p>
+  <div class="verdict">
+    <div><span class="num up" id="vLt">+6.68%</span><span class="lbl">低于 15 元 · 63 笔 · 每笔平均</span></div>
+    <div class="vs">vs</div>
+    <div><span class="num up" id="vGe">+6.53%</span><span class="lbl">15 元以上 · 34 笔 · 每笔平均</span></div>
+    <div class="note">差 <b>+0.16 个百分点</b><br>Welch p=0.95 · 统计上等于零<br><span class="muted">按资金加权：+5.57% vs +7.55%</span></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">97</div><div class="k">笔已平仓交易（另有 2 笔未平仓）</div></div>
+    <div class="kpi"><div class="v up">+31.79 万</div><div class="k">累计净盈亏（费用后）</div></div>
+    <div class="kpi"><div class="v">70.1%</div><div class="k">胜率</div></div>
+    <div class="kpi"><div class="v">12.9 日</div><div class="k">平均持有交易日</div></div>
+  </div>
+</header>
+
+<section>
+  <h2>一、六档：不是越低越好，是中间略好</h2>
+  <p>按实际成交价切六档。每笔平均最高的是 10–15 元档（+8.6%），最低的是 &lt;5 元档（+2.6%）；但除 &lt;5 元外，其余五档都落在 +4% 到 +9% 之间，95% 区间大面积重叠。价格和收益的关系更像倒 U，而不是单调向下。</p>
+  <div class="card">
+    <div class="chart-head">
+      <div class="legend">
+        <span><i style="background:#a93426"></i>每笔平均（等权）</span>
+        <span><i style="background:#3d5b72"></i>资金加权（总盈亏÷总成本）</span>
+        <span><i style="background:#5c5346;height:2px;border-radius:0"></i>95% 区间</span>
+      </div>
+      <span class="small">横轴：实际成交价（元）</span>
+    </div>
+    <svg id="barChart" role="img" aria-label="按实际成交价分档的每笔平均收益与资金加权收益"></svg>
+    <div class="note">条形上方的数字是每笔平均净收益率；蓝色条是资金加权收益。&lt;5 元档每笔平均仍为正，但资金加权为负——因为亏损发生在后期更大的仓位上。</div>
+  </div>
+  <div class="table-wrap">
+    <table id="bucketTable">
+      <thead><tr>
+        <th>价格档</th><th>笔数</th><th>胜率</th><th>每笔平均</th><th>95% 区间</th>
+        <th>中位数</th><th>资金加权</th><th>止盈占比</th><th>净盈亏</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="note">每笔平均 = 97 笔等权；资金加权 = 档内净盈亏合计 ÷ 档内买入成本合计，会被后期大仓位交易放大，不能当成“只做这一档”的收益。</div>
+  <h3>换成四分位，形态一样：中间两档强，两端弱</h3>
+  <div class="quart" id="quart"></div>
+  <div class="note">四分位按 97 笔的实际成交价排序切分，每档约 24–25 笔。Q1 最便宜、Q4 最贵；资金加权同样受后期大仓位影响。</div>
+  <div class="card" style="margin-top:18px">
+    <div class="chart-head">
+      <h3 style="margin:0">逐笔散点：价格横着走，收益竖着跳</h3>
+      <div class="legend">
+        <span><i style="background:#9a6a18"></i>2017–19</span>
+        <span><i style="background:#3d5b72"></i>2020–22</span>
+        <span><i style="background:#7d8f7a"></i>2023–25</span>
+        <span><i style="background:#a93426"></i>2026</span>
+      </div>
+    </div>
+    <svg id="scatter" role="img" aria-label="实际成交价与单笔净收益的散点图"></svg>
+    <div class="note">每个点是一笔已平仓交易；横轴为对数刻度。低价区既有大赢家也有大亏损，价格本身分不开收益。红色虚线是全样本平均 +6.63%。</div>
+  </div>
+</section>
+
+<section>
+  <h2>二、同日对照：把市场涨跌拿掉</h2>
+  <p>同一天买入的两只票，面对同一个市场窗口，价差不是选股逻辑，而是一个天然对照。31 个“双仓”买入日里，便宜的那只 17 次跑赢（54.8%），平均多赚 2.50 个百分点，p=0.34；只看一笔低于 15、一笔 15 元以上的 15 组，便宜的那只 8 次跑赢，平均多 3.74 个百分点。方向略偏低价，但远没到能当规则的程度。</p>
+  <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+    <div class="kpi"><div class="v">17 / 31</div><div class="k">便宜的那只跑赢次数</div></div>
+    <div class="kpi"><div class="v up">+2.50pp</div><div class="k">平均收益差（便宜 − 贵）</div></div>
+    <div class="kpi"><div class="v">−2.49 ~ +7.45pp</div><div class="k">95% 区间 · p=0.34</div></div>
+  </div>
+  <details>
+    <summary>展开 15 组“跨 15 元档”的同日配对</summary>
+    <div class="table-wrap">
+      <table id="pairTable">
+        <thead><tr><th>买入日</th><th>便宜（代码/价）</th><th>贵（代码/价）</th><th>便宜收益</th><th>贵收益</th><th>差</th><th>谁赢</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="note">只列一笔 &lt;15、一笔 ≥15 的配对；同日两笔都落在同一档的 16 组未列。差 = 便宜收益 − 贵收益。</div>
+  </details>
+</section>
+
+<section>
+  <h2>三、换一种价格基准，结论不变</h2>
+  <p>实际价会被拆股/送转改写，所以再用信号日收盘价和后复权价各切一次。三套口径都没有出现“低于 15 元显著更好”。后复权口径的差值略大（+1.29pp），但 p=0.59，而且资金加权方向相反（+4.50% vs +8.02%）——等权说低价好、钱说高价好，说明差异只是噪声和仓位时点的混合。</p>
+  <div class="table-wrap">
+    <table id="baseTable">
+      <thead><tr><th>价格基准</th><th>&lt;15 笔数</th><th>&lt;15 每笔平均</th><th>&lt;15 资金加权</th><th>≥15 笔数</th><th>≥15 每笔平均</th><th>≥15 资金加权</th><th>差值</th><th>p 值</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="note">p 值为 Welch t 检验；差值为“&lt;15 平均 − ≥15 平均”。后复权价使用买入日的 hfq_open，实际价与信号日收盘价来自同一面板。</div>
+  <h3>分阶段看，方向会翻转</h3>
+  <div class="table-wrap">
+    <table id="eraTable">
+      <thead><tr><th>阶段</th><th>&lt;15 笔数</th><th>&lt;15 每笔</th><th>&lt;15 资金加权</th><th>≥15 笔数</th><th>≥15 每笔</th><th>≥15 资金加权</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="note">2017–19 低价档更强，2020–22 反过来，2023–26 又是高价略强。方向不稳定，说明“价格低”本身不是一个可依赖的收益因子。</div>
+</section>
+
+<section>
+  <h2>四、&lt;5 元档为什么难看：主要是 2026 年 6–7 月的三笔亏损</h2>
+  <p>&lt;5 元档 10 笔，每笔平均还是 +2.6%，但资金加权 −3.4%、合计亏 3.34 万。拆开看，4 笔 2026 年交易平均 −9.3%（合计 −5.87 万），其余 6 笔平均 +10.6%（合计 +2.53 万）。亏损集中在 2026-06-08 和 2026-07-16 两批。6 月 8 日两笔伴随等权市场 −6.9%；7 月 16 日那笔市场 +2.3% 仍亏 12.1%，是个股自身问题。不管归因于市场窗口还是个股，这 4 笔都不是“低价”这个标签的稳定规律。</p>
+  <div class="card">
+    <div class="chart-head"><h3 style="margin:0">2026 年的 9 笔：低价档的亏损集中在 6–7 月</h3><span class="small">浅色底 = 实际成交价低于 15 元</span></div>
+    <div class="table-wrap">
+      <table id="y2026Table">
+        <thead><tr><th>买入日</th><th>代码</th><th>成交价</th><th>净收益</th><th>净盈亏</th><th>退出</th><th>同期市场</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="callout"><b>实际价不是稳定的股票特征。</b> 603007 实际 4.73 元、后复权 22.57 元；002777 实际 23.71 元、后复权 118.36 元。用实际价分档，混进了“曾经拆过股”这一层；用后复权价分档，也看不到“越低越好”。</div>
+  <div class="table-wrap">
+    <table id="splitTable">
+      <thead><tr><th>买入日</th><th>代码</th><th>实际成交价</th><th>后复权价</th><th>倍数</th><th>该笔净收益</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>五、结论与边界</h2>
+  <ul class="clean">
+    <li><b>不要因为“低于 15 更好”给当前策略加价格过滤。</b> 97 笔里没有这个证据：&lt;15 与 ≥15 的每笔平均差 +0.16pp（p=0.95），资金加权反而是 +5.57% vs +7.55%。</li>
+    <li><b>子集统计不等于过滤器回测。</b> 真要加价格上限，必须改候选池、重新排队成交并重跑账户；不能从这 97 笔里直接推断“过滤后更好”。现在能说的是：没有看到值得加的理由。</li>
+    <li><b>如果一定要设一条价格底线，&lt;5 元档是唯一资金加权为负的档。</b> 但它只有 10 笔，亏损集中在 2026 年 6–7 月，且拆股会污染实际价；不足以立规则。</li>
+    <li><b>10–15 元档描述性最好</b>（+8.6%，止盈率 36.8%），但只有 19 笔，95% 区间 [+3.5%, +13.5%]，与 5–10、15–25 大量重叠，不能当成“甜点区”去优化。</li>
+    <li><b>这套策略的收益更多来自市场 β 和个股反转。</b> 97 笔对同期等权市场的回归：β≈0.83、α≈+5.4%/笔，R²≈0.12；价格与收益的 Spearman 相关只有 0.03，分档解释不了差异。</li>
+    <li><b>这是历史回测，不是独立样本外证明。</b> 2017-11 至 2026-08，2024–2026 已参与研究；不构成投资建议。</li>
+  </ul>
+</section>
+
+<div class="footer">
+  <b>数据口径</b>：O03_c20000 实际价账户，20,000 元起，2 仓，单仓约 50%，信号后第 3 个交易日开盘买入，持有 15 个交易日或 +20% 止盈；100 股整手，佣金/过户费/印花税/0.1% 滑点/分红税后。收益率 = 单笔净收益率。<br>
+  <b>样本</b>：97 笔已平仓（2017-11-23 至 2026-08-10）；另有 2 笔未平仓（600783 13.27 元、603778 7.51 元，均低于 15 元，2026-10-23 合计浮动约 −1.0%），未计入。<br>
+  <b>统计</b>：Welch t 检验、Mann–Whitney、20,000 次 bootstrap、同日配对；所有分档均为描述统计，未做多重比较校正。<br>
+  <b>来源</b>：<span style="font-family:var(--mono)">flash 审计修复/results/accounts/O03_c20000/trades.csv</span>；<span style="font-family:var(--mono)">research_panel.parquet</span>。生成日期 2026-10-27。
+</div>
+
+</div>
+<script id="data" type="application/json">{"meta":{"n":97,"start":"2017-11-23","end":"2026-08-10","total_pnl":317862.3132000001,"total_cost":5096804.405630001,"win":0.7010309278350515,"avg":0.06627757210776773,"median":0.0745416407843977,"avg_hold":12.938144329896907,"open_n":2,"open_note":"600783 13.27 元、603778 7.51 元，均低于 15 元，2026-10-23 合计浮动约 -1.0%"},"buckets":[{"bucket":"<5","n":10.0,"win":0.5,"avg":0.026265065823998818,"ci_lo":-0.05867616564100012,"ci_hi":0.11322784155502134,"median":0.02517474470678755,"cap_weighted":-0.033761049703034826,"profit_factor":0.5473039768307549,"tp_share":0.2,"pnl":-33379.27606999999,"avg_pnl":-3337.927606999999,"market":0.003405913581779474,"excess":0.022859152242219332,"vol20":0.48452766219283283},{"bucket":"5-10","n":34.0,"win":0.7352941176470589,"avg":0.06783804195468343,"ci_lo":0.03090310873385747,"ci_hi":0.10387735146221008,"median":0.059658398323542944,"cap_weighted":0.0859509828821836,"profit_factor":5.163940517221522,"tp_share":0.3235294117647059,"pnl":145059.02541000012,"avg_pnl":4266.441923823533,"market":0.021539215155108177,"excess":0.046298826799575254,"vol20":0.5079881865236062},{"bucket":"10-15","n":19.0,"win":0.7368421052631579,"avg":0.0863670438691057,"ci_lo":0.03460281500796855,"ci_hi":0.13509281657927288,"median":0.0848008740605883,"cap_weighted":0.10917611635518541,"profit_factor":8.776258636205203,"tp_share":0.3684210526315789,"pnl":76003.34462999999,"avg_pnl":4000.1760331578944,"market":0.008323343585309746,"excess":0.07804370028379595,"vol20":0.4735460470165651},{"bucket":"15-25","n":21.0,"win":0.7619047619047619,"avg":0.06940832223132366,"ci_lo":0.02280906963869493,"ci_hi":0.11515212138485048,"median":0.0890612536708062,"cap_weighted":0.07277931219699779,"profit_factor":5.518331503329061,"tp_share":0.23809523809523808,"pnl":80033.04362000004,"avg_pnl":3811.097315238097,"market":0.02537189177146894,"excess":0.04403643045985472,"vol20":0.536501846821029},{"bucket":"25-40","n":8.0,"win":0.625,"avg":0.044162199213597174,"ci_lo":-0.03216257624161254,"ci_hi":0.12045377716726843,"median":0.04489195172000835,"cap_weighted":0.04310923984168667,"profit_factor":2.2213615025346516,"tp_share":0.25,"pnl":17318.302789999972,"avg_pnl":2164.7878487499966,"market":-0.021513230802591668,"excess":0.06567543001618883,"vol20":0.4348985121194578},{"bucket":">=40","n":5.0,"win":0.6,"avg":0.0815868431349327,"ci_lo":-0.017636241894304155,"ci_hi":0.18080992816416958,"median":0.1207582969110024,"cap_weighted":0.1472986960761818,"profit_factor":20.584568820076413,"tp_share":0.4,"pnl":32827.87281999999,"avg_pnl":6565.574563999998,"market":0.02220211712123641,"excess":0.059384726013696286,"vol20":0.5059115890031475}],"quartiles":[{"quartile":"Q1 ≤6.88","n":25.0,"win":0.6,"avg":0.049068804156637835,"ci_lo":-0.0011778415702079722,"ci_hi":0.09811043521999681,"median":0.0449352999014589,"cap_weighted":-0.0066528250618730425,"profit_factor":0.8940750034880559,"tp_share":0.28,"pnl":-10419.53696999999,"avg_pnl":-416.7814787999996,"market":0.019669095370997498,"excess":0.029399708785640338,"vol20":0.49868401170026366},{"quartile":"Q2 6.88-10.53","n":24.0,"win":0.7916666666666666,"avg":0.07859630847655037,"ci_lo":0.036262614106366116,"ci_hi":0.11927239263920572,"median":0.06642946173703995,"cap_weighted":0.12091201746668369,"profit_factor":17.35935053884349,"tp_share":0.3333333333333333,"pnl":171547.18032000007,"avg_pnl":7147.799180000003,"market":0.011550307917124364,"excess":0.06704600055942601,"vol20":0.5124901270319073},{"quartile":"Q3 10.53-18.40","n":24.0,"win":0.7916666666666666,"avg":0.09039434649573182,"ci_lo":0.043511332793805986,"ci_hi":0.13426840317970062,"median":0.09500408807952346,"cap_weighted":0.09844431346765428,"profit_factor":8.58028719130584,"tp_share":0.375,"pnl":91507.97471000005,"avg_pnl":3812.8322795833355,"market":0.01624808655539446,"excess":0.07414625994033736,"vol20":0.49533041257475957},{"quartile":"Q4 >18.40","n":24.0,"win":0.625,"avg":0.04776786130011466,"ci_lo":0.004615278766825662,"ci_hi":0.09008099848448763,"median":0.050882609674930704,"cap_weighted":0.05516910844766787,"profit_factor":3.1048554926758953,"tp_share":0.20833333333333334,"pnl":65226.69513999996,"avg_pnl":2717.778964166665,"market":0.009890066415969378,"excess":0.037877794884145284,"vol20":0.48894755996633715}],"pairs":[{"买入日":"2017-11-23","便宜价":21.33,"贵价":47.67,"便宜收益":0.0890612536708062,"贵收益":-0.0749754841885601,"差(便宜-贵)":0.1640367378593663,"跨15元档":false,"便宜代码":"601116.SH","贵代码":"603716.SH"},{"买入日":"2017-12-14","便宜价":10.88,"贵价":24.91,"便宜收益":0.2282808444911111,"贵收益":0.0284202724855149,"差(便宜-贵)":0.1998605720055962,"跨15元档":true,"便宜代码":"601882.SH","贵代码":"002820.SZ"},{"买入日":"2018-02-07","便宜价":12.27,"贵价":16.76,"便宜收益":0.1233774720176983,"贵收益":0.03907281797782,"差(便宜-贵)":0.0843046540398783,"跨15元档":true,"便宜代码":"603966.SH","贵代码":"002843.SZ"},{"买入日":"2018-06-20","便宜价":5.6,"贵价":9.58,"便宜收益":-0.0178918191850509,"贵收益":0.0794601306742636,"差(便宜-贵)":-0.0973519498593145,"跨15元档":false,"便宜代码":"601011.SH","贵代码":"002497.SZ"},{"买入日":"2018-07-11","便宜价":6.25,"贵价":10.32,"便宜收益":0.1292124631933291,"贵收益":0.0445977943351601,"差(便宜-贵)":0.08461466885816901,"跨15元档":false,"便宜代码":"600438.SH","贵代码":"600392.SH"},{"买入日":"2018-08-23","便宜价":7.35,"贵价":14.02,"便宜收益":0.0159069446807695,"贵收益":-0.0829514966417355,"差(便宜-贵)":0.098858441322505,"跨15元档":false,"便宜代码":"002607.SZ","贵代码":"002320.SZ"},{"买入日":"2018-09-14","便宜价":12.78,"贵价":31.74,"便宜收益":0.1942979223661354,"贵收益":-0.0169280924036514,"差(便宜-贵)":0.2112260147697868,"跨15元档":true,"便宜代码":"002895.SZ","贵代码":"002896.SZ"},{"买入日":"2018-10-17","便宜价":18.57,"贵价":22.51,"便宜收益":0.0961601553660344,"贵收益":-0.1415202584966157,"差(便宜-贵)":0.2376804138626501,"跨15元档":false,"便宜代码":"603533.SH","贵代码":"002856.SZ"},{"买入日":"2018-12-20","便宜价":7.17,"贵价":16.87,"便宜收益":0.0403691336446476,"贵收益":0.2278895317426556,"差(便宜-贵)":-0.18752039809800802,"跨15元档":true,"便宜代码":"002607.SZ","贵代码":"002907.SZ"},{"买入日":"2019-05-08","便宜价":11.65,"贵价":13.98,"便宜收益":0.0772320788780798,"贵收益":0.0848008740605883,"差(便宜-贵)":-0.007568795182508498,"跨15元档":false,"便宜代码":"000636.SZ","贵代码":"603386.SH"},{"买入日":"2019-10-24","便宜价":8.92,"贵价":22.03,"便宜收益":-0.0720586495457886,"贵收益":-0.0631785387078489,"差(便宜-贵)":-0.0088801108379397,"跨15元档":true,"便宜代码":"000610.SZ","贵代码":"600345.SH"},{"买入日":"2019-11-14","便宜价":5.01,"贵价":5.69,"便宜收益":0.1937680419101212,"贵收益":-0.0383896172286558,"差(便宜-贵)":0.232157659138777,"跨15元档":false,"便宜代码":"600860.SH","贵代码":"601162.SH"},{"买入日":"2020-03-24","便宜价":6.66,"贵价":6.88,"便宜收益":0.0449352999014589,"贵收益":0.0187779241465267,"差(便宜-贵)":0.0261573757549322,"跨15元档":false,"便宜代码":"002057.SZ","贵代码":"000723.SZ"},{"买入日":"2020-09-17","便宜价":5.29,"贵价":7.84,"便宜收益":0.0267721477015952,"贵收益":-0.0473872564611635,"差(便宜-贵)":0.07415940416275871,"跨15元档":false,"便宜代码":"000652.SZ","贵代码":"603879.SH"},{"买入日":"2021-01-04","便宜价":4.71,"贵价":38.32,"便宜收益":0.1086938373772837,"贵收益":0.0164389565756702,"差(便宜-贵)":0.09225488080161351,"跨15元档":true,"便宜代码":"000698.SZ","贵代码":"000710.SZ"},{"买入日":"2021-02-04","便宜价":8.28,"贵价":54.29,"便宜收益":0.093724151000969,"贵收益":-0.0294942690027015,"差(便宜-贵)":0.12321842000367049,"跨15元档":true,"便宜代码":"002286.SZ","贵代码":"600211.SH"},{"买入日":"2021-10-20","便宜价":8.74,"贵价":14.05,"便宜收益":-0.155764019229682,"贵收益":-0.0001182883468439,"差(便宜-贵)":-0.1556457308828381,"跨15元档":false,"便宜代码":"000822.SZ","贵代码":"600007.SH"},{"买入日":"2022-02-07","便宜价":12.81,"贵价":26.0,"便宜收益":0.1948788581181441,"贵收益":0.0733449468643465,"差(便宜-贵)":0.12153391125379759,"跨15元档":true,"便宜代码":"002667.SZ","贵代码":"002612.SZ"},{"买入日":"2022-03-14","便宜价":10.08,"贵价":30.34,"便宜收益":-0.0084733371989563,"贵收益":0.1952565028931973,"差(便宜-贵)":-0.20372984009215359,"跨15元档":true,"便宜代码":"603518.SH","贵代码":"002326.SZ"},{"买入日":"2022-09-21","便宜价":9.65,"贵价":10.86,"便宜收益":-0.043942088010485,"贵收益":0.0039968613685303,"差(便宜-贵)":-0.0479389493790153,"跨15元档":false,"便宜代码":"002639.SZ","贵代码":"603716.SH"},{"买入日":"2022-10-19","便宜价":5.05,"贵价":8.3,"便宜收益":-0.039086194025197,"贵收益":0.1957704972610736,"差(便宜-贵)":-0.2348566912862706,"跨15元档":false,"便宜代码":"000838.SZ","贵代码":"600706.SH"},{"买入日":"2023-04-28","便宜价":7.3,"贵价":16.33,"便宜收益":0.0682372446177693,"贵收益":0.1433915118382756,"差(便宜-贵)":-0.07515426722050629,"跨15元档":true,"便宜代码":"002909.SZ","贵代码":"603990.SH"},{"买入日":"2023-10-26","便宜价":6.22,"贵价":23.71,"便宜收益":0.084102377754774,"贵收益":0.1595080934798369,"差(便宜-贵)":-0.07540571572506291,"跨15元档":true,"便宜代码":"603879.SH","贵代码":"002777.SZ"},{"买入日":"2023-12-29","便宜价":10.18,"贵价":18.24,"便宜收益":0.0745416407843977,"贵收益":0.0329368311607405,"差(便宜-贵)":0.04160480962365721,"跨15元档":true,"便宜代码":"002517.SZ","贵代码":"002555.SZ"},{"买入日":"2024-01-24","便宜价":7.12,"贵价":9.74,"便宜收益":0.1954089689489721,"贵收益":0.0646216788563106,"差(便宜-贵)":0.13078729009266152,"跨15元档":false,"便宜代码":"601949.SH","贵代码":"600633.SH"},{"买入日":"2024-06-07","便宜价":3.65,"贵价":19.54,"便宜收益":-0.0639691762333574,"贵收益":-0.0535733176109115,"差(便宜-贵)":-0.010395858622445908,"跨15元档":true,"便宜代码":"600186.SH","贵代码":"603629.SH"},{"买入日":"2024-07-01","便宜价":10.53,"贵价":26.63,"便宜收益":0.2114888875331161,"贵收益":-0.1083078895168819,"差(便宜-贵)":0.319796777049998,"跨15元档":true,"便宜代码":"603615.SH","贵代码":"605198.SH"},{"买入日":"2024-09-02","便宜价":7.32,"贵价":36.74,"便宜收益":0.0290042621705241,"贵收益":0.1006728669707551,"差(便宜-贵)":-0.071668604800231,"跨15元档":true,"便宜代码":"600630.SH","贵代码":"000628.SZ"},{"买入日":"2026-03-26","便宜价":19.64,"贵价":101.82,"便宜收益":0.0239039071837248,"贵收益":0.1961861512942402,"差(便宜-贵)":-0.1722822441105154,"跨15元档":false,"便宜代码":"000029.SZ","贵代码":"605255.SH"},{"买入日":"2026-06-08","便宜价":3.83,"贵价":4.4,"便宜收益":-0.1444764309060323,"贵收益":-0.1644892327994721,"差(便宜-贵)":0.02001280189343982,"跨15元档":false,"便宜代码":"000892.SZ","贵代码":"000572.SZ"},{"买入日":"2026-06-30","便宜价":2.39,"贵价":7.89,"便宜收益":0.0574979375655218,"贵收益":0.1964972757273223,"差(便宜-贵)":-0.13899933816180052,"跨15元档":false,"便宜代码":"600408.SH","贵代码":"600829.SH"}],"paired":{"dates":31,"cheap_wins":17,"mean":0.024995688330149913,"median":0.0261573757549322,"ci_lo":-0.02489426224182514,"ci_hi":0.07454378646494031,"p_ttest":0.34312191143697984,"p_wilcoxon":0.35696212109178305,"cross_n":15,"cross_cheap_wins":8,"cross_mean":0.03740301627677672},"baselines":[{"基准":"实际成交价","低于15笔数":63,"低于15平均":0.0668272685430513,"15以上笔数":34,"15以上平均":0.0652590169482717,"差值":0.0015682515947795933,"p值":0.9487396057980341,"低于15资金加权":0.05565036430785515,"15以上资金加权":0.07549842022024708},{"基准":"信号日收盘价","低于15笔数":63,"低于15平均":0.06859247204576346,"15以上笔数":34,"15以上平均":0.06198819869324623,"差值":0.0066042733525172315,"p值":0.784644339911189,"低于15资金加权":0.06157916644776337,"15以上资金加权":0.06409919354179146},{"基准":"后复权成交价","低于15笔数":48,"低于15平均":0.07277334580260757,"15以上笔数":49,"15以上平均":0.05991436522302669,"差值":0.012858980579580875,"p值":0.5863990412118214,"低于15资金加权":0.045040935144061586,"15以上资金加权":0.08020412068990394}],"era_table":[{"阶段":"2017-19","低于15笔数":17,"低于15每笔平均":0.08425581650203316,"低于15资金加权":0.08091618896873219,"15以上笔数":13,"15以上每笔平均":0.03690919631081269,"15以上资金加权":0.030587616290469223},{"阶段":"2020-22","低于15笔数":21,"低于15每笔平均":0.04588209590875663,"低于15资金加权":0.03918052772139698,"15以上笔数":7,"15以上每笔平均":0.07764193119211169,"15以上资金加权":0.07658561801153008},{"阶段":"2023-26","低于15笔数":25,"低于15每笔平均":0.07256980094375118,"低于15资金加权":0.05784033687656093,"15以上笔数":14,"15以上每笔平均":0.0853923932754208,"15以上资金加权":0.08129539455394331}],"market_fit":{"alpha":0.05437609932708288,"alpha_t":4.699623743395698,"beta":0.8268164664623988,"beta_t":3.5479599761152447,"r2":0.117002060201853},"y2026":[{"buy_date":"2026-03-26","thscode":"605255.SH","buy_price":101.82,"return":0.1961861512942402,"net_pnl":25975.127879999985,"exit_reason":"profit_target","mkt":0.0199589659241044},{"buy_date":"2026-03-26","thscode":"000029.SZ","buy_price":19.64,"return":0.0239039071837248,"net_pnl":3334.1230799999903,"exit_reason":"max_holding","mkt":0.028929598620365926},{"buy_date":"2026-06-08","thscode":"000572.SZ","buy_price":4.4,"return":-0.1644892327994721,"net_pnl":-25627.504320000007,"exit_reason":"max_holding","mkt":-0.06896308924621286},{"buy_date":"2026-06-08","thscode":"000892.SZ","buy_price":3.83,"return":-0.1444764309060323,"net_pnl":-22526.98602000001,"exit_reason":"max_holding","mkt":-0.06896308924621286},{"buy_date":"2026-06-30","thscode":"600829.SH","buy_price":7.89,"return":0.1964972757273223,"net_pnl":25897.802220000012,"exit_reason":"profit_target","mkt":-0.010263770459362664},{"buy_date":"2026-06-30","thscode":"600408.SH","buy_price":2.39,"return":0.0574979375655218,"net_pnl":7587.560160000023,"exit_reason":"max_holding","mkt":-0.06302298832538344},{"buy_date":"2026-07-21","thscode":"603778.SH","buy_price":8.43,"return":0.2063605099684759,"net_pnl":28711.17810000002,"exit_reason":"profit_target","mkt":0.06744108783983482},{"buy_date":"2026-07-16","thscode":"000036.SZ","buy_price":4.74,"return":-0.1211502730808975,"net_pnl":-18093.650399999984,"exit_reason":"max_holding","mkt":0.022724940546225536},{"buy_date":"2026-08-05","thscode":"002759.SZ","buy_price":15.16,"return":0.1960086947314542,"net_pnl":29722.644,"exit_reason":"profit_target","mkt":0.036356396997837104}],"low5_ex2026":{"n":6,"avg":0.10587810957681136,"pnl":25281.304509999984},"low5_2026":{"n":4,"avg":-0.09315449980522002,"pnl":-58660.58057999998},"splits":[{"buy_date":"2023-10-26","thscode":"002777.SZ","buy_price":23.71,"buy_hfq_open":118.3624,"hfq_ratio":4.9921,"return":0.1595},{"buy_date":"2025-04-17","thscode":"603007.SH","buy_price":4.73,"buy_hfq_open":22.5676,"hfq_ratio":4.7712,"return":0.1658},{"buy_date":"2022-09-21","thscode":"603716.SH","buy_price":10.86,"buy_hfq_open":38.2205,"hfq_ratio":3.5194,"return":0.004},{"buy_date":"2025-01-09","thscode":"603960.SH","buy_price":18.4,"buy_hfq_open":58.5694,"hfq_ratio":3.1831,"return":0.094},{"buy_date":"2023-12-29","thscode":"002517.SZ","buy_price":10.18,"buy_hfq_open":31.1855,"hfq_ratio":3.0634,"return":0.0745}],"trades":[{"buy_date":"2017-11-23","sell_date":"2017-12-13","thscode":"601116.SH","buy_price":21.33,"return":0.0890612536708062,"net_pnl":760.3311199999989,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2017-11-23","sell_date":"2017-12-13","thscode":"603716.SH","buy_price":47.67,"return":-0.0749754841885601,"net_pnl":-715.2054399999997,"exit_reason":"max_holding","bucket":">=40","era":"2017-19"},{"buy_date":"2017-12-14","sell_date":"2017-12-29","thscode":"601882.SH","buy_price":10.88,"return":0.2282808444911111,"net_pnl":2236.5121400000007,"exit_reason":"profit_target","bucket":"10-15","era":"2017-19"},{"buy_date":"2017-12-14","sell_date":"2018-01-04","thscode":"002820.SZ","buy_price":24.91,"return":0.0284202724855149,"net_pnl":283.3273599999993,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2018-02-07","sell_date":"2018-03-06","thscode":"603966.SH","buy_price":12.27,"return":0.1233774720176983,"net_pnl":1363.101560000001,"exit_reason":"max_holding","bucket":"10-15","era":"2017-19"},{"buy_date":"2018-02-07","sell_date":"2018-03-06","thscode":"002843.SZ","buy_price":16.76,"return":0.03907281797782,"net_pnl":393.1194799999994,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2018-04-26","sell_date":"2018-05-18","thscode":"002365.SZ","buy_price":24.29,"return":0.1097529786832493,"net_pnl":1333.5253500000017,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2018-06-20","sell_date":"2018-07-10","thscode":"601011.SH","buy_price":5.6,"return":-0.0178918191850509,"net_pnl":-220.52108000000044,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2018-06-20","sell_date":"2018-07-10","thscode":"002497.SZ","buy_price":9.58,"return":0.0794601306742636,"net_pnl":990.0135599999994,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2018-07-11","sell_date":"2018-07-31","thscode":"600438.SH","buy_price":6.25,"return":0.1292124631933291,"net_pnl":1696.5935599999991,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2018-07-11","sell_date":"2018-07-31","thscode":"600392.SH","buy_price":10.32,"return":0.0445977943351601,"net_pnl":552.53312,"exit_reason":"max_holding","bucket":"10-15","era":"2017-19"},{"buy_date":"2018-08-23","sell_date":"2018-09-12","thscode":"002320.SZ","buy_price":14.02,"return":-0.0829514966417355,"net_pnl":-1163.4179999999997,"exit_reason":"max_holding","bucket":"10-15","era":"2017-19"},{"buy_date":"2018-08-23","sell_date":"2018-09-12","thscode":"002607.SZ","buy_price":7.35,"return":0.0159069446807695,"net_pnl":222.22445999999945,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2018-09-14","sell_date":"2018-10-11","thscode":"002895.SZ","buy_price":12.78,"return":0.1942979223661354,"net_pnl":2484.1485999999986,"exit_reason":"profit_target","bucket":"10-15","era":"2017-19"},{"buy_date":"2018-09-14","sell_date":"2018-10-12","thscode":"002896.SZ","buy_price":31.74,"return":-0.0169280924036514,"net_pnl":-215.0079999999998,"exit_reason":"max_holding","bucket":"25-40","era":"2017-19"},{"buy_date":"2018-10-17","sell_date":"2018-11-06","thscode":"603533.SH","buy_price":18.57,"return":0.0961601553660344,"net_pnl":1429.0646400000005,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2018-10-17","sell_date":"2018-11-06","thscode":"002856.SZ","buy_price":22.51,"return":-0.1415202584966157,"net_pnl":-1912.11844,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2018-12-20","sell_date":"2018-12-24","thscode":"002907.SZ","buy_price":16.87,"return":0.2278895317426556,"net_pnl":3076.7980800000023,"exit_reason":"profit_target","bucket":"15-25","era":"2017-19"},{"buy_date":"2018-12-20","sell_date":"2019-01-11","thscode":"002607.SZ","buy_price":7.17,"return":0.0403691336446476,"net_pnl":579.1067999999996,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2019-01-09","sell_date":"2019-01-29","thscode":"603986.SH","buy_price":61.57,"return":0.1207582969110024,"net_pnl":1487.651200000002,"exit_reason":"max_holding","bucket":">=40","era":"2017-19"},{"buy_date":"2019-05-08","sell_date":"2019-05-28","thscode":"603386.SH","buy_price":13.98,"return":0.0848008740605883,"net_pnl":1423.0719199999985,"exit_reason":"max_holding","bucket":"10-15","era":"2017-19"},{"buy_date":"2019-05-08","sell_date":"2019-05-28","thscode":"000636.SZ","buy_price":11.65,"return":0.0772320788780798,"net_pnl":1260.066560000003,"exit_reason":"max_holding","bucket":"10-15","era":"2017-19"},{"buy_date":"2019-05-30","sell_date":"2019-06-12","thscode":"002731.SZ","buy_price":16.06,"return":0.1955018558816298,"net_pnl":3454.782370000001,"exit_reason":"profit_target","bucket":"15-25","era":"2017-19"},{"buy_date":"2019-07-25","sell_date":"2019-08-14","thscode":"000550.SZ","buy_price":18.01,"return":-0.1301952368814715,"net_pnl":-2580.000399999997,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2019-08-15","sell_date":"2019-08-20","thscode":"000068.SZ","buy_price":3.17,"return":0.2378283306933815,"net_pnl":4600.167549999998,"exit_reason":"profit_target","bucket":"<5","era":"2017-19"},{"buy_date":"2019-08-07","sell_date":"2019-08-22","thscode":"002565.SZ","buy_price":6.06,"return":0.1945084321905092,"net_pnl":3655.081030000001,"exit_reason":"profit_target","bucket":"5-10","era":"2017-19"},{"buy_date":"2019-10-24","sell_date":"2019-11-13","thscode":"000610.SZ","buy_price":8.92,"return":-0.0720586495457886,"net_pnl":-1671.6354200000023,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2019-10-24","sell_date":"2019-11-13","thscode":"600345.SH","buy_price":22.03,"return":-0.0631785387078489,"net_pnl":-1392.1990000000003,"exit_reason":"max_holding","bucket":"15-25","era":"2017-19"},{"buy_date":"2019-11-14","sell_date":"2019-12-04","thscode":"601162.SH","buy_price":5.69,"return":-0.0383896172286558,"net_pnl":-830.28442,"exit_reason":"max_holding","bucket":"5-10","era":"2017-19"},{"buy_date":"2019-11-14","sell_date":"2019-12-04","thscode":"600860.SH","buy_price":5.01,"return":0.1937680419101212,"net_pnl":4175.471999999998,"exit_reason":"profit_target","bucket":"5-10","era":"2017-19"},{"buy_date":"2020-02-06","sell_date":"2020-02-14","thscode":"002274.SZ","buy_price":5.73,"return":0.1936219629077113,"net_pnl":4439.013600000002,"exit_reason":"profit_target","bucket":"5-10","era":"2020-22"},{"buy_date":"2020-02-07","sell_date":"2020-02-21","thscode":"000159.SZ","buy_price":4.85,"return":0.1940351362863986,"net_pnl":4518.357600000003,"exit_reason":"profit_target","bucket":"<5","era":"2020-22"},{"buy_date":"2020-02-17","sell_date":"2020-03-06","thscode":"603226.SH","buy_price":15.2,"return":0.1955249714156124,"net_pnl":4756.4511999999995,"exit_reason":"profit_target","bucket":"15-25","era":"2020-22"},{"buy_date":"2020-03-24","sell_date":"2020-04-14","thscode":"000723.SZ","buy_price":6.88,"return":0.0187779241465267,"net_pnl":555.6760999999933,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2020-03-24","sell_date":"2020-04-14","thscode":"002057.SZ","buy_price":6.66,"return":0.0449352999014589,"net_pnl":1347.0745499999975,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2020-09-17","sell_date":"2020-10-15","thscode":"000652.SZ","buy_price":5.29,"return":0.0267721477015952,"net_pnl":821.644820000005,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2020-09-17","sell_date":"2020-10-15","thscode":"603879.SH","buy_price":7.84,"return":-0.0473872564611635,"net_pnl":-1449.3039599999977,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2021-01-04","sell_date":"2021-01-22","thscode":"000710.SZ","buy_price":38.32,"return":0.0164389565756702,"net_pnl":504.08871999999974,"exit_reason":"max_holding","bucket":"25-40","era":"2020-22"},{"buy_date":"2021-01-04","sell_date":"2021-01-22","thscode":"000698.SZ","buy_price":4.71,"return":0.1086938373772837,"net_pnl":3328.5602999999937,"exit_reason":"max_holding","bucket":"<5","era":"2020-22"},{"buy_date":"2021-02-04","sell_date":"2021-03-03","thscode":"600211.SH","buy_price":54.29,"return":-0.0294942690027015,"net_pnl":-961.0057199999936,"exit_reason":"max_holding","bucket":">=40","era":"2020-22"},{"buy_date":"2021-02-04","sell_date":"2021-03-03","thscode":"002286.SZ","buy_price":8.28,"return":0.093724151000969,"net_pnl":3027.357450000007,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2021-10-20","sell_date":"2021-11-09","thscode":"600007.SH","buy_price":14.05,"return":-0.0001182883468439,"net_pnl":-3.9897600000040256,"exit_reason":"max_holding","bucket":"10-15","era":"2020-22"},{"buy_date":"2021-10-20","sell_date":"2021-11-09","thscode":"000822.SZ","buy_price":8.74,"return":-0.155764019229682,"net_pnl":-5174.631379999995,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2022-02-07","sell_date":"2022-02-16","thscode":"002667.SZ","buy_price":12.81,"return":0.1948788581181441,"net_pnl":5992.973279999998,"exit_reason":"profit_target","bucket":"10-15","era":"2020-22"},{"buy_date":"2022-02-07","sell_date":"2022-02-25","thscode":"002612.SZ","buy_price":26.0,"return":0.0733449468643465,"net_pnl":2288.980199999998,"exit_reason":"max_holding","bucket":"25-40","era":"2020-22"},{"buy_date":"2022-02-17","sell_date":"2022-03-09","thscode":"003022.SZ","buy_price":29.02,"return":-0.1030371110620256,"net_pnl":-3290.03873,"exit_reason":"max_holding","bucket":"25-40","era":"2020-22"},{"buy_date":"2022-03-14","sell_date":"2022-03-22","thscode":"002326.SZ","buy_price":30.34,"return":0.1952565028931973,"net_pnl":6518.249980000008,"exit_reason":"profit_target","bucket":"25-40","era":"2020-22"},{"buy_date":"2022-03-14","sell_date":"2022-04-01","thscode":"603518.SH","buy_price":10.08,"return":-0.0084733371989563,"net_pnl":-281.9331900000034,"exit_reason":"max_holding","bucket":"10-15","era":"2020-22"},{"buy_date":"2022-04-06","sell_date":"2022-04-13","thscode":"002592.SZ","buy_price":5.02,"return":0.2033238077511902,"net_pnl":7555.112140000005,"exit_reason":"profit_target","bucket":"5-10","era":"2020-22"},{"buy_date":"2022-04-01","sell_date":"2022-04-25","thscode":"000301.SZ","buy_price":14.04,"return":-0.1729277325891238,"net_pnl":-6314.258339999993,"exit_reason":"max_holding","bucket":"10-15","era":"2020-22"},{"buy_date":"2022-04-27","sell_date":"2022-05-10","thscode":"000301.SZ","buy_price":10.85,"return":0.1944834986719485,"net_pnl":6965.361810000002,"exit_reason":"profit_target","bucket":"10-15","era":"2020-22"},{"buy_date":"2022-04-26","sell_date":"2022-05-19","thscode":"600318.SH","buy_price":7.71,"return":0.0217810062878351,"net_pnl":806.289119999994,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2022-05-11","sell_date":"2022-05-23","thscode":"603396.SH","buy_price":51.45,"return":0.1954595206606825,"net_pnl":7041.3048999999955,"exit_reason":"profit_target","bucket":">=40","era":"2020-22"},{"buy_date":"2022-05-20","sell_date":"2022-06-10","thscode":"000056.SZ","buy_price":5.31,"return":-0.0635720588353244,"net_pnl":-2735.0087400000048,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2022-09-21","sell_date":"2022-10-18","thscode":"603716.SH","buy_price":10.86,"return":0.0039968613685303,"net_pnl":173.66879999999946,"exit_reason":"max_holding","bucket":"10-15","era":"2020-22"},{"buy_date":"2022-09-21","sell_date":"2022-10-18","thscode":"002639.SZ","buy_price":9.65,"return":-0.043942088010485,"net_pnl":-1908.6812999999968,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2022-10-19","sell_date":"2022-11-04","thscode":"600706.SH","buy_price":8.3,"return":0.1957704972610736,"net_pnl":8289.119760000001,"exit_reason":"profit_target","bucket":"5-10","era":"2020-22"},{"buy_date":"2022-10-19","sell_date":"2022-11-08","thscode":"000838.SZ","buy_price":5.05,"return":-0.039086194025197,"net_pnl":-1658.4674400000004,"exit_reason":"max_holding","bucket":"5-10","era":"2020-22"},{"buy_date":"2023-04-28","sell_date":"2023-05-23","thscode":"002909.SZ","buy_price":7.3,"return":0.0682372446177693,"net_pnl":3089.220680000006,"exit_reason":"max_holding","bucket":"5-10","era":"2023-26"},{"buy_date":"2023-04-28","sell_date":"2023-05-23","thscode":"603990.SH","buy_price":16.33,"return":0.1433915118382756,"net_pnl":6558.1381600000095,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2023-08-28","sell_date":"2023-09-15","thscode":"603777.SH","buy_price":14.47,"return":-0.0396810305478142,"net_pnl":-2010.1682999999975,"exit_reason":"max_holding","bucket":"10-15","era":"2023-26"},{"buy_date":"2023-10-26","sell_date":"2023-11-15","thscode":"002777.SZ","buy_price":23.71,"return":0.1595080934798369,"net_pnl":7565.840400000001,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2023-10-26","sell_date":"2023-11-15","thscode":"603879.SH","buy_price":6.22,"return":0.084102377754774,"net_pnl":4133.697119999997,"exit_reason":"max_holding","bucket":"5-10","era":"2023-26"},{"buy_date":"2023-12-29","sell_date":"2024-01-19","thscode":"002555.SZ","buy_price":18.24,"return":0.0329368311607405,"net_pnl":1802.772000000012,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2023-12-29","sell_date":"2024-01-19","thscode":"002517.SZ","buy_price":10.18,"return":0.0745416407843977,"net_pnl":4098.768479999984,"exit_reason":"max_holding","bucket":"10-15","era":"2023-26"},{"buy_date":"2024-01-24","sell_date":"2024-01-29","thscode":"601949.SH","buy_price":7.12,"return":0.1954089689489721,"net_pnl":11411.72352,"exit_reason":"profit_target","bucket":"5-10","era":"2023-26"},{"buy_date":"2024-02-01","sell_date":"2024-02-08","thscode":"600129.SH","buy_price":33.54,"return":0.1958574133873672,"net_pnl":11827.378080000002,"exit_reason":"profit_target","bucket":"25-40","era":"2023-26"},{"buy_date":"2024-01-24","sell_date":"2024-02-21","thscode":"600633.SH","buy_price":9.74,"return":0.0646216788563106,"net_pnl":3777.4728000000105,"exit_reason":"max_holding","bucket":"5-10","era":"2023-26"},{"buy_date":"2024-02-19","sell_date":"2024-02-22","thscode":"603918.SH","buy_price":13.02,"return":0.1954003479832571,"net_pnl":13487.302200000006,"exit_reason":"profit_target","bucket":"10-15","era":"2023-26"},{"buy_date":"2024-02-23","sell_date":"2024-02-27","thscode":"603729.SH","buy_price":20.33,"return":0.1955331948174538,"net_pnl":15507.271260000009,"exit_reason":"profit_target","bucket":"15-25","era":"2023-26"},{"buy_date":"2024-02-22","sell_date":"2024-02-28","thscode":"603196.SH","buy_price":9.23,"return":0.194879970427624,"net_pnl":14573.599380000014,"exit_reason":"profit_target","bucket":"5-10","era":"2023-26"},{"buy_date":"2024-02-28","sell_date":"2024-03-19","thscode":"600666.SH","buy_price":1.63,"return":-0.0071484481519467,"net_pnl":-666.6659999999974,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2024-04-19","sell_date":"2024-04-29","thscode":"000752.SZ","buy_price":5.46,"return":0.2057289280611217,"net_pnl":19213.0812,"exit_reason":"profit_target","bucket":"5-10","era":"2023-26"},{"buy_date":"2024-04-22","sell_date":"2024-05-15","thscode":"002229.SZ","buy_price":16.76,"return":0.0782549520418247,"net_pnl":7215.417000000001,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2024-06-07","sell_date":"2024-06-28","thscode":"600186.SH","buy_price":3.65,"return":-0.0639691762333574,"net_pnl":-6819.607440000007,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2024-06-07","sell_date":"2024-06-28","thscode":"603629.SH","buy_price":19.54,"return":-0.0535733176109115,"net_pnl":-5654.311920000007,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2024-07-01","sell_date":"2024-07-03","thscode":"603615.SH","buy_price":10.53,"return":0.2114888875331161,"net_pnl":21161.791500000007,"exit_reason":"profit_target","bucket":"10-15","era":"2023-26"},{"buy_date":"2024-07-01","sell_date":"2024-07-19","thscode":"605198.SH","buy_price":26.63,"return":-0.1083078895168819,"net_pnl":-10674.459300000017,"exit_reason":"max_holding","bucket":"25-40","era":"2023-26"},{"buy_date":"2024-07-12","sell_date":"2024-08-01","thscode":"600630.SH","buy_price":7.71,"return":0.0546951177907753,"net_pnl":5820.964200000017,"exit_reason":"max_holding","bucket":"5-10","era":"2023-26"},{"buy_date":"2024-07-22","sell_date":"2024-08-09","thscode":"605198.SH","buy_price":23.83,"return":-0.0588708790519332,"net_pnl":-6174.3343199999945,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2024-09-02","sell_date":"2024-09-24","thscode":"000628.SZ","buy_price":36.74,"return":0.1006728669707551,"net_pnl":10359.111839999983,"exit_reason":"max_holding","bucket":"25-40","era":"2023-26"},{"buy_date":"2024-09-02","sell_date":"2024-09-24","thscode":"600630.SH","buy_price":7.32,"return":0.0290042621705241,"net_pnl":3058.076159999997,"exit_reason":"max_holding","bucket":"5-10","era":"2023-26"},{"buy_date":"2025-01-07","sell_date":"2025-02-05","thscode":"000595.SZ","buy_price":5.91,"return":-0.1717422505681516,"net_pnl":-19188.425339999987,"exit_reason":"max_holding","bucket":"5-10","era":"2023-26"},{"buy_date":"2025-01-09","sell_date":"2025-02-06","thscode":"603960.SH","buy_price":18.4,"return":0.0939919751299446,"net_pnl":10552.402200000011,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2025-04-14","sell_date":"2025-04-16","thscode":"002693.SZ","buy_price":8.54,"return":0.2048591019730657,"net_pnl":22049.390160000024,"exit_reason":"profit_target","bucket":"5-10","era":"2023-26"},{"buy_date":"2025-04-11","sell_date":"2025-04-21","thscode":"002583.SZ","buy_price":10.27,"return":0.2217324372002129,"net_pnl":23916.734099999987,"exit_reason":"profit_target","bucket":"10-15","era":"2023-26"},{"buy_date":"2025-04-17","sell_date":"2025-05-12","thscode":"603007.SH","buy_price":4.73,"return":0.1658289774891085,"net_pnl":20320.492499999993,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2025-04-21","sell_date":"2025-05-14","thscode":"002045.SZ","buy_price":13.76,"return":0.0960162010291023,"net_pnl":661.0781500000003,"exit_reason":"max_holding","bucket":"10-15","era":"2023-26"},{"buy_date":"2026-03-26","sell_date":"2026-04-14","thscode":"605255.SH","buy_price":101.82,"return":0.1961861512942402,"net_pnl":25975.127879999985,"exit_reason":"profit_target","bucket":">=40","era":"2023-26"},{"buy_date":"2026-03-26","sell_date":"2026-04-16","thscode":"000029.SZ","buy_price":19.64,"return":0.0239039071837248,"net_pnl":3334.1230799999903,"exit_reason":"max_holding","bucket":"15-25","era":"2023-26"},{"buy_date":"2026-06-08","sell_date":"2026-06-29","thscode":"000572.SZ","buy_price":4.4,"return":-0.1644892327994721,"net_pnl":-25627.504320000007,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2026-06-08","sell_date":"2026-06-29","thscode":"000892.SZ","buy_price":3.83,"return":-0.1444764309060323,"net_pnl":-22526.98602000001,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2026-06-30","sell_date":"2026-07-15","thscode":"600829.SH","buy_price":7.89,"return":0.1964972757273223,"net_pnl":25897.802220000012,"exit_reason":"profit_target","bucket":"5-10","era":"2023-26"},{"buy_date":"2026-06-30","sell_date":"2026-07-20","thscode":"600408.SH","buy_price":2.39,"return":0.0574979375655218,"net_pnl":7587.560160000023,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2026-07-21","sell_date":"2026-08-04","thscode":"603778.SH","buy_price":8.43,"return":0.2063605099684759,"net_pnl":28711.17810000002,"exit_reason":"profit_target","bucket":"5-10","era":"2023-26"},{"buy_date":"2026-07-16","sell_date":"2026-08-05","thscode":"000036.SZ","buy_price":4.74,"return":-0.1211502730808975,"net_pnl":-18093.650399999984,"exit_reason":"max_holding","bucket":"<5","era":"2023-26"},{"buy_date":"2026-08-05","sell_date":"2026-08-10","thscode":"002759.SZ","buy_price":15.16,"return":0.1960086947314542,"net_pnl":29722.644,"exit_reason":"profit_target","bucket":"15-25","era":"2023-26"}],"lt15":{"n":63,"avg":0.0668272685430513,"capw":0.05565036430785515,"win":0.6984126984126984},"ge15":{"n":34,"avg":0.0652590169482717,"capw":0.07549842022024708,"win":0.7058823529411765},"welch_p":0.9487396057980341}</script>
+<script>
+const D = JSON.parse(document.getElementById('data').textContent);
+const NS = 'http://www.w3.org/2000/svg';
+const pct = (v, d = 1) => (v * 100).toFixed(d) + '%';
+const sgn = (v, d = 1) => (v >= 0 ? '+' : '') + (v * 100).toFixed(d) + '%';
+const money = v => (v >= 0 ? '+' : '') + (v / 10000).toFixed(2) + ' 万';
+const cls = v => v >= 0 ? 'up' : 'down';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dispBucket = b => b.replace('>=40', '≥40').replace(/^(\d+)-(\d+)$/, '$1–$2');
+const reason = r => r === 'profit_target' ? '止盈' : (r === 'max_holding' ? '持有到期' : r);
+
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function put(parent, x, y, str, klass, anchor = 'middle') {
+  const t = el('text', {x, y, class: klass, 'text-anchor': anchor}, parent);
+  t.textContent = str;
+  return t;
+}
+
+/* ---------- KPI / verdict ---------- */
+document.getElementById('vLt').textContent = sgn(D.lt15.avg, 2);
+document.getElementById('vGe').textContent = sgn(D.ge15.avg, 2);
+document.querySelector('.verdict .note').innerHTML =
+  `差 <b>${(D.lt15.avg - D.ge15.avg >= 0 ? '+' : '') + ((D.lt15.avg - D.ge15.avg) * 100).toFixed(2)} 个百分点</b><br>` +
+  `Welch p=${D.welch_p.toFixed(2)} · 统计上等于零<br>` +
+  `<span class="muted">按资金加权：${sgn(D.lt15.capw, 2)} vs ${sgn(D.ge15.capw, 2)}</span>`;
+
+/* ---------- 六档表 ---------- */
+const tb = document.querySelector('#bucketTable tbody');
+D.buckets.forEach(b => {
+  const tr = document.createElement('tr');
+  if (b.bucket === '<5') tr.className = 'row-bad';
+  tr.innerHTML = `<td>${esc(dispBucket(b.bucket))} 元</td><td>${b.n}</td><td>${pct(b.win)}</td>` +
+    `<td class="${cls(b.avg)}">${sgn(b.avg, 2)}</td><td class="muted">[${sgn(b.ci_lo)}, ${sgn(b.ci_hi)}]</td>` +
+    `<td>${sgn(b.median, 2)}</td><td class="${cls(b.cap_weighted)}">${sgn(b.cap_weighted, 2)}</td>` +
+    `<td>${pct(b.tp_share, 0)}</td><td class="${cls(b.pnl)}">${money(b.pnl)}</td>`;
+  tb.appendChild(tr);
+});
+
+/* ---------- 四分位 ---------- */
+const qbox = document.getElementById('quart');
+D.quartiles.forEach(q => {
+  const d = document.createElement('div');
+  d.className = 'q';
+  d.innerHTML = `<div class="qt">${esc(q.quartile)}</div>` +
+    `<div class="qv ${cls(q.avg)}">${sgn(q.avg)}</div>` +
+    `<div class="qs">${q.n} 笔 · 胜率 ${pct(q.win, 0)} · 资金加权 ${sgn(q.cap_weighted)}</div>`;
+  qbox.appendChild(d);
+});
+
+/* ---------- 柱状图 ---------- */
+function drawBars() {
+  const svg = document.getElementById('barChart');
+  const W = 780, H = 390, m = {t: 34, r: 18, b: 66, l: 58};
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const ymin = -0.09, ymax = 0.20;
+  const pw = W - m.l - m.r, ph = H - m.t - m.b;
+  const y = v => m.t + (ymax - v) / (ymax - ymin) * ph;
+  const band = pw / D.buckets.length;
+
+  for (let v = -0.05; v <= 0.2001; v += 0.05) {
+    el('line', {x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: 'grid'}, svg);
+    put(svg, m.l - 10, y(v) + 4, (v * 100).toFixed(0) + '%', 'axis', 'end');
+  }
+  el('line', {x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), class: 'zero'}, svg);
+
+  D.buckets.forEach((b, i) => {
+    const x0 = m.l + band * i;
+    const cx = x0 + band / 2;
+    if (b.bucket === '<5') el('rect', {x: x0 + 3, y: m.t, width: band - 6, height: ph, class: 'band-bad'}, svg);
+
+    const bw = band * 0.27, gap = band * 0.055;
+    const x1 = cx - bw - gap / 2, x2 = cx + gap / 2;
+
+    // 等权
+    const y0 = y(0), y1 = y(b.avg);
+    el('rect', {
+      x: x1, y: Math.min(y0, y1), width: bw, height: Math.max(1.2, Math.abs(y1 - y0)),
+      fill: '#a93426', rx: 1.5
+    }, svg);
+    // 资金加权
+    const y2 = y(b.cap_weighted);
+    el('rect', {
+      x: x2, y: Math.min(y0, y2), width: bw, height: Math.max(1.2, Math.abs(y2 - y0)),
+      fill: '#3d5b72', rx: 1.5
+    }, svg);
+
+    // 95% 区间
+    const xc = x1 + bw / 2;
+    el('line', {x1: xc, x2: xc, y1: y(b.ci_lo), y2: y(b.ci_hi), class: 'whisker'}, svg);
+    el('line', {x1: xc - 5, x2: xc + 5, y1: y(b.ci_lo), y2: y(b.ci_lo), class: 'whisker-cap'}, svg);
+    el('line', {x1: xc - 5, x2: xc + 5, y1: y(b.ci_hi), y2: y(b.ci_hi), class: 'whisker-cap'}, svg);
+
+    // 数值
+    const ly = b.avg >= 0 ? y(b.avg) - 7 : y(b.avg) + 14;
+    put(svg, xc, ly, (b.avg >= 0 ? '+' : '') + (b.avg * 100).toFixed(1) + '%', 'bar-label');
+    const ly2 = b.cap_weighted >= 0 ? y(b.cap_weighted) - 6 : y(b.cap_weighted) + 13;
+    put(svg, x2 + bw / 2, ly2, (b.cap_weighted >= 0 ? '+' : '') + (b.cap_weighted * 100).toFixed(1) + '%', 'bar-label');
+
+    // x 标签
+    put(svg, cx, m.t + ph + 24, dispBucket(b.bucket), 'axis');
+    put(svg, cx, m.t + ph + 42, `n=${b.n}`, 'axislab');
+  });
+
+  // 轴标题
+  put(svg, m.l + pw / 2, H - 12, '实际成交价（元）', 'axislab');
+  const yl = el('text', {x: 14, y: m.t + ph / 2, class: 'axislab', 'text-anchor': 'middle', transform: `rotate(-90 14 ${m.t + ph / 2})`}, svg);
+  yl.textContent = '单笔净收益率';
+}
+
+/* ---------- 散点图 ---------- */
+function drawScatter() {
+  const svg = document.getElementById('scatter');
+  const W = 780, H = 400, m = {t: 26, r: 22, b: 58, l: 58};
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const xmin = 1.5, xmax = 120, ymin = -0.18, ymax = 0.25;
+  const pw = W - m.l - m.r, ph = H - m.t - m.b;
+  const x = v => m.l + (Math.log10(v) - Math.log10(xmin)) / (Math.log10(xmax) - Math.log10(xmin)) * pw;
+  const y = v => m.t + (ymax - v) / (ymax - ymin) * ph;
+
+  for (let v = -0.15; v <= 0.2501; v += 0.05) {
+    el('line', {x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: 'grid'}, svg);
+    put(svg, m.l - 10, y(v) + 4, (v * 100).toFixed(0) + '%', 'axis', 'end');
+  }
+  [2, 5, 10, 15, 20, 50, 100].forEach(v => {
+    el('line', {x1: x(v), x2: x(v), y1: m.t, y2: m.t + ph, class: 'grid'}, svg);
+    put(svg, x(v), m.t + ph + 22, String(v), 'axis');
+  });
+  el('line', {x1: m.l, x2: W - m.r, y1: y(0), y2: y(0), class: 'zero'}, svg);
+  el('line', {x1: m.l, x2: W - m.r, y1: y(D.meta.avg), y2: y(D.meta.avg), stroke: '#a93426', 'stroke-width': 1.2, 'stroke-dasharray': '5 4', opacity: .65}, svg);
+  put(svg, W - m.r - 4, y(D.meta.avg) - 6, `全样本 ${sgn(D.meta.avg)}`, 'axislab', 'end');
+
+  const colors = {'2017-19': '#9a6a18', '2020-22': '#3d5b72', '2023-25': '#7d8f7a', '2026': '#a93426'};
+  const era = t => t.era === '2023-26' ? (t.buy_date.slice(0, 4) === '2026' ? '2026' : '2023-25') : t.era;
+  D.trades.forEach(t => {
+    const c = el('circle', {cx: x(t.buy_price), cy: y(t.return), r: 4.3, fill: colors[era(t)] || '#756d60', opacity: .82}, svg);
+    const title = el('title', {}, c);
+    title.textContent = `${t.buy_date} ${t.thscode}\n成交价 ${t.buy_price.toFixed(2)} 元\n净收益 ${sgn(t.return)} · ${money(t.net_pnl)}`;
+  });
+
+  put(svg, m.l + pw / 2, H - 14, '实际成交价（元，对数轴）', 'axislab');
+  const yl = el('text', {x: 14, y: m.t + ph / 2, class: 'axislab', 'text-anchor': 'middle', transform: `rotate(-90 14 ${m.t + ph / 2})`}, svg);
+  yl.textContent = '单笔净收益率';
+}
+
+/* ---------- 同日配对 ---------- */
+const pt = document.querySelector('#pairTable tbody');
+D.pairs.filter(p => p['跨15元档']).forEach(p => {
+  const tr = document.createElement('tr');
+  const win = p['差(便宜-贵)'] > 0;
+  tr.innerHTML = `<td>${p['买入日']}</td>` +
+    `<td>${esc(p['便宜代码'])} · ${p['便宜价'].toFixed(2)}</td>` +
+    `<td>${esc(p['贵代码'])} · ${p['贵价'].toFixed(2)}</td>` +
+    `<td class="${cls(p['便宜收益'])}">${sgn(p['便宜收益'])}</td>` +
+    `<td class="${cls(p['贵收益'])}">${sgn(p['贵收益'])}</td>` +
+    `<td class="${cls(p['差(便宜-贵)'])}">${sgn(p['差(便宜-贵)'])}</td>` +
+    `<td><span class="tag ${win ? '' : 'green'}">${win ? '便宜赢' : '贵赢'}</span></td>`;
+  pt.appendChild(tr);
+});
+
+/* ---------- 换基准 ---------- */
+const bt = document.querySelector('#baseTable tbody');
+D.baselines.forEach(b => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${esc(b['基准'])}</td><td>${b['低于15笔数']}</td>` +
+    `<td class="${cls(b['低于15平均'])}">${sgn(b['低于15平均'])}</td>` +
+    `<td class="${cls(b['低于15资金加权'])}">${sgn(b['低于15资金加权'])}</td>` +
+    `<td>${b['15以上笔数']}</td>` +
+    `<td class="${cls(b['15以上平均'])}">${sgn(b['15以上平均'])}</td>` +
+    `<td class="${cls(b['15以上资金加权'])}">${sgn(b['15以上资金加权'])}</td>` +
+    `<td class="${cls(b['差值'])}">${sgn(b['差值'], 2)}</td><td>${b['p值'].toFixed(2)}</td>`;
+  bt.appendChild(tr);
+});
+
+/* ---------- 分阶段 ---------- */
+const et = document.querySelector('#eraTable tbody');
+D.era_table.forEach(b => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${esc(b['阶段'])}</td><td>${b['低于15笔数']}</td>` +
+    `<td class="${cls(b['低于15每笔平均'])}">${sgn(b['低于15每笔平均'])}</td>` +
+    `<td class="${cls(b['低于15资金加权'])}">${sgn(b['低于15资金加权'])}</td>` +
+    `<td>${b['15以上笔数']}</td>` +
+    `<td class="${cls(b['15以上每笔平均'])}">${sgn(b['15以上每笔平均'])}</td>` +
+    `<td class="${cls(b['15以上资金加权'])}">${sgn(b['15以上资金加权'])}</td>`;
+  et.appendChild(tr);
+});
+
+/* ---------- 2026 表 ---------- */
+const yt = document.querySelector('#y2026Table tbody');
+D.y2026.slice().sort((a, b) => a.buy_date.localeCompare(b.buy_date)).forEach(r => {
+  const tr = document.createElement('tr');
+  if (r.buy_price < 15) tr.className = 'row-low';
+  tr.innerHTML = `<td>${r.buy_date}</td><td>${esc(r.thscode)}</td><td>${r.buy_price.toFixed(2)}</td>` +
+    `<td class="${cls(r.return)}">${sgn(r.return)}</td>` +
+    `<td class="${cls(r.net_pnl)}">${money(r.net_pnl)}</td>` +
+    `<td>${reason(r.exit_reason)}</td><td class="${cls(r.mkt)}">${sgn(r.mkt)}</td>`;
+  yt.appendChild(tr);
+});
+
+/* ---------- 拆股例子 ---------- */
+const st = document.querySelector('#splitTable tbody');
+D.splits.forEach(r => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${r.buy_date}</td><td>${esc(r.thscode)}</td><td>${r.buy_price.toFixed(2)}</td>` +
+    `<td>${r.buy_hfq_open.toFixed(2)}</td><td>${r.hfq_ratio.toFixed(2)}×</td>` +
+    `<td class="${cls(r.return)}">${sgn(r.return)}</td>`;
+  st.appendChild(tr);
+});
+
+drawBars();
+drawScatter();
+</script>
+</body>
+</html>

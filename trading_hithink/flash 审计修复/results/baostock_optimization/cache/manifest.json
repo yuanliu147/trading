@@ -1,0 +1,18 @@
+{
+  "source": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+  "source_bytes": 10311245824,
+  "source_mtime_ns": 1793100832052213230,
+  "start": "2016-10-13",
+  "end": "2026-10-23",
+  "adjustflags": {
+    "1": "backward_adjusted",
+    "3": "unadjusted"
+  },
+  "symbols": 3489,
+  "listed_symbols": 3194,
+  "delisted_symbols": 295,
+  "rows": 14643560,
+  "elapsed_seconds": 64.013501624926,
+  "parquet": "/Users/admin/WorkSpace/trading/trading_hithink/flash 审计修复/results/baostock_optimization/cache/mainboard_adjust_1_3.parquet",
+  "parquet_bytes": 842334060
+}

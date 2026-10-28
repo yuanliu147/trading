@@ -1,0 +1,32 @@
+{
+  "market_comparison": {
+    "sessions": 2187,
+    "return20_correlation": 0.9995220267671505,
+    "median_absolute_difference": 0.0010980089488379363,
+    "p99_absolute_difference": 0.0072687620147307026,
+    "gate_disagreement_sessions": 11
+  },
+  "fixed_original_market_gate": {
+    "current_signals": 4195,
+    "delisted_signals": 127,
+    "delisted_signal_symbols": 46,
+    "combined_candidates": 1569,
+    "delisted_candidates": 70,
+    "delisted_candidate_symbols": 29,
+    "delisted_top2_candidates": 32
+  },
+  "all_universe_market_gate": {
+    "current_signals": 4257,
+    "delisted_signals": 132,
+    "delisted_signal_symbols": 46,
+    "combined_candidates": 1613,
+    "delisted_candidates": 75,
+    "delisted_candidate_symbols": 29,
+    "delisted_top2_candidates": 35
+  },
+  "limitations": [
+    "Signal-level audit only; no portfolio CAGR is reported for the delisted universe.",
+    "Delisted-stock corporate actions, final cash settlement, and residual value require explicit execution rules before an account replay.",
+    "The all-universe market gate also reflects small vendor/code-history coverage differences."
+  ]
+}

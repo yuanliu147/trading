@@ -1,0 +1,6786 @@
+{
+  "accounts": 30,
+  "passed": true,
+  "reports": [
+    {
+      "account": "baseline_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "31.626954999519512"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.35937696250400286,
+      "max_drawdown": -0.163430575197267,
+      "final_equity": 1590113.5684149994,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 31.626954999519512,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "baseline_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "21.941280000006373"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.36701331714814467,
+      "max_drawdown": -0.16318858015511417,
+      "final_equity": 334486.5621600001,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 21.941280000006373,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "baseline_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "73.26367000001483"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.3702799654515434,
+      "max_drawdown": -0.16336250339693492,
+      "final_equity": 854394.3934299999,
+      "trade_count": 97,
+      "open_positions": 2,
+      "minimum_cash": 73.26367000001483,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "no_st_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "17.118935000093188"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.3178840732592494,
+      "max_drawdown": -0.2741887869694678,
+      "final_equity": 1202612.3458850004,
+      "trade_count": 96,
+      "open_positions": 2,
+      "minimum_cash": 17.118935000093188,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "no_st_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "85.93806000000404"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.3129256461912999,
+      "max_drawdown": -0.2567019884608608,
+      "final_equity": 232490.46485000005,
+      "trade_count": 96,
+      "open_positions": 2,
+      "minimum_cash": 85.93806000000404,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "no_st_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "97.33326000001398"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.3147862722132184,
+      "max_drawdown": -0.2762078535443201,
+      "final_equity": 588690.0989499998,
+      "trade_count": 96,
+      "open_positions": 2,
+      "minimum_cash": 97.33326000001398,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn5_high_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "134.6380200003041"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.2942465114231896,
+      "max_drawdown": -0.18607708948023582,
+      "final_equity": 1021652.2580799998,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 134.6380200003041,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn5_high_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "147.940109999985"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.281375369798893,
+      "max_drawdown": -0.1839910201088305,
+      "final_equity": 186733.7631099999,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 147.940109999985,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn5_high_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "140.14736500021536"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.29308455343278106,
+      "max_drawdown": -0.1843120782293921,
+      "final_equity": 506708.7292650003,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 140.14736500021536,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn5_low_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "200.4999849999149"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.2598815931674632,
+      "max_drawdown": -0.2283379972552937,
+      "final_equity": 801673.740095,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 200.4999849999149,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn5_low_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "229.6768099999681"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.25421096285222244,
+      "max_drawdown": -0.22167871593632515,
+      "final_equity": 153948.44042999996,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 229.6768099999681,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn5_low_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "193.16584000003056"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.25760649352192067,
+      "max_drawdown": -0.22641595337003229,
+      "final_equity": 394361.91313,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 193.16584000003056,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn_high_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "89.58777000050759"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.29956306957189915,
+      "max_drawdown": -0.34378760111215945,
+      "final_equity": 1060094.5505500005,
+      "trade_count": 98,
+      "open_positions": 2,
+      "minimum_cash": 89.58777000050759,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn_high_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "9.884919999938576"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.2900261250507139,
+      "max_drawdown": -0.34276689054612075,
+      "final_equity": 198404.74467999983,
+      "trade_count": 98,
+      "open_positions": 2,
+      "minimum_cash": 9.884919999938576,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn_high_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "75.14420000015525"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.2988152967515798,
+      "max_drawdown": -0.3433307854158527,
+      "final_equity": 527305.5501600002,
+      "trade_count": 98,
+      "open_positions": 2,
+      "minimum_cash": 75.14420000015525,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn_low_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "9.432789999991655"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.22202719055212028,
+      "max_drawdown": -0.23094592638325984,
+      "final_equity": 609006.42875,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 9.432789999991655,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn_low_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "131.57131999999547"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.2099827286289524,
+      "max_drawdown": -0.22291143640021926,
+      "final_equity": 111401.85573999996,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 131.57131999999547,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "rank_turn_low_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "129.86037000006763"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.22056219243549724,
+      "max_drawdown": -0.2274047870168755,
+      "final_equity": 301229.79743000015,
+      "trade_count": 94,
+      "open_positions": 2,
+      "minimum_cash": 129.86037000006763,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "turn1_high_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "71.23263000007137"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.19632601979165365,
+      "max_drawdown": -0.26109116829208023,
+      "final_equity": 502857.8270700001,
+      "trade_count": 66,
+      "open_positions": 2,
+      "minimum_cash": 71.23263000007137,
+      "deferred_sells": 5,
+      "failed_checks": []
+    },
+    {
+      "account": "turn1_high_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "92.71973000003344"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.18343130792457552,
+      "max_drawdown": -0.25525007047561155,
+      "final_equity": 91215.45757000004,
+      "trade_count": 66,
+      "open_positions": 2,
+      "minimum_cash": 92.71973000003344,
+      "deferred_sells": 5,
+      "failed_checks": []
+    },
+    {
+      "account": "turn1_high_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "48.762970000003406"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.19394482004979197,
+      "max_drawdown": -0.25949632930286304,
+      "final_equity": 246955.4973900001,
+      "trade_count": 66,
+      "open_positions": 2,
+      "minimum_cash": 48.762970000003406,
+      "deferred_sells": 5,
+      "failed_checks": []
+    },
+    {
+      "account": "turn1_low_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "209.27626500013864"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.20117494033352967,
+      "max_drawdown": -0.1780516841076123,
+      "final_equity": 521523.2574250002,
+      "trade_count": 84,
+      "open_positions": 2,
+      "minimum_cash": 209.27626500013864,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "turn1_low_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "0.1808400000300025"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.19538301498470267,
+      "max_drawdown": -0.1765603072434102,
+      "final_equity": 99859.52195999998,
+      "trade_count": 84,
+      "open_positions": 2,
+      "minimum_cash": 0.1808400000300025,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "turn1_low_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "145.10945500004163"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.19860431301967063,
+      "max_drawdown": -0.17754518723687995,
+      "final_equity": 255776.2934150001,
+      "trade_count": 84,
+      "open_positions": 2,
+      "minimum_cash": 145.10945500004163,
+      "deferred_sells": 1,
+      "failed_checks": []
+    },
+    {
+      "account": "turn5_high_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "217.10312000001431"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.08811178054379254,
+      "max_drawdown": -0.3386411460666908,
+      "final_equity": 214012.00465,
+      "trade_count": 54,
+      "open_positions": 2,
+      "minimum_cash": 217.10312000001431,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "turn5_high_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "148.42357999999513"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.08100748243741651,
+      "max_drawdown": -0.3324226399507849,
+      "final_equity": 40349.26362,
+      "trade_count": 54,
+      "open_positions": 2,
+      "minimum_cash": 148.42357999999513,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "turn5_high_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "108.03341000001456"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.08676703576954314,
+      "max_drawdown": -0.33451363298484715,
+      "final_equity": 105820.33353,
+      "trade_count": 54,
+      "open_positions": 2,
+      "minimum_cash": 108.03341000001456,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "turn5_low_c100000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "44.44371999996656"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.23631837106260845,
+      "max_drawdown": -0.19568828201555355,
+      "final_equity": 676267.9423599995,
+      "trade_count": 80,
+      "open_positions": 2,
+      "minimum_cash": 44.44371999996656,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "turn5_low_c20000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "34.0309700000289"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.23076860150914902,
+      "max_drawdown": -0.19396489034879727,
+      "final_equity": 129880.36673,
+      "trade_count": 80,
+      "open_positions": 2,
+      "minimum_cash": 34.0309700000289,
+      "deferred_sells": 0,
+      "failed_checks": []
+    },
+    {
+      "account": "turn5_low_c50000",
+      "passed": true,
+      "checks": {
+        "manifest_daily_equity.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_trades.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_orders.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_corporate_actions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_positions_daily.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_open_positions.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_annual.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_drawdowns.csv": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_metrics.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "manifest_run_config.json": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_order_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_trade_ids": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_dates": {
+          "passed": true,
+          "detail": ""
+        },
+        "unique_daily_positions": {
+          "passed": true,
+          "detail": ""
+        },
+        "nonnegative_cash": {
+          "passed": true,
+          "detail": "66.6841900000436"
+        },
+        "whole_lot_buys": {
+          "passed": true,
+          "detail": ""
+        },
+        "positive_sales": {
+          "passed": true,
+          "detail": ""
+        },
+        "t_plus_one": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_signal_before_execution": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_fee_budget": {
+          "passed": true,
+          "detail": ""
+        },
+        "participation_cap": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_cash_delta": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_dividend_net": {
+          "passed": true,
+          "detail": ""
+        },
+        "gross_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "commission_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "historical_fee_schedules": {
+          "passed": true,
+          "detail": ""
+        },
+        "execution_prices": {
+          "passed": true,
+          "detail": ""
+        },
+        "buy_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_slippage": {
+          "passed": true,
+          "detail": ""
+        },
+        "price_tick": {
+          "passed": true,
+          "detail": ""
+        },
+        "opening_limit_up_rejection": {
+          "passed": true,
+          "detail": ""
+        },
+        "sell_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_order_links": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_share_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "dividend_tax_schedule": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_pnl": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_buy_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "trade_sell_order_values": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_bonus_conservation": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_availability": {
+          "passed": true,
+          "detail": ""
+        },
+        "corporate_nonnegative": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_daily_ledger": {
+          "passed": true,
+          "detail": "[]"
+        },
+        "independent_daily_returns": {
+          "passed": true,
+          "detail": ""
+        },
+        "independent_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_not_trades": {
+          "passed": true,
+          "detail": ""
+        },
+        "open_positions_valuation": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_final_equity": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_cagr": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_max_drawdown": {
+          "passed": true,
+          "detail": ""
+        },
+        "metric_trade_counts": {
+          "passed": true,
+          "detail": ""
+        },
+        "annual_returns": {
+          "passed": true,
+          "detail": ""
+        }
+      },
+      "cagr": 0.23555063170743273,
+      "max_drawdown": -0.1952343434823356,
+      "final_equity": 336246.71865000005,
+      "trade_count": 80,
+      "open_positions": 2,
+      "minimum_cash": 66.6841900000436,
+      "deferred_sells": 0,
+      "failed_checks": []
+    }
+  ]
+}

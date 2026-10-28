@@ -1,0 +1,22 @@
+{"baseline_reproduction": "passed"}
+{"account": "baseline_c100000", "cagr": 0.35937696250400286, "max_drawdown": -0.1634305751972669, "trades": 97, "final_equity": 1590113.5684149994}
+{"account": "no_st_c100000", "cagr": 0.3178840732592494, "max_drawdown": -0.2741887869694678, "trades": 96, "final_equity": 1202612.3458850004}
+{"account": "turn5_low_c100000", "cagr": 0.23631837106260845, "max_drawdown": -0.19568828201555355, "trades": 80, "final_equity": 676267.9423599995}
+{"account": "turn5_high_c100000", "cagr": 0.08811178054379254, "max_drawdown": -0.3386411460666907, "trades": 54, "final_equity": 214012.00465000002}
+{"account": "turn1_low_c100000", "cagr": 0.20117494033352967, "max_drawdown": -0.1780516841076123, "trades": 84, "final_equity": 521523.2574250002}
+{"account": "turn1_high_c100000", "cagr": 0.19632601979165365, "max_drawdown": -0.26109116829208023, "trades": 66, "final_equity": 502857.8270700001}
+{"account": "rank_turn_high_c100000", "cagr": 0.29956306957189915, "max_drawdown": -0.34378760111215945, "trades": 98, "final_equity": 1060094.5505500005}
+{"account": "rank_turn_low_c100000", "cagr": 0.22202719055212028, "max_drawdown": -0.23094592638325984, "trades": 94, "final_equity": 609006.42875}
+{"account": "rank_turn5_high_c100000", "cagr": 0.2942465114231896, "max_drawdown": -0.18607708948023594, "trades": 94, "final_equity": 1021652.2580799998}
+{"account": "rank_turn5_low_c100000", "cagr": 0.2598815931674632, "max_drawdown": -0.2283379972552937, "trades": 94, "final_equity": 801673.740095}
+                account     cagr  max_drawdown  trade_count  final_equity
+       baseline_c100000 0.359377     -0.163431           97  1.590114e+06
+          no_st_c100000 0.317884     -0.274189           96  1.202612e+06
+      turn5_low_c100000 0.236318     -0.195688           80  6.762679e+05
+     turn5_high_c100000 0.088112     -0.338641           54  2.140120e+05
+      turn1_low_c100000 0.201175     -0.178052           84  5.215233e+05
+     turn1_high_c100000 0.196326     -0.261091           66  5.028578e+05
+ rank_turn_high_c100000 0.299563     -0.343788           98  1.060095e+06
+  rank_turn_low_c100000 0.222027     -0.230946           94  6.090064e+05
+rank_turn5_high_c100000 0.294247     -0.186077           94  1.021652e+06
+ rank_turn5_low_c100000 0.259882     -0.228338           94  8.016737e+05

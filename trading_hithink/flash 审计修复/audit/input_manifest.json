@@ -9,6 +9,11 @@
   },
   "strategy_sha256": "46a75daf0d39902d5a68c93f3f5853b25616df109b00b84cd94adc0f14ebaa95",
   "code_sha256": {
+    "baostock_delisted_research.py": "ffb174f3b7975a08a0f58ec9e7f98fefab3c160fa94b46c19d32c28a70bfaa80",
+    "baostock_optimization.py": "33cae11116f1450ff8a9d0ef513f18300d2e266e818124edf9b93a294406982c",
+    "baostock_replay.py": "6970f6b7ccfe700747a555456dfae71ad6e305f066f767396532ed71ace4dab6",
+    "baostock_signal_research.py": "6475c77202eb87a5819db9be1566f32779c7ce7164fef08ca60029ded29031e3",
+    "baostock_verify.py": "b098a6dfdb44003cb7f1ed6af54d6f37b153bfde47c61936859b7f48c79a9379",
     "flash_data.py": "aa12de45f2f971698984b782aa5c836c6d945657d45e66853d634c659bb2d3a6",
     "flash_engine.py": "385076a608f410f6690a2063ff4a5293f3fec9618cc1a27ea4c531af6d9c51ab",
     "migrate_initial.py": "db3cac3d72517c625550f85e151897a30871ca903c8f2710b93f61c23ba8ddcf",

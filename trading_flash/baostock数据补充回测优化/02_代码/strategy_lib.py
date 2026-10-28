@@ -68,6 +68,7 @@ class Config:
     cost_flat: float | None = None  # 若设置，则用固定单边成本率（兼容旧口径）
     extra_filter: str = ""  # SQL 片段，作用在信号筛选上
     label: str = "baseline"
+    max_rank: int = 10  # 每个信号日最多买到第几名；10 等价于仅受仓位数限制
 
 
 @dataclass
@@ -189,7 +190,7 @@ def run(signals: pd.DataFrame, M: dict, stocks: pd.DataFrame, cfg: Config) -> Re
     HO, HH, HL, HC = M["hfq_open"], M["hfq_high"], M["hfq_low"], M["hfq_close"]
     ST, TR = M["is_st"], M["tradable"]
 
-    sig = signals[signals["rank"] <= 10].copy()
+    sig = signals[signals["rank"] <= cfg.max_rank].copy()
     sigday: dict[int, list[tuple[int, float]]] = {}
     for d, g in sig.groupby("date"):
         if d not in di:

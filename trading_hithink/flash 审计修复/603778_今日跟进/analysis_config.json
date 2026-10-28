@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "created_before_running_analysis": "2026-10-27",
+  "purpose": "Describe the new 2026-10-27 close for the existing 603778 comparison without searching new parameters or fabricating future trade outcomes.",
+  "data": {
+    "database": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "raw_database_sha256_at_discovery": "313aa08777e6597577b95a973e96142306edd0e1753ba13ec61a9500f7a19395",
+    "cutoff": "2026-10-27",
+    "first_signal_date": "2026-10-23",
+    "second_signal_date": "2026-10-26",
+    "original_feature_start": "2024-10-01",
+    "comparison_symbols": ["603778.SH", "605376.SH", "002240.SZ"],
+    "remote_or_third_party_data": false,
+    "delisted_stocks_reconstructed": false,
+    "historical_st_or_official_industry_membership_known": false
+  },
+  "fixed_definitions": {
+    "original_signal_and_rank": "Reuse the audited original signal thresholds and drawdown250 ascending/thscode tie-break without changing them.",
+    "strong_reversal": "drawdown250 <= -0.65; hfq low below previous hfq low; hfq close above previous hfq close and above hfq open; close_location > 0.8.",
+    "next_day_consolidation": "Reuse followup_config.json: higher low than first signal, close above first signal open, absolute body <= 2% of open, amount/amount20 < 1.",
+    "T2_observations": "Use the previously studied lead2 return, close above first signal high, below first signal low and MACD histogram fields. These are not completed trade returns.",
+    "market": "Equal-weight mainboard prefix proxy and its 20-session breadth, not an official index.",
+    "peer_group": "Reuse the lagged 2026-10 peer membership only; do not invent a group for 603778.",
+    "new_parameter_search_or_new_historical_rule": false
+  },
+  "execution_status": {
+    "entry_lag_sessions": 3,
+    "holding_sessions": 15,
+    "planned_entry_for_2026_10_23": "2026-10-28",
+    "planned_entry_for_2026_10_26": "2026-10-29",
+    "actual_entry_or_completed_return_known_at_cutoff": false,
+    "orders_or_ledger_entries_fabricated": false
+  },
+  "validation": {
+    "database_hash_must_be_unchanged_during_analysis": true,
+    "raw_and_hfq_2026_10_23_and_2026_10_26_must_match_frozen_cohort": true,
+    "previous_frozen_market_values_must_match": true,
+    "previous_frozen_input_hashes_must_match": true,
+    "rerun_output_must_be_byte_identical": true
+  }
+}

@@ -1,0 +1,476 @@
+{
+  "cutoff": "2026-10-27",
+  "passed": true,
+  "checks_passed": 91,
+  "checks_total": 91,
+  "rerun_requested": true,
+  "raw_database_sha256": "313aa08777e6597577b95a973e96142306edd0e1753ba13ec61a9500f7a19395",
+  "analysis_output_files": [
+    "source_daily_quality.csv",
+    "market_snapshots.csv",
+    "current_stock_features.csv",
+    "current_original_signals.csv",
+    "cohort_23_followthrough.csv",
+    "cohort_26_followthrough.csv",
+    "current_peer_proxy.csv",
+    "source_quality.json",
+    "analysis_summary.json"
+  ],
+  "checks": [
+    {
+      "check": "database_hash_frozen",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "official_quality_envelope_passed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "no_pending_or_applied_migration",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "analysis_code_hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "analysis_config_hash",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "only_frozen_local_database",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "latest_complete_daily_release",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "latest_row_and_symbol_counts",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_cutoff",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_raw_ohlcv_exact",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_independent_ret1",
+      "passed": true,
+      "detail": "-0.027434842249657088"
+    },
+    {
+      "check": "target_independent_rsi14",
+      "passed": true,
+      "detail": "29.604667979542654"
+    },
+    {
+      "check": "target_independent_macd_hist_pct",
+      "passed": true,
+      "detail": "-0.0028230272341204015"
+    },
+    {
+      "check": "target_independent_macd_hist_delta",
+      "passed": true,
+      "detail": "-0.00014034378349493757"
+    },
+    {
+      "check": "target_independent_close_location",
+      "passed": true,
+      "detail": "0.055555555555554456"
+    },
+    {
+      "check": "target_independent_amount_ratio1_20",
+      "passed": true,
+      "detail": "0.41395111774719767"
+    },
+    {
+      "check": "target_independent_drawdown250",
+      "passed": true,
+      "detail": "-0.7931135103589145"
+    },
+    {
+      "check": "target_independent_return_250d",
+      "passed": true,
+      "detail": "1.0373563218390807"
+    },
+    {
+      "check": "target_independent_return_20d",
+      "passed": true,
+      "detail": "-0.23101952277657278"
+    },
+    {
+      "check": "target_independent_upper_shadow",
+      "passed": true,
+      "detail": "0.010973936899862879"
+    },
+    {
+      "check": "target_independent_ma5_actual",
+      "passed": true,
+      "detail": "7.281999999999999"
+    },
+    {
+      "check": "target_independent_ma10_actual",
+      "passed": true,
+      "detail": "7.4510000000000005"
+    },
+    {
+      "check": "target_independent_ma20_actual",
+      "passed": true,
+      "detail": "7.883500000000001"
+    },
+    {
+      "check": "target_independent_ma60_actual",
+      "passed": true,
+      "detail": "9.262166666666666"
+    },
+    {
+      "check": "target_independent_close_ma20",
+      "passed": true,
+      "detail": "-0.10065326314454248"
+    },
+    {
+      "check": "target_rejected_intraday_strength",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_below_short_medium_ma",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_macd_not_confirmed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_not_a_new_signal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "completed_week_features",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "unfinished_month_return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "unfinished_higher_timeframes_labelled",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_thscode",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_open",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_high",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_low",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_close",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_rsi14",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_macd_hist_pct",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "summary_target_amount_ratio1_20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "first_cohort_10_unique",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_bars_returns_and_structure_rebuilt",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "check": "cohort_all_negative_T2",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_no_close_above_first_high",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_one_broken_low",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_five_above_first_open",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_one_consolidation",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_mean_rebuilt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "cohort_median_rebuilt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_first_low_not_broken",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_second_consolidation_failed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_only_intraday_probe_above_high",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "second_top2_T1_mean",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "second_top2_members",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "no_future_trade_outcomes",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all_160_frozen_raw_and_hfq_ohlc_values_stable",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-23_market_return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-23_market_return20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-23_breadth20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-23_advance_share",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-26_market_return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-26_market_return20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-26_breadth20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-26_advance_share",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-27_market_return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-27_market_return20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-27_breadth20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "independent_market_2026-10-27_advance_share",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "market_risk_off_confirmed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "frozen_market_stable_2026-10-23",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "frozen_market_stable_2026-10-26",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "original_scan_members_and_rank_rebuilt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "only_one_loose_signal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "original_signal_603843.SH_drawdown250",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "original_signal_603843.SH_return_250d",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "original_signal_603843.SH_rsi14",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "original_signal_603843.SH_close_location",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "original_signal_603843.SH_amount20",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "no_strict_reversal_today",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "new_candidate_limit_up_verified",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "new_candidate_fails_deep65_only",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "current_rank_mapping",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "peer_proxy_not_official_industry",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "603778_no_fabricated_peer_evidence",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "002240_peer_member_count",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "002240_peer_metrics_rebuilt",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "no_premature_entry_or_return",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "new_signal_future_not_known",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "full_rerun_exit_zero",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "full_rerun_byte_identical",
+      "passed": true,
+      "detail": "{'files': 9, 'changed': []}"
+    },
+    {
+      "check": "database_unchanged_at_end",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}

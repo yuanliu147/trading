@@ -1,0 +1,7 @@
+date,thscode,position_id,event_type,shares_before,available_shares_before,dividend_per_share,per_share_bonus,rights_ratio,rights_price,cash_equivalent_per_share,dividend_added,bonus_shares_added,rights_action,shares_after,available_shares_after,dividend_receivable_after,assumption
+2018-05-15,002365.SZ,O00000015,explicit_corporate_action,2800,2800,0.1,0.5,0.0,0.0,0.0,280.0,1400,not_applicable,4200,2800,280.0,explicit_event_records_used; rights_not_exercised
+2019-01-08,002607.SZ,O00000037,explicit_corporate_action,11300,11300,0.39,0.0,0.0,0.0,0.0,4407.0,0,not_applicable,11300,11300,4407.0,explicit_event_records_used; rights_not_exercised
+2019-05-21,000636.SZ,O00000044,explicit_corporate_action,7800,7800,0.3,0.0,0.0,0.0,0.0,2340.0,0,not_applicable,7800,7800,2340.0,explicit_event_records_used; rights_not_exercised
+2022-03-30,002455.SZ,O00000101,explicit_corporate_action,15600,15600,0.05,0.0,0.0,0.0,0.0,780.0,0,not_applicable,15600,15600,780.0,explicit_event_records_used; rights_not_exercised
+2024-06-14,603629.SH,O00000156,explicit_corporate_action,24700,24700,0.09,0.0,0.0,0.0,0.0,2223.0,0,not_applicable,24700,24700,2223.0,explicit_event_records_used; rights_not_exercised
+2024-09-11,603496.SH,O00000169,explicit_corporate_action,22600,22600,0.02,0.0,0.0,0.0,0.0,452.0,0,not_applicable,22600,22600,452.0,explicit_event_records_used; rights_not_exercised

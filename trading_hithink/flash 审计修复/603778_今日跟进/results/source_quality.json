@@ -1,0 +1,47 @@
+{
+  "database": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+  "database_sha256": "313aa08777e6597577b95a973e96142306edd0e1753ba13ec61a9500f7a19395",
+  "cutoff": "2026-10-27 00:00:00",
+  "latest_import": {
+    "batch_id": "incremental-1793100515495",
+    "source": "fuyao:20261027/a_share_daily_k_1d_none_10d_20261027.parquet",
+    "started_at": "2026-10-27 19:28:35.495489",
+    "completed_at": "2026-10-27 19:28:35.495489",
+    "status": "complete",
+    "row_count": 55664,
+    "content_hash": null,
+    "error_code": null
+  },
+  "latest_import_columns": [
+    "batch_id",
+    "source",
+    "started_at",
+    "completed_at",
+    "status",
+    "row_count",
+    "content_hash",
+    "error_code"
+  ],
+  "metadata": {
+    "schema_version": "1",
+    "schema_checksum": "de348d8053706344413a06d58b3420baa227058a627b727402f98a33458fbab3",
+    "last_sync_mode": "INCREMENTAL",
+    "last_kline_release_id": "20261027/a_share_daily_k_1d_none_10d_20261027.parquet",
+    "last_adjustment_release_id": "20261027/a_share_adjustment_factors_event_none_all_20261027.parquet"
+  },
+  "duplicates": 0,
+  "current_universe_symbols_without_bar_today": 11,
+  "missing_today_note": "A symbol without a current bar is not automatically a corrupt row; suspension or listing status is not reconstructed here.",
+  "remote_or_third_party_data_used": false,
+  "database_hash_unchanged_during_analysis": true,
+  "frozen_ohlc_comparisons_passed": 160,
+  "mainboard_eligible_symbols_today": 3134,
+  "tracked_stock_symbols": 16,
+  "tracked_stock_bars_today": 16,
+  "scope_limitations": [
+    "Daily data only; no intraday queue, tick or order-book evidence.",
+    "Current listed universe; delisted stocks and historical ST flags are not reconstructed.",
+    "No official industry index or historical industry constituents used for 603778.",
+    "Current two-day observations are not the strategy's T+3 entry or completed 15-session trade outcomes."
+  ]
+}

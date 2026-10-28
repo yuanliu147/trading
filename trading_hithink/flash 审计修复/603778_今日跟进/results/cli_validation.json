@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.1.13",
+  "database": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+  "checks": [
+    {
+      "command": "hithink-finance data status --db <database> --format json",
+      "ok": true,
+      "version": 1
+    },
+    {
+      "command": "hithink-finance data migrate --db <database> --format json",
+      "ok": true,
+      "applied": false,
+      "versions": []
+    },
+    {
+      "command": "hithink-finance data validate --db <database> --format json",
+      "ok": true,
+      "data": {
+        "ok": true,
+        "issues": []
+      }
+    },
+    {
+      "command": "hithink-finance db query --db <database> --sql <603778 bars from 2026-10-23 through cutoff, LIMIT 3> --format json",
+      "ok": true,
+      "count": 3,
+      "data": [
+        {"thscode": "603778.SH", "date": "2026-10-23", "open": 7.07, "high": 7.38, "low": 6.72, "close": 7.33, "volume": 45649700, "amount": 321584895.7},
+        {"thscode": "603778.SH", "date": "2026-10-26", "open": 7.28, "high": 7.41, "low": 7.19, "close": 7.29, "volume": 22026905, "amount": 160490595.71},
+        {"thscode": "603778.SH", "date": "2026-10-27", "open": 7.35, "high": 7.43, "low": 7.07, "close": 7.09, "volume": 20333025, "amount": 147926741.25}
+      ]
+    }
+  ],
+  "remote_or_third_party_market_data_requested": false
+}

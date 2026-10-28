@@ -1,0 +1,4 @@
+﻿target,cluster_id,cluster_strength,cluster_size,cluster_train_end,date,members,peer_return1,peer_return5,peer_return20,peer_return60,peer_breadth20,peer_breadth60,official_industry_index,note
+603778.SH,-1.0,0.22289419775070135,0.0,2026-09-30,2026-10-27,,,,,,,,False,no_lagged_PCA_peer_group
+605376.SH,,,,,2026-10-27,,,,,,,,False,no_lagged_PCA_peer_group
+002240.SZ,2.0,0.3553975585339559,48.0,2026-09-30,2026-10-27,47.0,-0.011503189352339106,-0.04511400619882982,-0.19493200893498772,-0.1723979765249591,0.02127659574468085,0.02127659574468085,False,lagged_PCA_peer_group_not_official_industry
