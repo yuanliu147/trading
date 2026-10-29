@@ -1,0 +1,1997 @@
+{
+  "meta": {
+    "tool": "交付验收",
+    "generated_at": "2026-10-29T03:37:00",
+    "project_root": "/Users/admin/WorkSpace/trading/trading_趋势结构",
+    "data_version": "v2-adjspace-2026-10-28",
+    "freeze": "2026-10-26",
+    "return_window_end": "2020-12-31",
+    "python": "3.13.13",
+    "argv": [
+      "02_代码/交付验收.py"
+    ],
+    "tool_sha256": "4f7e7dfe2ec6eed23a46587e1831fdfe8f7b889c540612a5755feb824655a2e8",
+    "elapsed_s": 65.3,
+    "mode": "full"
+  },
+  "summary": {
+    "pass": 28,
+    "fail": 0,
+    "warn": 2,
+    "skip": 0,
+    "total": 30,
+    "ok": true,
+    "failed_ids": []
+  },
+  "checks": [
+    {
+      "id": "G1",
+      "group": "交付物",
+      "name": "关键交付物存在",
+      "status": "PASS",
+      "metric": "11/11",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "G2",
+      "group": "交付物",
+      "name": "README 必备段落",
+      "status": "PASS",
+      "metric": "4/4",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "G3",
+      "group": "交付物",
+      "name": "文件清单可读",
+      "status": "PASS",
+      "metric": "359 行",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "G4",
+      "group": "交付物",
+      "name": "数据版本与冻结日",
+      "status": "PASS",
+      "metric": "v2-adjspace-2026-10-28 / 2026-10-26",
+      "detail": "built_at=2026-10-29T00:01:02",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "G5",
+      "group": "交付物",
+      "name": "README 的验收命令与脚本绑定",
+      "status": "PASS",
+      "metric": "script_sha256=4f7e7dfe2ec6eed2…",
+      "detail": "README 命令=有",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "V1",
+      "group": "数据指纹",
+      "name": "daily 行数/边界/主键与 meta 一致",
+      "status": "PASS",
+      "metric": "rows=16,698,536 symbols=5,549 2004-01-02~2026-10-26",
+      "detail": "meta rows=16,698,536; 冻结后行=0; 重复主键=0",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "V2",
+      "group": "数据指纹",
+      "name": "内容指纹（整数和）与 meta 一致",
+      "status": "PASS",
+      "metric": "28e75745dd81ddb1…",
+      "detail": "meta=28e75745dd81ddb1…",
+      "evidence": {
+        "components": [
+          16698536,
+          31133474954,
+          31862408699,
+          30491995138,
+          31171060649,
+          7932397305708,
+          45724328148332,
+          13506427811
+        ]
+      },
+      "sec": null
+    },
+    {
+      "id": "V3",
+      "group": "数据指纹",
+      "name": "所有冻结表不晚于冻结日",
+      "status": "PASS",
+      "metric": "6 张表",
+      "detail": "max=2026-10-26",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "V4",
+      "group": "数据指纹",
+      "name": "hfq 日收益 = pct_chg（hash 抽样 1/50）",
+      "status": "PASS",
+      "metric": "332,501 对；违约=0；max=2.23e-15；中位=8.33e-17",
+      "detail": "v1 反事实：全样本 94.10% 行 >1bp（见 01_自检_数据.py C11）",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "V5",
+      "group": "数据指纹",
+      "name": "qfq 日收益 = pct_chg（hash 抽样 1/97）",
+      "status": "PASS",
+      "metric": "171,599 对；违约=0；max=2.03e-15",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "V6",
+      "group": "数据指纹",
+      "name": "qfq 末日锚定原始收盘",
+      "status": "PASS",
+      "metric": "违约=0/5,549",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "V7",
+      "group": "数据指纹",
+      "name": "冻结文件 SHA-256",
+      "status": "PASS",
+      "metric": "8/56 个文件，缺失/不符=0",
+      "detail": "抽样",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "L1",
+      "group": "2021+ 泄漏",
+      "name": "绩效表无 2021+ 收益行",
+      "status": "PASS",
+      "metric": "扫描 469 个文件；违规=0；日期越界但无收益=2",
+      "detail": "",
+      "evidence": {
+        "violations": [],
+        "warn": [
+          {
+            "max": "2026-10-26",
+            "rows_over": 2,
+            "perf_over": 0,
+            "perf_cols": [
+              "cagr",
+              "mdd",
+              "sharpe"
+            ],
+            "date_cols": [
+              "window_start",
+              "window_end"
+            ],
+            "rows": 1699,
+            "path": "03_结果/最终试验总账.csv",
+            "bytes": 868773
+          },
+          {
+            "max": "2026-10-26",
+            "rows_over": 2,
+            "perf_over": 0,
+            "perf_cols": [
+              "cagr",
+              "mdd",
+              "sharpe"
+            ],
+            "date_cols": [
+              "window_start",
+              "window_end"
+            ],
+            "rows": 875,
+            "path": "03_结果/试验总账.csv",
+            "bytes": 411956
+          }
+        ],
+        "whitelisted": [
+          {
+            "path": "03_结果/_审计缓存/bs_window_all_flags.parquet",
+            "whitelist": "原始三复权审计数据，非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "max": "2026-10-26",
+            "rows_over": 5,
+            "perf_over": 0,
+            "perf_cols": [],
+            "date_cols": [
+              "window_start",
+              "window_end"
+            ],
+            "rows": 10,
+            "path": "03_结果/实验注册表.csv",
+            "bytes": 10944,
+            "whitelist": "注册表元数据，2026 为文件/登记日期"
+          },
+          {
+            "max": "2026-10-26",
+            "rows_over": 1406,
+            "perf_over": 0,
+            "perf_cols": [],
+            "date_cols": [
+              "date"
+            ],
+            "rows": 1406,
+            "path": "03_结果/市场状态/市场状态_日频许可_扩展2021_2026_未评估.csv",
+            "bytes": 313344,
+            "whitelist": "状态序列，无收益列（父预注册 §10.4 覆盖审计）"
+          },
+          {
+            "path": "03_结果/市场状态_缓存/calendar.parquet",
+            "whitelist": "输入缓存（特征/行情），非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "path": "03_结果/市场状态_缓存/index_daily.parquet",
+            "whitelist": "输入缓存（特征/行情），非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "path": "03_结果/市场状态_缓存/index_feat.parquet",
+            "whitelist": "输入缓存（特征/行情），非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "path": "03_结果/市场状态_缓存/market_feature.parquet",
+            "whitelist": "输入缓存（特征/行情），非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "path": "03_结果/市场状态_缓存/panel_hfq.parquet",
+            "whitelist": "输入缓存（特征/行情），非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "path": "03_结果/市场状态_缓存/stock_basic.parquet",
+            "whitelist": "输入缓存（特征/行情），非绩效",
+            "max": "2026-10-26"
+          },
+          {
+            "max": "2026-10-28",
+            "rows_over": 14,
+            "perf_over": 0,
+            "perf_cols": [],
+            "date_cols": [
+              "max_date"
+            ],
+            "rows": 14,
+            "path": "03_结果/统计整合/2021后日期扫描.csv",
+            "bytes": 1205,
+            "whitelist": "扫描结果自身"
+          }
+        ],
+        "skipped": []
+      },
+      "sec": null
+    },
+    {
+      "id": "L2",
+      "group": "2021+ 泄漏",
+      "name": "试验总账的 2026 边界只是 meta/audit",
+      "status": "PASS",
+      "metric": "越界行=2；其中带绩效=0",
+      "detail": "kind=['meta', 'audit']",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "L3",
+      "group": "2021+ 泄漏",
+      "name": "统计整合的 2021+ 扫描可复核",
+      "status": "PASS",
+      "metric": "14 行",
+      "detail": "分类={'derived_state_only': 8, 'non_performance_metadata': 3, 'metadata_self': 2, 'PERFORMANCE_2021+_SUSPECT': 1}",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "L4",
+      "group": "2021+ 泄漏",
+      "name": "代码中 2021+ 日期均有明确用途",
+      "status": "WARN",
+      "metric": "命中 92 行；护栏 36；策略/收益面未分类 1",
+      "detail": "封存2021文件.py:66",
+      "evidence": {
+        "by_file": {
+          "01_自检_数据.py": 3,
+          "主候选_T0005.py": 2,
+          "交易制度自检.py": 9,
+          "候选_相对强弱.py": 1,
+          "候选_突破回踩.py": 4,
+          "候选_结构内反转.py": 1,
+          "多周期.py": 2,
+          "实验登记.py": 9,
+          "审计双源.py": 1,
+          "审计第一阶段.py": 2,
+          "封存2021文件.py": 5,
+          "持仓状态机.py": 3,
+          "数据层.py": 3,
+          "整合实验登记.py": 2,
+          "最终交付.py": 2,
+          "最终试验总账.py": 3,
+          "构建冻结数据.py": 2,
+          "核心特征.py": 1,
+          "独立复现_基线.py": 3,
+          "策略族_市场状态.py": 4,
+          "策略族_结构.py": 3,
+          "统一回测.py": 3,
+          "统一数据适配.py": 1,
+          "统计验证.py": 14,
+          "账户撮合.py": 5,
+          "费用与交易约束.py": 2,
+          "退出_自检.py": 2
+        },
+        "unclassified": [
+          {
+            "file": "封存2021文件.py",
+            "line": 66,
+            "text": "note=\"1,406 行 2021-01-04..2026-10-26 的 state/B1-B5/P/gate/pos_A-D；无收益列。\""
+          }
+        ],
+        "hits": [
+          {
+            "file": "01_自检_数据.py",
+            "line": 616,
+            "text": "for d in [\"2016-10-13\", \"2021-06-15\", \"2026-10-23\"]:",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "01_自检_数据.py",
+            "line": 722,
+            "text": "VALUES ('688050.SH', DATE '2024-06-05'), ('000001.SZ', DATE '2020-12-31'),",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "01_自检_数据.py",
+            "line": 888,
+            "text": "md.append(\"## 5. 案例（688050.SH 2024-06-05，10 送 8 派 0.49）\")",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "主候选_T0005.py",
+            "line": 1169,
+            "text": "\"n_rows_after_2020\": int((eq.index >= pd.Timestamp(\"2021-01-01\")).sum()),",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "主候选_T0005.py",
+            "line": 2031,
+            "text": "if (s >= pd.Timestamp(\"2021-01-01\")).any():",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 167,
+            "text": "check(\"B06\", \"科创板 20%\", close(rb.price_limit_pct(\"sh.688001\", \"2024-01-02\"), 0.20))",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 168,
+            "text": "check(\"B07\", \"北交所 30%\", close(rb.price_limit_pct(\"920242.BJ\", \"2024-01-02\"), 0.30))",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 190,
+            "text": "rb.can_sell(\"sh.600000\", \"2024-01-02\", {\"open\": 10.0, \"high\": 10.1, \"low\": 9.9, \"close\": 10.0}, 10.0, held_days=0)[1] == \"t_plus_one\")",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 192,
+            "text": "rb.can_buy(\"sh.600000\", \"2024-01-02\", {\"open\": 10.0, \"high\": 10.0, \"low\": 10.0, \"close\": 10.0}, 10.0, suspended=True)[1] == \"suspended\")",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 194,
+            "text": "rb.can_buy(\"sh.600000\", \"2024-01-02\", {\"open\": 11.0, \"high\": 11.0, \"low\": 11.0, \"close\": 11.0}, 10.0)[1] == \"limit_up_open\")",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 197,
+            "text": "(\"buy\", 100000, 10000, \"2024-01-02\", 31.00),",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 198,
+            "text": "(\"sell\", 100000, 10000, \"2024-01-02\", 81.00),",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 199,
+            "text": "(\"buy\", 2000, 200, \"2024-01-02\", 5.02),",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "交易制度自检.py",
+            "line": 201,
+            "text": "(\"sell\", 100000, 10000, \"2023-08-28\", 81.00),",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "候选_相对强弱.py",
+            "line": 820,
+            "text": "2021-01-01 及以后一律抛 HoldoutViolation（预注册 §2.3）。统一引擎复核时，",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "候选_突破回踩.py",
+            "line": 13,
+            "text": "* 硬截断：任何信号/路径/账户都只到 2020-12-31；2021-01-01 之后不查询、不计算。",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "候选_突破回踩.py",
+            "line": 1826,
+            "text": "EventBook().load(\"2020-01-01\", \"2021-01-04\")",
+            "guard": false,
+            "group": "护栏"
+          },
+          {
+            "file": "候选_突破回踩.py",
+            "line": 1926,
+            "text": "- `EventBook.load(..., '2021-01-04')` 被拒绝：{sc['no_2021']['guard_rejects_2021']}。",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "候选_突破回踩.py",
+            "line": 1927,
+            "text": "- 面板加载函数对 `end >= 2021-01-01` 直接抛错。",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "候选_结构内反转.py",
+            "line": 57,
+            "text": "HOLDOUT_START = \"2021-01-01\"",
+            "guard": false,
+            "group": "护栏"
+          },
+          {
+            "file": "多周期.py",
+            "line": 710,
+            "text": "out[\"note\"] = (\"2021-01-01 起仅做覆盖审计；本文件不含任何 2021+ 收益/行为分布统计。\"",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "多周期.py",
+            "line": 767,
+            "text": "\"2021-01-01 起不产出任何收益或行为分布；descriptive_stats 窗口截止 2020-12-31。\",",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 908,
+            "text": "from stock_kline_d where adjustflag=3 and date between '2024-01-01' and '2024-12-31'\"\"\")",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 914,
+            "text": "from stock_kline_d where adjustflag=3 and date between '2024-06-01' and '2024-06-30'\"\"\")",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 948,
+            "text": "where code='sh.688050' and date='2024-06-05' and adjustflag=3\"\"\").fetchone()",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 957,
+            "text": "where a.adjustflag=3 and a.date='2024-03-26' and a.code='sz.002089'",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 1067,
+            "text": "\"--window-start\", \"2016-01-01\", \"--window-end\", \"2021-06-30\",",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 1074,
+            "text": "\"--window-start\", \"2021-01-01\", \"--window-end\", \"2025-12-31\",",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 1082,
+            "text": "\"--window-start\", \"2021-01-01\", \"--window-end\", \"2025-12-31\",",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 1112,
+            "text": "\"--window-start\", \"2021-01-01\", \"--window-end\", \"2025-12-31\",",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "实验登记.py",
+            "line": 1120,
+            "text": "\"--window-start\", \"2021-01-01\", \"--window-end\", \"2025-12-31\",",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "审计双源.py",
+            "line": 1077,
+            "text": "A(f\"这 {va['amt_rel_gt_1pct']} 行集中在 2020-07-21 / 2020-11-09 / 2020-12-09 / 2022-07-20 等创业板、科创板上市首日，\")",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "审计第一阶段.py",
+            "line": 5,
+            "text": "不计算任何 2021-01-01 之后的策略收益。",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "审计第一阶段.py",
+            "line": 204,
+            "text": "\"002089.SZ 2024-03-26 preclose 滞后案例不在 2008-2020 窗口，但机制同类\")",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "封存2021文件.py",
+            "line": 7,
+            "text": "扫描项目内含 2021-01-01 之后日期的派生状态/特征/行情缓存，登记",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "封存2021文件.py",
+            "line": 66,
+            "text": "note=\"1,406 行 2021-01-04..2026-10-26 的 state/B1-B5/P/gate/pos_A-D；无收益列。\"",
+            "guard": false,
+            "group": "策略信号/收益"
+          },
+          {
+            "file": "封存2021文件.py",
+            "line": 155,
+            "text": "readers=\"全部策略脚本（统一在 2021-01-01 前截断；见 02_代码/统一数据适配.py:147,292 等）\",",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "封存2021文件.py",
+            "line": 195,
+            "text": "\"结构族读取；面板在 2021-01-01 截断（策略族_结构.py:1449）\"),",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "封存2021文件.py",
+            "line": 199,
+            "text": "\"结构族读取；面板在 2021-01-01 截断（策略族_结构.py:1449）\"),",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "持仓状态机.py",
+            "line": 9,
+            "text": "5. 2021-01-01 之后禁止计算盈亏，由 assert_in_window 硬拦截。",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "持仓状态机.py",
+            "line": 24,
+            "text": "HOLDOUT_START = \"2021-01-01\"",
+            "guard": false,
+            "group": "护栏"
+          },
+          {
+            "file": "持仓状态机.py",
+            "line": 544,
+            "text": "assert_in_window(\"2021-01-04\")",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "数据层.py",
+            "line": 25,
+            "text": "px = dl.daily(\"2024-01-01\", \"2024-12-31\", columns=[\"symbol\",\"date\",\"close\",\"hfq_close\",\"is_suspended\"])",
+            "guard": false,
+            "group": "护栏"
+          },
+          {
+            "file": "数据层.py",
+            "line": 26,
+            "text": "u  = dl.universe(\"2024-06-28\", min_avg_amount=5e7, min_td_since_list=120)",
+            "guard": false,
+            "group": "护栏"
+          },
+          {
+            "file": "数据层.py",
+            "line": 27,
+            "text": "cal = dl.calendar(\"2024-01-01\", \"2024-12-31\", trading_only=True)",
+            "guard": false,
+            "group": "护栏"
+          },
+          {
+            "file": "整合实验登记.py",
+            "line": 20,
+            "text": "* 收益只算 2005-01-01..2020-12-31；2021-01-01 起只做覆盖扫描，不算收益。",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "整合实验登记.py",
+            "line": 885,
+            "text": "if r[\"stage\"] in (\"dev\", \"val\", \"preheat\") and r[\"window_end\"] >= \"2021-01-01\":",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "最终交付.py",
+            "line": 2542,
+            "text": "\"window\": \"2021-01-01..2025-12-31\",  # 留出窗口：未运行（护栏，禁止计算）",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "最终交付.py",
+            "line": 2667,
+            "text": "\"holdout\": \"2021-01-01..2025-12-31（未运行）\",",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "最终试验总账.py",
+            "line": 14,
+            "text": "* 2021-01-01 起不计算任何收益。脚本对所有载入的净值/交易文件做 max(date) 断言。",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "最终试验总账.py",
+            "line": 1417,
+            "text": "assert_no_2021(pd.DataFrame({\"date\": [\"2021-01-04\"]}), \"selftest\")",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "最终试验总账.py",
+            "line": 1777,
+            "text": "\"holdout\": \"2021-01-01..2025-12-31（未运行）\"},",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "构建冻结数据.py",
+            "line": 267,
+            "text": "CASE WHEN ipo_date >= DATE '2023-04-10' AND td_since_list <= 5 THEN NULL",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "构建冻结数据.py",
+            "line": 275,
+            "text": "AND ipo_date < DATE '2023-04-10' THEN 0.36",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "核心特征.py",
+            "line": 1187,
+            "text": "lf = limit_flags(bars_from_arrays(pd.bdate_range(\"2024-01-01\", periods=2),",
+            "guard": false,
+            "group": "制度/费用"
+          },
+          {
+            "file": "独立复现_基线.py",
+            "line": 9,
+            "text": "* 所有收益只到 2020-12-31；2021-01-01 起直接断言失败；",
+            "guard": false,
+            "group": "审计/自检"
+          },
+          {
+            "file": "独立复现_基线.py",
+            "line": 1300,
+            "text": "lines.append(\"- 2021-01-01 之后的行情未读取、未计算；元数据（代码/退市日）仅用于宇宙过滤；\"",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "独立复现_基线.py",
+            "line": 1326,
+            "text": "lines.append(\"> 2021-01-01 之后的数据未进入面板；日线读取到 2020-12-31 为止。公司行动 21,324 个证券-除权日（匹配 20,017）。\\n\")",
+            "guard": true,
+            "group": "审计/自检"
+          },
+          {
+            "file": "策略族_市场状态.py",
+            "line": 14,
+            "text": "验证期，规则冻结后才看结果；2021-01-01 之后**只做覆盖审计**，不输出任何",
+            "guard": true,
+            "group": "护栏"
+          },
+          {
+            "file": "策略族_市场状态.py",
+            "line": 57,
+            "text": "AUDIT = (\"2021-01-01\", FREEZE)",
+            "guard": true,
+            "group": "护栏"
+          }
+        ]
+      },
+      "sec": null
+    },
+    {
+      "id": "L5",
+      "group": "2021+ 泄漏",
+      "name": "文件名含 2021-2026 的结果均可解释",
+      "status": "PASS",
+      "metric": "5 个；未解释=0",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "S1",
+      "group": "自检",
+      "name": "数据层自检（01_自检_数据.py）",
+      "status": "PASS",
+      "metric": "28 PASS / 0 FAIL / 7 INFO，13.7s",
+      "detail": "输出重定向到临时目录，未改 01_数据/_audit",
+      "evidence": {
+        "checks": [
+          {
+            "id": "A1",
+            "check": "日线行数/证券数/时间边界/主键唯一",
+            "status": "PASS",
+            "metric": "rows=16,698,536 symbols=5,549 2004-01-02~2026-10-26",
+            "detail": "未来行=0 重复主键=0"
+          },
+          {
+            "id": "A2",
+            "check": "日线字段数",
+            "status": "INFO",
+            "metric": "40 列",
+            "detail": "symbol, date, name, board, ipo_date, delist_date, td_since_list, open, high, low, close, preclose, volume, amount, turn, trade_status, is_st, is_suspended, pct_chg, pe_ttm, pb_mrq, factor, hfq_open, hfq_high, hfq_low, hfq_close, bs_hfq_close, close_ret_check, limit_pct, limit_up_px, limit_down_px, is_limit_up_close, is_limit_down_close, is_limit_up_open, is_limit_down_open, px_breaks_limit_up, px_breaks_limit_down, float_shares, float_mktcap, year"
+          },
+          {
+            "id": "A3",
+            "check": "年度分区",
+            "status": "PASS",
+            "metric": "23 个分区",
+            "detail": "year=2004~year=2026"
+          },
+          {
+            "id": "A4",
+            "check": "关键字段缺失率(%)",
+            "status": "PASS",
+            "metric": "preclose=0.0 turn=3.3816 pe_ttm=0.0 pb=0.0268 float_shares=0.0003 bs_hfq=0.0657",
+            "detail": "is_st=1 占比 4.35%"
+          },
+          {
+            "id": "A5",
+            "check": "meta.json 版本与当前产物一致",
+            "status": "PASS",
+            "metric": "data_version=v2-adjspace-2026-10-28 meta_rows=16,698,536 built_at=2026-10-29T00:01:02",
+            "detail": "daily 最新分区 mtime=2026-10-29 00:00:57；期望版本 v2-adjspace-2026-10-28"
+          },
+          {
+            "id": "A6",
+            "check": "meta.json 逐文件 SHA-256",
+            "status": "PASS",
+            "metric": "核对 56 个文件，不匹配 0",
+            "detail": ""
+          },
+          {
+            "id": "A7",
+            "check": "daily 内容指纹（整数和，跨重建可复现）",
+            "status": "PASS",
+            "metric": "28e75745dd81ddb1… vs meta 28e75745dd81ddb1…",
+            "detail": "文件 SHA 会随 Parquet 编码/行序变化；此指纹用于版本比对"
+          },
+          {
+            "id": "B1",
+            "check": "证券-年面板密度（bars/该年交易日）",
+            "status": "INFO",
+            "metric": "n=72,119 低于0.9的=4,142 最小=0.004 均值=0.968",
+            "detail": "上市/退市当年与长期停牌会拉低；逐日缺口另见 B2"
+          },
+          {
+            "id": "B2",
+            "check": "相邻两条日线间隔>10自然日",
+            "status": "INFO",
+            "metric": "23,119 处，最大 13 天",
+            "detail": "仅长假；源库对停牌日也保留行（OHLC=昨收、量额空）"
+          },
+          {
+            "id": "C0",
+            "check": "调整价/因子非空与首日因子",
+            "status": "PASS",
+            "metric": "hfq_close空=0 hfq_open空=0 close<=0=3 因子非正=0 首日因子≠1=0",
+            "detail": ""
+          },
+          {
+            "id": "C1",
+            "check": "恒等式 hfq_px = raw_px × factor / close_t × close_first",
+            "status": "PASS",
+            "metric": "n=16,698,536 违约 close/open/high/low=0/0/0/0 最大|误差|=1.82e-12",
+            "detail": "v1 的 hfq=raw×factor 在这条恒等式上也不失败，必须用 C5/C6 才能抓住双计"
+          },
+          {
+            "id": "C2",
+            "check": "factor 日收益 = 官方 pct_chg",
+            "status": "PASS",
+            "metric": "偏差>0.5bp 的行=0，最大偏差=4.31e-15",
+            "detail": ""
+          },
+          {
+            "id": "C3",
+            "check": "close/preclose 与 pct_chg 一致（价格校验）",
+            "status": "PASS",
+            "metric": "不一致>6bp=3，最大=1.032735，preclose无效=0",
+            "detail": "pct_chg 早期仅 2 位小数，6bp 内差异属源库舍入"
+          },
+          {
+            "id": "C4",
+            "check": "Baostock 后复权列的自身瑕疵（不采用为主口径的原因）",
+            "status": "INFO",
+            "metric": "收益与官方涨跌幅背离>0.5pp 的 79/16,682,010 行（0.000%），涉及 39 只",
+            "detail": "典型为年末重定基（如 000001.SZ 2020-12-31 官方+0.73%，其hfq隐含-16.8%）"
+          },
+          {
+            "id": "C5",
+            "check": "I1 hfq_close 相邻日收益 = pct_chg（全样本）",
+            "status": "PASS",
+            "metric": "16,676,415 对；>0.5bp=0 >1bp=0 最大=4.31e-15 中位=8.33e-17 p99.9=7.01e-16 斜率=1.000000",
+            "detail": "v1 反事实：94.10% 的行 >1bp、中位 1.41pp、斜率 2.012（见 C11）"
+          },
+          {
+            "id": "C6",
+            "check": "I2 除权日 hfq 收益 = pct_chg，原始价收益显著偏离",
+            "status": "PASS",
+            "metric": "除权日=52,316 调整价违约=0 最大=2.50e-15；原始价偏离>1%=29,802（57.0%）中位=1.24pp；开盘跨日校验违约=0 最大=5.4e-05 中位=1.7e-07",
+            "detail": "原始价收益在除权日必须显著偏离（送转/分红），否则说明样本选错；开盘跨度差异受 pct_chg 4 位小数限制"
+          },
+          {
+            "id": "C6b",
+            "check": "I2b 开盘跨日 hfq_open/hfq_close_prev = open/preclose（全样本，剔除 3 行源库冲突）",
+            "status": "PASS",
+            "metric": "16,676,412 对；违约=0 最大=5.8e-05 中位=1.7e-07",
+            "detail": "源库 3 行 pct_chg 与 close/preclose 冲突（689009.SH 2020-10-29、001965.SZ 2017-12-25、689009.SH 2020-11-02），已由 C3 标记并剔除"
+          },
+          {
+            "id": "C7",
+            "check": "I3 同 bar 内 hfq/qfq 的 OHLC 比例 = 原始价比例",
+            "status": "PASS",
+            "metric": "hfq最大比例误差 o/h/l=8.9e-16/8.9e-16/5.6e-16；qfq=6.7e-16/6.7e-16/6.7e-16",
+            "detail": "v1 因 ROUND(...,4) 在低价高因子行把比例破坏到 1e-1 量级；v2 不舍入"
+          },
+          {
+            "id": "C8",
+            "check": "I4 首条 hfq_close=原始收盘；末条 qfq_close=原始收盘",
+            "status": "PASS",
+            "metric": "5,549 只；首条违约=0 末日违约=0；|hfq-factor×c0|max=0.0e+00；|qfq-factor×cl/factor_last|max=0.0e+00",
+            "detail": ""
+          },
+          {
+            "id": "C9",
+            "check": "I5 截断到 T 重算的 hfq 在 t≤T 上不变",
+            "status": "PASS",
+            "metric": "2015-12-31: n=499,182 hfq相对误差=3.7e-15 开盘=3.7e-15; 2020-12-31: n=788,816 hfq相对误差=5.3e-15 开盘=5.4e-15",
+            "detail": "qfq 锚定末日，重算后价格水平会变（中位相对变化 2015-12-31=30.40%, 2020-12-31=4.16%），故只作展示"
+          },
+          {
+            "id": "C10",
+            "check": "I1b 随机日抽样（hash%800）hfq 收益 = pct_chg",
+            "status": "PASS",
+            "metric": "n=20,779 违约=0 最大=1.72e-15 中位=8.15e-17 p99=4.02e-16",
+            "detail": ""
+          },
+          {
+            "id": "C11",
+            "check": "I6 检验功效：旧公式 hfq=raw×factor 必须被判失败",
+            "status": "PASS",
+            "metric": "全样本 15,693,245/16,676,415 行>1bp（94.10%），中位=1.41pp，斜率=2.0119；除权日 52,316 个：中位=2.62pp p95=44.83pp 最大=7596.46pp >5pp=15,590",
+            "detail": "同一组 I1/I2 在 v1 数据上会 FAIL，说明检查真的能抓住双计"
+          },
+          {
+            "id": "C12",
+            "check": "qfq_close 相邻日收益 = pct_chg",
+            "status": "PASS",
+            "metric": "16,676,415 对；>0.5bp=0 最大=4.09e-15",
+            "detail": ""
+          },
+          {
+            "id": "D1",
+            "check": "停牌行形态（量额空、价格不动）",
+            "status": "PASS",
+            "metric": "停牌行=564,852 其中量0/空=564,852 价格异动=14",
+            "detail": "is_st缺失=0；停牌判定改用成交量，trade_status 有 8 行误标"
+          },
+          {
+            "id": "D2",
+            "check": "涨跌停规则与实际最高/最低价冲突",
+            "status": "PASS",
+            "metric": "1483/16,690,473（0.0089%）",
+            "detail": "主要为 2005-2007 股改/重组复牌无涨跌幅、退市整理期首日无涨跌幅、缩股式重整；已用 px_breaks_* 标记"
+          },
+          {
+            "id": "D3",
+            "check": "单日绝对涨跌幅>30% 的极端行",
+            "status": "INFO",
+            "metric": "3885 行（ST=85，上市5日内=3502，2004-01-07~2026-10-23）",
+            "detail": "退市整理期首日无涨跌幅、缩股/重整为主；因子按 pct_chg 计入，研究时应结合 px_breaks_* 剔除"
+          },
+          {
+            "id": "E1",
+            "check": "证券主表与退市覆盖",
+            "status": "PASS",
+            "metric": "证券=5,549 有退市日=326 退市且有末条行情=322 无退市日但行情早停=0",
+            "detail": "末条行情晚于退市日30天以上=0"
+          },
+          {
+            "id": "E2",
+            "check": "冻结窗口内退市/长停证券数",
+            "status": "INFO",
+            "metric": "322 只最后行情早于 2026-09-01",
+            "detail": "退市股保留在样本内，避免生存者偏差"
+          },
+          {
+            "id": "F1",
+            "check": "同花顺公司行动事件",
+            "status": "PASS",
+            "metric": "57,607 条 / 5,433 只 / 1991-02-26~2026-10-26",
+            "detail": "行情表自 2016-10-13 起，但事件表含 1991 年以来历史（2016 前 22,225 条）"
+          },
+          {
+            "id": "F2",
+            "check": "由 preclose≠前收 推导的除权日",
+            "status": "INFO",
+            "metric": "52,316 条 / 5,377 只 / 2004-01-13~2026-10-26；与同花顺事件匹配 50,346",
+            "detail": "覆盖 2004 起，可补源库早期缺口；2016+ 与同花顺事件匹配率见下行"
+          },
+          {
+            "id": "F3",
+            "check": "公司行动公式 vs 实际除权后昨收",
+            "status": "PASS",
+            "metric": "吻合 49,588/51,654（96.00%），中位绝对误差=0.0000",
+            "detail": "不吻合者多为同日多事件/缩股/数据源口径差异，未修正价格"
+          },
+          {
+            "id": "G1",
+            "check": "指数日线与交易日历一致",
+            "status": "PASS",
+            "metric": "44,162 行 / 9 只 / 2006-01-04~2026-10-26；与日历差集=0",
+            "detail": "指数最早 2006-01-04（源库限制）"
+          },
+          {
+            "id": "G2",
+            "check": "交易日历",
+            "status": "PASS",
+            "metric": "13,096 天，其中交易日 8,749，1990-12-19~2026-10-26",
+            "detail": ""
+          },
+          {
+            "id": "G3",
+            "check": "量额单位一致性（amount vs volume×均价）",
+            "status": "PASS",
+            "metric": "中位偏差=0.0021，p99=0.0188",
+            "detail": "amount=元、volume=股；偏差来自成交价分布与 VWAP 近似"
+          },
+          {
+            "id": "H1",
+            "check": "两源库原始 OHLCV 交叉校验",
+            "status": "PASS",
+            "metric": "2016-10-13:2511只/最大相对差1.4e-04; 2021-06-15:4137只/最大相对差2.6e-08; 2026-10-23:5217只/最大相对差0.0e+00",
+            "detail": "逐字段完全一致，说明两源同源；差异仅在覆盖范围（同花顺含北交所）"
+          }
+        ]
+      },
+      "sec": 13.683327913284302
+    },
+    {
+      "id": "S2",
+      "group": "自检",
+      "name": "特征/多周期因果自检",
+      "status": "PASS",
+      "metric": "25/25 PASS，28.4s",
+      "detail": "样本 cases=40 symbols=12",
+      "evidence": {
+        "summary": {
+          "total": 25,
+          "pass": 25,
+          "fail": 0,
+          "skip": 0
+        },
+        "meta": {
+          "generated_at": "2026-10-29T03:36:41",
+          "freeze": "2026-10-26",
+          "scope": "features + multi_timeframe",
+          "python": "3.13.13",
+          "numpy": "2.5.0",
+          "pandas": "3.0.3",
+          "calendar_sessions": 8751,
+          "calendar_window": [
+            "1990-12-19",
+            "2026-10-28"
+          ],
+          "files": {
+            "核心特征.py": "6a3dee194385f508",
+            "多周期.py": "ccfa99b89c8cf3af"
+          },
+          "config": {
+            "sma_windows": [
+              5,
+              10,
+              20,
+              50,
+              200
+            ],
+            "ema_windows": [
+              10,
+              21
+            ],
+            "atr_n": 14,
+            "atr_short": 20,
+            "atr_long": 60,
+            "rsi_n": 14,
+            "adx_n": 14,
+            "don_n": 20,
+            "bb_n": 20,
+            "bb_rank_n": 252,
+            "nr_n": 7,
+            "slope_n": 20,
+            "pivot_k": 5,
+            "pivot_k_w": 3,
+            "pivot_k_m": 2,
+            "pullback_min": 0.236,
+            "pullback_max": 0.618,
+            "vol_contract": 0.85,
+            "restart_vol": 1.2,
+            "restart_lookback": 5,
+            "stop_atr_buffer": 0.5,
+            "min_hist": 250,
+            "drop_partial_start": true
+          },
+          "screen_config": {
+            "stop_min": 0.02,
+            "stop_max": 0.12,
+            "min_amt_ma20": 50000000.0,
+            "require_w_trend": "up",
+            "allow_d_trend": [
+              "up",
+              "transition"
+            ]
+          },
+          "runtime_sec": 28.04,
+          "adjustment": "价格类后复权(baostock adjustflag=1)，量额换手原始口径；宽度用不复权收盘算均线",
+          "sources": {
+            "baostock": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+            "duckdb": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb"
+          }
+        }
+      },
+      "sec": 28.364357948303223
+    },
+    {
+      "id": "S3",
+      "group": "自检",
+      "name": "撮合/账户自检",
+      "status": "PASS",
+      "metric": "31/31 PASS；审计 11 项，失败 0，5.2s",
+      "detail": "",
+      "evidence": {
+        "self_tests": {
+          "total": 31,
+          "passed": 31,
+          "failed": 0
+        },
+        "audit_fail": []
+      },
+      "sec": 5.190654993057251
+    },
+    {
+      "id": "S4a",
+      "group": "自检",
+      "name": "统计框架自检",
+      "status": "PASS",
+      "metric": "20/20 PASS，4.8s",
+      "detail": "",
+      "evidence": {
+        "checks": [
+          {
+            "name": "最大回撤与水下期",
+            "passed": true,
+            "detail": {
+              "mdd": -0.25,
+              "peak": 1,
+              "trough": 2
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "累计收益口径",
+            "passed": true,
+            "detail": {
+              "total_return": 0.6549125505299835,
+              "cagr": 0.29820744328482274
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "夏普手算一致",
+            "passed": true,
+            "detail": {
+              "sharpe": 1.394464785880384,
+              "manual": 1.3944647858803854
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "留出期护栏",
+            "passed": true,
+            "detail": {
+              "raised": true
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "费用与印花税分段",
+            "passed": true,
+            "detail": {
+              "buy_bps": 12.6,
+              "sell_bps": 17.6
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "涨跌停分段",
+            "passed": true,
+            "detail": {
+              "ok": true
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "p值校正",
+            "passed": true,
+            "detail": {
+              "bh": [
+                0.03,
+                0.04,
+                0.04
+              ],
+              "holm": [
+                0.03,
+                0.06,
+                0.06
+              ]
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "DSR随试验数递减",
+            "passed": true,
+            "detail": {
+              "dsr_1": 0.9941270475892304,
+              "dsr_100": 0.938597746280258,
+              "srn0": 0.40172075534833224
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "PBO噪声≈0.5且信号更低",
+            "passed": true,
+            "detail": {
+              "pbo_noise": 0.5428571428571428,
+              "pbo_signal": 0.44285714285714284
+            },
+            "sec": 0.01
+          },
+          {
+            "name": "聚类方差膨胀",
+            "passed": true,
+            "detail": {
+              "se_ratio": 2.7142114374018633,
+              "p": 0.5408222744086305
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "区块bootstrap覆盖率",
+            "passed": true,
+            "detail": {
+              "coverage": 1.0,
+              "reps": 60
+            },
+            "sec": 2.39
+          },
+          {
+            "name": "T+1契约拦截",
+            "passed": true,
+            "detail": {
+              "caught": "回测结果未通过契约检查：存在成交日不晚于信号日（T+1 违规）"
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "曲面平台/尖峰判别",
+            "passed": true,
+            "detail": {
+              "plateau": 1.0,
+              "isolation": 3.0
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "最优区块长度",
+            "passed": true,
+            "detail": {
+              "block_len": 43.146224727152315
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "walk-forward折不重叠",
+            "passed": true,
+            "detail": {
+              "n_folds": 2,
+              "oos_cagr": 0.1631765388865838
+            },
+            "sec": 0.02
+          },
+          {
+            "name": "延迟重估",
+            "passed": true,
+            "detail": {
+              "rows": 2,
+              "delays": [
+                1,
+                2
+              ]
+            },
+            "sec": 0.02
+          },
+          {
+            "name": "剔除最大赢家",
+            "passed": true,
+            "detail": {
+              "rows": 2
+            },
+            "sec": 0.0
+          },
+          {
+            "name": "功效：真实夏普1.0可检出",
+            "passed": true,
+            "detail": {
+              "cagr_lo": 0.05591850111838381,
+              "p_le_0": 0.005,
+              "dsr": 0.997810008232134
+            },
+            "sec": 0.57
+          },
+          {
+            "name": "尺寸：零均值不误判",
+            "passed": true,
+            "detail": {
+              "p_le_0": 0.835,
+              "dsr": 0.06526441367794827
+            },
+            "sec": 0.47
+          },
+          {
+            "name": "SPA：真实候选可检出",
+            "passed": true,
+            "detail": {
+              "p_spa": 0.0016638935108153079,
+              "p_rc": 0.0016638935108153079
+            },
+            "sec": 0.55
+          }
+        ]
+      },
+      "sec": 4.8206751346588135
+    },
+    {
+      "id": "S4b",
+      "group": "自检",
+      "name": "多重性/哈希链机制自检",
+      "status": "PASS",
+      "metric": "7 PASS / 0 FAIL，3.0s",
+      "detail": "",
+      "evidence": {
+        "tail": [
+          "[PASS] bootstrap 覆盖点估计",
+          "",
+          "结论：全部通过（/var/folders/0v/0rx9bc1x279djcmxgb9vk4hr0000gn/T/intledger_bwgq_7rr）"
+        ]
+      },
+      "sec": 2.978529930114746
+    },
+    {
+      "id": "S5",
+      "group": "自检",
+      "name": "统一引擎自检（写入关闭）",
+      "status": "PASS",
+      "metric": "gates 10/10 PASS，5.3s",
+      "detail": "",
+      "evidence": {
+        "gates": {
+          "G-E6_ca_continuity": true,
+          "G-E6b_ca_no_missing_events": true,
+          "G-E7_equivalence_median_50bp": true,
+          "G-E7_equivalence_max_300bp": true,
+          "G-E8_accounting_1pct": true,
+          "G-E10_no_2021": true,
+          "adapter_bad_bars_0": true,
+          "events_invalid_0": true,
+          "G-E10b_2021_guard": true,
+          "all_pass": true
+        },
+        "equivalence": {
+          "shares_median_abs_err_bp": 18.861,
+          "shares_max_abs_err_bp": 176.272
+        },
+        "guard_2021": {
+          "panel_2021_blocked": true,
+          "event_2021_blocked": true
+        }
+      },
+      "sec": 5.270419120788574
+    },
+    {
+      "id": "T1",
+      "group": "关键表",
+      "name": "关键结果表可读且非空",
+      "status": "PASS",
+      "metric": "37/37",
+      "detail": "缺失=[] 不可读=[] 空=[]",
+      "evidence": {
+        "tables": [
+          "分级:24列/875行",
+          "区间:15列/218行",
+          "多重性:7键",
+          "缺陷暴露:7列/9行",
+          "2021+ 扫描:4列/14行",
+          "试验计数:7列/22行",
+          "试验总账:31列/875行",
+          "官方注册表:27列/10行",
+          "趋势族汇总:21列/84行",
+          "趋势族净值:1,946行/8列",
+          "趋势族逐笔:31,961行/15列",
+          "结构族矩阵:5列/66行",
+          "结构族离场:9列/54行",
+          "结构族净值:33列/3164行",
+          "结构族自检:3列/20行",
+          "退出族汇总:14列/36行",
+          "退出族净值:2列/1946行",
+          "市场状态绩效:12列/20行",
+          "市场状态自检:3列/9行",
+          "统一引擎汇总:9键",
+          "统一引擎净值:14列/1946行",
+          "统一引擎逐笔:15列/896行",
+          "执行压力汇总:30列/202行",
+          "小盘低波关键数字:8键",
+          "小盘低波网格:59列/126行",
+          "小盘低波净值:9列/22148行",
+          "趋势回调统计:5键",
+          "收缩突破统计:6键",
+          "生态切换绩效:17列/14行",
+          "相对强弱统计:3键",
+          "突破回踩自检:13键",
+          "结构内反转统计:7键",
+          "长期双动量统计:5键",
+          "风险预算自检:3列/7行",
+          "退出统一汇总:29列/112行",
+          "T0005 统计:2键",
+          "T0005 净值:11列/1946行"
+        ]
+      },
+      "sec": null
+    },
+    {
+      "id": "T2",
+      "group": "关键表",
+      "name": "结果表含预注册 §15 四列（或表头元数据）",
+      "status": "WARN",
+      "metric": "1/25 张 CSV 显式含四列",
+      "detail": "口径实际写在文件名/报告/JSON meta 中；§15 的硬要求未在表内落实",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "T3",
+      "group": "关键表",
+      "name": "报告内引用的项目路径存在",
+      "status": "PASS",
+      "metric": "134 条引用；缺失 0",
+      "detail": "",
+      "evidence": {
+        "missing": []
+      },
+      "sec": null
+    },
+    {
+      "id": "R1",
+      "group": "作废索引",
+      "name": "tp8 撤回条目可定位",
+      "status": "PASS",
+      "metric": "6 条",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "R2",
+      "group": "作废索引",
+      "name": "v1 hfq 条目可定位",
+      "status": "PASS",
+      "metric": "3 条",
+      "detail": "",
+      "evidence": {
+        "retractions": [
+          {
+            "path": "03_结果/结构族_开发验证规范.md",
+            "kind": "tp8",
+            "what": "§8.6/§8.7/§9 把 tp8 列为最优离场（+2.6%）、G+tp8 +7.3%，并据此写“快速兑现优于让利润奔跑”",
+            "why": "tp8 在 120 日内未触及 +8% 时把 5,559 笔失败离场置 NaN 后过滤；按最后收盘强制离场这些事件均值 −15.4%。G+tp8 8 种子 +6.36% → −1.14%；E+tp8 +2.21% → −3.07%",
+            "authority": "05_审计/第一阶段代码与负结果审计.md §F2（撤回声明）",
+            "action": "只可引用其负结论；tp8 正收益、'最佳离场'表述作废，不得进入一页纸"
+          },
+          {
+            "path": "03_结果/统计整合/01_整合结论.md",
+            "kind": "tp8",
+            "what": "§2 矩阵表 `struct_rules` 最好 +2.48%（PBO 0.021）来自 `tp8` 聚合规则；`多重性.json` 同值",
+            "why": "tp8 的正收益已被失败离场修正撤回；+2.48% 不能证明“聚合规则有边际”",
+            "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+            "action": "可作为负结果引用；不得单引 +2.48%，引用时须写“tp8 行修正后为负”"
+          },
+          {
+            "path": "03_结果/结构族_离场规则_组合_K3.csv",
+            "kind": "tp8",
+            "what": "tp8 组合层 CAGR/Sharpe 行（+2.6%）",
+            "why": "同上，正收益来自丢弃左尾而非策略优势",
+            "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+            "action": "数据保留；tp8 行不得单独作为结果引用，引用须附失败离场修正值"
+          },
+          {
+            "path": "03_结果/结构族_离场规则_净值_K3.csv",
+            "kind": "tp8",
+            "what": "tp8 净值列",
+            "why": "同上；该列为丢弃左尾后的路径",
+            "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+            "action": "数据保留；tp8 列不得单独作为净值证据"
+          },
+          {
+            "path": "03_结果/结构族_信号×离场_矩阵.csv",
+            "kind": "tp8",
+            "what": "6 信号 × 离场矩阵中的 tp8 行（G 列 +7.3）",
+            "why": "同一 tp8 实现；矩阵内 tp8 格偏高",
+            "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+            "action": "同上；聚合结论以 hold40/struct 行为准"
+          },
+          {
+            "path": "03_结果/结构族_离场对比_K2.csv / _K3.csv / _K5.csv",
+            "kind": "tp8",
+            "what": "事件层 tp8 均值/胜率/分位",
+            "why": "事件层 tp8 统计本身可用于比较路径，但其组合层正收益不可复现",
+            "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+            "action": "仅作事件层描述；不得外推为组合收益"
+          },
+          {
+            "path": "01_数据/_audit/v1_修复前_自检报告.md",
+            "kind": "v1_hfq",
+            "what": "v1 自检宣称 hfq=close×factor 成立、'复权收益偏差 0'",
+            "why": "C1 是恒等式、C2 用 factor 收益冒充 hfq 收益；旧公式把价格收益计入两次（全样本 94.10% 行 >1bp，中位 1.41pp）",
+            "authority": "05_审计/复权修复影响.md §4.1；01_数据/_audit/修复后自检报告.md",
+            "action": "历史快照，禁止引用其结论；以 v2 自检 28 PASS 为准"
+          },
+          {
+            "path": "01_数据/_audit/v1_修复前_自检结果.json",
+            "kind": "v1_hfq",
+            "what": "v1 自检的机器结果",
+            "why": "同上",
+            "authority": "05_审计/复权修复影响.md §4.1",
+            "action": "只作 v1 缺陷证据，不作数据可用性证据"
+          },
+          {
+            "path": "03_结果/候选_相对强弱/00_预注册_相对强弱.md",
+            "kind": "v1_hfq",
+            "what": "§2.1 写“后复权价用冻结层自建 factor（hfq = raw × factor）”",
+            "why": "该式是 v1 双计公式；代码实际使用 exit_cache 的 Baostock 后复权价，结果复算到 A 空间（中位误差 1.96pp）",
+            "authority": "05_审计/复权修复影响.md §3.5 / §4.3",
+            "action": "预注册只追加不改；引用时以代码与审计为准，勿按字面复算"
+          },
+          {
+            "path": "03_结果/趋势族_开发验证规范.md",
+            "kind": "note_baostock_hfq",
+            "what": "通篇以“hfq”指 Baostock adjustflag=1 后复权价",
+            "why": "不是冻结层 v1 hfq；但同名易混。Baostock 另有年末重定基缺陷（63 个证券日 >0.5pp）",
+            "authority": "05_审计/复权修复影响.md §5.1(2)",
+            "action": "可引用；引用时写明“Baostock flag1”，不得写成“冻结层 hfq”"
+          },
+          {
+            "path": "03_结果/退出与仓位_实验规范.md",
+            "kind": "note_baostock_hfq",
+            "what": "以 hfq 空间记账（exit_cache.px_hfq）",
+            "why": "同上，Baostock 后复权，非冻结层 v1",
+            "authority": "05_审计/复权修复影响.md §5.1(4)",
+            "action": "可引用；写明报价比价口径与 Baostock 来源"
+          }
+        ]
+      },
+      "sec": null
+    },
+    {
+      "id": "R3",
+      "group": "作废索引",
+      "name": "撤回依据包含量化反证",
+      "status": "PASS",
+      "metric": "第一阶段审计 §F2 含 5,559 笔 / −15.4% / 符号翻转",
+      "detail": "",
+      "evidence": null,
+      "sec": null
+    },
+    {
+      "id": "G3b",
+      "group": "交付物",
+      "name": "文件清单重建",
+      "status": "PASS",
+      "metric": "359 行",
+      "detail": "文件清单.csv；类别={'交付': 3, '代码': 45, '审计': 22, '报告': 63, '数据': 11, '结果': 206, '证据': 9}",
+      "evidence": null,
+      "sec": null
+    }
+  ],
+  "selfchecks": {
+    "data": {
+      "n": 35,
+      "pass": 28,
+      "fail": 0,
+      "info": 7,
+      "checks": [
+        {
+          "id": "A1",
+          "check": "日线行数/证券数/时间边界/主键唯一",
+          "status": "PASS",
+          "metric": "rows=16,698,536 symbols=5,549 2004-01-02~2026-10-26",
+          "detail": "未来行=0 重复主键=0"
+        },
+        {
+          "id": "A2",
+          "check": "日线字段数",
+          "status": "INFO",
+          "metric": "40 列",
+          "detail": "symbol, date, name, board, ipo_date, delist_date, td_since_list, open, high, low, close, preclose, volume, amount, turn, trade_status, is_st, is_suspended, pct_chg, pe_ttm, pb_mrq, factor, hfq_open, hfq_high, hfq_low, hfq_close, bs_hfq_close, close_ret_check, limit_pct, limit_up_px, limit_down_px, is_limit_up_close, is_limit_down_close, is_limit_up_open, is_limit_down_open, px_breaks_limit_up, px_breaks_limit_down, float_shares, float_mktcap, year"
+        },
+        {
+          "id": "A3",
+          "check": "年度分区",
+          "status": "PASS",
+          "metric": "23 个分区",
+          "detail": "year=2004~year=2026"
+        },
+        {
+          "id": "A4",
+          "check": "关键字段缺失率(%)",
+          "status": "PASS",
+          "metric": "preclose=0.0 turn=3.3816 pe_ttm=0.0 pb=0.0268 float_shares=0.0003 bs_hfq=0.0657",
+          "detail": "is_st=1 占比 4.35%"
+        },
+        {
+          "id": "A5",
+          "check": "meta.json 版本与当前产物一致",
+          "status": "PASS",
+          "metric": "data_version=v2-adjspace-2026-10-28 meta_rows=16,698,536 built_at=2026-10-29T00:01:02",
+          "detail": "daily 最新分区 mtime=2026-10-29 00:00:57；期望版本 v2-adjspace-2026-10-28"
+        },
+        {
+          "id": "A6",
+          "check": "meta.json 逐文件 SHA-256",
+          "status": "PASS",
+          "metric": "核对 56 个文件，不匹配 0",
+          "detail": ""
+        },
+        {
+          "id": "A7",
+          "check": "daily 内容指纹（整数和，跨重建可复现）",
+          "status": "PASS",
+          "metric": "28e75745dd81ddb1… vs meta 28e75745dd81ddb1…",
+          "detail": "文件 SHA 会随 Parquet 编码/行序变化；此指纹用于版本比对"
+        },
+        {
+          "id": "B1",
+          "check": "证券-年面板密度（bars/该年交易日）",
+          "status": "INFO",
+          "metric": "n=72,119 低于0.9的=4,142 最小=0.004 均值=0.968",
+          "detail": "上市/退市当年与长期停牌会拉低；逐日缺口另见 B2"
+        },
+        {
+          "id": "B2",
+          "check": "相邻两条日线间隔>10自然日",
+          "status": "INFO",
+          "metric": "23,119 处，最大 13 天",
+          "detail": "仅长假；源库对停牌日也保留行（OHLC=昨收、量额空）"
+        },
+        {
+          "id": "C0",
+          "check": "调整价/因子非空与首日因子",
+          "status": "PASS",
+          "metric": "hfq_close空=0 hfq_open空=0 close<=0=3 因子非正=0 首日因子≠1=0",
+          "detail": ""
+        },
+        {
+          "id": "C1",
+          "check": "恒等式 hfq_px = raw_px × factor / close_t × close_first",
+          "status": "PASS",
+          "metric": "n=16,698,536 违约 close/open/high/low=0/0/0/0 最大|误差|=1.82e-12",
+          "detail": "v1 的 hfq=raw×factor 在这条恒等式上也不失败，必须用 C5/C6 才能抓住双计"
+        },
+        {
+          "id": "C2",
+          "check": "factor 日收益 = 官方 pct_chg",
+          "status": "PASS",
+          "metric": "偏差>0.5bp 的行=0，最大偏差=4.31e-15",
+          "detail": ""
+        },
+        {
+          "id": "C3",
+          "check": "close/preclose 与 pct_chg 一致（价格校验）",
+          "status": "PASS",
+          "metric": "不一致>6bp=3，最大=1.032735，preclose无效=0",
+          "detail": "pct_chg 早期仅 2 位小数，6bp 内差异属源库舍入"
+        },
+        {
+          "id": "C4",
+          "check": "Baostock 后复权列的自身瑕疵（不采用为主口径的原因）",
+          "status": "INFO",
+          "metric": "收益与官方涨跌幅背离>0.5pp 的 79/16,682,010 行（0.000%），涉及 39 只",
+          "detail": "典型为年末重定基（如 000001.SZ 2020-12-31 官方+0.73%，其hfq隐含-16.8%）"
+        },
+        {
+          "id": "C5",
+          "check": "I1 hfq_close 相邻日收益 = pct_chg（全样本）",
+          "status": "PASS",
+          "metric": "16,676,415 对；>0.5bp=0 >1bp=0 最大=4.31e-15 中位=8.33e-17 p99.9=7.01e-16 斜率=1.000000",
+          "detail": "v1 反事实：94.10% 的行 >1bp、中位 1.41pp、斜率 2.012（见 C11）"
+        },
+        {
+          "id": "C6",
+          "check": "I2 除权日 hfq 收益 = pct_chg，原始价收益显著偏离",
+          "status": "PASS",
+          "metric": "除权日=52,316 调整价违约=0 最大=2.50e-15；原始价偏离>1%=29,802（57.0%）中位=1.24pp；开盘跨日校验违约=0 最大=5.4e-05 中位=1.7e-07",
+          "detail": "原始价收益在除权日必须显著偏离（送转/分红），否则说明样本选错；开盘跨度差异受 pct_chg 4 位小数限制"
+        },
+        {
+          "id": "C6b",
+          "check": "I2b 开盘跨日 hfq_open/hfq_close_prev = open/preclose（全样本，剔除 3 行源库冲突）",
+          "status": "PASS",
+          "metric": "16,676,412 对；违约=0 最大=5.8e-05 中位=1.7e-07",
+          "detail": "源库 3 行 pct_chg 与 close/preclose 冲突（689009.SH 2020-10-29、001965.SZ 2017-12-25、689009.SH 2020-11-02），已由 C3 标记并剔除"
+        },
+        {
+          "id": "C7",
+          "check": "I3 同 bar 内 hfq/qfq 的 OHLC 比例 = 原始价比例",
+          "status": "PASS",
+          "metric": "hfq最大比例误差 o/h/l=8.9e-16/8.9e-16/5.6e-16；qfq=6.7e-16/6.7e-16/6.7e-16",
+          "detail": "v1 因 ROUND(...,4) 在低价高因子行把比例破坏到 1e-1 量级；v2 不舍入"
+        },
+        {
+          "id": "C8",
+          "check": "I4 首条 hfq_close=原始收盘；末条 qfq_close=原始收盘",
+          "status": "PASS",
+          "metric": "5,549 只；首条违约=0 末日违约=0；|hfq-factor×c0|max=0.0e+00；|qfq-factor×cl/factor_last|max=0.0e+00",
+          "detail": ""
+        },
+        {
+          "id": "C9",
+          "check": "I5 截断到 T 重算的 hfq 在 t≤T 上不变",
+          "status": "PASS",
+          "metric": "2015-12-31: n=499,182 hfq相对误差=3.7e-15 开盘=3.7e-15; 2020-12-31: n=788,816 hfq相对误差=5.3e-15 开盘=5.4e-15",
+          "detail": "qfq 锚定末日，重算后价格水平会变（中位相对变化 2015-12-31=30.40%, 2020-12-31=4.16%），故只作展示"
+        },
+        {
+          "id": "C10",
+          "check": "I1b 随机日抽样（hash%800）hfq 收益 = pct_chg",
+          "status": "PASS",
+          "metric": "n=20,779 违约=0 最大=1.72e-15 中位=8.15e-17 p99=4.02e-16",
+          "detail": ""
+        },
+        {
+          "id": "C11",
+          "check": "I6 检验功效：旧公式 hfq=raw×factor 必须被判失败",
+          "status": "PASS",
+          "metric": "全样本 15,693,245/16,676,415 行>1bp（94.10%），中位=1.41pp，斜率=2.0119；除权日 52,316 个：中位=2.62pp p95=44.83pp 最大=7596.46pp >5pp=15,590",
+          "detail": "同一组 I1/I2 在 v1 数据上会 FAIL，说明检查真的能抓住双计"
+        },
+        {
+          "id": "C12",
+          "check": "qfq_close 相邻日收益 = pct_chg",
+          "status": "PASS",
+          "metric": "16,676,415 对；>0.5bp=0 最大=4.09e-15",
+          "detail": ""
+        },
+        {
+          "id": "D1",
+          "check": "停牌行形态（量额空、价格不动）",
+          "status": "PASS",
+          "metric": "停牌行=564,852 其中量0/空=564,852 价格异动=14",
+          "detail": "is_st缺失=0；停牌判定改用成交量，trade_status 有 8 行误标"
+        },
+        {
+          "id": "D2",
+          "check": "涨跌停规则与实际最高/最低价冲突",
+          "status": "PASS",
+          "metric": "1483/16,690,473（0.0089%）",
+          "detail": "主要为 2005-2007 股改/重组复牌无涨跌幅、退市整理期首日无涨跌幅、缩股式重整；已用 px_breaks_* 标记"
+        },
+        {
+          "id": "D3",
+          "check": "单日绝对涨跌幅>30% 的极端行",
+          "status": "INFO",
+          "metric": "3885 行（ST=85，上市5日内=3502，2004-01-07~2026-10-23）",
+          "detail": "退市整理期首日无涨跌幅、缩股/重整为主；因子按 pct_chg 计入，研究时应结合 px_breaks_* 剔除"
+        },
+        {
+          "id": "E1",
+          "check": "证券主表与退市覆盖",
+          "status": "PASS",
+          "metric": "证券=5,549 有退市日=326 退市且有末条行情=322 无退市日但行情早停=0",
+          "detail": "末条行情晚于退市日30天以上=0"
+        },
+        {
+          "id": "E2",
+          "check": "冻结窗口内退市/长停证券数",
+          "status": "INFO",
+          "metric": "322 只最后行情早于 2026-09-01",
+          "detail": "退市股保留在样本内，避免生存者偏差"
+        },
+        {
+          "id": "F1",
+          "check": "同花顺公司行动事件",
+          "status": "PASS",
+          "metric": "57,607 条 / 5,433 只 / 1991-02-26~2026-10-26",
+          "detail": "行情表自 2016-10-13 起，但事件表含 1991 年以来历史（2016 前 22,225 条）"
+        },
+        {
+          "id": "F2",
+          "check": "由 preclose≠前收 推导的除权日",
+          "status": "INFO",
+          "metric": "52,316 条 / 5,377 只 / 2004-01-13~2026-10-26；与同花顺事件匹配 50,346",
+          "detail": "覆盖 2004 起，可补源库早期缺口；2016+ 与同花顺事件匹配率见下行"
+        },
+        {
+          "id": "F3",
+          "check": "公司行动公式 vs 实际除权后昨收",
+          "status": "PASS",
+          "metric": "吻合 49,588/51,654（96.00%），中位绝对误差=0.0000",
+          "detail": "不吻合者多为同日多事件/缩股/数据源口径差异，未修正价格"
+        },
+        {
+          "id": "G1",
+          "check": "指数日线与交易日历一致",
+          "status": "PASS",
+          "metric": "44,162 行 / 9 只 / 2006-01-04~2026-10-26；与日历差集=0",
+          "detail": "指数最早 2006-01-04（源库限制）"
+        },
+        {
+          "id": "G2",
+          "check": "交易日历",
+          "status": "PASS",
+          "metric": "13,096 天，其中交易日 8,749，1990-12-19~2026-10-26",
+          "detail": ""
+        },
+        {
+          "id": "G3",
+          "check": "量额单位一致性（amount vs volume×均价）",
+          "status": "PASS",
+          "metric": "中位偏差=0.0021，p99=0.0188",
+          "detail": "amount=元、volume=股；偏差来自成交价分布与 VWAP 近似"
+        },
+        {
+          "id": "H1",
+          "check": "两源库原始 OHLCV 交叉校验",
+          "status": "PASS",
+          "metric": "2016-10-13:2511只/最大相对差1.4e-04; 2021-06-15:4137只/最大相对差2.6e-08; 2026-10-23:5217只/最大相对差0.0e+00",
+          "detail": "逐字段完全一致，说明两源同源；差异仅在覆盖范围（同花顺含北交所）"
+        }
+      ]
+    },
+    "data_rc": 0,
+    "feature": {
+      "total": 25,
+      "pass": 25,
+      "fail": 0,
+      "skip": 0
+    },
+    "feature_rc": 0,
+    "matching": {
+      "total": 31,
+      "passed": 31,
+      "failed": 0,
+      "audits": 11,
+      "audit_fail": []
+    },
+    "matching_rc": 0,
+    "stats": {
+      "n_checks": 20,
+      "n_passed": 20,
+      "all_passed": true
+    },
+    "stats_rc": 0,
+    "registry": {
+      "pass": 7,
+      "fail": 0,
+      "rc": 0
+    },
+    "engine": {
+      "gates": {
+        "G-E6_ca_continuity": true,
+        "G-E6b_ca_no_missing_events": true,
+        "G-E7_equivalence_median_50bp": true,
+        "G-E7_equivalence_max_300bp": true,
+        "G-E8_accounting_1pct": true,
+        "G-E10_no_2021": true,
+        "adapter_bad_bars_0": true,
+        "events_invalid_0": true,
+        "G-E10b_2021_guard": true,
+        "all_pass": true
+      },
+      "equivalence": {
+        "shares_median_abs_err_bp": 18.861,
+        "shares_max_abs_err_bp": 176.272
+      }
+    },
+    "engine_rc": 0
+  },
+  "inventory": {
+    "path": "文件清单.csv",
+    "rows": 359
+  },
+  "retractions": [
+    {
+      "path": "03_结果/结构族_开发验证规范.md",
+      "kind": "tp8",
+      "what": "§8.6/§8.7/§9 把 tp8 列为最优离场（+2.6%）、G+tp8 +7.3%，并据此写“快速兑现优于让利润奔跑”",
+      "why": "tp8 在 120 日内未触及 +8% 时把 5,559 笔失败离场置 NaN 后过滤；按最后收盘强制离场这些事件均值 −15.4%。G+tp8 8 种子 +6.36% → −1.14%；E+tp8 +2.21% → −3.07%",
+      "authority": "05_审计/第一阶段代码与负结果审计.md §F2（撤回声明）",
+      "action": "只可引用其负结论；tp8 正收益、'最佳离场'表述作废，不得进入一页纸"
+    },
+    {
+      "path": "03_结果/统计整合/01_整合结论.md",
+      "kind": "tp8",
+      "what": "§2 矩阵表 `struct_rules` 最好 +2.48%（PBO 0.021）来自 `tp8` 聚合规则；`多重性.json` 同值",
+      "why": "tp8 的正收益已被失败离场修正撤回；+2.48% 不能证明“聚合规则有边际”",
+      "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+      "action": "可作为负结果引用；不得单引 +2.48%，引用时须写“tp8 行修正后为负”"
+    },
+    {
+      "path": "03_结果/结构族_离场规则_组合_K3.csv",
+      "kind": "tp8",
+      "what": "tp8 组合层 CAGR/Sharpe 行（+2.6%）",
+      "why": "同上，正收益来自丢弃左尾而非策略优势",
+      "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+      "action": "数据保留；tp8 行不得单独作为结果引用，引用须附失败离场修正值"
+    },
+    {
+      "path": "03_结果/结构族_离场规则_净值_K3.csv",
+      "kind": "tp8",
+      "what": "tp8 净值列",
+      "why": "同上；该列为丢弃左尾后的路径",
+      "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+      "action": "数据保留；tp8 列不得单独作为净值证据"
+    },
+    {
+      "path": "03_结果/结构族_信号×离场_矩阵.csv",
+      "kind": "tp8",
+      "what": "6 信号 × 离场矩阵中的 tp8 行（G 列 +7.3）",
+      "why": "同一 tp8 实现；矩阵内 tp8 格偏高",
+      "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+      "action": "同上；聚合结论以 hold40/struct 行为准"
+    },
+    {
+      "path": "03_结果/结构族_离场对比_K2.csv / _K3.csv / _K5.csv",
+      "kind": "tp8",
+      "what": "事件层 tp8 均值/胜率/分位",
+      "why": "事件层 tp8 统计本身可用于比较路径，但其组合层正收益不可复现",
+      "authority": "05_审计/第一阶段代码与负结果审计.md §F2",
+      "action": "仅作事件层描述；不得外推为组合收益"
+    },
+    {
+      "path": "01_数据/_audit/v1_修复前_自检报告.md",
+      "kind": "v1_hfq",
+      "what": "v1 自检宣称 hfq=close×factor 成立、'复权收益偏差 0'",
+      "why": "C1 是恒等式、C2 用 factor 收益冒充 hfq 收益；旧公式把价格收益计入两次（全样本 94.10% 行 >1bp，中位 1.41pp）",
+      "authority": "05_审计/复权修复影响.md §4.1；01_数据/_audit/修复后自检报告.md",
+      "action": "历史快照，禁止引用其结论；以 v2 自检 28 PASS 为准"
+    },
+    {
+      "path": "01_数据/_audit/v1_修复前_自检结果.json",
+      "kind": "v1_hfq",
+      "what": "v1 自检的机器结果",
+      "why": "同上",
+      "authority": "05_审计/复权修复影响.md §4.1",
+      "action": "只作 v1 缺陷证据，不作数据可用性证据"
+    },
+    {
+      "path": "03_结果/候选_相对强弱/00_预注册_相对强弱.md",
+      "kind": "v1_hfq",
+      "what": "§2.1 写“后复权价用冻结层自建 factor（hfq = raw × factor）”",
+      "why": "该式是 v1 双计公式；代码实际使用 exit_cache 的 Baostock 后复权价，结果复算到 A 空间（中位误差 1.96pp）",
+      "authority": "05_审计/复权修复影响.md §3.5 / §4.3",
+      "action": "预注册只追加不改；引用时以代码与审计为准，勿按字面复算"
+    },
+    {
+      "path": "03_结果/趋势族_开发验证规范.md",
+      "kind": "note_baostock_hfq",
+      "what": "通篇以“hfq”指 Baostock adjustflag=1 后复权价",
+      "why": "不是冻结层 v1 hfq；但同名易混。Baostock 另有年末重定基缺陷（63 个证券日 >0.5pp）",
+      "authority": "05_审计/复权修复影响.md §5.1(2)",
+      "action": "可引用；引用时写明“Baostock flag1”，不得写成“冻结层 hfq”"
+    },
+    {
+      "path": "03_结果/退出与仓位_实验规范.md",
+      "kind": "note_baostock_hfq",
+      "what": "以 hfq 空间记账（exit_cache.px_hfq）",
+      "why": "同上，Baostock 后复权，非冻结层 v1",
+      "authority": "05_审计/复权修复影响.md §5.1(4)",
+      "action": "可引用；写明报价比价口径与 Baostock 来源"
+    }
+  ],
+  "limitations": [
+    "本验收只运行数据/特征/撮合/统计/引擎自检，不重跑任何策略回测；策略绩效以既有证据文件为准。",
+    "2021+ 泄漏扫描对 >20MB 的 CSV 与无 parquet 统计信息的文件无法逐行检查，已计入 skipped。",
+    "关键表检查验证可读与非空，不重算其数值；数值复现见 README 的完整复现命令。",
+    "预注册 §15 的 window_start/window_end/adjust/cost_model_id 四列尚未在所有结果表内落实（T2 为 WARN）。",
+    "作废索引只标注、不修改历史文件；引用旧报告时须先查 R1/R2。"
+  ]
+}

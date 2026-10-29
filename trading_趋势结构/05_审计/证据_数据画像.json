@@ -1,0 +1,71 @@
+{
+  "duckdb": {
+    "path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "table": "raw_kline_daily",
+    "rows": 10392558,
+    "symbols": 5579,
+    "min_date": "2016-10-13",
+    "max_date": "2026-10-28",
+    "distinct_days": 2439,
+    "rows_after_freeze": 11137,
+    "bse_symbols": 353,
+    "bse_rows": 277174,
+    "bse_prev_close_null": 277174,
+    "bse_min_date": "2020-07-27",
+    "symbols_last_before_2026_10_01": 5,
+    "dim_symbol_name_nulls": 5580,
+    "dim_symbol_rows": 5580,
+    "board_counts": {
+      "STAR": 618,
+      "SME": 961,
+      "ChiNext": 1411,
+      "BSE": 353,
+      "SSE_main": 1702,
+      "SZSE_main": 534
+    }
+  },
+  "baostock": {
+    "path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "stock_rows_total": 55803375,
+    "stock_rows_by_adjustflag": {
+      "1": 18595903,
+      "2": 18595903,
+      "3": 18611733
+    },
+    "stock_min_date": "1990-12-19",
+    "stock_max_date": "2026-10-28",
+    "stock_basic_total": 9024,
+    "stock_basic_type1": 5564,
+    "delisted_type1": 340,
+    "bse_codes": 0,
+    "trade_dates_rows": 13098,
+    "trade_dates_trading": 8751,
+    "trade_dates_min": "1990-12-19",
+    "trade_dates_max": "2026-10-28",
+    "index_rows": 44162,
+    "index_codes": 9,
+    "index_min": "2006-01-04",
+    "index_max": "2026-10-26",
+    "rows_after_freeze_af1": 6704,
+    "rows_after_freeze_af2": 6744,
+    "rows_after_freeze_af3": 6798,
+    "delisted_type1_any": 341,
+    "delisted_type1_out_date_after_freeze": 1,
+    "active_type1": 5224,
+    "board_counts": {
+      "ChiNext": 1454,
+      "SME": 1015,
+      "SSE_main": 1846,
+      "STAR": 621,
+      "SZSE_main": 628
+    }
+  },
+  "generated_at": "2026-10-28T21:37:24",
+  "notes": [
+    "源库处于在线同步状态：本次审计期间 Baostock stock_kline_d 行数由 55,795,773 增至 55,803,375；DuckDB 含 2026-10-27/28 共 11,137 行。研究必须物理截断到 2026-10-26。",
+    "DuckDB 仅含现存代码（5 个代码最后交易日早于 2026-10-01），无退市股；Baostock type=1 含 340 只 out_date<=2026-10-26 的退市股。",
+    "DuckDB dim_symbol.name 全为 NULL，不能用于 ST/名称过滤；应使用 Baostock is_st 或 code_name。",
+    "DuckDB 北交所 353 只、277,174 行，2020-07-27 起；prev_close 全为 NULL，需用 lag(close) 自行计算。",
+    "Baostock 无北交所代码（bj. 0 只）。"
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "checks": [
+    {
+      "id": "S1",
+      "name": "hfq 日收益 ≡ pct_chg",
+      "status": "pass",
+      "detail": "300 只 / 850,335 行，max|diff|=1.991e-15"
+    },
+    {
+      "id": "S2",
+      "name": "截断重算信号一致",
+      "status": "pass",
+      "detail": "40 个信号，不一致 0"
+    },
+    {
+      "id": "S3",
+      "name": "未来扰动不影响信号",
+      "status": "pass",
+      "detail": "20 个信号，不一致 0"
+    },
+    {
+      "id": "S4",
+      "name": "T+1（最短持有≥1日）",
+      "status": "pass",
+      "detail": "1391685 笔，最短持有 1 日"
+    },
+    {
+      "id": "S7",
+      "name": "买入整股（100 股倍数）",
+      "status": "pass",
+      "detail": "违规 0 笔"
+    },
+    {
+      "id": "S8",
+      "name": "窗口不越 2020-12-31",
+      "status": "pass",
+      "detail": "越界 0 笔"
+    },
+    {
+      "id": "S5",
+      "name": "开盘涨停不买（计数）",
+      "status": "pass",
+      "detail": "涨停拒买 593 笔；失败原因表见 09_失败订单.csv"
+    },
+    {
+      "id": "S6",
+      "name": "费用手工复算",
+      "status": "pass",
+      "detail": "40 笔，误差>0.02 元 0 笔"
+    },
+    {
+      "id": "S9",
+      "name": "停牌日无成交（抽样200笔）",
+      "status": "pass",
+      "detail": "入场日停牌 0；非停牌强制退出的出场日停牌 0"
+    },
+    {
+      "id": "S10",
+      "name": "组合现金对账",
+      "status": "pass",
+      "detail": "max|recon_err|=2.36e-08（30 个组合）"
+    }
+  ],
+  "pass_n": 10,
+  "fail_n": 0,
+  "meta": {
+    "window_start": "2008-01-01",
+    "window_end": "2020-12-31",
+    "adjust": "hfq_rebuilt_from_pct_chg",
+    "cost_model_id": "C-REAL-V1",
+    "code": "02_代码/候选_退出统一.py",
+    "n_trades": 1391685,
+    "n_configs": 30,
+    "code_sha256": "ed717b5cfc992fa8cb94314219aa37fd392aa689f1d5884966fb47e9fec90e7b",
+    "panel_sha256": "eb4aac65a980d86d9c9a1c4acd8018e9216f65a2f432f8b203e84c08b0107945"
+  }
+}

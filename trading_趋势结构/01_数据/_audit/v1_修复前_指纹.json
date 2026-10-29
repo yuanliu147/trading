@@ -1,0 +1,17 @@
+{
+  "captured_at": "2026-10-28T23:38:00",
+  "version": "v1 (2026-10-28 21:55 build)",
+  "daily_rows": 16698536,
+  "symbols": 5549,
+  "date_min": "2004-01-02",
+  "date_max": "2026-10-26",
+  "future_rows": 0,
+  "dup_keys": 0,
+  "files_agg_sha256": "4fc8ee2ee397faf8cb84c5d5b03db92b338d044cee78dc0e297bc97434efbd64",
+  "meta_json_sha256": "c7198030925e7a7524a148a06f91ecad0c47248da386a833aa7c252df0b346e9",
+  "frozen_duckdb_sha256": "3751374616745bd107a98f6ac94dc8b2525b12ba00c99e2522f2c344c721d459",
+  "big_files": {
+    "frozen/market_daily.parquet": "027c238341fc860e5068f84776060c94190906615b61f2159478f6ed677012fa"
+  },
+  "n_files": 56
+}

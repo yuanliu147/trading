@@ -1,0 +1,972 @@
+{
+  "generated_at_local": "2026-10-29T01:28:05",
+  "tag": "[FINAL-DELIVERY-2026-10-29]",
+  "counts": {
+    "total": {
+      "in_Nsel": 733.0,
+      "in_Ncell": 1251.0,
+      "in_Ndiag": 454.0,
+      "in_Nplatform": 257.0,
+      "in_Nsens": 235.0,
+      "in_Naudit": 87.0,
+      "rows": 1699
+    },
+    "by_family": {
+      "AUDITFIX": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 0.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 4.0,
+        "rows": 1
+      },
+      "BREAKPULL": {
+        "in_Nsel": 20.0,
+        "in_Ncell": 40.0,
+        "in_Ndiag": 2.0,
+        "in_Nplatform": 144.0,
+        "in_Nsens": 8.0,
+        "in_Naudit": 6.0,
+        "rows": 46
+      },
+      "ECOLOGY": {
+        "in_Nsel": 14.0,
+        "in_Ncell": 42.0,
+        "in_Ndiag": 36.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 44
+      },
+      "EXECPRESSURE": {
+        "in_Nsel": 4.0,
+        "in_Ncell": 8.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 101.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 9
+      },
+      "EXIT": {
+        "in_Nsel": 51.0,
+        "in_Ncell": 78.0,
+        "in_Ndiag": 72.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 33.0,
+        "in_Naudit": 0.0,
+        "rows": 150
+      },
+      "EXITUNI": {
+        "in_Nsel": 30.0,
+        "in_Ncell": 30.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 30
+      },
+      "LONGMOM": {
+        "in_Nsel": 26.0,
+        "in_Ncell": 52.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 33.0,
+        "rows": 53
+      },
+      "MAIN": {
+        "in_Nsel": 19.0,
+        "in_Ncell": 38.0,
+        "in_Ndiag": 30.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 18.0,
+        "in_Naudit": 0.0,
+        "rows": 69
+      },
+      "META": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 0.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 1
+      },
+      "MKT": {
+        "in_Nsel": 12.0,
+        "in_Ncell": 32.0,
+        "in_Ndiag": 8.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 8.0,
+        "in_Naudit": 0.0,
+        "rows": 38
+      },
+      "OFFICIAL": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 0.0,
+        "in_Ndiag": 1.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 2
+      },
+      "RELSTR": {
+        "in_Nsel": 40.0,
+        "in_Ncell": 80.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 2.0,
+        "rows": 84
+      },
+      "RISKBUDGET": {
+        "in_Nsel": 29.0,
+        "in_Ncell": 87.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 14.0,
+        "in_Naudit": 30.0,
+        "rows": 177
+      },
+      "SMALLLOWVOL": {
+        "in_Nsel": 109.0,
+        "in_Ncell": 199.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 12.0,
+        "in_Nsens": 46.0,
+        "in_Naudit": 11.0,
+        "rows": 130
+      },
+      "STAT": {
+        "in_Nsel": 9.0,
+        "in_Ncell": 9.0,
+        "in_Ndiag": 4.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 13
+      },
+      "STRUCT": {
+        "in_Nsel": 219.0,
+        "in_Ncell": 219.0,
+        "in_Ndiag": 216.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 62.0,
+        "in_Naudit": 0.0,
+        "rows": 435
+      },
+      "STRUCTREV": {
+        "in_Nsel": 30.0,
+        "in_Ncell": 60.0,
+        "in_Ndiag": 1.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 1.0,
+        "rows": 63
+      },
+      "TREND": {
+        "in_Nsel": 60.0,
+        "in_Ncell": 120.0,
+        "in_Ndiag": 74.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 18.0,
+        "in_Naudit": 0.0,
+        "rows": 194
+      },
+      "TRENDCALLBACK": {
+        "in_Nsel": 35.0,
+        "in_Ncell": 105.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 20.0,
+        "in_Naudit": 0.0,
+        "rows": 105
+      },
+      "UNIFIEDENGINE": {
+        "in_Nsel": 4.0,
+        "in_Ncell": 8.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 9
+      },
+      "VCB": {
+        "in_Nsel": 22.0,
+        "in_Ncell": 44.0,
+        "in_Ndiag": 10.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 8.0,
+        "in_Naudit": 0.0,
+        "rows": 46
+      }
+    },
+    "by_category": {
+      "audit": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 11.0,
+        "in_Ndiag": 1.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 57.0,
+        "rows": 11
+      },
+      "control": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 0.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 30.0,
+        "rows": 90
+      },
+      "diag": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 0.0,
+        "in_Ndiag": 423.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 381
+      },
+      "meta": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 0.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 1
+      },
+      "platform": {
+        "in_Nsel": 0.0,
+        "in_Ncell": 12.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 257.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 3
+      },
+      "posthoc": {
+        "in_Nsel": 240.0,
+        "in_Ncell": 327.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 0.0,
+        "in_Naudit": 0.0,
+        "rows": 328
+      },
+      "prereg": {
+        "in_Nsel": 272.0,
+        "in_Ncell": 567.0,
+        "in_Ndiag": 0.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 14.0,
+        "in_Naudit": 0.0,
+        "rows": 569
+      },
+      "sensitivity": {
+        "in_Nsel": 221.0,
+        "in_Ncell": 334.0,
+        "in_Ndiag": 30.0,
+        "in_Nplatform": 0.0,
+        "in_Nsens": 221.0,
+        "in_Naudit": 0.0,
+        "rows": 316
+      }
+    },
+    "N_dsr_ladder": {
+      "N1_sel": 733,
+      "N2_sel_plus_platform": 990,
+      "N3_all_cells": 1444
+    },
+    "budget": {
+      "prereg_hard_budget_select": 40,
+      "prereg_hard_budget_with_ablation": 64,
+      "N_sel_over_budget_ratio": 11.45
+    }
+  },
+  "grade_counts": {
+    "F_unevaluable": 35,
+    "C_negative_valid": 364,
+    "B_conditional": 5,
+    "E_underpowered": 42,
+    "W_window_mixed": 32
+  },
+  "candidate_grading": {
+    "config_level": {
+      "caliber": "最终试验总账/统一门槛：全项目、配置级；每配置 1 行门槛、总账 5×2=10 行",
+      "n_configs": 5,
+      "n_rows": 10,
+      "trend_s3_configs": 4,
+      "vcb_configs": 1,
+      "config_ids": [
+        "052bda290524",
+        "409453eacb0a",
+        "VCB:VCB-P20_T40",
+        "cdf1d2c08eec",
+        "fdc0d286eb39"
+      ],
+      "source": "03_结果/最终统计/统一门槛.csv；03_结果/最终试验总账.csv"
+    },
+    "row_level_6_families": {
+      "caliber": "候选分级.csv：仅第一阶段 6 族（TREND/STRUCT/EXIT/MKT/STAT/ECOLOGY）、行级；不含 VCB 等后加族",
+      "n_rows": 12,
+      "n_configs": 8,
+      "trend_s3_rows": 11,
+      "trend_s1_rows": 1,
+      "source": "03_结果/统计整合/候选分级.csv"
+    },
+    "note": "两个口径族集合与粒度不同，不能混用；'全部 S3' 只在配置级 5 个成立，行级 12 行含 1 行 S1。"
+  },
+  "gate_coverage": {
+    "n_gate_rows": 478,
+    "N_sel_covered_by_gate_rows": 505,
+    "N_sel_unrated": 228,
+    "N_sel_total": 733,
+    "identity": "505+228=733",
+    "legacy_714_caliber": {
+      "covered": 486,
+      "unrated": 228,
+      "note": "旧值 486/228 是 714 口径（486+228=714）；不含 T0005 的 19 个 N_sel。当前 478 行门槛表含 T0005 19 行，故 505/228。"
+    },
+    "unrated_reason": "无 dev/val 两窗口记录：STRUCT 219（只有 2008-2020 合并窗口）+ STAT 9（统计框架夹具）；只能作负证据"
+  },
+  "t0005": {
+    "trial_id": "T0005",
+    "family": "F1-S1-E2-X3-G1",
+    "strategy": "F1(月/周/日) × S1(已确认分型) × E2(突破回踩) × X3(奔跑+谨慎态) × G1(无市场门)",
+    "params_default_7_8": {
+      "k": 2,
+      "atr": 14,
+      "breakout_buffer_atr": 0.05,
+      "stop_atr": 0.3,
+      "max_risk_pct": 0.12,
+      "be_mfe_r": 1.0,
+      "trail_mfe_r": 2.0,
+      "trail_atr": 3.0,
+      "fail_days": 3,
+      "fail_mfe_r": 0.5,
+      "half_days": 10,
+      "time_stop_days": 20,
+      "port_dd_half": 0.1,
+      "port_dd_stop": 0.15,
+      "risk_per_trade": 0.012,
+      "max_pos": 10,
+      "rank": "breakout_strength"
+    },
+    "dev": {
+      "cagr": 0.04156815775673306,
+      "mdd": -0.0905350729763279,
+      "sharpe": 0.8971889037931549,
+      "vol": 0.04829943127682387,
+      "calmar": 0.4591387225987197,
+      "n_trades": 103,
+      "n_codes": 81,
+      "win_rate": 0.4077669902912621,
+      "avg_hold_days": 23.262135922330096,
+      "avg_positions": 0.8319630010277492,
+      "time_in_market": 0.2446043165467626,
+      "cagr_ex_top5": 0.02399709446207665,
+      "top5_share": 0.31060968266898764,
+      "total_return": 0.3848562737000001
+    },
+    "val": {
+      "cagr": -0.025342280131277373,
+      "mdd": -0.13797983512013767,
+      "sharpe": -0.6420610387692266,
+      "vol": 0.04003294993427147,
+      "calmar": -0.18366654887804512,
+      "n_trades": 159,
+      "n_codes": 111,
+      "win_rate": 0.2830188679245283,
+      "avg_hold_days": 18.28301886792453,
+      "avg_positions": 1.6182266009852218,
+      "time_in_market": 0.548440065681445,
+      "cagr_ex_top5": -0.042337999591500974,
+      "top5_share": 0.40923472818282186,
+      "total_return": -0.1202488787999999
+    },
+    "grading": {
+      "dev_cagr_gt0": true,
+      "val_cagr_gt0": false,
+      "dev_mdd_le25": true,
+      "val_mdd_le25": true,
+      "dev_trades_ge30": true,
+      "val_trades_ge30": true,
+      "dev_codes_ge10": true,
+      "val_codes_ge10": true,
+      "selection_pass_7_9_5": false,
+      "tier_12_2": "无可利用边际（min(dev,val) = -2.53% < 20%）"
+    },
+    "multiplicity": {
+      "n_new_configs_registered": 32,
+      "n_configs_unique_paths": 32,
+      "n_sel_before": 365,
+      "n_for_dsr_in_t0005_report": 397,
+      "pbo_neighbor_dev": 0.3106449106449106,
+      "pbo_neighbor_val": 0.7564879564879565,
+      "dsr_project_dev_N397": 0.011488527569497685,
+      "dsr_project_val_N397": 6.070940834428626e-08,
+      "family_dsr_dev_N18": 0.9584357377659514,
+      "family_dsr_note": "18 个邻域变体高度相关，Var(SR_trials) 被系统低估，族内 DSR 偏高；门槛口径是项目级 N。"
+    },
+    "ablation": {
+      "n_variants": 15,
+      "dev_best": "V7 X3→X1 固定2R目标 +8.12%（MDD -6.01%）",
+      "val_best": "A1 E2+固定20日 -0.11%（MDD -12.68%）",
+      "val_range": [
+        -0.0359,
+        -0.0011
+      ],
+      "n_val_positive": 0,
+      "v1_zero_trades": "F1→F2（季/月）在 12% 初始风险门下信号集为空，两段 0 笔——是无法交易，不是无损失。"
+    },
+    "neighborhood": {
+      "n_variants": 18,
+      "dev_range": [
+        0.0154,
+        0.055
+      ],
+      "val_range": [
+        -0.026,
+        -0.0135
+      ],
+      "n_val_positive": 0
+    },
+    "exit_structure": {
+      "stop_trigger": {
+        "dev": {
+          "n": 37,
+          "mean_pnl": 13334.0,
+          "win_rate": 0.784
+        },
+        "val": {
+          "n": 36,
+          "mean_pnl": 2366.0,
+          "win_rate": 0.611
+        }
+      },
+      "open_exits": {
+        "dev": {
+          "n": 65,
+          "mean_pnl": -1917.0,
+          "win_rate": 0.185
+        },
+        "val": {
+          "n": 120,
+          "mean_pnl": -1760.0,
+          "win_rate": 0.167
+        }
+      },
+      "note": "stop_trigger 含跟踪/保本止损，是“锁住利润”的那一类；时间/结构退出（open）是亏损来源。"
+    },
+    "signal_funnel": {
+      "n_signals_2007_2020": 25558,
+      "risk_gate_pass_share": {
+        "dev": 0.0132,
+        "val": 0.0465
+      },
+      "risk_gate_median_r_over_p0": {
+        "dev": 0.2924,
+        "val": 0.2452
+      },
+      "note": "12% 初始风险门是主要约束：周线结构低点离现价太远，232 个有效成交信号来自 25558 个信号。"
+    },
+    "selfcheck": {
+      "dev": {
+        "cash_identity_max_abs": 0.0,
+        "cash_identity_bad_days": 0,
+        "nav_identity_max_abs": 5e-05,
+        "nav_identity_bad_days": 0,
+        "t1_violations": 0,
+        "fills_on_suspension": 0,
+        "fills_at_locked_limit_open": 0,
+        "forced_valuation_fills_on_suspension": 0,
+        "max_positions": 10,
+        "risk_violations": 1,
+        "max_realized_risk_pct": 0.01433,
+        "max_price_r_pct": 0.138061,
+        "rows_after_2020": 0,
+        "max_date": "2015-12-31",
+        "forced_sells": 0,
+        "delist_forced": 0,
+        "n_orders": 559,
+        "n_fills": 240,
+        "n_round_trips": 103,
+        "n_failed_orders": 0,
+        "n_ca_events": 2,
+        "n_tax_events": 2,
+        "bad_bars": 0,
+        "orders_execute_before_decision": 0,
+        "final_nav": 1384856.2737,
+        "liq_nav_after_cost": 1384768.93,
+        "nav_identity_self_max_abs": 0.0
+      },
+      "val": {
+        "cash_identity_max_abs": 0.0,
+        "cash_identity_bad_days": 0,
+        "nav_identity_max_abs": 5e-05,
+        "nav_identity_bad_days": 0,
+        "t1_violations": 0,
+        "fills_on_suspension": 0,
+        "fills_at_locked_limit_open": 0,
+        "forced_valuation_fills_on_suspension": 2,
+        "max_positions": 10,
+        "risk_violations": 2,
+        "max_realized_risk_pct": 0.013252,
+        "max_price_r_pct": 0.131468,
+        "rows_after_2020": 0,
+        "max_date": "2020-12-31",
+        "forced_sells": 2,
+        "delist_forced": 0,
+        "n_orders": 667,
+        "n_fills": 381,
+        "n_round_trips": 159,
+        "n_failed_orders": 3,
+        "n_ca_events": 10,
+        "n_tax_events": 9,
+        "bad_bars": 0,
+        "orders_execute_before_decision": 0,
+        "final_nav": 879751.1212,
+        "liq_nav_after_cost": 879698.26,
+        "nav_identity_self_max_abs": 0.0
+      }
+    },
+    "reconciliation": {
+      "dev": {
+        "n_days": 1946,
+        "final_nav_independent": 1384856.2736697628,
+        "final_nav_unified": 1384856.2737,
+        "final_diff": -3.023725003004074e-05,
+        "max_abs_diff": 4.9853348173201084e-05,
+        "max_rel_diff": 5.227305578233449e-11,
+        "n_days_diff_gt_1yuan": 0,
+        "n_ca_rows": 2
+      },
+      "val": {
+        "n_days": 1218,
+        "final_nav_independent": 879751.1212474064,
+        "final_nav_unified": 879751.1212,
+        "final_diff": 4.7406298108398914e-05,
+        "max_abs_diff": 4.9998750910162926e-05,
+        "max_rel_diff": 5.6435527289979115e-11,
+        "n_days_diff_gt_1yuan": 0,
+        "n_ca_rows": 10
+      },
+      "fill_price_mismatch_gt_1e-6": {
+        "dev": 1,
+        "val": 1
+      },
+      "causality": {
+        "n_checked": 480,
+        "n_signal_samples": 200,
+        "n_other_samples": 200,
+        "n_mismatch": 0,
+        "pass": true
+      }
+    },
+    "yearly": {
+      "dev": {
+        "2008": {
+          "return": 0.0,
+          "mdd": 0.0
+        },
+        "2009": {
+          "return": 0.0,
+          "mdd": 0.0
+        },
+        "2010": {
+          "return": -0.00347772,
+          "mdd": -0.0472518066626147
+        },
+        "2011": {
+          "return": -0.0166919800327997,
+          "mdd": -0.0166919800327997
+        },
+        "2012": {
+          "return": 0.0040095162882587,
+          "mdd": -0.004522445257389
+        },
+        "2013": {
+          "return": -0.032209110989808,
+          "mdd": -0.0384271214949611
+        },
+        "2014": {
+          "return": 0.2639106179218193,
+          "mdd": -0.0449178893365614
+        },
+        "2015": {
+          "return": 0.1507802180035131,
+          "mdd": -0.0289550342184504
+        }
+      },
+      "val": {
+        "2016": {
+          "return": -0.0305686499999999,
+          "mdd": -0.039053163274497
+        },
+        "2017": {
+          "return": -0.0326163708239887,
+          "mdd": -0.090868360246898
+        },
+        "2018": {
+          "return": -0.0152347563604093,
+          "mdd": -0.035457123832306
+        },
+        "2019": {
+          "return": -0.0123141592707626,
+          "mdd": -0.0173800217928662
+        },
+        "2020": {
+          "return": -0.0355216235009012,
+          "mdd": -0.0449361760136531
+        }
+      }
+    },
+    "dsr_at_project_N": {
+      "N733": {
+        "dev": 0.01710924318216377,
+        "val": 1.2121615288384202e-07
+      },
+      "N990": {
+        "dev": 0.01248524410505172,
+        "val": 6.988931250155243e-08
+      },
+      "N1444": {
+        "dev": 0.008330868356421916,
+        "val": 3.51332436169005e-08
+      }
+    }
+  },
+  "dsr_ladder": {
+    "N1_sel": {
+      "N": 733,
+      "sr0_annual": 1.648894753929204,
+      "dsr_best_dev": 0.000662754421907755,
+      "dsr_best_val": 0.008055951337233545
+    },
+    "N2_sel_plus_platform": {
+      "N": 990,
+      "sr0_annual": 1.6939693792829116,
+      "dsr_best_dev": 0.0004262688218779341,
+      "dsr_best_val": 0.006092492584022361
+    },
+    "N3_all_cells": {
+      "N": 1444,
+      "sr0_annual": 1.7491402757518166,
+      "dsr_best_dev": 0.00024346836215178422,
+      "dsr_best_val": 0.004274346582633593
+    }
+  },
+  "var_sr_daily": 0.0011164356612968494,
+  "var_sr_note": "Var(SR_trials) 沿用 418 条日净值序列的估计；T0005 的 2 条序列未重估（影响 <1%，且 N 上升使 SR0 上升、DSR 只降不升）。",
+  "families": {
+    "MAIN": {
+      "label": "官方主候选 T0005（F1×S1×E2×X3×G1）",
+      "n_configs_registered": 34,
+      "dev": {
+        "cagr": 0.04156815775673306,
+        "mdd": -0.0905350729763279,
+        "trades": 103
+      },
+      "val": {
+        "cagr": -0.025342280131277373,
+        "mdd": -0.13797983512013767,
+        "trades": 159
+      },
+      "verdict": "淘汰",
+      "reason": "§7.9.5 两段净收益>0 不通过（val -2.53%）；15 个消融与 18 个参数邻域无一在 val 转正；PBO 0.311/0.756、项目级 DSR≈0。"
+    },
+    "TREND": {
+      "label": "趋势族（多周期趋势/结构/触发）",
+      "best_dev": {
+        "config": "S4 纯时间60",
+        "cagr": 0.0935,
+        "mdd": -0.543
+      },
+      "best_val": {
+        "config": "S3 纯时间60",
+        "cagr": 0.0646,
+        "mdd": -0.096
+      },
+      "verdict": "无可冻结",
+      "reason": "dev/val 符号翻转；5 个两段为正的配置全部是 S3 事后探索（无 trial_id、每窗口 44-71 笔、事件层 20 日超额中位为负、去前 5 即转负）；max-stat p 0.374/0.716。"
+    },
+    "STRUCT": {
+      "label": "结构族（非重绘 HH/HL）",
+      "best_pooled": 0.0116,
+      "verdict": "无入场 alpha",
+      "reason": "219 个配置只有 2008-2020 合并窗口，无法两窗口评级；事件层 20 日超额 -1.21%~+0.11%；tp8 正收益因丢弃左尾撤回；结构止损是最差离场。"
+    },
+    "EXIT": {
+      "label": "退出族（18 臂 × 2 测试床）",
+      "dev_range": [
+        -0.376,
+        -0.2014
+      ],
+      "val_range": [
+        -0.458,
+        -0.198
+      ],
+      "verdict": "退出规则不改变符号",
+      "reason": "同一入场换 18 种退出，验证窗口全负；T2 跟踪把 dev 平均 R 从 +0.98 打到 -0.01；STK 六态状态机为 dev 最差臂。"
+    },
+    "MKT": {
+      "label": "市场状态族",
+      "best_dev": {
+        "cagr": 0.1389
+      },
+      "best_val": {
+        "cagr": -0.0733
+      },
+      "verdict": "不是择时 alpha",
+      "reason": "dev 好、val 负；收益改善来自降 beta；全段正收益集中在 2006-2007 与 2014-2015 的暴露。"
+    },
+    "ECOLOGY": {
+      "label": "生态切换（反转×趋势 + 连续风险预算）",
+      "dev_best": -0.0013,
+      "val_best": -0.022,
+      "verdict": "拒绝",
+      "reason": "54,070 个事件、扣除成本后 10 日超额 -0.75%/-1.38%（REV）与 -1.02%/-2.28%（BRK），按信号日聚类 t -10.9~-18.0；36 个状态条件格平均超额全负。"
+    },
+    "STAT": {
+      "label": "统计框架夹具",
+      "best": -0.0629,
+      "verdict": "夹具",
+      "reason": "2008-2012 参考网格，仅用于校验统计框架；不作为候选。"
+    },
+    "VCB": {
+      "label": "收缩突破（VCB）",
+      "main": {
+        "dev": 0.0567,
+        "val": 0.0559,
+        "dev_mdd": -0.363,
+        "val_mdd": -0.262
+      },
+      "best_gate": {
+        "config": "VCB-P20/T40",
+        "dev": 0.0651,
+        "val": 0.0538,
+        "dev_mdd": -0.236,
+        "val_mdd": -0.156
+      },
+      "closest": {
+        "config": "VCB-N120/T40",
+        "dev": 0.0833,
+        "val": 0.0871,
+        "dev_mdd": -0.353
+      },
+      "verdict": "拒绝",
+      "reason": "低个位数两段正但事件层为零（-1.08%/+0.92%，t<1）；PBO 0.614、DSR 0.62-0.84；随机排序（+7.20/+6.16）高于突破强度排序（+5.67/+5.59）；去前 5 后 val 仅 +0.7%/年。"
+    },
+    "SMALLLOWVOL": {
+      "label": "小盘低波趋势",
+      "main": {
+        "dev": 0.0953,
+        "val": 0.0033,
+        "dev_mdd": -0.557,
+        "val_mdd": -0.411,
+        "val_cagr_nav_first": 0.0033,
+        "val_cagr_initial_capital": -0.0003,
+        "val_first_day_return": -0.0176,
+        "val_nav_first": 982381.89,
+        "val_nav_start_capital": 1000000.0
+      },
+      "verdict": "不成立",
+      "reason": "val +0.33% 以首日收盘净值 982,382 为基准（2016-01-04 熔断日 -1.76% 未计入）；按初始 100 万计 val -0.03%，不是“两段为正”。val 的 P(CAGR≤0)=49.95%；val 去前 5 赢家 -9.42%；63 格中 0 个两段为正且两段 MDD≤25%；1 亿部署率 13.7%、CAGR -1.5%。"
+    },
+    "TRENDCALLBACK": {
+      "label": "趋势回调 vs 结构破坏",
+      "event_l5": 0.00077,
+      "main": {
+        "dev": -0.2396,
+        "val": -0.1978
+      },
+      "verdict": "拒绝",
+      "reason": "健康回调 20 日超额 +0.077%（t=0.78，中位 -1.74%）；主候选扣费 -23.96%/-19.78%；35 个配置 0 个两段为正。"
+    },
+    "RELSTR": {
+      "label": "横截面相对强弱（RS-T）",
+      "main": {
+        "dev": -0.112,
+        "val": -0.363
+      },
+      "verdict": "拒绝（反向信号）",
+      "reason": "24 个 IC 全部为负；40 个配置 0 个两段同为正；负边际来自选股而非成本（毛已 -13.4%/年）。"
+    },
+    "BREAKPULL": {
+      "label": "突破回踩 vs 立即追涨",
+      "main": {
+        "dev": -0.1902,
+        "val": -0.1985
+      },
+      "lookahead_arm": {
+        "dev": 0.82,
+        "val": 1.0755
+      },
+      "verdict": "拒绝",
+      "reason": "回踩买价低 +0.20%/+0.61% 每笔，但政策层 dev 144 格全负、val 144 格全正（符号翻转）；账户层两段约 -19%；+82%/+107.5% 是前视子集，不得当候选。"
+    },
+    "STRUCTREV": {
+      "label": "结构内短期温和反转",
+      "main": {
+        "dev": -0.2361,
+        "val": -0.218
+      },
+      "verdict": "拒绝",
+      "reason": "31 个账户配置 0 个两段为正；按日等权 net dev -1.09%/笔、val -0.85%/笔；排序键把“回撤最浅优先”操作化成“已反弹最多优先”。"
+    },
+    "LONGMOM": {
+      "label": "长期双动量",
+      "main": {
+        "dev": -0.0837,
+        "val": -0.1302
+      },
+      "verdict": "无正边际",
+      "reason": "26 个配置全负；月度 IC dev -0.0308（t=-1.99）；双动量退化（绝对动量过滤从不改变 Top-N）；DSR 0.038、PBO 0.020（低 PBO 只说明“最不差”稳定）。"
+    },
+    "EXITUNI": {
+      "label": "退出统一比较（2 入口 × 15 臂）",
+      "entry_a": -0.0151,
+      "entry_b": -0.0087,
+      "verdict": "拒绝",
+      "reason": "两个公开入口扣费后 -1.51%/-0.87% 每笔；28 个非基准比较 0 个通过 6 条判定；唯一显著的相对改善（结构止损 +0.18pp）本身仍为负。"
+    },
+    "RISKBUDGET": {
+      "label": "市场状态 → 风险预算",
+      "verdict": "拒绝",
+      "reason": "dev 有效、val 有害；控制当期 20 日已实现波动后偏相关 +0.036/-0.002/+0.003；状态只是“波动已经很高”的另一种说法。"
+    },
+    "UNIFIEDENGINE": {
+      "label": "统一引擎公开基线",
+      "dev_range": [
+        -0.3306,
+        0.0555
+      ],
+      "val_range": [
+        -0.4722,
+        -0.0758
+      ],
+      "verdict": "基线应淘汰",
+      "reason": "4 个公开基线配置 dev/val 全部为负；60 日新高突破的前向 20 日超额 11/13 年为负。"
+    },
+    "EXECPRESSURE": {
+      "label": "执行压力与容量",
+      "max_full_window": 0.121,
+      "verdict": "60% 不成立",
+      "reason": "1,250 个基线压力格 + 192 个候选重定格，0 格 ≥20%、0 格 ≥60%；最高 12.1% 是固定交易集合重定价，不是原账户路径。"
+    }
+  },
+  "a_candidate": [],
+  "mechanical_G_pass": [
+    {
+      "family": "TREND",
+      "config_id": "cdf1d2c08eec",
+      "strategy_id": "TREND@S3_波动收缩突破",
+      "category": "posthoc",
+      "role": "",
+      "artifact": "03_结果/趋势族/组合模拟_汇总.csv",
+      "dev_cagr": "0.0188340575",
+      "dev_mdd": "-0.0945248335",
+      "dev_trades": "67.0",
+      "val_cagr": "0.0219345458",
+      "val_mdd": "-0.1032745079",
+      "val_trades": "59.0",
+      "full_cagr": "nan",
+      "full_mdd": "nan",
+      "full_trades": "nan",
+      "gates": "{\"D\": \"D_pass\", \"G\": \"G_pass\", \"P\": \"P_pass\", \"R\": \"R_fail_posthoc\", \"S\": \"S_unverified\", \"T\": \"T_fail_stat\"}",
+      "grade": "B_conditional",
+      "fail_gate": "R_fail_posthoc;S_unverified;T_fail_stat",
+      "eligible": "False"
+    },
+    {
+      "family": "TREND",
+      "config_id": "fdc0d286eb39",
+      "strategy_id": "TREND@S3_波动收缩突破",
+      "category": "posthoc",
+      "role": "",
+      "artifact": "03_结果/趋势族/组合模拟_汇总.csv",
+      "dev_cagr": "0.0101680226",
+      "dev_mdd": "-0.2119861061",
+      "dev_trades": "64.0",
+      "val_cagr": "0.0186721219",
+      "val_mdd": "-0.0936344917",
+      "val_trades": "50.0",
+      "full_cagr": "nan",
+      "full_mdd": "nan",
+      "full_trades": "nan",
+      "gates": "{\"D\": \"D_pass\", \"G\": \"G_pass\", \"P\": \"P_pass\", \"R\": \"R_fail_posthoc\", \"S\": \"S_unverified\", \"T\": \"T_fail_stat\"}",
+      "grade": "B_conditional",
+      "fail_gate": "R_fail_posthoc;S_unverified;T_fail_stat",
+      "eligible": "False"
+    },
+    {
+      "family": "TREND",
+      "config_id": "052bda290524",
+      "strategy_id": "TREND@S3_波动收缩突破",
+      "category": "posthoc",
+      "role": "",
+      "artifact": "03_结果/趋势族/组合模拟_汇总.csv",
+      "dev_cagr": "0.0046057441",
+      "dev_mdd": "-0.0996922737",
+      "dev_trades": "71.0",
+      "val_cagr": "0.0140874061",
+      "val_mdd": "-0.0793942431",
+      "val_trades": "66.0",
+      "full_cagr": "nan",
+      "full_mdd": "nan",
+      "full_trades": "nan",
+      "gates": "{\"D\": \"D_pass\", \"G\": \"G_pass\", \"P\": \"P_pass\", \"R\": \"R_fail_posthoc\", \"S\": \"S_unverified\", \"T\": \"T_fail_stat\"}",
+      "grade": "B_conditional",
+      "fail_gate": "R_fail_posthoc;S_unverified;T_fail_stat",
+      "eligible": "False"
+    },
+    {
+      "family": "TREND",
+      "config_id": "409453eacb0a",
+      "strategy_id": "TREND@S3_波动收缩突破",
+      "category": "posthoc",
+      "role": "",
+      "artifact": "03_结果/趋势族/组合模拟_汇总.csv",
+      "dev_cagr": "0.0439159324",
+      "dev_mdd": "-0.2025813725",
+      "dev_trades": "58.0",
+      "val_cagr": "0.0389511563",
+      "val_mdd": "-0.1091486887",
+      "val_trades": "45.0",
+      "full_cagr": "nan",
+      "full_mdd": "nan",
+      "full_trades": "nan",
+      "gates": "{\"D\": \"D_pass\", \"G\": \"G_pass\", \"P\": \"P_pass\", \"R\": \"R_fail_posthoc\", \"S\": \"S_unverified\", \"T\": \"T_fail_stat\"}",
+      "grade": "B_conditional",
+      "fail_gate": "R_fail_posthoc;S_unverified;T_fail_stat",
+      "eligible": "False"
+    },
+    {
+      "family": "VCB",
+      "config_id": "VCB:VCB-P20_T40",
+      "strategy_id": "VCB-P20_T40",
+      "category": "prereg",
+      "role": "grid",
+      "artifact": "03_结果/候选_收缩突破/组合_汇总_全部.csv",
+      "dev_cagr": "0.06504911",
+      "dev_mdd": "-0.23555588",
+      "dev_trades": "161.0",
+      "val_cagr": "0.05373665",
+      "val_mdd": "-0.1560311",
+      "val_trades": "86.0",
+      "full_cagr": "nan",
+      "full_mdd": "nan",
+      "full_trades": "nan",
+      "gates": "{\"D\": \"D_pass\", \"G\": \"G_pass\", \"P\": \"P_pass\", \"R\": \"R_fail_grid_promotion\", \"S\": \"S_unverified\", \"T\": \"T_fail_stat\"}",
+      "grade": "B_conditional",
+      "fail_gate": "R_fail_grid_promotion;S_unverified;T_fail_stat",
+      "eligible": "False"
+    }
+  ],
+  "n_gate_rows": 478,
+  "pbo_ci_note": "最终PBO_maxstat.csv 与 最终置信区间.csv 已补 MAIN 行：PBO 来自 18 配置邻域（12870 组合）；CI 来自 T0005 日净值 stationary bootstrap（块长 20，B=2000），其 cagr_point 用 243 交易日年化，与主指标 365.25 日历天年化差约 0.15pp（dev 4.31% vs 4.16%，val -2.62% vs -2.53%）。"
+}

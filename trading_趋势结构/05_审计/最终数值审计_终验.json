@@ -1,0 +1,157 @@
+{
+  "schema": "trend-structure-final-numeric-audit-signoff/v1",
+  "meta": {
+    "role": "最终数值审计签字（未参与策略设计、整改执行或报告写作）",
+    "generated_at_local": "2026-10-29T03:28:40",
+    "scope": "数值审计复核项 F01/F06/F09/N01/N02/N03/N04；不替代交付/反方/方法审计员的签字",
+    "inputs": [
+      "00_一页纸.md 03:12",
+      "01_完整报告.md 03:13",
+      "02_规则手册_研究结论版.md 03:12",
+      "03_数据与复现说明.md 03:23",
+      "04_最终结论.json 03:19",
+      "04_证据/最终审计剩余项关闭.json 03:24",
+      "04_证据/审计整改验收.json 03:24",
+      "05_审计/留出准入裁决.md 03:18 / .json 02:58（v2）"
+    ],
+    "discipline": [
+      "只读文档/CSV/parquet/NAV/DuckDB",
+      "不重跑策略",
+      "不计算 2021+ 策略绩效",
+      "不修改任何文件"
+    ],
+    "previous_audit": "05_审计/最终数值审计_复核.json（F01/F06/F09/N01-N04）"
+  },
+  "summary": {
+    "status": "PASS",
+    "status_zh": "数值审计范围 PASS（带已声明限制）；无阻断项",
+    "blockers": 0,
+    "closed_items": 7,
+    "item_ids": [
+      "F01",
+      "F06",
+      "F09",
+      "N01",
+      "N02",
+      "N03",
+      "N04"
+    ],
+    "external_global_0open": false,
+    "scope_note": "本签字只覆盖数值审计 7 项；全局 0 open 仍需交付/反方/方法审计员确认，`最终审计剩余项关闭.json` 的 status 仍为 INTERNAL_FIX_COMPLETE_AWAITING_ORIGINAL_AUDITOR_CONFIRMATION。"
+  },
+  "items": [
+    {
+      "id": "F01",
+      "verdict": "PASS",
+      "evidence": "01 §5.8 已改“主口径 A 偏广度 +13.89%/−7.33%；族内真实最高 val D_串联过滤 −2.35%”；04 MKT 用 main_dev_config_val=-0.0733 + family_best_val=-0.0235；RELSTR family_best_dev.val=-0.255681、family_best_val.dev=0.037473；01 §3.19 EXIT 改为 18 臂 −20.20%/−19.84%，TB1/B0 −8.83% 单列 full-window 基准；MAIN N_sel=19。表内 18 行 N_sel 求和=733。",
+      "independent": "gate/ledger 复算：B02 8.1457/−25.5681、N02 3.7473/−4.3718；18 臂 best S_fix −20.1996；表内 N_sel 19+60+219+51+12+14+9+22+109+35+40+20+30+26+30+29+4+4=733。"
+    },
+    {
+      "id": "F06",
+      "verdict": "PASS",
+      "evidence": "00 第 40 行、01 第 672/821 行、03 第 135 行、04 holdout.adjudication/adjudication_note 均已改为“v2 修订版（2026-10-29 02:12）；00:37 初版在附录 A/initial_snapshot”；04 supersedes.path=#initial_snapshot、as_of=02:12。",
+      "independent": "裁决文件 JSON schema=holdout_admission_verdict/v2、revision=2、revised_at=2026-10-29T02:12；正文为当前事实，附录 A 为 00:37 初版。"
+    },
+    {
+      "id": "F09",
+      "verdict": "PASS",
+      "evidence": "04 cross_cutting.dynamic_parameters 已改 1.54%~5.50%（S06 最低），与 statistics.neighborhood_range、01 §2.5/§5.1、00 一致。",
+      "independent": "30_邻域.csv S06 dev=1.5396%；min/max 1.5396/5.4984。"
+    },
+    {
+      "id": "N01",
+      "verdict": "PASS",
+      "evidence": "03 §3.2 主口径改 0.1%（0.0010）；0.06%（0.0006）仅 --transfer-par 敏感性；02_代码/最终交付.py transfer_fee_aligned 已改为同时接受主口径 0.1% 和敏感性 0.06%，并要求代码默认 0.0010。",
+      "independent": "02_代码/统一回测.py:79/88 默认 transfer_par_rate=0.0010；主候选_T0005.py:134 transfer_par=0.0010；01_信号覆盖_漏斗.json transfer_par=0.001。03 的 543 元差额按 0.0004×1,357,400 股=542.96 元复算一致（57 笔买入、134 笔买卖成交；57 只是买入笔数，非阻断）。"
+    },
+    {
+      "id": "N02",
+      "verdict": "PASS",
+      "evidence": "00 第 41/131/132/151 行、01 第 682/730/750/812 行、03 第 136/210/233 行、04 holdout.exposure_note/limits 均已改为“逻辑封存 34 文件（A3/B7/C24，逐文件 SHA-256，0 策略绩效），未物理隔离”。",
+      "independent": "05_审计/2021+未评估文件封存清单.csv 34 行、34/34 SHA-256；A=3/B=7/C=24；封存说明定义逻辑封存。"
+    },
+    {
+      "id": "N03",
+      "verdict": "PASS",
+      "evidence": "04_证据/审计整改验收.json summary 已改为 105 项/97 FIXED/6 SUPERSEDE/2 LIMITATION、status=内部检查通过，等待独立复核、external_claim=不宣称 0 open；04_证据/最终审计剩余项关闭.json status=INTERNAL_FIX_COMPLETE_AWAITING_ORIGINAL_AUDITOR_CONFIRMATION，35 项映射/0 unmapped/0 check fail。",
+      "independent": "本签字确认数值 7 项；验收 JSON 不再宣称外部 0 open。其他审计范围未由本签字确认。"
+    },
+    {
+      "id": "N04",
+      "verdict": "PASS",
+      "evidence": "00 第 54 行、01 §6.6 第 655 行均改为 worst rolling 12m −6.44%~−18.22%，逐配置 −6.44/−7.17/−18.22/−15.33/−14.74。",
+      "independent": "252 日滚动复算：−6.4356/−7.1746/−18.2214/−15.3304/−14.7357；5 个全部过 −20%。"
+    }
+  ],
+  "independent_checks": {
+    "N_sel": 733,
+    "table_n_sel_sum": 733,
+    "table_rows": 18,
+    "main_n_sel": 19,
+    "ledger_N_sel": 733,
+    "counts_Ncell": 1251,
+    "counts_Ndiag": 454,
+    "counts_Nplatform": 257,
+    "counts_Naudit": 87,
+    "ledger_rows": 1699,
+    "sel_g_pass": 5,
+    "two_segment_positive": 32,
+    "max_dev": 0.203991,
+    "max_val": 0.08704869,
+    "max_min": 0.08323778,
+    "t0005_dev_cagr": 0.04156815775673306,
+    "t0005_dev_mdd": -0.0905350729763279,
+    "t0005_val_cagr": -0.025342280131277373,
+    "t0005_val_mdd": -0.13797983512013767,
+    "t0005_trades": [
+      103,
+      159
+    ],
+    "pbo_t0005": [
+      0.3106449106449106,
+      0.7564879564879565
+    ],
+    "pbo_vcb9": 0.6142857142857143,
+    "maxstat_min_p": 0.07196401799100449,
+    "dsr_N733": 0.000662754421907755,
+    "transfer_code_default": 0.001,
+    "transfer_doc_main": "0.1%",
+    "transfer_sensitivity": "0.06%",
+    "seal_files": 34,
+    "seal_sha_nonempty": 34,
+    "seal_grades": {
+      "A": 3,
+      "B": 7,
+      "C": 24
+    },
+    "g4_values": [
+      -0.064356,
+      -0.071746,
+      -0.182214,
+      -0.153304,
+      -0.147357
+    ],
+    "g4_range": [
+      -0.182214,
+      -0.064356
+    ],
+    "verify": "51/51 PASS（只读运行；交叉核对，不作为独立复算来源）"
+  },
+  "declared_limitations": [
+    "2021+ 已逻辑封存（34 文件 SHA-256），未做物理隔离/独立保管；A 级 3 个文件仍在项目树内。",
+    "TREND 创业板限价档位 bug、VCB 成本（无冲击项）与 250 日停牌强平未改代码、未重跑；只作披露与量化。",
+    "跨族引擎/价格口径未统一（仅 T0005 与 4 个公开基线接入统一引擎），跨族表只作负结果清单。",
+    "E1 未建立、E2 未运行、E3 不存在；2016-2020 在本工作区已被历史研究污染，只能作否决证据。",
+    "T0005 未做成本×2+延迟 1 日+去尾的完整 S 闸压力；单个去前 5 年化已报告，完整 S 闸仍按“未证明即不通过”。"
+  ],
+  "not_run": [
+    "任何策略回测",
+    "任何 2021+ 策略绩效/收益",
+    "任何注册表/总账/结果文件修改"
+  ],
+  "opinion": {
+    "verdict": "PASS（数值审计范围，带已声明限制）",
+    "blockers": "无",
+    "note": "F01/F06/F09/N01/N02/N03/N04 均已按当前文件独立复核关闭；N_sel=733、过户费主口径 0.1%、逻辑封存 34 文件、G4 −6.44%~−18.22% 均已确认。不得把本签字扩大为其他三份审计的签字，也不得据此宣称 2021+ 样本外验证。"
+  }
+}

@@ -1,0 +1,398 @@
+{
+  "generated_at": "2026-10-29T00:05:25",
+  "data_version": "v2-adjspace-2026-10-28",
+  "freeze_date": "2026-10-26",
+  "purpose": "冻结层复权口径修复证据；只做数据完整性校验，未计算任何策略收益",
+  "build_history": [
+    {
+      "built_at": "2026-10-28T23:54:03",
+      "data_version": "v2-adjspace-2026-10-28",
+      "daily_rows": "16698536",
+      "symbols": "5549",
+      "content_digest": "28e75745dd81ddb133cf299c5b34c46b6c1556a2cee01a7cd9bb563903233148",
+      "files_agg_sha256": "c0e84815e3f842063443e54593e8b2378f6c16ba71914b4aec2aba6289982053",
+      "freeze": "2026-10-26"
+    },
+    {
+      "built_at": "2026-10-28T23:55:55",
+      "data_version": "v2-adjspace-2026-10-28",
+      "daily_rows": "16698536",
+      "symbols": "5549",
+      "content_digest": "28e75745dd81ddb133cf299c5b34c46b6c1556a2cee01a7cd9bb563903233148",
+      "files_agg_sha256": "16ffcbdb5976e9db0aa24e009946c317ac8ac1bd312691c574a5b90d73f8a79d",
+      "freeze": "2026-10-26"
+    },
+    {
+      "built_at": "2026-10-29T00:01:02",
+      "data_version": "v2-adjspace-2026-10-28",
+      "daily_rows": "16698536",
+      "symbols": "5549",
+      "content_digest": "28e75745dd81ddb133cf299c5b34c46b6c1556a2cee01a7cd9bb563903233148",
+      "files_agg_sha256": "6dad9611aac534aa002fe318671f0e5c583b2ab25bc3a3140d34dc433be2e7a4",
+      "freeze": "2026-10-26"
+    }
+  ],
+  "formula": {
+    "v1_deprecated": "hfq_px = raw_px * factor  (price return double-counted)",
+    "v2_hfq": "raw_px * factor_t / close_t * close_first; first hfq_close=raw close; daily return=pct_chg",
+    "v2_qfq": "raw_px * factor_t / close_t * close_last / factor_last; last qfq_close=raw close; display only",
+    "factor": "factor_t = prod(1+pct_chg/100), first bar=1; total-return index"
+  },
+  "v1_fingerprint": {
+    "captured_at": "2026-10-28T23:38:00",
+    "version": "v1 (2026-10-28 21:55 build)",
+    "daily_rows": 16698536,
+    "symbols": 5549,
+    "date_min": "2004-01-02",
+    "date_max": "2026-10-26",
+    "future_rows": 0,
+    "dup_keys": 0,
+    "files_agg_sha256": "4fc8ee2ee397faf8cb84c5d5b03db92b338d044cee78dc0e297bc97434efbd64",
+    "meta_json_sha256": "c7198030925e7a7524a148a06f91ecad0c47248da386a833aa7c252df0b346e9",
+    "frozen_duckdb_sha256": "3751374616745bd107a98f6ac94dc8b2525b12ba00c99e2522f2c344c721d459",
+    "big_files": {
+      "frozen/market_daily.parquet": "027c238341fc860e5068f84776060c94190906615b61f2159478f6ed677012fa"
+    },
+    "n_files": 56
+  },
+  "v2_fingerprint": {
+    "version": "v2-adjspace-2026-10-28",
+    "built_at": "2026-10-29T00:01:02",
+    "daily_rows": 16698536,
+    "symbols": 5549,
+    "date_min": "2004-01-02",
+    "date_max": "2026-10-26",
+    "future_rows": 0,
+    "dup_keys": 0,
+    "files_agg_sha256": "6dad9611aac534aa002fe318671f0e5c583b2ab25bc3a3140d34dc433be2e7a4",
+    "meta_json_sha256": "1275c812a995b8dd93ecf7148a044b8380766833b8fe12ef282d78a142b5375e",
+    "frozen_duckdb_sha256": "292e052f6570d4313cd79224896736d753c446d2a9f248f7031a765390a3a35a",
+    "n_files": 56,
+    "content_digest": "28e75745dd81ddb133cf299c5b34c46b6c1556a2cee01a7cd9bb563903233148",
+    "deep_hash_checked": 56,
+    "deep_hash_mismatch": 0
+  },
+  "v1_reconstruction": "v1 的 hfq_* = ROUND(raw_px × factor, 4)，可由当前 raw+factor 精确重建（仅 4 位舍入差 ≤5e-5）；因此未保留 1.4 GB 旧数据副本，旧结果可按此公式复算。",
+  "v1_defect": {
+    "generated_at": "2026-10-28T23:36:51",
+    "version_v1": "2026-10-28 21:55 build; hfq=raw*factor (price return counted twice)",
+    "n_pairs": 16676415,
+    "hfq_ret_vs_pctchg": {
+      "bad_gt_1bp": 15693248,
+      "bad_share_pct": 94.1044,
+      "median_abs": 0.0141051,
+      "p95_abs": 0.0670896,
+      "ols_slope_all": 2.61965,
+      "ols_slope_trim_0.1_30pct": 2.01191
+    },
+    "exdate": {
+      "n": 52316,
+      "adj_bad_gt_1bp": 51689,
+      "adj_median_abs": 0.026157963534361797,
+      "adj_p95_abs": 0.4483032990465718,
+      "adj_max_abs": 75.96456000000002,
+      "raw_bad_gt_10bp": 29802,
+      "raw_median_abs": 0.01242302460024619,
+      "raw_p95_abs": 0.44559149368421036,
+      "note": "旧 hfq=raw×factor 在全部交易日上取相邻收益后筛除权日；v1 已重算，早先按“上一个除权日”比较的数值作废"
+    },
+    "ohlc_ratio": {
+      "n": 16698533,
+      "n_abs_err_gt_1e-6": 8814230,
+      "p99_abs_err": 3.824e-05,
+      "note": "旧列 ROUND(...,4) 在 hfq 价位极低时破坏比例；不是双计证据"
+    },
+    "anchor": {
+      "n_symbols": 5549,
+      "first_hfq_err": 0.0,
+      "last_qfq_err": 0.0,
+      "note": "首末锚定在旧口径也通过，单独不能发现双计"
+    },
+    "truncation": {
+      "n": 557872,
+      "factor_abs_err": 6.394884621840902e-14,
+      "old_hfq_recompute_err": 4.999999999988347e-05,
+      "correct_formula_vs_old_hfq_err": 2606.224081733892,
+      "note": "旧 hfq 亦为点时构造（old_hfq_recompute_err≈0），截断检验单独不能发现双计；correct_formula_vs_old_hfq_err 是修复前后价差"
+    },
+    "random_sample": {
+      "n": 20779,
+      "median_abs": 0.0143873,
+      "p99_abs": 0.11003,
+      "bad_gt_1bp": 19598
+    },
+    "examples": [
+      {
+        "symbol": "688050.SH",
+        "date": "2024-06-05",
+        "close": 79.7,
+        "prev_close": 145.88,
+        "preclose": 80.82,
+        "pct_chg": -1.3858,
+        "raw_ret": -0.453661,
+        "old_hfq_ret": -0.461232,
+        "factor_ret": -0.013858,
+        "note": "10送8派0.49；旧 hfq 把送转当亏损"
+      },
+      {
+        "symbol": "000001.SZ",
+        "date": "2020-12-31",
+        "close": 19.34,
+        "prev_close": 19.2,
+        "preclose": 19.2,
+        "pct_chg": 0.7292,
+        "raw_ret": 0.007292,
+        "old_hfq_ret": 0.014637,
+        "factor_ret": 0.007292,
+        "note": "普通日：旧 hfq 收益≈(1+r)²-1"
+      },
+      {
+        "symbol": "600655.SH",
+        "date": "2020-11-13",
+        "close": 9.4,
+        "prev_close": 9.65,
+        "preclose": 9.65,
+        "pct_chg": -2.5907,
+        "raw_ret": -0.025907,
+        "old_hfq_ret": -0.051143,
+        "factor_ret": -0.025907,
+        "note": "普通日双计"
+      },
+      {
+        "symbol": "002466.SZ",
+        "date": "2019-11-20",
+        "close": 28.74,
+        "prev_close": 28.89,
+        "preclose": 28.89,
+        "pct_chg": -0.5192,
+        "raw_ret": -0.005192,
+        "old_hfq_ret": -0.010357,
+        "factor_ret": -0.005192,
+        "note": "配股前的普通日双计"
+      }
+    ],
+    "reconstruction_note": "v1 实测 bad_gt_1bp=15,693,248；用 v2 raw×factor 反算旧公式得 15,693,245，差 3 行来自 v1 列的 ROUND(...,4)。两者均说明同一结论。"
+  },
+  "invariants": [
+    {
+      "id": "I1",
+      "name": "hfq_close 相邻日收益 = pct_chg（全样本）",
+      "pre_v1": {
+        "violations_gt_1bp": 15693248,
+        "median_abs": 0.0141051,
+        "slope": 2.01191
+      },
+      "post_v2": {
+        "pairs": 16676415,
+        "violations_gt_0.5bp": 0,
+        "max_abs": 4.311655199540354e-15,
+        "median_abs": 8.326672684688674e-17,
+        "slope": 1.0000000000000002
+      },
+      "catches_double_count": true
+    },
+    {
+      "id": "I2",
+      "name": "除权日 hfq 收益 = pct_chg；原始价收益显著偏离",
+      "pre_v1": {
+        "exdates": 52316,
+        "adj_bad": 51689,
+        "adj_median_abs": 0.026157963534361797
+      },
+      "post_v2": {
+        "exdates": 52316,
+        "adj_bad": 0,
+        "adj_max_abs": 2.5049406993105094e-15,
+        "raw_bad_gt_1pct": 29802,
+        "raw_median_abs": 0.01242302460024619,
+        "open_cross_bad": 0,
+        "open_cross_max_abs": 5.400296827295925e-05,
+        "open_cross_median_abs": 1.725234719529567e-07
+      },
+      "catches_double_count": true
+    },
+    {
+      "id": "I2b",
+      "name": "开盘跨日 hfq_open/hfq_close_prev = open/preclose（全样本）",
+      "pre_v1": {
+        "note": "v1 的 hfq_open 跨日比值含前一日价格收益，会系统性偏离 open/preclose"
+      },
+      "post_v2": {
+        "pairs": 16676412,
+        "bad": 0,
+        "max_abs": 5.7791286727226776e-05,
+        "median_abs": 1.6708085598393652e-07
+      },
+      "catches_double_count": true
+    },
+    {
+      "id": "I3",
+      "name": "同 bar OHLC 比例 = 原始价比例",
+      "pre_v1": {
+        "n_abs_err_gt_1e-6": 8814230,
+        "p99_abs_err": 3.824e-05
+      },
+      "post_v2": {
+        "hfq_max_err": [
+          8.881784197001252e-16,
+          8.881784197001252e-16,
+          5.551115123125783e-16
+        ],
+        "qfq_max_err": [
+          6.661338147750939e-16,
+          6.661338147750939e-16,
+          6.661338147750939e-16
+        ]
+      },
+      "catches_double_count": false
+    },
+    {
+      "id": "I4",
+      "name": "首条 hfq_close=原始收盘；末条 qfq_close=原始收盘",
+      "pre_v1": {
+        "first_err": 0.0,
+        "last_err": 0.0
+      },
+      "post_v2": {
+        "symbols": 5549,
+        "first_bad": 0,
+        "last_bad": 0,
+        "hfq_factor_max_err": 0.0,
+        "qfq_factor_max_err": 0.0
+      },
+      "catches_double_count": false
+    },
+    {
+      "id": "I5",
+      "name": "截断到 T 重算 hfq，在 t≤T 上不变",
+      "pre_v1": {
+        "note": "v1 的 hfq=raw×factor 也是点时构造，重算误差≈0，单独不能发现双计"
+      },
+      "post_v2": [
+        {
+          "cut": "2015-12-31",
+          "n": 499182,
+          "factor_rel": 3.642471172023525e-15,
+          "hfq_rel": 3.698086932532312e-15,
+          "hfq_open_rel": 3.724221822514872e-15,
+          "qfq_med_rel": 0.3040202200051526,
+          "qfq_max_rel": 8.016531890316282,
+          "sample_boards": {
+            "主板": 150,
+            "创业板": 100
+          }
+        },
+        {
+          "cut": "2020-12-31",
+          "n": 788816,
+          "factor_rel": 5.308495523274731e-15,
+          "hfq_rel": 5.278732457292125e-15,
+          "hfq_open_rel": 5.38782689850628e-15,
+          "qfq_med_rel": 0.04158044502164676,
+          "qfq_max_rel": 2.3017083232596987,
+          "sample_boards": {
+            "主板": 150,
+            "创业板": 100
+          }
+        }
+      ],
+      "catches_double_count": false
+    },
+    {
+      "id": "I1b",
+      "name": "随机日抽样（hash%800）",
+      "pre_v1": {
+        "bad": 19598,
+        "n": 20779
+      },
+      "post_v2": {
+        "n": 20779,
+        "bad": 0,
+        "max_abs": 1.721713049906981e-15,
+        "median_abs": 8.153200337090993e-17
+      },
+      "catches_double_count": true
+    },
+    {
+      "id": "I6",
+      "name": "反事实旧公式必须被 I1/I2 判失败（检验功效）",
+      "pre_v1": {},
+      "post_v2": {
+        "n": 16676415,
+        "bad": 15693245,
+        "bad_share_pct": 94.1044283198757,
+        "median_abs": 0.014104991582491611,
+        "slope": 2.0119048837080475,
+        "exdate_n": 52316,
+        "exdate_median_abs": 0.026157963534361797,
+        "exdate_p95_abs": 0.4483032990465718,
+        "exdate_max_abs": 75.96456000000002,
+        "exdate_gt5pp": 15590
+      },
+      "catches_double_count": true
+    },
+    {
+      "id": "I7",
+      "name": "qfq_close 相邻日收益 = pct_chg",
+      "pre_v1": {},
+      "post_v2": {
+        "pairs": 16676415,
+        "bad": 0,
+        "max_abs": 4.089610594615323e-15
+      },
+      "catches_double_count": true
+    }
+  ],
+  "cases": [
+    {
+      "symbol": "000001.SZ",
+      "date": "2020-12-31",
+      "close": 19.34,
+      "prev_close": 19.2,
+      "preclose": 19.2,
+      "pct_chg": 0.7292,
+      "raw_ret": 0.007291666666666696,
+      "new_hfq_ret": 0.007292000000000076
+    },
+    {
+      "symbol": "688050.SH",
+      "date": "2024-06-05",
+      "close": 79.7,
+      "prev_close": 145.88,
+      "preclose": 80.82,
+      "pct_chg": -1.3858,
+      "raw_ret": -0.45366054291198243,
+      "new_hfq_ret": -0.013857999999999926
+    },
+    {
+      "symbol": "002466.SZ",
+      "date": "2019-11-20",
+      "close": 28.74,
+      "prev_close": 28.89,
+      "preclose": 28.89,
+      "pct_chg": -0.5192,
+      "raw_ret": -0.005192107995846351,
+      "new_hfq_ret": -0.0051920000000000854
+    },
+    {
+      "symbol": "600655.SH",
+      "date": "2020-11-13",
+      "close": 9.4,
+      "prev_close": 9.65,
+      "preclose": 9.65,
+      "pct_chg": -2.5907,
+      "raw_ret": -0.025906735751295318,
+      "new_hfq_ret": -0.02590699999999979
+    }
+  ],
+  "limitations": [
+    "I3/I4/I5 在 v1 上也能通过；只有收益型不变量（I1/I2/I2b/I1b/I6/I7）能抓住双计。",
+    "qfq 锚定冻结日最后一条，价格水平不是截断不变的；只能用于展示/横向比较。",
+    "pct_chg 在早期年份只有 2 位小数，close/preclose 与 pct_chg 存在 ≤6bp 的源库舍入差；开盘跨日校验受此限制。",
+    "C6 的除权日来自 `corp_actions_implied`，含复牌首日 preclose 滞后等非公司行动跳变；该检查只验证调整公式与官方 pct_chg 一致，不证明 pct_chg 在该日经济上真实。",
+    "3 行源库 pct_chg 与 close/preclose 冲突（689009.SH 2020-10-29、001965.SZ 2017-12-25、689009.SH 2020-11-02）；因子按官方 pct_chg 构造，这 3 行的调整价与原始价关系不成立，已由 C3/C6b 单独剔除并计数。",
+    "3 行 close<=0 的源库记录无法构造调整价（hfq 为 NULL），已单独计数。",
+    "本证据不包含 2021+ 策略收益；全样本只用于数据层不变量，不用于规则选择。",
+    "下游若在 v1 上产出过结果，必须用 v2 重跑；v1 的 hfq_* 列不可用于收益/指标。"
+  ]
+}

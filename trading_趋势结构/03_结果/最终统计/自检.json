@@ -1,0 +1,41 @@
+{
+  "pbo_pure_noise": {
+    "pbo": 0.6170940170940171,
+    "n_splits": 12870,
+    "n_candidates": 20,
+    "T": 2000,
+    "median_oos_rank": 0.38095238095238093,
+    "logit_median": -0.48550781578170094
+  },
+  "pbo_one_signal": {
+    "pbo": 0.048795648795648794,
+    "n_splits": 12870,
+    "n_candidates": 20,
+    "T": 2000,
+    "median_oos_rank": 0.9523809523809523,
+    "logit_median": 2.99573227355399
+  },
+  "dsr_null_mean": 0.3811097498801664,
+  "dsr_null_p95": 0.8406716319619371,
+  "dsr_null_frac_gt_95": 0.01,
+  "guard_2021": "PASS_raised",
+  "maxstat_noise": {
+    "stat": 0.00043454124648281006,
+    "p_maxstat": 0.4111776447105788,
+    "B": 500,
+    "T": 2000,
+    "n_candidates": 20
+  },
+  "maxstat_one_signal": {
+    "stat": 0.0010591975797135775,
+    "p_maxstat": 0.001996007984031936,
+    "B": 500,
+    "T": 2000,
+    "n_candidates": 20
+  },
+  "maxstat_ok": true,
+  "pbo_noise_ok": true,
+  "pbo_signal_ok": true,
+  "dsr_null_ok": true,
+  "pass": true
+}

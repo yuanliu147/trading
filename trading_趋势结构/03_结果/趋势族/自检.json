@@ -1,0 +1,15 @@
+{
+  "weekly_bar_no_intraweek_update": true,
+  "monthly_bar_no_intraweek_update": true,
+  "truncation_invariance_2012-06-29": true,
+  "truncation_invariance_2016-12-30": true,
+  "truncation_invariance_2019-06-28": true,
+  "pivot_confirmed_after_5_bars": true,
+  "pivot_checks": 23640,
+  "hfq_ret_equals_total_ret": true,
+  "t_plus_1_no_same_day_sell": true,
+  "costs_configured": true,
+  "cache_end_is_analysis_end": true,
+  "random_entry_exc20_mean": 0.000777027104049921,
+  "random_entry_ok": true
+}

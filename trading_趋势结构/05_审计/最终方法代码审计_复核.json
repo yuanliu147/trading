@@ -1,0 +1,775 @@
+{
+ "schema": "trend-structure-final-method-code-audit-recheck/v1",
+ "meta": {
+  "project": "trading_趋势结构",
+  "recheck_date": "2026-10-29",
+  "auditor": "首次方法代码审计员（同一人，对 rev2 整改做复核）",
+  "first_audit": {
+   "path": "05_审计/最终方法代码审计.md",
+   "result": "36 PASS / 12 WARN / 0 FAIL",
+   "not_overwritten": true
+  },
+  "data_version": "v2-adjspace-2026-10-28",
+  "freeze_date": "2026-10-26",
+  "windows": {
+   "dev": "2008-01-01..2015-12-31",
+   "val": "2016-01-01..2020-12-31",
+   "holdout": "2021+ 未运行"
+  },
+  "writes": [
+   "05_审计/最终方法代码审计_复核.md",
+   "05_审计/最终方法代码审计_复核.json"
+  ],
+  "not_done": [
+   "未重跑策略",
+   "未计算 2021+ 收益",
+   "未修改任何报告/代码/结果",
+   "未运行会写文件的 selfcheck/remediation/封存2021文件.py"
+  ]
+ },
+ "verdict": {
+  "overall": "PASS_WITH_CONDITIONS",
+  "n_checks": 31,
+  "n_pass": 25,
+  "n_warn": 6,
+  "n_fail": 0,
+  "publishable_as_descriptive_negative_result": true,
+  "publishable_condition": "先修 N1（封存事实）与 N2（裁决文件标注）；两条均为纯文本订正，不涉及任何数字",
+  "remaining_warn": [
+   "N1 封存事实相反（中）",
+   "N2 裁决被标成未改写（中）",
+   "N3 附录A哈希无出处（低）",
+   "N4 三路径未指向34文件（低）",
+   "N5 6 vs 9 口径（低）",
+   "N6 E1/E2 重名（低）"
+  ],
+  "statement": "整改把 VCB 成本、VCB 250 日停牌强平、跨族停牌估值、E1/E2 边界四项披露做到可逐条复核，且未引入任何数值错误（我逐项重算 17 个有门槛行的族真实最高、32 个两段为正、16 个 max-stat p、top5 双分母、预算双口径、18 个邻域区间等全部一致）。但同一批产物里存在两条事实性矛盾：封存清单/说明已落盘且 34/34 哈希可复核，3 份根文档（报告/数据说明/README）+ 04 JSON 却写'本批未封存'；裁决文件已于 02:11 改写为修订版，五处文档与验收 JSON 仍写'00:37 历史快照/未改写/保留原样'。二者不影响数字与负结论，但会削弱'可复核的验收链'这一句。"
+ },
+ "target_disclosures": [
+  {
+   "item": "VCB 成本模型 ≠ C-REAL-V1",
+   "status": "PASS",
+   "where": [
+    "01_完整报告.md:69",
+    "01_完整报告.md:76",
+    "01_完整报告.md:254",
+    "01_完整报告.md:369-374",
+    "01_完整报告.md:480-484",
+    "04_最终结论.json families[VCB].cost_model",
+    "02_规则手册_研究结论版.md:111"
+   ],
+   "note": "四处一致；35,516 元/8 年≈0.44pp/年与我首次审计补算一致；dev 5.67−0.44=5.23%≈报告 +5.2%；不再写'全项目 C-REAL-V1'"
+  },
+  {
+   "item": "VCB 250 日停牌强平",
+   "status": "PASS",
+   "where": [
+    "01_完整报告.md:255",
+    "01_完整报告.md:374",
+    "01_完整报告.md:696",
+    "04_最终结论.json families[VCB].delisting_missing_days"
+   ],
+   "note": "526 日连续停牌、16.12→14.48→7.2、−3.9%/−13.7%/−57%、0.7-3.8% NAV、0.14-0.77pp/年 全部可复核；'方向保守'已改为'方向未证明/乐观'，并补 delist30 −0.63pp"
+  },
+  {
+   "item": "跨族停牌估值",
+   "status": "PASS",
+   "where": [
+    "01_完整报告.md:534-535",
+    "01_完整报告.md:697-698",
+    "01_完整报告.md:375",
+    "04_最终结论.json cross_family_matrix"
+   ],
+   "note": "T0005 2/159、小盘主单元 104、COMBO full 16/733、VCB 1 —— 与我首次审计的独立计数一致；T0005 的旧标签'退市强制退出'已改为'停牌顺延强平'"
+  },
+  {
+   "item": "2021+ 三路径",
+   "status": "WARN",
+   "where": [
+    "01_完整报告.md:680",
+    "01_完整报告.md:727",
+    "01_完整报告.md:746",
+    "03_数据与复现说明.md:135",
+    "README.md:185",
+    "04_最终结论.json holdout.exposure_note",
+    "05_审计/2021+未评估文件封存说明.md",
+    "05_审计/2021+未评估文件封存清单.csv"
+   ],
+   "note": "三个 A 级派生文件的行列/收益列准确；但'本批未封存'与封存清单（34 行、34/34 哈希可复核）矛盾；'三个'未指向 34 文件清单"
+  },
+  {
+   "item": "E1/E2 边界",
+   "status": "PASS",
+   "where": [
+    "01_完整报告.md:6",
+    "01_完整报告.md:21",
+    "01_完整报告.md:63-64",
+    "01_完整报告.md:650",
+    "01_完整报告.md:667-674",
+    "00_一页纸.md:50",
+    "00_一页纸.md:142",
+    "04_最终结论.json holdout.reasons"
+   ],
+   "note": "E1 未建立、E2 未运行、G1 未被直接检验、§12.2 仅描述性套用；仅遗留 E1/E2 与入场规则重名（N6）"
+  }
+ ],
+ "checks": [
+  {
+   "id": "D01",
+   "group": "VCB 成本",
+   "item": "是否披露 VCB 不是 C-REAL-V1",
+   "status": "PASS",
+   "severity": null,
+   "evidence": "§1.4 表末列、§3.8 专段、§3.20 矩阵、§5.4；04 JSON families[VCB].cost_model",
+   "match": true
+  },
+  {
+   "id": "D02",
+   "group": "VCB 成本",
+   "item": "量化与我首次审计补算是否一致",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "impact_cost_yuan_8y": 35516,
+    "pp_per_year": 0.44,
+    "dev_under_creal": 0.0523
+   },
+   "author_value": {
+    "impact_cost_yuan_8y": 35516,
+    "pp_per_year": 0.44,
+    "dev_under_creal": "约 +5.2%"
+   },
+   "match": true
+  },
+  {
+   "id": "D03",
+   "group": "VCB 成本",
+   "item": "是否仍把 C-REAL-V1 写成全项目口径",
+   "status": "PASS",
+   "severity": null,
+   "evidence": "§1.4 改为'口径不是全项目统一的'；§5.4 列 TREND 5bp / STRUCT 10bp / EXIT 5bp",
+   "match": true
+  },
+  {
+   "id": "D04",
+   "group": "VCB 停牌",
+   "item": "250 日强平的事实链",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "suspend_window": "2016-09-19..2018-11-15（526 个交易日）",
+    "fake_sell": "2017-09-25 @16.12",
+    "reopen": "2018-11-16 @14.48",
+    "2019_01": 7.23,
+    "nav_impact": "0.71%-3.8%"
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "D05",
+   "group": "VCB 停牌",
+   "item": "方向表述与 delist30 量化",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "delist30_val": 0.049562,
+    "base_val": 0.055881,
+    "diff_pp": -0.63
+   },
+   "author_value": {
+    "direction": "未证明/乐观",
+    "delist30_diff_pp": -0.63
+   },
+   "match": true
+  },
+  {
+   "id": "D06",
+   "group": "跨族停牌",
+   "item": "四族强平笔数",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "T0005_val": "2/159",
+    "SMALL_unit": 104,
+    "SMALL_COMBO_full": "16/733",
+    "VCB_val": 1
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "D07",
+   "group": "跨族停牌",
+   "item": "跨族口径矩阵",
+   "status": "PASS",
+   "severity": null,
+   "evidence": "§3.20 18 行矩阵；04 JSON cross_family_matrix",
+   "match": true
+  },
+  {
+   "id": "D08",
+   "group": "2021+",
+   "item": "三个 A 级文件的行列与收益列",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "state_csv": "1406x17 无收益列",
+    "index_feat": "44162x22 收益列5",
+    "market_feature": "5540x94 收益列24"
+   },
+   "author_value": "同",
+   "match": true,
+   "note": "MKT 在 EVAL_END=2020-12-31 截断（策略族_市场状态.py:56,497,797,915）"
+  },
+  {
+   "id": "D09",
+   "group": "2021+",
+   "item": "是否已经封存",
+   "status": "WARN",
+   "severity": "medium",
+   "my_value": "已做逻辑封存：封存清单 34 行、34/34 SHA-256 可复核（33 文件 + frozen.duckdb）、封存说明 + 可复跑脚本（退出码 2/3）",
+   "author_value": "本批未封存/未哈希封存（01_完整报告.md:680,727,746；00_一页纸.md；03_数据与复现说明.md:135,228；README.md:185,287；04 JSON exposure_note）",
+   "match": false,
+   "finding": "N1"
+  },
+  {
+   "id": "D10",
+   "group": "2021+",
+   "item": "2021+ 文件覆盖范围与计数口径",
+   "status": "WARN",
+   "severity": "low",
+   "my_value": {
+    "total_2021_files": 34,
+    "A": 3,
+    "B": 7,
+    "C": 24,
+    "in_03_results": 9
+   },
+   "author_value": "'间接风险不是一个文件，而是三个'，未指向封存清单；03_结果 写 6 个（数值审计 date 列口径）",
+   "match": "partial",
+   "findings": [
+    "N4",
+    "N5"
+   ]
+  },
+  {
+   "id": "D11",
+   "group": "E1/E2",
+   "item": "证据边界表述",
+   "status": "PASS",
+   "severity": null,
+   "evidence": "6 处一致：E1 未建立、E2 未运行、G1 未被直接检验、§12.2 描述性套用",
+   "match": true
+  },
+  {
+   "id": "D12",
+   "group": "E1/E2",
+   "item": "符号是否与入场规则重名",
+   "status": "WARN",
+   "severity": "low",
+   "my_value": "E1/E2 同时指证据等级与入场规则",
+   "author_value": "未加括注，未改名",
+   "match": false,
+   "finding": "N6"
+  },
+  {
+   "id": "W01",
+   "group": "矛盾",
+   "item": "裁决文件标注",
+   "status": "WARN",
+   "severity": "medium",
+   "evidence": "裁决已于 02:11 改为修订版（第0-9节当前事实 + 附录A）；报告:670,746/一页纸:40/数据说明:134/04 JSON adjudication_note 仍写'00:37 历史快照/保留原样'",
+   "finding": "N2"
+  },
+  {
+   "id": "W02",
+   "group": "矛盾",
+   "item": "验收 JSON 的事实陈述",
+   "status": "WARN",
+   "severity": "medium",
+   "evidence": "04_证据/审计整改验收.json 6 个 item 含'未封存/不改写/保留为历史快照'（数值F06、交付M05、反方F04、反方F06、方法F04，另 D04 相关）；与同批 05_审计/审计问题处置表.csv 第1、54 行相反",
+   "findings": [
+    "N1",
+    "N2"
+   ]
+  },
+  {
+   "id": "W03",
+   "group": "矛盾",
+   "item": "附录 A 初版哈希可核验性",
+   "status": "WARN",
+   "severity": "low",
+   "my_value": "grep ddd8a220 仅命中裁决自身与处置表；文件清单.csv 只有当前文件 64105/71fd23a2；附录 A 实测 42,886 字节（含新增标题）",
+   "author_value": "'42,550 bytes / SHA ddd8a220…，与文件清单.csv 记录一致'",
+   "match": false,
+   "finding": "N3"
+  },
+  {
+   "id": "V01",
+   "group": "数值",
+   "item": "17 个有门槛行的族：真实最高（dev/val）与门槛表逐行比对",
+   "status": "PASS",
+   "severity": null,
+   "my_value": "18/18 一致（含 MKT −2.35、ECOLOGY −0.12/−2.23、EXIT −8.83/−19.84、RELSTR +8.15/−4.37、BREAKPULL +3.31/−5.09、STRUCTREV −0.04/+0.73、TRENDCALLBACK +1.56/−0.77、RISKBUDGET +11.635/−3.14、EXECPRESSURE +11.16/−2.09、UNIFIED −21.14/−18.26）",
+   "author_value": "§3.19 表",
+   "match": true,
+   "note": "STRUCT/STAT 无门槛行，只按报告自身口径核对，未独立重算"
+  },
+  {
+   "id": "V02",
+   "group": "数值",
+   "item": "两段为正计数",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "total": 32,
+    "TREND": 5,
+    "VCB": 18,
+    "SMALL": 9
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "V03",
+   "group": "数值",
+   "item": "最高 dev / val / min",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "dev": 0.203991,
+    "val": 0.087049,
+    "min": 0.083238
+   },
+   "author_value": {
+    "dev": 0.204,
+    "val": 0.087,
+    "min": 0.0832
+   },
+   "match": true
+  },
+  {
+   "id": "V04",
+   "group": "数值",
+   "item": "max-stat 双口径",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "n_p_16": 16,
+    "global_min": 0.071964,
+    "nine_matrix_min": 0.374
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "V05",
+   "group": "数值",
+   "item": "top5 双分母",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "dev_net": 0.4587,
+    "dev_gross": 0.3106,
+    "val_net": -0.6258,
+    "val_gross": 0.4092
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "V06",
+   "group": "数值",
+   "item": "预算双口径",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "733/40": 18.325,
+    "733/64": 11.453
+   },
+   "author_value": {
+    "18.33": true,
+    "11.45": true
+   },
+   "match": true
+  },
+  {
+   "id": "V07",
+   "group": "数值",
+   "item": "邻域区间",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "dev": [
+     0.015396,
+     0.054984
+    ],
+    "val": [
+     -0.026039,
+     -0.013495
+    ]
+   },
+   "author_value": "dev 1.54%-5.50%; val -2.60%~-1.35%",
+   "match": true
+  },
+  {
+   "id": "V08",
+   "group": "数值",
+   "item": "VCB / STRUCTREV 计数",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "VCB": "34 declared = 32 unique = 22 N_sel + 10 diag, 2 aliases",
+    "STRUCTREV": "30 N_sel + 1 audit = 31 rows"
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "V09",
+   "group": "数值",
+   "item": "G2/G3/G4/G6/G8 单元格",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "G2_dev_mdd": [
+     -0.0945,
+     -0.212,
+     -0.0997,
+     -0.2026,
+     -0.2356
+    ],
+    "G3_calmar": [
+     0.199,
+     0.048,
+     0.046,
+     0.217,
+     0.276
+    ],
+    "G4_P20": [
+     -0.1474,
+     -0.1357
+    ],
+    "G6": "0.9585/0.1139",
+    "G8": "0.15%-5.97%"
+   },
+   "author_value": "同（G4 区间 -7.2%~-18.2% 含 P20）",
+   "match": true
+  },
+  {
+   "id": "V10",
+   "group": "数值",
+   "item": "VCB delist30 敏感性",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "delist30_val": 0.049562,
+    "base_val": 0.055881,
+    "diff_pp": -0.63
+   },
+   "author_value": {
+    "val": "4.96% vs 5.59%，-0.63pp"
+   },
+   "match": true
+  },
+  {
+   "id": "S01",
+   "group": "封存",
+   "item": "清单结构与分级",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "rows": 34,
+    "A": 3,
+    "B": 7,
+    "C": 24,
+    "all_max_date_gt_2020": true
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "S02",
+   "group": "封存",
+   "item": "逐文件 SHA-256 重算",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "file_rows_checked": 33,
+    "match": 33,
+    "mismatch": 0,
+    "directory_row": "01_数据/frozen/ ↔ frozen.duckdb 哈希一致",
+    "total_verifiable": 34
+   },
+   "author_value": "清单登记",
+   "match": true,
+   "note": "34/34 可核验（33 文件 + frozen.duckdb 目录行）"
+  },
+  {
+   "id": "S03",
+   "group": "封存",
+   "item": "收益列/绩效列判定",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "with_return_cols": 18,
+    "with_performance_cols": 0
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "A01",
+   "group": "验收",
+   "item": "verify 实跑",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "result": "42/42 PASS",
+    "files_changed": 0
+   },
+   "author_value": "42/42",
+   "match": true
+  },
+  {
+   "id": "A02",
+   "group": "验收",
+   "item": "交付验收",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "pass": 28,
+    "fail": 0,
+    "warn": 2,
+    "warn_ids": [
+     "T2",
+     "L4"
+    ]
+   },
+   "author_value": "同",
+   "match": true
+  },
+  {
+   "id": "A03",
+   "group": "验收",
+   "item": "selfcheck 与 remediation 计数",
+   "status": "PASS",
+   "severity": null,
+   "my_value": {
+    "selfcheck": "41/41 @02:33:49",
+    "remediation": "70 items / 60 checks / 0 open"
+   },
+   "author_value": "同",
+   "match": true
+  }
+ ],
+ "findings": [
+  {
+   "id": "N1",
+   "severity": "medium",
+   "kind": "factual_contradiction",
+   "title": "根文档称 2021+ '未封存'，而封存清单/说明已落盘且可复核",
+   "evidence": [
+    "05_审计/2021+未评估文件封存清单.csv（34 行，34/34 SHA-256 可复核（33 文件 + frozen.duckdb））",
+    "05_审计/2021+未评估文件封存说明.md（02:12）",
+    "02_代码/封存2021文件.py（退出码 2/3）",
+    "01_完整报告.md:680,727,746",
+    "03_数据与复现说明.md:135,228",
+    "README.md:185,287",
+    "04_最终结论.json holdout.exposure_note",
+    "04_证据/审计整改验收.json 反方F06/方法F04"
+   ],
+   "impact": "不改数字与结论；但把'已有的哈希基线'说成'没有'，未来留出运行前无法据此核对文件是否被改写",
+   "fix": "改为'已做逻辑封存（说明+34行清单，34/34 哈希可复核）；未做物理隔离（未移出、未改权限）'；同步 3 份根文档 + 04 JSON + 验收 JSON 两项",
+   "blocks_publication": true
+  },
+  {
+   "id": "N2",
+   "severity": "medium",
+   "kind": "factual_contradiction",
+   "title": "修订版裁决被标成'00:37 历史快照 / 未改写 / 保留原样'",
+   "evidence": [
+    "05_审计/留出准入裁决.md 头部：本版 2026-10-29，附录A 保留初版",
+    "05_审计/留出准入裁决.json：v2 + initial_snapshot",
+    "01_完整报告.md:670（历史快照）、:746（保留原样）",
+    "00_一页纸.md:40",
+    "03_数据与复现说明.md:134",
+    "04_最终结论.json holdout.adjudication_note",
+    "04_证据/审计整改验收.json 数值F06/交付M05/反方F04",
+    "反证：05_审计/审计问题处置表.csv 第1行写'已重写'、第54行已点名此冲突"
+   ],
+   "impact": "读者会把当前事实的文件当过期材料跳过；报告的实质事实（§7 理由1）已正确，仅为标注错误",
+   "fix": "五处统一为'修订版（2026-10-29 02:12）+ 附录A 历史快照（初版 00:37）'；验收 JSON 3 个 item（数值F06/交付M05/反方F04）同步",
+   "blocks_publication": true
+  },
+  {
+   "id": "N3",
+   "severity": "low",
+   "kind": "unverifiable_claim",
+   "title": "附录 A 的'初版哈希'在本项目内无出处",
+   "evidence": [
+    "05_审计/留出准入裁决.md:6（42,550 bytes / ddd8a220… / 与文件清单一致）",
+    "grep ddd8a220 仅命中裁决自身与处置表",
+    "文件清单.csv 只有当前文件 64105/71fd23a2216a6715",
+    "附录 A 实测 42,886 字节"
+   ],
+   "impact": "原文件已被覆盖，'逐字保留 + 原哈希'不可核验",
+   "fix": "改写溯源句，或把初版原件另存并登记哈希",
+   "blocks_publication": false
+  },
+  {
+   "id": "N4",
+   "severity": "low",
+   "kind": "incomplete_disclosure",
+   "title": "'间接风险三个文件'未指向 34 文件封存清单，也未提 C 级数据源",
+   "evidence": [
+    "01_完整报告.md:680",
+    "封存说明 §9.3：'护栏是代码断言，不是数据隔离'",
+    "封存清单 C 级 24 个（含 frozen/_tmp/bs_3_*/exit_cache，均可重建 2021+ 行情）"
+   ],
+   "impact": "读者会以为全项目只有 3 个 2021+ 文件",
+   "fix": "§7 加一句指向清单，并写明 C 级 24 个是可重建 2021+ 行情的数据源",
+   "blocks_publication": false
+  },
+  {
+   "id": "N5",
+   "severity": "low",
+   "kind": "caliber_difference",
+   "title": "03_结果 内 2021+ 文件 6 vs 9",
+   "evidence": [
+    "01_完整报告.md:678（6 个）",
+    "封存说明 §6（9 个 = A3+B6）",
+    "差 3 来自 date/calendar_date/out_date 口径"
+   ],
+   "impact": "细心的读者会认为两处矛盾",
+   "fix": "注明两种口径",
+   "blocks_publication": false
+  },
+  {
+   "id": "N6",
+   "severity": "low",
+   "kind": "naming",
+   "title": "E1/E2 同时指证据等级与入场规则",
+   "evidence": [
+    "§6.6 G1 的 E1/E2=证据等级",
+    "§2.4 V4 的 E2→E1=入场规则"
+   ],
+   "impact": "可读性；已有 G/G2 改名先例但未覆盖 E1/E2",
+   "fix": "首次出现加括注或改名（E1-EVID / E1-ENTRY）",
+   "blocks_publication": false
+  }
+ ],
+ "carried_declared_limitations": [
+  {
+   "item": "TREND 创业板 2020-08-24 前限价档位 bug，5 个 S3 未重跑",
+   "status": "declared",
+   "accepted": true,
+   "note": "已标'执行口径污染，不得作为干净两段正证据'；负结论不依赖 S3"
+  },
+  {
+   "item": "VCB delisting_missing_days / 成本模型 / delist_window 未改代码",
+   "status": "declared",
+   "accepted": true,
+   "note": "只披露与量化；VCB 已被 MDD/PBO/事件层否决"
+  },
+  {
+   "item": "out_date 前视 0.0158%",
+   "status": "declared",
+   "accepted": true,
+   "note": "已量化，不足以解释 2-6pp"
+  },
+  {
+   "item": "小盘 size_pit 用总收益指数当价格",
+   "status": "declared",
+   "accepted": true,
+   "note": "已披露，不影响 0 候选"
+  }
+ ],
+ "first_audit_resolution": {
+  "total_findings": 12,
+  "fixed": 8,
+  "converted_to_declared_limitation": 3,
+  "no_change_needed": 1,
+  "detail": [
+   {
+    "id": "F01 VCB 成本",
+    "resolution": "FIXED（四处披露 + 量化一致）"
+   },
+   {
+    "id": "F02 VCB 250 日强平",
+    "resolution": "FIXED（事实链可复核）"
+   },
+   {
+    "id": "F03 跨族停牌估值",
+    "resolution": "FIXED（四族计数补全）"
+   },
+   {
+    "id": "F04 2021+ 泄漏",
+    "resolution": "PARTIAL（三文件准确；封存声明矛盾 → N1/N4）"
+   },
+   {
+    "id": "F05 out_date 前视",
+    "resolution": "DECLARED LIMITATION"
+   },
+   {
+    "id": "F06 §12.2 分档",
+    "resolution": "FIXED（描述性套用）"
+   },
+   {
+    "id": "F07 矩阵 486/505",
+    "resolution": "FIXED（505/228，supersedes 注明）"
+   },
+   {
+    "id": "F08 扫描器口径",
+    "resolution": "FIXED（L3 假阳性已注明）"
+   },
+   {
+    "id": "F09 裁决仍写从未运行",
+    "resolution": "PARTIAL（内容已更新；标注反向 → N2）"
+   },
+   {
+    "id": "F10 size_pit",
+    "resolution": "DECLARED LIMITATION"
+   },
+   {
+    "id": "F11 风险门跳空",
+    "resolution": "NO CHANGE NEEDED（已披露）"
+   },
+   {
+    "id": "F12 差一个数量级",
+    "resolution": "FIXED（约 7 倍）"
+   }
+  ]
+ },
+ "publishability": {
+  "as_descriptive_negative_result": true,
+  "must_fix_before_publish": [
+   "N1",
+   "N2"
+  ],
+  "publishable_claims": [
+   "0 个候选进入冻结（A_candidate=0；5 个 SEL-G 通过者全被 R/S/T 否决）",
+   "T0005 淘汰（dev +4.16% / val -2.53%）",
+   "60% 在本项目测试空间内不被支持；G1 未被直接检验；约 7 倍差距",
+   "N_sel=733，超预算 40/64（18.33×/11.45×）",
+   "VCB 成本/250 日强平/跨族停牌估值三项口径差已量化披露",
+   "数据层可用（A 空间 0 违约）"
+  ],
+  "not_publishable_without_fix": [
+   "本报告已完成 2021+ 哈希封存",
+   "留出准入裁决为 00:37 历史快照（应写修订版 + 附录A）",
+   "全项目 2021+ 文件只有三个"
+  ]
+ },
+ "reproduce": {
+  "seal_hash": "python3 - 逐读 05_审计/2021+未评估文件封存清单.csv 重算 SHA-256（34/34）",
+  "family_best": "03_结果/最终统计/统一门槛.csv 按 family idxmax",
+  "acceptance": "python3 02_代码/最终交付.py verify（42/42，只读）",
+  "contradiction_scan": [
+   "grep -n '本批未做封存|未哈希封存|未封存' 01_完整报告.md 00_一页纸.md README.md 03_数据与复现说明.md",
+   "grep -n '00:37 历史快照|不改写|保留原样' 01_完整报告.md 00_一页纸.md 04_最终结论.json 04_证据/审计整改验收.json",
+   "grep -rn 'ddd8a220' 文件清单.csv"
+  ]
+ }
+}

@@ -1,0 +1,253 @@
+{
+  "schema": "trend-structure-final-delivery-audit-signoff/v1",
+  "meta": {
+    "project": "trading_趋势结构",
+    "project_root": "/Users/admin/WorkSpace/trading/trading_趋势结构",
+    "auditor": "deepseek-flash",
+    "thinking": "max",
+    "role": "未参与设计、整改与最终报告写作的最终签字复核审计员",
+    "generated_at_local": "2026-10-29",
+    "review_of": "05_审计/最终交付审计_复核.md/.json（R01-R05）",
+    "scope": [
+      "00_一页纸.md",
+      "01_完整报告.md",
+      "02_规则手册_研究结论版.md",
+      "03_数据与复现说明.md",
+      "04_最终结论.json",
+      "README.md",
+      "文件清单.csv",
+      "04_证据/最终审计剩余项关闭.json",
+      "04_证据/审计整改验收.json",
+      "04_证据/交付验收.json",
+      "05_审计/审计问题处置表.csv",
+      "05_审计/2021+未评估文件封存说明.md",
+      "05_审计/2021+未评估文件封存清单.csv",
+      "05_审计/留出准入裁决.md/.json",
+      "05_审计/最终结论证据矩阵.md"
+    ],
+    "discipline": {
+      "read_only_on_others_files": true,
+      "ran_strategy_backtests": false,
+      "read_or_computed_2021_plus_returns": false,
+      "files_written": [
+        "05_审计/最终交付审计_终验.md",
+        "05_审计/最终交付审计_终验.json"
+      ]
+    }
+  },
+  "overall": {
+    "verdict": "PASS_WITH_WARN",
+    "severity": "中",
+    "conclusion_sound": true,
+    "r01_r05_closed": true,
+    "user_requirements_delivered": true,
+    "clean_pass": false,
+    "sign_off": "CONDITIONAL_ON_I01",
+    "blocking_before_archive": [
+      "I01"
+    ],
+    "one_line": "R01-R05 与 M10/M23 全部关闭，10 项用户要求均有交付；唯一机械阻断是文件清单对 4 个最终证据文件的哈希滞后，重建清单即可干净归档。三项 declared residuals 已披露，不阻断负结论签字，但不能称零残余。",
+    "status_zh": "内容 PASS；归档前需重建文件清单（I01）"
+  },
+  "r_items": [
+    {
+      "id": "R01",
+      "status": "CLOSED",
+      "evidence": [
+        "00_一页纸.md:40：v2 修订版（02:12）；00:37 初版只作附录 A/initial_snapshot",
+        "01_完整报告.md:672/752/821：v2 修订版；初版 00:37 在附录 A/initial_snapshot",
+        "03_数据与复现说明.md:135：v2 修订版（02:12）",
+        "04_最终结论.json holdout.adjudication_note：v2 修订版（02:12）；00:37 初版只作附录 A/initial_snapshot",
+        "04_最终结论.json holdout.supersedes：path=05_审计/留出准入裁决.json#initial_snapshot；as_of=2026-10-29T02:12",
+        "05_审计/留出准入裁决.md：v2 + 附录 A；当前 10 行/0 holdout/T0005+T0007 discard"
+      ]
+    },
+    {
+      "id": "R02",
+      "status": "CLOSED",
+      "evidence": [
+        "04_最终结论.json cross_cutting.dynamic_parameters：1.54%~5.50%",
+        "04_最终结论.json main_candidate.dev/val：top5_share_gross/top5_share_net/top5_share_denominator（dev net 0.4587/gross 0.3106；val net -0.6258/gross 0.4092）",
+        "verify conclusion_top5_denominators PASS；04 JSON 旧 2.11 已清"
+      ]
+    },
+    {
+      "id": "R03",
+      "status": "CLOSED",
+      "evidence": [
+        "00_一页纸.md:41/132/151；01_完整报告.md:682/730/750；03_数据与复现说明.md:136/233；README.md:185/287；04_最终结论.json holdout.exposure_note",
+        "统一为“逻辑封存 34 文件（A=3/B=7/C=24、逐文件 SHA-256、0 策略绩效、禁止用途）；未物理隔离”",
+        "05_审计/2021+未评估文件封存清单.csv 34 行；3 个 A 级 SHA-256 本审计重算全部匹配"
+      ]
+    },
+    {
+      "id": "R04",
+      "status": "CLOSED",
+      "evidence": [
+        "04_证据/审计整改验收.json：105 项；97 fixed/6 supersede/2 limitation/0 open internal；82/82 checks；状态“内部检查通过，等待独立复核”",
+        "05_审计/审计问题处置表.csv：55 组；31 已修+15 已修（本轮）+6 披露+3 不采纳；needs_sync 0；HOLDOUT_ROOT/JSON_04_STALE 标“已修（本轮）/已同步”",
+        "04_证据/最终审计剩余项关闭.json：35/35 FIXED；0 unmapped/0 needs_resync/0 check fail；等待原审计员确认"
+      ]
+    },
+    {
+      "id": "R05",
+      "status": "CLOSED",
+      "evidence": [
+        "05_审计/最终结论证据矩阵.md 顶部横幅：01:12 历史；P03/§6#11 的 486/228 已被根文档 505/228/733 取代",
+        "根文档/04 JSON holdout.gate_coverage：505/228/733"
+      ]
+    }
+  ],
+  "aliases": [
+    {
+      "id": "M10",
+      "maps_to": "R02",
+      "status": "CLOSED",
+      "evidence": "04 JSON dynamic 1.54%"
+    },
+    {
+      "id": "M23",
+      "maps_to": "R05",
+      "status": "CLOSED",
+      "evidence": "证据矩阵 486/228 横幅"
+    }
+  ],
+  "user_requirements": [
+    {
+      "id": "U01",
+      "requirement": "双本地库验证",
+      "verdict": "PASS",
+      "evidence": "03 §1：共同证券日 10,104,953；close 差 4 行；任一 OHLC 5 行（688206 high-only，STAR，不在主宇宙）；volume/amount/ST/停牌分层核验"
+    },
+    {
+      "id": "U02",
+      "requirement": "足够深入、全面、动态",
+      "verdict": "PASS",
+      "evidence": "18 族、733 N_sel、1,251 cell、454 diag、257 平台、87 审计、1,699 行；13 个横切键"
+    },
+    {
+      "id": "U03",
+      "requirement": "多周期趋势结构及小周期性质",
+      "verdict": "PASS_WITH_WARN",
+      "evidence": "Q2（月/周/日）、TRENDCALLBACK（日线回调）、V5（E3 趋势内回调，val 17 笔）；无分钟数据，小周期证据仍薄"
+    },
+    {
+      "id": "U04",
+      "requirement": "买入后符合/不符合",
+      "verdict": "PASS",
+      "evidence": "§5.9：符合=10 日 MFE≥1R；MFE≥2R 后仍 60.6%/56.8% 亏损；A6 去掉 3 日失败两段更好"
+    },
+    {
+      "id": "U05",
+      "requirement": "提前离场/谨慎/利润奔跑",
+      "verdict": "PASS",
+      "evidence": "Q3-Q5；退出族 18 臂；V7 +8.12%/−2.13%；V6 vs A7 谨慎态符号不一致"
+    },
+    {
+      "id": "U06",
+      "requirement": "不同思维",
+      "verdict": "PASS",
+      "evidence": "§1.2 五派（结构/多周期/退出仓位/横截面生态/工程统计）；全部负结果或不可评级"
+    },
+    {
+      "id": "U07",
+      "requirement": "参数变化",
+      "verdict": "PASS",
+      "evidence": "T0005 18 邻域 dev 1.54%~5.50%、val −2.60%~−1.35%、0 转正；TREND 30、RELSTR 40、STRUCTREV 31、LONGMOM 26"
+    },
+    {
+      "id": "U08",
+      "requirement": "严谨回测",
+      "verdict": "PASS_WITH_WARN",
+      "evidence": "成本/撮合/T+1/停牌/涨跌停/退市/bootstrap/DSR/PBO/max-stat；T0005 独立账户 5.64e-11、因果 480 项 0；declared residuals：TREND 限价 bug、VCB 成本/250 日强平未改代码未重跑；跨族引擎/价格口径未统一（只披露）"
+    },
+    {
+      "id": "U09",
+      "requirement": "60% 目标",
+      "verdict": "PASS",
+      "evidence": "G1 未被直接检验；最高 dev 20.40%、val 8.70%、min 8.32%；1,250+192 压力格 0 ≥20%；60 与 8.70 约 7 倍；不是“任何策略都不可能 60%”"
+    },
+    {
+      "id": "U10",
+      "requirement": "审计员",
+      "verdict": "PASS",
+      "evidence": "独立复现、双源、复权、第一阶段代码/负结果、留出裁决、证据矩阵、四份复核、本终验；closure 35/35"
+    }
+  ],
+  "new_findings": [
+    {
+      "id": "I01",
+      "severity": "中",
+      "type": "inventory_hash_race",
+      "title": "文件清单对 4 个最终证据文件的哈希滞后",
+      "evidence": [
+        "04_证据/最终审计剩余项关闭.json：清单 5e996b798d73aacb；当前 cb35ff9cc7957635；字节 24,766=24,766",
+        "04_证据/审计整改验收.json：清单 99cd0f40d031b8e6；当前 1ddefb3730859671；字节 70,570=70,570",
+        "04_证据/交付验收.json：清单 387a79bc4eadafb2；当前 caf2de7700bf9de3；字节 74,459≠74,458",
+        "03_结果/最终统计/最终交付自检.json：清单 2b90eb6b835e1683；当前 ca0b96bc1e2c16df；字节 7,828=7,828",
+        "文件清单.csv 自身行也因自引用不匹配，属预期"
+      ],
+      "finding": "清单在 03:24:19 生成，证据文件在 03:24:22 后最终写入；交付验收.py 的“写证据+写清单”存在同批写入顺序竞态。内容与结论不受影响，但清单不能作为最终证据文件的哈希证明。",
+      "fix": "所有最终写入完成后运行 python3 02_代码/交付验收.py --inventory-only，再核对上述 4 个哈希；自引用行排除或标“生成时点哈希”。完成后可升为干净 PASS。",
+      "must_fix": true
+    }
+  ],
+  "declared_residuals": [
+    {
+      "id": "D01",
+      "residual": "2021+ 未物理隔离/独立保管",
+      "status": "DECLARED",
+      "detail": "34 个文件已逻辑封存（A=3/B=7/C=24、逐文件 SHA-256、0 策略绩效、禁止用途）；未移出/改权限/独立保管；A 级 3 个文件仍在项目树内。",
+      "blocking_negative_result": false
+    },
+    {
+      "id": "D02",
+      "residual": "TREND 创业板限价 bug、VCB 成本/250 日强平未改代码、未重跑",
+      "status": "DECLARED",
+      "detail": "已在报告中量化并标 S3 执行口径污染/VCB 偏乐观；负结论不依赖这些正结果，但不能把 S3/VCB 当干净候选。",
+      "blocking_negative_result": false
+    },
+    {
+      "id": "D03",
+      "residual": "跨族引擎/价格口径未统一",
+      "status": "DECLARED",
+      "detail": "T0005 与 4 个公开基线用统一引擎；TREND/STRUCT/EXIT/RELSTR/TRENDCALLBACK/LONGMOM 用 Baostock flag1；VCB/小盘各有自建引擎；§3.20 矩阵只作披露，跨族表不能横向排名。",
+      "blocking_negative_result": false
+    }
+  ],
+  "verification": {
+    "verify": "51/51 PASS（python3 02_代码/最终交付.py verify，只读）",
+    "delivery_acceptance": "28 PASS/0 FAIL/2 WARN（T2；L4 92/36/1）",
+    "remediation_acceptance": "105 项；97 fixed/6 supersede/2 limitation/0 open internal；82/82 checks；内部检查通过，等待独立复核",
+    "residual_closure": "35/35 FIXED；0 unmapped/0 needs_resync/0 check fail；等待原审计员确认",
+    "gate_table": "478 行；5 SEL-G；32 两段>0；0 A_candidate",
+    "best": "dev 20.40%（小盘 ADVQ12_s5_h40，MDD -69.15%）/ val 8.70%（VCB-N120_T40）/ min 8.32%",
+    "g4": "逐配置 -6.44/-7.17/-18.22/-15.33/-14.74%；worst -18.22%，全部 >-20%",
+    "maxstat": "16 p；min 0.071964（VCB dev）；9 矩阵 min 0.374（trend_dev）",
+    "holdout": "v2/02:12；supersedes #initial_snapshot；T0005/T0007 discard；10 行/0 holdout",
+    "seal": "34 行；A=3/B=7/C=24；3 个 A 级 SHA-256 全部匹配；逻辑封存、未物理隔离",
+    "inventory": "355 行；根文档哈希匹配；4 个最终证据哈希滞后（I01）；自引用行预期不匹配",
+    "disposition": "55 组；31 已修+15 已修（本轮）+6 披露+3 不采纳；needs_sync 0",
+    "no_2021_plus": "未运行/未计算；L1 469 表 0 违规；682 文件 6 个 >2020 日期但带绩效列 0"
+  },
+  "signature_conditions": {
+    "content_signable": true,
+    "clean_archive_requires": [
+      "I01：重建文件清单并核对 4 个最终证据文件哈希",
+      "声明三项 declared residuals 仍为已披露限制，不称零残余"
+    ],
+    "cannot_claim": [
+      "零残余/全部修完",
+      "外部 0 open（验收状态是内部检查通过，等待独立复核）",
+      "60% 已实现/样本外通过"
+    ]
+  },
+  "not_done": [
+    "未重跑 733 个回测；未逐族重算全部绩效；只独立重算了终验相关计数、G4、maxstat、封存哈希与清单哈希。",
+    "未做 44 个脚本逐行代码审计；TREND/VCB 代码未改是已声明 residual。",
+    "未读取 2021+ 行情/收益；封存复核只用 SHA-256/行数/列名。",
+    "未修改任何报告/代码/结果/清单；I01 需交付方重建清单后关闭。",
+    "严重度是交付风险，不是统计显著性；PASS/WARN/FAIL 不是投资建议。",
+    "本终验 .md/.json 写于 03:24 清单快照之后；未重建清单。按 README §9，重建会收录本 .md、不收录 .json。"
+  ]
+}

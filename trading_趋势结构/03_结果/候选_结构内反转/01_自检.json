@@ -1,0 +1,53 @@
+{
+  "a_close_vs_factor_level_dev": 1.7763568394002505e-15,
+  "adj_ret_vs_pctchg_max": 3.094746681142624e-15,
+  "cost_n": 219,
+  "cost_mean": 0.006896913850620392,
+  "cost_max_abs_diff_vs_module": 0.0,
+  "fee_rule_checks": [
+    {
+      "date": "2008-03-03",
+      "code": "000001.SZ",
+      "buy_diff": 0.0,
+      "sell_diff": 0.0,
+      "stamp_buy": 0.003,
+      "stamp_sell": 0.003
+    },
+    {
+      "date": "2008-06-03",
+      "code": "000001.SZ",
+      "buy_diff": 0.0013,
+      "sell_diff": 0.0013,
+      "stamp_buy": 0.001,
+      "stamp_sell": 0.001
+    },
+    {
+      "date": "2010-05-05",
+      "code": "000001.SZ",
+      "buy_diff": -0.005,
+      "sell_diff": -0.005,
+      "stamp_buy": 0.0,
+      "stamp_sell": 0.001
+    },
+    {
+      "date": "2016-05-05",
+      "code": "000001.SZ",
+      "buy_diff": 0.004,
+      "sell_diff": 0.0,
+      "stamp_buy": 0.0,
+      "stamp_sell": 0.001
+    }
+  ],
+  "causal_bad": 0,
+  "causal_n": 120,
+  "limit_up_mismatch": 0,
+  "limit_up_n": 288,
+  "n_dates": 3647,
+  "n_codes": 3117,
+  "n_bars": 7784838,
+  "avg_elig": 1482.1513906447535,
+  "n_rows_after_2020": 0,
+  "delisted_in_window": 63,
+  "prereg_sha256": "9a20161bb9669c4dd98ef409a0bf8be98969ff562ecfac0fe14e43b92f7eddeb",
+  "elapsed_s": 0.33
+}

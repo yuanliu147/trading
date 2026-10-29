@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-10-28T23:36:51",
+  "version_v1": "2026-10-28 21:55 build; hfq=raw*factor (price return counted twice)",
+  "n_pairs": 16676415,
+  "hfq_ret_vs_pctchg": {
+    "bad_gt_1bp": 15693248,
+    "bad_share_pct": 94.1044,
+    "median_abs": 0.0141051,
+    "p95_abs": 0.0670896,
+    "ols_slope_all": 2.61965,
+    "ols_slope_trim_0.1_30pct": 2.01191
+  },
+  "exdate": {
+    "n": 52316,
+    "adj_bad_gt_1bp": 51689,
+    "adj_median_abs": 0.026157963534361797,
+    "adj_p95_abs": 0.4483032990465718,
+    "adj_max_abs": 75.96456000000002,
+    "raw_bad_gt_10bp": 29802,
+    "raw_median_abs": 0.01242302460024619,
+    "raw_p95_abs": 0.44559149368421036,
+    "note": "旧 hfq=raw×factor 在全部交易日上取相邻收益后筛除权日；v1 已重算，早先按“上一个除权日”比较的数值作废"
+  },
+  "ohlc_ratio": {
+    "n": 16698533,
+    "n_abs_err_gt_1e-6": 8814230,
+    "p99_abs_err": 3.824e-05,
+    "note": "旧列 ROUND(...,4) 在 hfq 价位极低时破坏比例；不是双计证据"
+  },
+  "anchor": {
+    "n_symbols": 5549,
+    "first_hfq_err": 0.0,
+    "last_qfq_err": 0.0,
+    "note": "首末锚定在旧口径也通过，单独不能发现双计"
+  },
+  "truncation": {
+    "n": 557872,
+    "factor_abs_err": 6.394884621840902e-14,
+    "old_hfq_recompute_err": 4.999999999988347e-05,
+    "correct_formula_vs_old_hfq_err": 2606.224081733892,
+    "note": "旧 hfq 亦为点时构造（old_hfq_recompute_err≈0），截断检验单独不能发现双计；correct_formula_vs_old_hfq_err 是修复前后价差"
+  },
+  "random_sample": {
+    "n": 20779,
+    "median_abs": 0.0143873,
+    "p99_abs": 0.11003,
+    "bad_gt_1bp": 19598
+  },
+  "examples": [
+    {
+      "symbol": "688050.SH",
+      "date": "2024-06-05",
+      "close": 79.7,
+      "prev_close": 145.88,
+      "preclose": 80.82,
+      "pct_chg": -1.3858,
+      "raw_ret": -0.453661,
+      "old_hfq_ret": -0.461232,
+      "factor_ret": -0.013858,
+      "note": "10送8派0.49；旧 hfq 把送转当亏损"
+    },
+    {
+      "symbol": "000001.SZ",
+      "date": "2020-12-31",
+      "close": 19.34,
+      "prev_close": 19.2,
+      "preclose": 19.2,
+      "pct_chg": 0.7292,
+      "raw_ret": 0.007292,
+      "old_hfq_ret": 0.014637,
+      "factor_ret": 0.007292,
+      "note": "普通日：旧 hfq 收益≈(1+r)²-1"
+    },
+    {
+      "symbol": "600655.SH",
+      "date": "2020-11-13",
+      "close": 9.4,
+      "prev_close": 9.65,
+      "preclose": 9.65,
+      "pct_chg": -2.5907,
+      "raw_ret": -0.025907,
+      "old_hfq_ret": -0.051143,
+      "factor_ret": -0.025907,
+      "note": "普通日双计"
+    },
+    {
+      "symbol": "002466.SZ",
+      "date": "2019-11-20",
+      "close": 28.74,
+      "prev_close": 28.89,
+      "preclose": 28.89,
+      "pct_chg": -0.5192,
+      "raw_ret": -0.005192,
+      "old_hfq_ret": -0.010357,
+      "factor_ret": -0.005192,
+      "note": "配股前的普通日双计"
+    }
+  ],
+  "reconstruction_note": "v1 实测 bad_gt_1bp=15,693,248；用 v2 raw×factor 反算旧公式得 15,693,245，差 3 行来自 v1 列的 ROUND(...,4)。两者均说明同一结论。"
+}

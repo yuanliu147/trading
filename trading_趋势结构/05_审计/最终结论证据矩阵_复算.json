@@ -1,0 +1,673 @@
+{
+  "meta": {
+    "generated_at": "2026-10-29T01:21:38",
+    "role": "证据矩阵独立复算（只读）",
+    "data_version": "v2-adjspace-2026-10-28",
+    "freeze_date": "2026-10-26",
+    "holdout": "2021-01-01 之后未读取、未计算"
+  },
+  "data_v2": {
+    "rows": 16698536,
+    "symbols": 5549,
+    "date_min": "2004-01-02",
+    "date_max": "2026-10-26",
+    "future_rows": 0,
+    "dup_keys": 0
+  },
+  "v1_hfq": {
+    "pairs_v2_reconstruction": 16692984,
+    "bad_gt_1bp": 15693245,
+    "bad_share_pct_own_denominator": 94.011,
+    "median_abs": 0.01410499,
+    "ols_slope_all": 2.61958,
+    "audit_n_pairs": 16676415,
+    "audit_bad_gt_1bp": 15693248,
+    "audit_bad_share_pct": 94.1044,
+    "audit_slope_trim": 2.01191
+  },
+  "v2_hfq_invariant": {
+    "pairs": 16692984,
+    "max_abs": 4.311655199540354e-15,
+    "bad_gt_5bp": 0,
+    "median_abs": 8.326672684688674e-17
+  },
+  "dual_source": {
+    "common_security_days": 10104953,
+    "close_diff_gt_0_005": 4,
+    "max_abs_close_diff": 0.03999999999999204,
+    "window": "2016-10-13..2026-10-26",
+    "missing_symbol_rows": 338,
+    "value_mismatch_close_rows": 4
+  },
+  "ledger_final": {
+    "rows": 1699,
+    "N_sel": 733,
+    "N_cell": 1251,
+    "N_diag": 454,
+    "N_platform": 257,
+    "N_audit": 87
+  },
+  "ledger_stage1": {
+    "rows": 875,
+    "N_sel": 365,
+    "N_cell": 500,
+    "N_diag": 369
+  },
+  "ledger_snapshot_0051": {
+    "rows": 1631,
+    "N_sel": 714,
+    "N_cell": 1213,
+    "N_diag": 424,
+    "N_platform": 257,
+    "N_audit": 87,
+    "source": "03_结果/最终统计/00_最终报告.md；最终判定.json（生成 00:51，未含 01:01 的 T0005 登记）"
+  },
+  "overrun": {
+    "stage1_x": 5.7031,
+    "snapshot_x": 11.1562,
+    "ledger_x": 11.4531,
+    "budget": 64
+  },
+  "t0005_ledger": {
+    "rows": 70,
+    "done": 68,
+    "planned": 1,
+    "not_run": 1,
+    "status": [
+      "done",
+      "not_run",
+      "planned"
+    ],
+    "grade": [
+      "C_negative_valid",
+      "DIAG",
+      "F_unevaluable"
+    ],
+    "in_Nsel_sum": 19,
+    "in_Ncell_sum": 38,
+    "in_Ndiag_sum": 30,
+    "stale_ids": [
+      "F00002",
+      "F01629"
+    ],
+    "first_done_ids": [
+      "F01631",
+      "F01632",
+      "F01633",
+      "F01634"
+    ]
+  },
+  "gates": {
+    "rows": 478,
+    "grades": {
+      "C_negative_valid": 364,
+      "E_underpowered": 42,
+      "F_unevaluable": 35,
+      "W_window_mixed": 32,
+      "B_conditional": 5
+    },
+    "pass_both_windows_mdd25": 5
+  },
+  "candidate_grades": {
+    "rows": 875,
+    "A_candidate": 0,
+    "B_rows": 12,
+    "B_unique_configs": 8,
+    "B_families": [
+      "TREND"
+    ],
+    "C_negative_valid": 514
+  },
+  "acceptance": {
+    "delivery": {
+      "pass": 29,
+      "fail": 0,
+      "warn": 1,
+      "skip": 0,
+      "total": 30,
+      "ok": true,
+      "failed_ids": []
+    },
+    "data_selfcheck": {
+      "n": 35,
+      "pass": 28,
+      "fail": 0,
+      "info": 7
+    },
+    "warn_ids": [
+      "T2"
+    ],
+    "l1_2021_scan": "扫描 469 个文件；违规=0；日期越界但无收益=2"
+  },
+  "t0005": {
+    "dev": {
+      "rows": 1946,
+      "start": "2008-01-02",
+      "end": "2015-12-31",
+      "years": 7.994524,
+      "nav_first": 1000000.0,
+      "nav_last": 1384856.2737,
+      "cagr_nav_first": 0.04156816,
+      "cagr_initial_capital": 0.04156816,
+      "mdd": -0.09053507,
+      "n_trades": 103,
+      "n_codes": 81,
+      "top5_pnl": 176114.86,
+      "cagr_ex_top5": 0.0239971,
+      "avg_cash": 0.930881,
+      "risk_violations": 1,
+      "forced_valuation_fills": 0,
+      "rows_after_2020": 0
+    },
+    "val": {
+      "rows": 1218,
+      "start": "2016-01-04",
+      "end": "2020-12-31",
+      "years": 4.991102,
+      "nav_first": 1000000.0,
+      "nav_last": 879751.1212,
+      "cagr_nav_first": -0.02534228,
+      "cagr_initial_capital": -0.02534228,
+      "mdd": -0.13797984,
+      "n_trades": 159,
+      "n_codes": 111,
+      "top5_pnl": 73948.92,
+      "cagr_ex_top5": -0.042338,
+      "avg_cash": 0.886005,
+      "risk_violations": 2,
+      "forced_valuation_fills": 2,
+      "rows_after_2020": 0
+    },
+    "dsr": {
+      "n_total": 397,
+      "dev_dsr": 0.011488527569497685,
+      "val_dsr": 6.070940834428626e-08,
+      "dev_z": -2.273815945165577,
+      "val_z": -5.291346889068011
+    },
+    "annual": {
+      "2008": {
+        "ret": 0.0,
+        "mdd": 0.0
+      },
+      "2009": {
+        "ret": 0.0,
+        "mdd": 0.0
+      },
+      "2010": {
+        "ret": -0.003478,
+        "mdd": -0.047252
+      },
+      "2011": {
+        "ret": -0.016692,
+        "mdd": -0.016692
+      },
+      "2012": {
+        "ret": 0.00401,
+        "mdd": -0.004522
+      },
+      "2013": {
+        "ret": -0.032209,
+        "mdd": -0.038427
+      },
+      "2014": {
+        "ret": 0.263911,
+        "mdd": -0.044918
+      },
+      "2015": {
+        "ret": 0.15078,
+        "mdd": -0.028955
+      }
+    },
+    "dev_ex_2014_2015": -0.008142,
+    "max_date": "2020-12-31"
+  },
+  "small_combo": {
+    "dev": {
+      "rows": 1946,
+      "start": "2008-01-02",
+      "end": "2015-12-31",
+      "years": 7.994524,
+      "nav_first": 1004156.99,
+      "nav_last": 2078605.42,
+      "cagr_nav_first": 0.09527546,
+      "cagr_initial_capital": 0.09584395,
+      "mdd": -0.55696629,
+      "first_day_return": 0.00415699
+    },
+    "val": {
+      "rows": 1218,
+      "start": "2016-01-04",
+      "end": "2020-12-31",
+      "years": 4.991102,
+      "nav_first": 982381.89,
+      "nav_last": 998519.85,
+      "cagr_nav_first": 0.00326993,
+      "cagr_initial_capital": -0.00029673,
+      "mdd": -0.4108612,
+      "first_day_return": -0.01761811
+    },
+    "full": {
+      "cagr": 0.031776,
+      "mdd": -0.579336,
+      "n_closed": 733,
+      "years": 12.9966,
+      "nav_end": 1507880.0
+    },
+    "trades_closed_dev": 438,
+    "trades_closed_val": 290,
+    "trades_closed_total": 728,
+    "top5_pnl": {
+      "dev": 482308.9,
+      "val": 398814.0
+    },
+    "cagr_ex_top5": {
+      "dev": 0.05969584,
+      "val": -0.09415235
+    },
+    "capacity": {
+      "cap10wan": 0.020105,
+      "cap100wan": 0.031776,
+      "cap1000wan": 0.022754,
+      "cap10000wan": -0.014527
+    },
+    "capacity_deployment_1e8": 0.136915,
+    "chained_dev_val_cagr": 0.0589544,
+    "top5_share": {
+      "dev_pct": 53.16,
+      "val_pct": 375.62
+    },
+    "full_vs_chain_gap_pp": 2.72
+  },
+  "vcb": {
+    "P20_T40": {
+      "dev": {
+        "cagr": 0.06504911,
+        "mdd": -0.23555588,
+        "trades": 161
+      },
+      "val": {
+        "cagr": 0.05373665,
+        "mdd": -0.1560311,
+        "trades": 86
+      }
+    },
+    "M_T40": {
+      "dev": {
+        "cagr": 0.05673578,
+        "mdd": -0.36320542,
+        "trades": 222
+      },
+      "val": {
+        "cagr": 0.05588119,
+        "mdd": -0.2615363,
+        "trades": 153
+      }
+    },
+    "N120_T40": {
+      "dev": {
+        "cagr": 0.08323778,
+        "mdd": -0.3527526,
+        "trades": 193
+      },
+      "val": {
+        "cagr": 0.08704869,
+        "mdd": -0.206223,
+        "trades": 127
+      }
+    },
+    "event_20d": {
+      "P20_dev": {
+        "exc_mean": -0.010826,
+        "t": -0.8615
+      },
+      "P20_val": {
+        "exc_mean": 0.009166,
+        "t": -0.4875
+      },
+      "M_dev": {
+        "exc_mean": -0.007244,
+        "t": 0.0504
+      },
+      "M_val": {
+        "exc_mean": 0.009993,
+        "t": 0.1566
+      }
+    },
+    "pbo": {
+      "dev": 0.3090909090909091,
+      "val": 0.5051282051282051
+    }
+  },
+  "trend_s3": {
+    "宽止损4ATR+时间60": {
+      "dev": {
+        "rows": 1946,
+        "start": "2008-01-02",
+        "end": "2015-12-31",
+        "years": 7.994524,
+        "nav_first": 1000000.0,
+        "nav_last": 1410009.375,
+        "cagr_nav_first": 0.04391593,
+        "cagr_initial_capital": 0.04391593,
+        "mdd": -0.20258137
+      },
+      "val": {
+        "rows": 1218,
+        "start": "2016-01-04",
+        "end": "2020-12-31",
+        "years": 4.991102,
+        "nav_first": 1000000.0,
+        "nav_last": 1210118.75,
+        "cagr_nav_first": 0.03895116,
+        "cagr_initial_capital": 0.03895116,
+        "mdd": -0.10914869
+      }
+    },
+    "时间40+止损2ATR": {
+      "dev": {
+        "rows": 1946,
+        "start": "2008-01-02",
+        "end": "2015-12-31",
+        "years": 7.994524,
+        "nav_first": 1000000.0,
+        "nav_last": 1084238.625,
+        "cagr_nav_first": 0.01016802,
+        "cagr_initial_capital": 0.01016802,
+        "mdd": -0.21198611
+      },
+      "val": {
+        "rows": 1218,
+        "start": "2016-01-04",
+        "end": "2020-12-31",
+        "years": 4.991102,
+        "nav_first": 1000000.0,
+        "nav_last": 1096732.25,
+        "cagr_nav_first": 0.01867212,
+        "cagr_initial_capital": 0.01867212,
+        "mdd": -0.09363449
+      }
+    },
+    "目标2ATR+止损2": {
+      "dev": {
+        "rows": 1946,
+        "start": "2008-01-02",
+        "end": "2015-12-31",
+        "years": 7.994524,
+        "nav_first": 1000000.0,
+        "nav_last": 1037419.3125,
+        "cagr_nav_first": 0.00460574,
+        "cagr_initial_capital": 0.00460574,
+        "mdd": -0.09969227
+      },
+      "val": {
+        "rows": 1218,
+        "start": "2016-01-04",
+        "end": "2020-12-31",
+        "years": 4.991102,
+        "nav_first": 1000000.0,
+        "nav_last": 1072316.25,
+        "cagr_nav_first": 0.01408741,
+        "cagr_initial_capital": 0.01408741,
+        "mdd": -0.07939424
+      }
+    },
+    "纯时间20": {
+      "dev": {
+        "rows": 1946,
+        "start": "2008-01-02",
+        "end": "2015-12-31",
+        "years": 7.994524,
+        "nav_first": 1000000.0,
+        "nav_last": 1160869.125,
+        "cagr_nav_first": 0.01883406,
+        "cagr_initial_capital": 0.01883406,
+        "mdd": -0.09452483
+      },
+      "val": {
+        "rows": 1218,
+        "start": "2016-01-04",
+        "end": "2020-12-31",
+        "years": 4.991102,
+        "nav_first": 1000000.0,
+        "nav_last": 1114375.5,
+        "cagr_nav_first": 0.02193455,
+        "cagr_initial_capital": 0.02193455,
+        "mdd": -0.10327451
+      }
+    },
+    "纯时间60": {
+      "dev": {
+        "rows": 1946,
+        "start": "2008-01-02",
+        "end": "2015-12-31",
+        "years": 7.994524,
+        "nav_first": 1000000.0,
+        "nav_last": 1357668.125,
+        "cagr_nav_first": 0.0389881,
+        "cagr_initial_capital": 0.0389881,
+        "mdd": -0.25651996
+      },
+      "val": {
+        "rows": 1218,
+        "start": "2016-01-04",
+        "end": "2020-12-31",
+        "years": 4.991102,
+        "nav_first": 1000000.0,
+        "nav_last": 1366457.5,
+        "cagr_nav_first": 0.0645537,
+        "cagr_initial_capital": 0.0645537,
+        "mdd": -0.09606717
+      }
+    }
+  },
+  "trend_s4": {
+    "dev": {
+      "rows": 1946,
+      "start": "2008-01-02",
+      "end": "2015-12-31",
+      "years": 7.994524,
+      "nav_first": 1000000.0,
+      "nav_last": 2042946.375,
+      "cagr_nav_first": 0.09347456,
+      "cagr_initial_capital": 0.09347456,
+      "mdd": -0.54338248
+    },
+    "val": {
+      "rows": 1218,
+      "start": "2016-01-04",
+      "end": "2020-12-31",
+      "years": 4.991102,
+      "nav_first": 1000000.0,
+      "nav_last": 596664.5,
+      "cagr_nav_first": -0.09829168,
+      "cagr_initial_capital": -0.09829168,
+      "mdd": -0.56391365
+    }
+  },
+  "trend_s3_trades": {
+    "纯时间20|dev": 67,
+    "纯时间20|val": 59,
+    "纯时间60|dev": 57,
+    "纯时间60|val": 44,
+    "时间40+止损2ATR|dev": 64,
+    "时间40+止损2ATR|val": 50,
+    "移动止盈3ATR+止损2|dev": 66,
+    "移动止盈3ATR+止损2|val": 50,
+    "目标2ATR+止损2|dev": 71,
+    "目标2ATR+止损2|val": 66,
+    "宽止损4ATR+时间60|dev": 58,
+    "宽止损4ATR+时间60|val": 45,
+    "移动+不及预期|dev": 68,
+    "移动+不及预期|val": 61
+  },
+  "trend_s3_event": {
+    "n": 146,
+    "days": 80,
+    "codes": 140,
+    "exc20_mean": 0.017611,
+    "exc20_median": -0.000213,
+    "exc20_q_mean": 0.012049
+  },
+  "pbo": {
+    "BREAKPULL_dev": 0.261694,
+    "BREAKPULL_val": 0.613364,
+    "LONGMOM_dev": 0.07366,
+    "LONGMOM_val": 0.344134,
+    "RELSTR_dev": 0.277001,
+    "RELSTR_val": 0.392696,
+    "RISKBUDGET_dev": 0.682129,
+    "RISKBUDGET_val": 0.503341,
+    "SMALLLOWVOL_dev": 0.241103,
+    "SMALLLOWVOL_val": 0.338462,
+    "STRUCTREV_dev": 0.102642,
+    "STRUCTREV_val": 0.219736,
+    "TRENDCALLBACK_dev": 0.055633,
+    "TRENDCALLBACK_val": 0.240559,
+    "VCB_dev": 0.309091,
+    "VCB_val": 0.505128,
+    "MAIN_dev": 0.310645,
+    "MAIN_val": 0.756488
+  },
+  "dsr_family": {
+    "BREAKPULL": 0.056868,
+    "LONGMOM": 0.005206,
+    "RELSTR": 0.007404,
+    "RISKBUDGET": 0.055067,
+    "SMALLLOWVOL": 0.006693,
+    "STRUCTREV": 0.000585,
+    "VCB": 0.113875,
+    "MAIN": 0.958504
+  },
+  "dsr_project": {
+    "current_N": 733,
+    "current_best": "VCB-P20_T40",
+    "current_sr0_annual": 1.648895,
+    "current_dsr_dev_reported": 0.0006627544,
+    "current_dsr_dev_recalc": 0.0006627544,
+    "current_z_recalc": -3.210399,
+    "ladder": {
+      "N1_sel": {
+        "N": 733,
+        "sr0_annual": 1.648895,
+        "dsr_best_dev": 0.0006627544
+      },
+      "N2_sel_plus_platform": {
+        "N": 990,
+        "sr0_annual": 1.693969,
+        "dsr_best_dev": 0.0004262688
+      },
+      "N3_all_cells": {
+        "N": 1444,
+        "sr0_annual": 1.74914,
+        "dsr_best_dev": 0.0002434684
+      }
+    },
+    "snapshot_714_dsr_recalc": 0.0006886707,
+    "snapshot_714_z_recalc": -3.199358,
+    "N365_dsr_reported": 0.00030032157714916715,
+    "N365_z": -3.4313238143551192,
+    "N365_dsr_via_phi": 0.0003003216,
+    "N365_sr_annual": 0.466243,
+    "N365_sr0_annual": 1.6901263104693132
+  },
+  "null_random": {
+    "dev_0bp": {
+      "mean": 0.045675,
+      "p5": -0.025082,
+      "p95": 0.119109,
+      "seeds": 200
+    },
+    "dev_25bp": {
+      "mean": 0.016285,
+      "p5": -0.052448,
+      "p95": 0.087648,
+      "seeds": 200
+    },
+    "val_0bp": {
+      "mean": -0.058107,
+      "p5": -0.131818,
+      "p95": 0.023208,
+      "seeds": 200
+    },
+    "val_25bp": {
+      "mean": -0.085116,
+      "p5": -0.156742,
+      "p95": -0.006092,
+      "seeds": 200
+    },
+    "full_0bp": {
+      "mean": 0.008623,
+      "p5": -0.040205,
+      "p95": 0.060504,
+      "seeds": 200
+    },
+    "full_25bp": {
+      "mean": -0.019892,
+      "p5": -0.067361,
+      "p95": 0.030539,
+      "seeds": 200
+    }
+  },
+  "exec_pressure": {
+    "baseline_cells": 1250,
+    "baseline_max_cagr": 0.0723666,
+    "baseline_ge20": 0,
+    "baseline_ge60": 0,
+    "candidate_cells": 192,
+    "candidate_max_cagr": 0.12115467,
+    "candidate_ge20": 0,
+    "candidate_ge60": 0,
+    "candidate_max_row": {
+      "candidate": "S4时间60",
+      "window": "dev",
+      "capital": 10000000,
+      "slots": 10,
+      "n_trades": 220
+    }
+  },
+  "nopull": {
+    "dev": {
+      "cagr": 0.81995133,
+      "mdd": -0.18489073,
+      "n_closed": 706
+    },
+    "val": {
+      "cagr": 1.07546922,
+      "mdd": -0.24894221,
+      "n_closed": 520
+    }
+  },
+  "tp8": {
+    "all_ret_tp8_nan": 5559,
+    "G": {
+      "n": 92550,
+      "n_dropped_tp8": 3396,
+      "tp8_mean_nonnull": 0.02101629,
+      "forced_n": 3347,
+      "forced_mean": -0.15494698
+    },
+    "E": {
+      "n": 7639,
+      "n_dropped_tp8": 237,
+      "tp8_mean_nonnull": 0.01144715,
+      "forced_n": 233,
+      "forced_mean": -0.17855906
+    },
+    "G_cagr_original": 0.0636,
+    "G_cagr_forced": -0.0114,
+    "E_cagr_original": 0.0221,
+    "E_cagr_forced": -0.0307,
+    "source_note": "CAGR 变化引用审计报告（8 种子组合回测）；左尾统计为本审计独立重建"
+  },
+  "scan_2021": {
+    "files_checked": 222,
+    "files_with_2021_dates": 0,
+    "examples": []
+  },
+  "nav_2021_audit": {
+    "rows": 418,
+    "max_date": "2020-12-31",
+    "n_after_2020": 0
+  }
+}

@@ -1,0 +1,42 @@
+{
+ "note": "仅敏感性，不参与选择；T-U01 dev 同规则",
+ "rows": [
+  {
+   "initial_cash": 20000.0,
+   "cagr": -0.1713763573087066,
+   "mdd": -0.8726581994925735,
+   "n_trades": 685,
+   "avg_trade_ret": -0.0227703647062877,
+   "turnover": 7.742420480410192,
+   "cost_paid": 7701.8099999999995,
+   "cost_pct_of_initial": 0.3850905,
+   "gate": 1,
+   "max_participation_note": "下单量/ADV20 越高，冲击项越大；小资金更接近 10bp 基础滑点"
+  },
+  {
+   "initial_cash": 100000.0,
+   "cagr": -0.22933246869504176,
+   "mdd": -0.8967891614733786,
+   "n_trades": 891,
+   "avg_trade_ret": -0.022929588059411605,
+   "turnover": 9.565885111250893,
+   "cost_paid": 14546.04,
+   "cost_pct_of_initial": 0.14546040000000002,
+   "gate": 1,
+   "max_participation_note": "下单量/ADV20 越高，冲击项越大；小资金更接近 10bp 基础滑点"
+  },
+  {
+   "initial_cash": 1000000.0,
+   "cagr": -0.22958818926071323,
+   "mdd": -0.9134914419749518,
+   "n_trades": 896,
+   "avg_trade_ret": -0.01493476541630057,
+   "turnover": 10.835925673571566,
+   "cost_paid": 73929.03,
+   "cost_pct_of_initial": 0.07392902999999999,
+   "gate": 1,
+   "max_participation_note": "下单量/ADV20 越高，冲击项越大；小资金更接近 10bp 基础滑点"
+  }
+ ],
+ "elapsed_s": 26.84
+}

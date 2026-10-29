@@ -1,0 +1,66 @@
+{
+ "max_date<=2020-12-31": {
+  "pass": true,
+  "detail": "2020-12-31"
+ },
+ "tr收益=官方pct_chg": {
+  "pass": true,
+  "detail": "checked=976, bad=0"
+ },
+ "截断重算一致": {
+  "pass": true,
+  "detail": "VCB-M:True; VCB-N20:True; VCB-HV:True"
+ },
+ "信号与入场分离": {
+  "pass": true,
+  "detail": "signals=1246"
+ },
+ "ATR 覆盖(2005后)": {
+  "pass": true,
+  "detail": "missing=0"
+ },
+ "通道尺度 ch55/close": {
+  "pass": true,
+  "detail": "median close/ch55=0.867"
+ },
+ "55日突破频率": {
+  "pass": true,
+  "detail": "freq=3.082%"
+ },
+ "ATR/价格量级": {
+  "pass": true,
+  "detail": "median=3.821%"
+ },
+ "收缩分位均匀": {
+  "pass": true,
+  "detail": "mean=0.505"
+ },
+ "随机入场超额≈0": {
+  "pass": true,
+  "detail": "mean=-0.1029%"
+ },
+ "特征最大日期": {
+  "pass": true,
+  "detail": "2020-12-31"
+ },
+ "整股(买入100股)": {
+  "pass": true,
+  "detail": "buys=81"
+ },
+ "零股卖出仅限清仓": {
+  "pass": true,
+  "detail": "odd_lot_sells=2（送转/配股产生，允许一次性卖出）"
+ },
+ "订单执行日>决策日": {
+  "pass": true,
+  "detail": "orders=162"
+ },
+ "交易不晚于2020-12-31": {
+  "pass": true,
+  "detail": "2010-12-21 00:00:00"
+ },
+ "费用>0": {
+  "pass": true,
+  "detail": "fees=16082"
+ }
+}

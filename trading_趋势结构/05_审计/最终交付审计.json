@@ -1,0 +1,827 @@
+{
+  "schema": "trend-structure-final-delivery-audit/v1",
+  "meta": {
+    "project": "trading_趋势结构",
+    "project_root": "/Users/admin/WorkSpace/trading/trading_趋势结构",
+    "auditor": "deepseek-flash",
+    "thinking": "max",
+    "role": "未参与策略设计、参数选择、结果生成与最终报告写作的最终交付审计员",
+    "generated_at_local": "2026-10-29",
+    "scope": [
+      "00_一页纸.md",
+      "01_完整报告.md",
+      "02_规则手册_研究结论版.md",
+      "03_数据与复现说明.md",
+      "04_最终结论.json",
+      "README.md",
+      "文件清单.csv",
+      "04_证据/最终口径对账.json",
+      "05_审计/最终结论证据矩阵.md",
+      "05_审计/留出准入裁决.md",
+      "05_审计/第一阶段代码与负结果审计.md",
+      "关键结果文件与费用/撮合代码",
+      "05_审计/留出准入裁决.json"
+    ],
+    "discipline": {
+      "read_only_on_others_files": true,
+      "ran_strategy_backtests": false,
+      "read_or_computed_2021_plus_returns": false,
+      "files_written": [
+        "05_审计/最终交付审计.md",
+        "05_审计/最终交付审计.json"
+      ]
+    }
+  },
+  "overall": {
+    "verdict": "FAIL",
+    "severity": "高",
+    "conclusion_sound": true,
+    "delivery_clean": false,
+    "one_line": "0 候选、T0005 淘汰、60% 拒绝、2021+ 未跑这四件事有证据；但“全部结论在主板、全部口径一致、G6/max-stat 数字如文中所写”不成立。",
+    "summary": {
+      "zero_candidate": "PASS",
+      "t0005_discard": "PASS",
+      "60pct_rejection": "PASS_CONDITIONAL",
+      "negative_result_credibility": "PASS",
+      "cross_document_consistency": "FAIL",
+      "root_docs_independent_delivery": "PASS_WITH_WARN",
+      "rulebook_not_live": "PASS",
+      "negative_results_and_limits_prominent": "PASS_WITH_WARN"
+    },
+    "what_would_make_pass": "修复 M01-M06，并把 M07-M13 的中严重度矛盾对账；之后重跑 verify/selfcheck 与跨文档一致性检查。"
+  },
+  "requirements": [
+    {
+      "id": "U01",
+      "requirement": "双本地库验证",
+      "verdict": "PASS",
+      "severity": "低",
+      "evidence": [
+        "01_数据/meta.json：sources.baostock_sqlite=/Users/admin/WorkSpace/baostock_data/data/baostock.db（10.3 GB），sources.hithink_duckdb=/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb（1.86 GB）",
+        "本审计全量 join：2016-10-13..2026-10-26 共同证券日 10,104,953；close 差>0.005 元 4 行；max 0.04",
+        "05_审计/双源数据核验.md：volume/amount/ST/停牌/复权完整性/公司行动均有分层核验"
+      ],
+      "finding": "两个本地库均存在且只读，共同证券日/close 差异与作者一致；volume、amount、ST、停牌语义也做了核验。WARN：作者标题写“OHLC 差异仅 4 行”，但本审计按 open/high/low/close 四字段全量 join 得到 5 行，多出 688206.SH 2021-12-28 high 56.20 vs 55.00（close 均 42.71）。该股为科创板，不在主宇宙，不影响策略结论；但“OHLC”标签不准确，应写“close 4 行；OHLC 5 行”。"
+    },
+    {
+      "id": "U02",
+      "requirement": "足够深入、全面、动态",
+      "verdict": "PASS",
+      "severity": "中",
+      "evidence": [
+        "01_完整报告.md §3：18 个族、733 个 N_sel、1,251 个 N_cell、454 个 N_diag、257 个平台格、87 个审计夹具、1,699 行总账",
+        "01_完整报告.md §5：动态参数、5/10/20 仓、2 万-1 亿资金、成本、延迟、板块、流动性、市场状态、符合/不符合预期、谨慎、必须退出、利润奔跑 13 个横切键",
+        "03_结果/最终试验总账.csv：1,699 行哈希链"
+      ],
+      "finding": "深度和广度都够：18 个族、733 个配置、1,699 行总账，横切 13 个维度；不是只跑一个策略。WARN：跨族引擎、宇宙、价格口径不一致（见 U08/M01/M06）；“动态”主要是风险预算/状态叠加，不是独立的动态系统；没有测试提高单笔风险、集中持仓、杠杆等高风险路径。"
+    },
+    {
+      "id": "U03",
+      "requirement": "多周期趋势结构及小周期性质",
+      "verdict": "WARN",
+      "severity": "中",
+      "evidence": [
+        "01_完整报告.md §4 Q2：V1（季/月）dev/val 0 笔；V2（去高周期）dev −1.72%/val −3.44%",
+        "01_完整报告.md §3.10：健康回调 L5 20 日超额 +0.077%（t=0.78，n=67,118），中位 −1.74%；主候选 −23.96%/−19.78%",
+        "01_完整报告.md §2.4 V5：E3 趋势内回调 dev +1.18%/val −3.49%，val 仅 17 笔"
+      ],
+      "finding": "多周期（月/周/日）有直接回答：三层叠加不是独立信息源，V1 无法交易、V2 更差；小周期（日线下跌）也有专门族（TRENDCALLBACK），回答“回调不是可买边缘”。WARN：没有独立的“小周期性质”章节；无分钟数据，日线内顺序不可知；“小周期”结论样本薄（E3 val 17 笔），功效低。"
+    },
+    {
+      "id": "U04",
+      "requirement": "买入后符合/不符合",
+      "verdict": "PASS",
+      "severity": "低",
+      "evidence": [
+        "01_完整报告.md §5.9：符合预期=入场后 10 个交易日内 MFE≥1R",
+        "01_完整报告.md §3.15：第 10 日 MFE≥2R 的交易里最终仍有 60.6%(A)/56.8%(B) 亏损",
+        "01_完整报告.md §2.4 A6：去掉 3 日失败退出 dev +5.70%/val −1.46%，两段都优于 A5 +4.16%/−2.53%"
+      ],
+      "finding": "定义、反例、消融都有：符合预期不等于最终盈利；3 日失败早退没有提高终值。回答完整，且没有把“符合预期”事后改成“最终盈利”。"
+    },
+    {
+      "id": "U05",
+      "requirement": "提前离场/谨慎/利润奔跑",
+      "verdict": "PASS",
+      "severity": "低",
+      "evidence": [
+        "01_完整报告.md §4 Q3-Q5：A6、V6/A7、V7/V6 三组对照",
+        "01_完整报告.md §3.3：退出族 18 臂×2 测试床×2 窗口，组合级 dev −20.1%~−37.6%、val −19.8%~−45.8%",
+        "01_完整报告.md §2.6：stop_trigger dev 37 笔均值 +13,334 元、胜率 78.4%；open 退出 dev 65 笔 −1,917 元、胜率 18.5%"
+      ],
+      "finding": "提前离场（3 日失败）、谨慎态（C1/C3）、利润奔跑（X2 vs X1）各有独立实验和负结果；退出族还给出“结构止损是最差离场”的反直觉证据。边界清楚：没有一条在两段同时为正，tp8 已撤回。"
+    },
+    {
+      "id": "U06",
+      "requirement": "不同思维",
+      "verdict": "PASS",
+      "severity": "低",
+      "evidence": [
+        "01_完整报告.md §1.2：结构语言派、多周期叠加派、退出与仓位派、横截面与生态派、工程与统计派",
+        "01_完整报告.md §3：五派分别对应 STRUCT/TREND/EXIT/RELSTR+ECOLOGY+SMALLLOWVOL/UNIFIEDENGINE+EXECPRESSURE"
+      ],
+      "finding": "五种研究路径都保留，且都给出负结果；不是只做一个策略再改参数。WARN：五种都在同一“仅做多、无杠杆、10 仓、主板/宽基”框架内，不是五种独立风险框架；没有“高集中/高换手/杠杆”派。"
+    },
+    {
+      "id": "U07",
+      "requirement": "参数变化",
+      "verdict": "PASS",
+      "severity": "低",
+      "evidence": [
+        "03_结果/主候选_T0005/30_邻域.csv：18 个变体×2 窗口；dev 1.5396%~5.4984%，val −2.6039%~−1.3495%，0 个 val 为正",
+        "03_结果/趋势族_开发验证规范.md：30 个参数邻域",
+        "01_完整报告.md §3.11-3.14：RELSTR 40、STRUCTREV 31、LONGMOM 26 配置"
+      ],
+      "finding": "参数变化覆盖广，且明确“敏感性只报告不选择”；没有出现“调对参数就转正”的配置。WARN：报告 §2.5 写“dev 2.11%~5.50%”，漏掉 S06 的 1.5396%（同段又写“最大风险 10% 1.54%”），见 M10。"
+    },
+    {
+      "id": "U08",
+      "requirement": "严谨回测",
+      "verdict": "WARN",
+      "severity": "高",
+      "evidence": [
+        "03_数据与复现说明.md §3：C-REAL-V1、T+1、停牌/复牌、涨跌停、整股、退市",
+        "03_结果/主候选_T0005/08_因果自检.json：480 项 0 不符；40_独立账户对账.json：max_rel_diff 5.64e-11",
+        "05_审计/第一阶段代码与负结果审计.md:212-216,388：TREND/STRUCT 含创业板/科创板，不能称 U-MAINBOARD-V1",
+        "05_审计/第一阶段代码与负结果审计.md §F3：TREND 创业板限价档位错误"
+      ],
+      "finding": "撮合/成本/会计/统计机制扎实，T0005 的独立账户与因果截断都过；但 TREND/STRUCT 使用更宽宇宙（MKT 规则也覆盖创业板/科创板）、四族使用简化引擎而非统一引擎、价格口径 A 空间 vs Baostock flag1 混用，且 TREND 创业板限价有 bug。根文档“所有结论只覆盖主板”“A 空间”因此不成立。严谨回测的“机制”是 PASS，“口径一致性”是 FAIL。"
+    },
+    {
+      "id": "U09",
+      "requirement": "60% 目标",
+      "verdict": "PASS",
+      "severity": "中",
+      "evidence": [
+        "03_结果/执行压力/01_压力矩阵.csv：1,250 格，0 格≥20%，0 格≥60%，max 7.2367%",
+        "03_结果/执行压力/06_候选_交易级重算.csv：192 格，0 格≥20%，0 格≥60%，max 12.1155%",
+        "01_完整报告.md §4 Q6：最好两段 8.33%/8.71%（VCB-N120/T40），dev MDD −35.3%",
+        "01_完整报告.md §6.6：G1-G10 逐条不成立"
+      ],
+      "finding": "60% 被拒绝有硬证据：1,250+192 个压力格 0 格≥20%；最好两段 8.3%/8.7%；T0005 val −2.53%。WARN：结论是“在该低杠杆、10 仓、1.2% 单笔风险框架下 60% 不支持”，不是“A 股不存在 60% 策略”；60% 算术 21.8%/12.8 次重复计入部署率（见 M09）；“差一个数量级”是 6.9 倍，措辞过强。"
+    },
+    {
+      "id": "U10",
+      "requirement": "审计员",
+      "verdict": "PASS",
+      "severity": "中",
+      "evidence": [
+        "05_审计/独立复现_基线.md：独立实现 9+2 个审计配置，NAV/现金/股数恒等式全 PASS",
+        "05_审计/双源数据核验.md：10,104,953 共同证券日、4 行 close 差异",
+        "05_审计/第一阶段代码与负结果审计.md：tp8、限价、随机基准、统一引擎审计",
+        "05_审计/留出准入裁决.md：0 候选获准"
+      ],
+      "finding": "审计角色是真实存在的：独立复现、双源核验、复权修复、代码/负结果审计、留出裁决、证据矩阵，不是作者自证。WARN：留出裁决是 00:37 旧快照，仍写 T0005 从未运行/6 行/N=365，与最终状态冲突（见 M05）。"
+    }
+  ],
+  "delivery": [
+    {
+      "id": "D01",
+      "check": "根目录四份文档 + README + 文件清单能否独立交付",
+      "verdict": "PASS",
+      "severity": "中",
+      "evidence": [
+        "00_一页纸.md、01_完整报告.md、02_规则手册_研究结论版.md、03_数据与复现说明.md、04_最终结论.json、README.md、文件清单.csv 均存在且可读",
+        "文件清单.csv 343 行；根文档 SHA256 全部匹配（00 0783b994…、01 19aa36f4…、02 474bb4f6…、03 125883ee…、README ec329846…、04 70b39ebc…）",
+        "04_最终结论.json meta.tool_sha256=f95649a9… 与 02_代码/最终交付.py 一致"
+      ],
+      "finding": "四份文档 + 04_最终结论.json + README + 文件清单齐全、可读、相互引用，根文档哈希与清单一致；04 JSON 的工具哈希也一致。WARN：清单缺 05_审计/留出准入裁决.json 与 05_审计/最终结论证据矩阵.csv；README VCB 行指向 01_完整报告.md §1，但 §1 没有该解释。"
+    },
+    {
+      "id": "D02",
+      "check": "规则手册是否清楚标未通过而非实盘建议",
+      "verdict": "PASS",
+      "severity": "低",
+      "evidence": [
+        "02_规则手册_研究结论版.md:3-7：三行身份声明“研究结论版/未通过验证/不构成实盘系统”",
+        "02_规则手册_研究结论版.md:123-164：每条规则有“为什么未验证/禁止用途”",
+        "02_规则手册_研究结论版.md:194-204：七条硬理由",
+        "02_规则手册_研究结论版.md:226-229：引用必须同时写四个限定"
+      ],
+      "finding": "规则手册的身份声明、禁止用途、七条硬理由、引用限定都清楚；没有把 §3 的规则包装成实盘建议。PASS。"
+    },
+    {
+      "id": "D03",
+      "check": "负结果与限制是否醒目",
+      "verdict": "PASS",
+      "severity": "中",
+      "evidence": [
+        "00_一页纸.md:11-13：一句话“没有找到可进入冻结的净边际/0 候选/60% 拒绝/无可利用边际”",
+        "01_完整报告.md:612-628：为什么没有留出 5 条理由",
+        "01_完整报告.md:632-648：15 条数据/撮合限制",
+        "01_完整报告.md:652-676：撤回/作废索引",
+        "04_最终结论.json limits：18 条"
+      ],
+      "finding": "负结果和限制写得很醒目，不是藏在脚注。WARN：最 material 的三项跨族缺陷（主板宇宙、跨族引擎、TREND 创业板限价 bug）只在 05_审计/第一阶段代码与负结果审计.md，没有进根文档 §8/§9/04 JSON limits（见 M01/M02/M06）。"
+    },
+    {
+      "id": "D04",
+      "check": "是否隐藏未来函数",
+      "verdict": "WARN",
+      "severity": "中",
+      "evidence": [
+        "01_完整报告.md:641：out_date 前视 54/342,387=0.0158%，已披露，未修",
+        "01_完整报告.md:642：VCB 报告与代码 delist_window 不一致，已披露，方向保守",
+        "01_完整报告.md:128：nopull 臂已标前视禁引",
+        "03_数据与复现说明.md:127：只披露 1 个 2021+ state/pos 文件",
+        "本审计扫描：03_结果/市场状态_缓存/index_feat.parquet 有 ret1，market_feature.parquet 有 ew_ret1 等，max date 2026-10-26"
+      ],
+      "finding": "out_date 前视、VCB delist_window、nopull、tp8 都已披露；T0005 因果截断 480 项 0 不符。本审计未发现新的、未披露的未来函数；问题在已披露的 out_date/delist_date 仍未量化/修复，以及 2021+ 缓存面：index_feat.parquet 有 ret1，market_feature.parquet 有 ew_ret1 等，max date 2026-10-26，报告只列了一个 state/pos 文件。"
+    },
+    {
+      "id": "D05",
+      "check": "负结果是否由实现 bug 造成",
+      "verdict": "PASS",
+      "severity": "中",
+      "evidence": [
+        "v1 hfq 双计收益已修：v2 全样本 0 违约，max 4.31e-15",
+        "tp8 丢左尾已撤回：G+tp8 +6.36%→−1.14%，E+tp8 +2.21%→−3.07%",
+        "nopull 前视臂已禁引：dev +82.00%/val +107.55%",
+        "TREND 创业板限价 bug 是乐观方向（让涨停买入/跌停卖出更容易成交），不是压负",
+        "T0005 独立账户 max_rel_diff 5.64e-11；撮合 31/31 PASS"
+      ],
+      "finding": "未发现把结果系统性压负的实现 bug；已知 bug 都是乐观方向或小量级。成本约 0.36%/往返，不是异常惩罚；多族毛收益已为负（RELSTR dev −13.4%/年）。WARN：TREND S3 的正结果被限价 bug 污染，但负结论不依赖 S3。"
+    },
+    {
+      "id": "D06",
+      "check": "跨文档一致性",
+      "verdict": "FAIL",
+      "severity": "高",
+      "evidence": [
+        "G6：00_一页纸.md:47 / 01_完整报告.md:602 写“族内最高 0.84”；01_完整报告.md:564 写 T0005 族内 DSR 0.958；族内DSR.csv VCB-N120 0.1139",
+        "max-stat：00_一页纸.md:32 / 01_完整报告.md:561 写“最小 0.374”；最终判定.json 最小 0.071964",
+        "留出：00_一页纸.md:97 / 04_最终结论.json holdout.reasons[0] 写“no done val”；注册表 T0007 val done",
+        "宇宙：01_完整报告.md:451-454 写“所有结论只覆盖主板”；TREND 15.83% / STRUCT 13.93% 创业板+科创板成交",
+        "VCB：README.md:62 写“族内 34、总账 22，差额见 §1”；§1 无解释",
+        "费用：03_数据与复现说明.md:94 写“沪市 2015 前按面额 0.1%”；代码 0.0006 元/股（0.06%）",
+        "60% 算术：01_完整报告.md:396 / 02_规则手册:117 写 21.8%/12.8；S4 实际 3.08 次/槽/年"
+      ],
+      "finding": "至少 6 组高/中严重度矛盾，集中在 G6、max-stat、留出状态、主板宇宙、VCB 计数、费用口径、60% 算术。根文档之间、根文档与审计文件之间、根文档与最终统计之间都有冲突。"
+    },
+    {
+      "id": "D07",
+      "check": "机器可读入口是否完整",
+      "verdict": "FAIL",
+      "severity": "中",
+      "evidence": [
+        "04_最终结论.json statistics.pbo_maxstat：16 个 MAXSTAT 行 p 值全为空",
+        "04_最终结论.json holdout.reasons[0] 仍是“no done val”",
+        "04_最终结论.json limits 未列主板宇宙/跨族引擎/TREND 限价 bug"
+      ],
+      "finding": "04 JSON 是报告 §12 的机器可读入口，但 max-stat 行没有 p 值，无法复现 0.374/0.072；holdout 理由过期；limits 缺三项关键缺陷。"
+    },
+    {
+      "id": "D08",
+      "check": "数字可追溯性",
+      "verdict": "WARN",
+      "severity": "中",
+      "evidence": [
+        "G6 的 0.84 在最终统计无对应行；0.77-0.84 也无对应行",
+        "统一门槛.csv / 最终试验总账.csv 无 universe_id/adjust/cost_model_id 列",
+        "预注册 §15 四列只有少数表落实，交付验收 T2 WARN（1/25 CSV）"
+      ],
+      "finding": "多数关键数字有路径，但 0.84/0.77-0.84 没有最终统计出处；总账缺少宇宙/复权/成本三列，跨族口径无法从总账直接审计。04_证据/最终口径对账.json 35/35 PASS 的检查项集中在 N/T0005/B_conditional/小盘基准/门槛覆盖/扫描时点，不含 G6/max-stat/宇宙/引擎/60% 算术，不能证明跨文档一致。"
+    },
+    {
+      "id": "D09",
+      "check": "多重性预算披露",
+      "verdict": "WARN",
+      "severity": "中",
+      "evidence": [
+        "00_一页纸.md:24 / 01_完整报告.md:512 / README.md:43 只写“预算 64，11.45×”",
+        "00_研究预注册.md:407：用于选择的试验 ≤40，含消融与敏感性 ≤64",
+        "733/40=18.33×；733/64=11.45×"
+      ],
+      "finding": "用 64 作上限可辩护（N_sel 含敏感性/消融），但只写 64 会让读者以为超支 11.45×；按选择预算 40 是 18.33×。两个口径应同时写。"
+    },
+    {
+      "id": "D10",
+      "check": "审计文件新鲜度",
+      "verdict": "FAIL",
+      "severity": "中",
+      "evidence": [
+        "05_审计/留出准入裁决.md:19,107,386 仍写“T0005 从未运行/注册表 6 行/N=365”",
+        "05_审计/留出准入裁决.json decision.reason_codes 含 PROCEDURAL_NO_DONE_VAL_TRIAL",
+        "05_审计/最终结论证据矩阵.md:33,179 仍写“最终判定报 486/228”，而 01:28 最终判定.json 已改 505/228"
+      ],
+      "finding": "留出裁决生成于 00:37，早于 T0005 完成（00:29-00:53）和 T0007 登记（01:01），未更新；证据矩阵 P03 也被 01:28 的最终判定超过。最终包引用了过期审计。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "M01",
+      "severity": "高",
+      "type": "scope_overclaim",
+      "verdict": "FAIL",
+      "title": "“所有结论只覆盖主板”与事实不符",
+      "evidence": [
+        "03_结果/趋势族_开发验证规范.md:62：sh.60/68、sz.00/30",
+        "03_结果/结构族_开发验证规范.md:350：universe 未排除 300/688",
+        "03_结果/市场状态_研究规范.md:410：含创业板/科创板涨跌停规则",
+        "03_结果/趋势族/交易明细_全部.parquet：31,961 笔，5,033 创业板 + 31 科创板（15.83%）",
+        "03_结果/结构族_事件_K3.parquet：163,564 条，22,727 创业板 + 52 科创板（13.93%）",
+        "05_审计/第一阶段代码与负结果审计.md:212-216,388：四族不是同一主宇宙，不能称已在 U-MAINBOARD-V1 上验证",
+        "01_完整报告.md:71,451-454；README.md:152；03_数据与复现说明.md:77"
+      ],
+      "finding": "根文档把项目宇宙写成 U-MAINBOARD-V1，并写“所有结论只覆盖主板”；TREND/STRUCT 明确使用更宽宇宙（sh.60/68、sz.00/30，未排除 300/688），MKT 的涨跌停规则也覆盖创业板/科创板。TREND 15.83%、STRUCT 13.93% 的成交来自创业板/科创板。§3.19 跨族表因此不是同一宇宙的对拍。",
+      "fix": "加“族×宇宙×价格口径×引擎”矩阵；把“所有结论”改成“T0005/VCB/小盘覆盖主板；TREND/STRUCT 为更宽宇宙，MKT 需单独核对”；或在主板重跑后再维持原句。",
+      "must_fix": true
+    },
+    {
+      "id": "M02",
+      "severity": "高",
+      "type": "implementation_bug_optimistic",
+      "verdict": "FAIL",
+      "title": "TREND 创业板限价档位 bug 污染 5 个 S3 正结果",
+      "evidence": [
+        "05_审计/第一阶段代码与负结果审计.md §F3：创业板 2020-08-24 前实际 10%，代码全期 20%；17-18 个唯一涨停开盘仍买入，45 个唯一跌停开盘仍卖出",
+        "S4 纯时间 60 不受影响；宽止损 4ATR+时间 60 +7.80%→+7.12%，val −2.65%→−3.64%",
+        "03_结果/趋势族/交易明细_全部.parquet：S3 826 笔中 135 笔创业板（16.34%）；5 个两段正 S3 规则 581 笔中 95 笔创业板+1 笔科创板（16.5%），这 5 个规则每窗口 44-71 笔",
+        "01_完整报告.md:200-203：5 个 S3 两段正，未提限价 bug"
+      ],
+      "finding": "5 个 S3 是 TREND 族内唯一的两段正配置；在同时过 MDD≤25% 的 5 个配置里，除 VCB-P20 外就是这 4 个 S3。TREND 的创业板限价 bug 可能让其中几笔涨停买入/跌停卖出成交，正号可能被高估。根文档把它们作为 B_conditional 的 4/5，未披露污染。",
+      "fix": "在主板+正确创业板限价下重跑 5 个 S3；若不能重跑，标为“执行口径污染，不得作为干净的两段正证据”，并写进 §8/§9/limits。",
+      "must_fix": true
+    },
+    {
+      "id": "M03",
+      "severity": "高",
+      "type": "statistical_mislabel",
+      "verdict": "FAIL",
+      "title": "G6 “族内最高 0.84”与最终统计矛盾",
+      "evidence": [
+        "00_一页纸.md:47；01_完整报告.md:602：族内最高 0.84（VCB-N120）",
+        "01_完整报告.md:564：T0005 族内 DSR 0.958",
+        "03_结果/最终统计/族内DSR.csv：T0005 0.9585；VCB-N120 0.1139",
+        "03_结果/候选_收缩突破/统计诊断.json：VCB 主候选 DSR 0.622（N=24）",
+        "03_结果/最终统计/自检.json:19：dsr_null_p95=0.8407（零分布分位，不是 DSR）"
+      ],
+      "finding": "0.84 在最终统计里没有对应 DSR 行，疑与 dsr_null_p95=0.8407 混淆；同时漏掉 T0005 族内 0.958>0.95。G6 结论（项目级 6.6e-4 不过）仍成立，但表内数字不可引用。",
+      "fix": "G6 行改成“项目级 6.6e−4；T0005 族内 0.9585（相关邻域，不可用）；可用族内最高 VCB-N120 0.1139；0.84 在最终统计中没有 DSR 出处，若引自 dsr_null_p95 则它不是 DSR”；同步 §3.8/§4 Q6 的 0.77-0.84。",
+      "must_fix": true
+    },
+    {
+      "id": "M04",
+      "severity": "高",
+      "type": "statistical_overclaim",
+      "verdict": "FAIL",
+      "title": "max-stat “最小 p=0.374”低于实际最小值",
+      "evidence": [
+        "00_一页纸.md:32；01_完整报告.md:561：最小 p=0.374（trend_dev）",
+        "03_结果/最终统计/最终判定.json statistics.maxstat：VCB dev 0.071964、SMALLLOWVOL dev 0.105947、RISKBUDGET dev 0.197901，最小 0.071964",
+        "03_结果/统计整合/多重性.json：只有 9 个矩阵，最小 0.374（trend_dev）",
+        "04_最终结论.json statistics.pbo_maxstat：16 个 MAXSTAT 行 p 值全为空"
+      ],
+      "finding": "结论“没有族过 0.05”仍成立；但“最小 0.374”把 VCB 的 0.072 藏掉，弱化“VCB 已接近但未过”的信息；04 JSON 的 maxstat 行没有 p 值，无法复现。",
+      "fix": "写“§6.3 表内 9 个矩阵最小 0.374；全项目已计算族最小 0.072（VCB dev）；均未过 0.05”；把最终判定.json 的 p 值填进 04 JSON 或明确指向它。",
+      "must_fix": true
+    },
+    {
+      "id": "M05",
+      "severity": "高",
+      "type": "stale_caliber",
+      "verdict": "FAIL",
+      "title": "留出理由仍是“no done val”，与 T0007 冲突",
+      "evidence": [
+        "00_一页纸.md:97：官方注册表没有可作为留出父试验的 done val 试验",
+        "04_最终结论.json holdout.reasons[0]：同一句",
+        "05_审计/留出准入裁决.md:19,107,386：T0005 仍 planned/从未运行/注册表 6 行",
+        "05_审计/留出准入裁决.json decision.reason_codes 含 PROCEDURAL_NO_DONE_VAL_TRIAL",
+        "03_结果/实验注册表.csv：10 行；T0005 rev2 done；T0007 val done/discard；holdout 0 行",
+        "01_完整报告.md:616-618：原先没有，本批已补登记（正确版本）"
+      ],
+      "finding": "T0005 已完成并淘汰，T0007 val 已 done/discard；一页纸/JSON/裁决仍写“no done val/T0005 从未运行”。留出结论（不跑）仍成立，但理由必须改成“T0007 是事后补登记 val，不是预注册父试验；且无候选过 G1-G10、E1 未建立”。",
+      "fix": "给留出裁决加 2026-10-29 01:35 补注；同步一页纸第 97 行与 04 JSON holdout.reasons[0]；reason_codes 改为候选不达标/E1 缺失，不用 PROCEDURAL_NO_DONE_VAL_TRIAL。",
+      "must_fix": true
+    },
+    {
+      "id": "M06",
+      "severity": "高",
+      "type": "methodology_disclosure",
+      "verdict": "FAIL",
+      "title": "跨族引擎/价格口径不一致未进根文档",
+      "evidence": [
+        "05_审计/第一阶段代码与负结果审计.md:21,373：四族没有接入公共引擎；最终账户结论必须用统一引擎复核",
+        "03_数据与复现说明.md:63：趋势/结构/退出/相对强弱用 Baostock flag1",
+        "01_完整报告.md:70：收益/指标 A 空间；01_完整报告.md:639：趋势/结构/退出用 Baostock flag1",
+        "03_结果/最终试验总账.csv：无 universe_id/adjust/cost_model_id 列",
+        "04_证据/交付验收.json T2：1/25 CSV 含预注册 §15 四列，WARN"
+      ],
+      "finding": "§3.19 跨族表不是同一引擎/同一价格口径的对拍；§1.2 “换引擎后剩 0”只对 4 个公开基线成立；账户层 0.2-7.4pp 的引擎差已大于报告用来否决候选的 2-6pp 边际。",
+      "fix": "族表加“引擎/价格口径/宇宙”三列；§1.2 限定为“4 个公开基线 + T0005 统一引擎复核”；§8/§9/limits 写明“跨族汇总只能作负结果清单，不能作横向排名”。",
+      "must_fix": true
+    },
+    {
+      "id": "M07",
+      "severity": "中",
+      "type": "unreconciled_count",
+      "verdict": "FAIL",
+      "title": "VCB 族内 34 vs 总账 N_sel 22；README 断链",
+      "evidence": [
+        "README.md:62：族内声明 34、总账 N_sel 22（差额去向见 01_完整报告.md §1）",
+        "03_结果/最终统计/最终计数.csv：VCB 22 N_sel / 44 cell / 10 diag",
+        "01_完整报告.md §1：无 VCB 差额解释",
+        "05_审计/最终结论证据矩阵.md §6#6：VCB 族声明 34 vs 总账 22，引用时写“差额去向见最终报告 §1”"
+      ],
+      "finding": "34 与 22 差 12 个配置，README 指向的 §1 没有解释；读者无法判断 N_sel/DSR 是否漏计。",
+      "fix": "加 12 个差额的逐项表（34 = 可行性 4 + 信号 9 + 消融 6 + 退出 6 + 敏感性 9 → 22 个 N_sel 的映射），或写“族内 34 为族自报上界，总账只计 22 个可部署配置”；删掉断链。",
+      "must_fix": true
+    },
+    {
+      "id": "M08",
+      "severity": "中",
+      "type": "cost_model_mismatch",
+      "verdict": "FAIL",
+      "title": "过户费文档 0.1% vs 代码 0.06%",
+      "evidence": [
+        "03_数据与复现说明.md:94：沪市 2015 前按面额 0.1%",
+        "02_代码/费用与交易约束.py:9：按面值 0.6‰（每股 0.0006 元）",
+        "02_代码/费用与交易约束.py:131-149：TransferRule(2005-01-01,'par_sh',0.0006,'SH')",
+        "05_审计/独立复现_基线.md 费用段：沪市按面额 0.1%（最低 1 元）"
+      ],
+      "finding": "主引擎用 0.0006 元/股（0.06% 面额），文档和独立复现用 0.1%；差 0.0004 元/股/边，约 0.001%-0.02% 成交额，量级小但口径不一致。",
+      "fix": "统一为同一条款；若保留 0.06%，量化对 2008-2015 沪市往返成本的影响（每股 0.0004 元，约 0.001%-0.02% 成交额），并在 03 数据说明写清。",
+      "must_fix": true
+    },
+    {
+      "id": "M09",
+      "severity": "中",
+      "type": "arithmetic_error",
+      "verdict": "FAIL",
+      "title": "60% 算术 21.8%/12.8 次重复计入部署率",
+      "evidence": [
+        "01_完整报告.md:396；02_规则手册_研究结论版.md:117：S4 +4.67%/笔、2.75 次/槽/年；要 60% 需 21.8%/笔或 12.8 次/槽/年",
+        "03_结果/趋势族/组合模拟_汇总.csv：S4 纯时间60 246 笔、10 槽、7.9945 年、avg_ret 4.7128%、avg_exposure 76.55%",
+        "246/10/7.9945=3.08 次/槽/年；报告用 2.75 次再乘约 0.784（由 21.8% 反推）；正确所需每笔约 15.3%，所需轮次约 10.1 次/槽/年"
+      ],
+      "finding": "报告用 2.75 次/槽/年再乘约 0.784（由 21.8% 反推），重复计入了部署；3.08 次/槽/年已包含空槽时间，不能再乘 0.7655。正确所需每笔约 0.470/3.08=15.3%（或按 2.75 算 17.1%），所需轮次约 0.470/4.67%=10.1 次/槽/年。60% 仍远不可达，但 21.8%/12.8 把差距夸大约 27-43%。",
+      "fix": "用 3.08 次/槽/年重算：所需每笔约 15.3%（或按 2.75 算 17.1%），不是 21.8%；所需轮次约 10.1 次/槽/年，不是 12.8。结论仍成立，但数字要改。",
+      "must_fix": true
+    },
+    {
+      "id": "M10",
+      "severity": "中",
+      "type": "range_error",
+      "verdict": "FAIL",
+      "title": "邻域 dev 区间 2.11%~5.50% 漏掉 1.54%",
+      "evidence": [
+        "01_完整报告.md §2.5：dev 2.11%~5.50%",
+        "03_结果/主候选_T0005/30_邻域.csv：S06 最大初始风险10% dev 0.015396；min 0.015396，max 0.054984",
+        "同段又写“最大风险 10% 1.54%/−2.27%”"
+      ],
+      "finding": "报告自己的下界与表格不一致；2.11% 是 S01 k=3，不是最小值。",
+      "fix": "改成 1.54%~5.50%。",
+      "must_fix": true
+    },
+    {
+      "id": "M11",
+      "severity": "中",
+      "type": "indirect_2021_plus_risk",
+      "verdict": "WARN",
+      "title": "2021+ 间接风险只披露 1 个 state/pos 文件",
+      "evidence": [
+        "03_数据与复现说明.md:127：只列 03_结果/市场状态/市场状态_日频许可_扩展2021_2026_未评估.csv",
+        "本审计扫描：03_结果/市场状态_缓存/index_feat.parquet 有 ret1；market_feature.parquet 有 ew_ret1/csd_ret1 等；max date 2026-10-26"
+      ],
+      "finding": "这些缓存没有策略绩效，但可用于 2021+ 基准/状态对照；只披露一个文件低估了 2021+ 暴露面。",
+      "fix": "在 §7/§8 列出这些缓存，说明“无策略绩效，但可用于 2021+ 基准对照”；留出前同样不得查看。",
+      "must_fix": true
+    },
+    {
+      "id": "M12",
+      "severity": "中",
+      "type": "inventory_gap",
+      "verdict": "FAIL",
+      "title": "文件清单缺审计 JSON/CSV",
+      "evidence": [
+        "文件清单.csv：343 行",
+        "05_审计/留出准入裁决.json 存在但清单无行",
+        "05_审计/最终结论证据矩阵.csv 存在但清单无行"
+      ],
+      "finding": "清单只列了 05_审计 的 .md，没有 .json/.csv；这两个文件被根文档/一页纸引用，按清单验收会找不到。",
+      "fix": "把审计 JSON/CSV 纳入清单，或明确“清单只收报告类审计，机器证据见目录”。",
+      "must_fix": true
+    },
+    {
+      "id": "M13",
+      "severity": "中",
+      "type": "budget_disclosure",
+      "verdict": "WARN",
+      "title": "预算只写 64，不写 40",
+      "evidence": [
+        "00_研究预注册.md:407：用于选择的试验 ≤40；含消融与敏感性 ≤64",
+        "00_一页纸.md:24；01_完整报告.md:512；README.md:43：只写 64 / 11.45×",
+        "733/40=18.33×；733/64=11.45×"
+      ],
+      "finding": "64 可辩护（N_sel 含敏感性/消融），但只写 64 会让读者以为超支 11.45×；选择预算 40 是 18.33×。",
+      "fix": "两个都写，说明 N_sel 含敏感性所以用 64 作上限、40 作选择预算。",
+      "must_fix": true
+    },
+    {
+      "id": "M14",
+      "severity": "低",
+      "type": "logic_error",
+      "verdict": "FAIL",
+      "title": "G2 行“5 个过 25% 的候选里 1 个 dev −36.3%”逻辑不通",
+      "evidence": [
+        "01_完整报告.md:598",
+        "03_结果/最终统计/统一门槛.csv：5 个 G 通过 MDD 为 −9.45/−21.20/−9.97/−20.26/−23.56",
+        "−36.3% 是 VCB-M 主候选，不是 5 个之一"
+      ],
+      "finding": "过 25% 的 5 个里没有 −36.3%；−36.3% 是另一个配置。",
+      "fix": "改成“5 个过 25% 的配置都过 35%；另外 VCB-M 主候选 dev −36.3% 未过 35%，但它不在 5 个里”。",
+      "must_fix": false
+    },
+    {
+      "id": "M15",
+      "severity": "低",
+      "type": "range_inconsistency",
+      "verdict": "FAIL",
+      "title": "G8 一页纸 0.7%~3.9% vs 报告 0.15%-3.9%",
+      "evidence": [
+        "00_一页纸.md:49：全部 0.7%~3.9%/年",
+        "01_完整报告.md:591：实际 0.15%-3.9%/年",
+        "VCB T40 val 去尾 0.15%/年"
+      ],
+      "finding": "一页纸漏掉 0.15% 的下界。",
+      "fix": "统一为 0.15%~3.9%。",
+      "must_fix": false
+    },
+    {
+      "id": "M16",
+      "severity": "低",
+      "type": "stale_number",
+      "verdict": "FAIL",
+      "title": "README 85 行/30 护栏 vs 实际 87/32",
+      "evidence": [
+        "README.md:176：2021+ 日期字面量 85 行、30 行护栏",
+        "04_证据/交付验收.json L4：命中 87 行、护栏 32",
+        "03_数据与复现说明.md:124：87 行/32 护栏"
+      ],
+      "finding": "README 是旧值，和验收/数据说明不一致。",
+      "fix": "改成 87/32。",
+      "must_fix": false
+    },
+    {
+      "id": "M17",
+      "severity": "低",
+      "type": "typo",
+      "verdict": "FAIL",
+      "title": "“敏感性格”是错字",
+      "evidence": [
+        "00_一页纸.md:28：VCB-P20/T40 敏感性格",
+        "01_完整报告.md:348：敏感性格禁止升级",
+        "03_结果/最终统计/00_最终报告.md:96：敏感性格不得事后升级"
+      ],
+      "finding": "应为“敏感性网格/敏感性格”。",
+      "fix": "统一为“敏感性网格”或“敏感性格”。",
+      "must_fix": false
+    },
+    {
+      "id": "M18",
+      "severity": "低",
+      "type": "overclaim",
+      "verdict": "WARN",
+      "title": "“数据层可以信”过于绝对",
+      "evidence": [
+        "03_数据与复现说明.md:239：数据层可以信（v2 复权空间 0 行违约、双源 4 行差异）",
+        "同文件 §7：ST 历史标记、退市两档、生存者偏差、停牌语义、Baostock 重定基等限制"
+      ],
+      "finding": "复权/价格层可以信；ST/退市/成交量/停牌语义仍有已知限制。",
+      "fix": "改成“复权/价格层可以信；ST、退市、成交量、停牌语义仍有限”。",
+      "must_fix": false
+    },
+    {
+      "id": "M19",
+      "severity": "低",
+      "type": "rhetorical_overclaim",
+      "verdict": "WARN",
+      "title": "“差一个数量级”实为 6.9 倍",
+      "evidence": [
+        "00_一页纸.md:53：60% 被拒绝，而且是差一个数量级地拒绝",
+        "最好两段 8.33%/8.71%；60/8.7=6.9"
+      ],
+      "finding": "6.9 倍不是 10 倍；可改为“约 7 倍/差 51 个百分点”。",
+      "fix": "改成“约 7 倍”或“差 51 个百分点”。",
+      "must_fix": false
+    },
+    {
+      "id": "M20",
+      "severity": "低",
+      "type": "caliber_label",
+      "verdict": "WARN",
+      "title": "v1 斜率 2.012 未注明截尾",
+      "evidence": [
+        "03_数据与复现说明.md:59：斜率 2.012",
+        "05_审计/最终结论证据矩阵.md R06：全样本 2.61958",
+        "05_审计/第一阶段代码与负结果审计.md：全样本 2.62（截尾 2.01）"
+      ],
+      "finding": "2.012 是截尾斜率，不是全样本。",
+      "fix": "写“全样本 2.62 / 截尾 2.01”。",
+      "must_fix": false
+    },
+    {
+      "id": "M21",
+      "severity": "低",
+      "type": "count_inconsistency",
+      "verdict": "WARN",
+      "title": "Baostock 重定基 63 个证券日 vs 自检 79 行",
+      "evidence": [
+        "01_完整报告.md:639；03_数据与复现说明.md:63：63 个证券日 >0.5pp",
+        "04_证据/交付验收.json C4：79/16,682,010 行 >0.5pp，涉及 39 只"
+      ],
+      "finding": "63 是年末重定基证券日，79 是广义 >0.5pp 行；两个口径没有解释。",
+      "fix": "注明“63 个年末重定基证券日；广义 >0.5pp 行 79 个”。",
+      "must_fix": false
+    },
+    {
+      "id": "M22",
+      "severity": "低",
+      "type": "universe_detail",
+      "verdict": "WARN",
+      "title": "“上市 ≥250 日”漏掉 td_since_list ≥120",
+      "evidence": [
+        "01_完整报告.md:71；README.md:152：上市≥250 日",
+        "03_数据与复现说明.md:83：td_since_list≥120 且 days_since_ipo≥250"
+      ],
+      "finding": "只写 250 日，漏掉 120 个交易日的条件。",
+      "fix": "补全两个条件。",
+      "must_fix": false
+    },
+    {
+      "id": "M23",
+      "severity": "低",
+      "type": "stale_audit",
+      "verdict": "WARN",
+      "title": "证据矩阵 P03 仍写“最终判定报 486/228”",
+      "evidence": [
+        "05_审计/最终结论证据矩阵.md:33,179：最终判定报 486/228",
+        "03_结果/最终统计/最终判定.json holdout_gate：505/228/733（01:28）"
+      ],
+      "finding": "最终判定已在 01:28 更新为 505/228，证据矩阵 P03/§6#11 仍是 01:12 的旧值。",
+      "fix": "加“01:28 已更新为 505/228”的补注。",
+      "must_fix": false
+    }
+  ],
+  "must_fix": [
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M05",
+    "M06",
+    "M07",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M13"
+  ],
+  "optional": [
+    {
+      "id": "O01",
+      "improvement": "在统一门槛/最终试验总账增加 universe_id、price_caliber、engine_id 三列",
+      "value": "一次性解决跨族可比性/审计追溯"
+    },
+    {
+      "id": "O02",
+      "improvement": "用主板+正确创业板限价重跑 5 个 S3，更新 B_conditional",
+      "value": "把唯一被污染的“两段正”证据变干净"
+    },
+    {
+      "id": "O03",
+      "improvement": "给留出裁决加 supersedes/as_of 字段和补注",
+      "value": "避免旧快照被当最终事实"
+    },
+    {
+      "id": "O04",
+      "improvement": "加跨文档一致性脚本：G6、max-stat、N、T0005 状态、宇宙、VCB 计数、60% 算术",
+      "value": "防止本次这类矛盾再出现"
+    },
+    {
+      "id": "O05",
+      "improvement": "把高集中/高换手/杠杆/提高单笔风险的 60% 路径作为新预注册单独测试，或明确写“本批不测试”",
+      "value": "让“60% 被拒绝”的边界更清楚"
+    },
+    {
+      "id": "O06",
+      "improvement": "在 README 加“用户要求→交付物→裁决”追溯表",
+      "value": "本审计的 U01-U10 可直接复用"
+    },
+    {
+      "id": "O07",
+      "improvement": "关键数字加源文件行号/单元格",
+      "value": "减少“0.84 从哪来”这类问题"
+    },
+    {
+      "id": "O08",
+      "improvement": "生成交付清单（四份根文档+README+关键审计的 SHA256）",
+      "value": "让“独立交付”可机器验证"
+    },
+    {
+      "id": "O09",
+      "improvement": "把 2021+ 缓存（index_feat/market_feature/state-pos）列入“留出前不得查看”清单",
+      "value": "与 03 数据说明 §4 一致"
+    },
+    {
+      "id": "O10",
+      "improvement": "同时报告 40/64 两个预算与 18.33×/11.45×",
+      "value": "避免“用宽预算显得超支少”"
+    },
+    {
+      "id": "O11",
+      "improvement": "把最终判定.json 的 max-stat p 值回填 04_最终结论.json",
+      "value": "机器可读入口自洽"
+    },
+    {
+      "id": "O12",
+      "improvement": "在根文档加“什么会改变裁决”一节（留出裁决 JSON 已有）",
+      "value": "让负结果更有可证伪性"
+    }
+  ],
+  "negative_result_credibility": {
+    "verdict": "PASS",
+    "summary": "结论可信；问题在交付口径，不在负结果本身。",
+    "points": [
+      "60% 拒绝有硬证据：1,250 个基线压力格 max 7.24%，192 个候选重定格 max 12.12%，0 格 ≥20%、0 格 ≥60%；最好两段 8.33%/8.71%，dev MDD −35.3%。",
+      "T0005 淘汰干净：dev +4.16%/MDD −9.05%/103 回合，val −2.53%/MDD −13.80%/159 回合；val 五年逐年为负；bootstrap val 97.5% 上界 +0.43%；12% 风险门下 1.32%/4.65% 信号可用；平均持仓 0.83/1.62，93.1%/88.6% 现金。",
+      "负结果不是成本单一造成：RELSTR 毛收益 dev 已 −13.4%/年；TRENDCALLBACK 去掉止损仍 −24.48%/−24.86%；多族事件层超额为负；成本约 0.36%/往返。",
+      "已知 bug 多为乐观方向：v1 hfq 双计收益（已修）、tp8 丢左尾（已撤回）、nopull 前视（已禁引）、out_date 前视（0.0158%，让入场避开退市下跌）、TREND 创业板限价（让涨停买入/跌停卖出更容易成交）、VCB delist_window 缺失（方向保守）。没有发现把结果系统性压负的 bug。",
+      "唯一干净的两段正配置 VCB-P20 也不过：+6.50%/+5.37%，但事件层 dev −1.08%（t=−0.86）、val +0.92%（t=−0.49）；PBO 0.309/0.505；去前 5 后 val 0.7%/年；随机排序 +7.20/+6.16 高于强度排序 +5.67/+5.59。",
+      "5 个 S3 正结果不干净：TREND 使用更宽宇宙+创业板限价 bug；即使最终仍为正，也不满足事件层/去尾/未登记闸。负结论不依赖它们。",
+      "留出不跑是纪律，不是遗漏：没有候选过 G1-G10，E1 未建立，5 年留出无法确认低个位数；但理由要改成“T0007 是事后补登记，不是预注册父试验”，不能继续写“no done val”。"
+    ],
+    "boundary": "60% 的拒绝是“在该预注册的低杠杆、10 仓、1.2% 单笔风险、主板/宽基框架下”的拒绝；不能外推为“A 股不存在 60% 策略”。提高单笔风险、集中持仓、杠杆、日内等路径没有测试。"
+  },
+  "verification_log": [
+    {
+      "command": "python3 02_代码/最终交付.py verify",
+      "result": "19/19 PASS；registry rows=10；ledger rows=1,699；T0005 dev/val 一致；A_candidate=0；无 2021+ 绩效"
+    },
+    {
+      "command": "DuckDB frozen.duckdb select count(*), count(distinct symbol), min(date), max(date) from daily",
+      "result": "16,698,536 / 5,549 / 2004-01-02 / 2026-10-26"
+    },
+    {
+      "command": "SQLite flag3 join DuckDB raw_kline_daily 2016-10-13..2026-10-26",
+      "result": "10,104,953 common；close>0.005 4 行；OHLC>0.005 5 行；max 1.20（688206 high-only）"
+    },
+    {
+      "command": "统一门槛.csv 四条件筛选",
+      "result": "5 行：4 S3 + VCB-P20_T40；eligible 全 False"
+    },
+    {
+      "command": "30_邻域.csv min/max",
+      "result": "dev 0.015396~0.054984；val −0.026039~−0.013495"
+    },
+    {
+      "command": "最终判定.json statistics.maxstat",
+      "result": "16 个 p；min 0.071964（VCB dev）"
+    },
+    {
+      "command": "族内DSR.csv",
+      "result": "T0005 0.958504；VCB-N120 0.113875"
+    },
+    {
+      "command": "自检.json",
+      "result": "dsr_null_p95=0.840672（非 DSR）"
+    },
+    {
+      "command": "趋势族/交易明细_全部.parquet 代码前缀统计",
+      "result": "31,961 笔；5,033 创业板+31 科创板；S3 826 笔/135 创业板"
+    },
+    {
+      "command": "结构族_事件_K3.parquet 代码前缀统计",
+      "result": "163,564 条；22,727 创业板+52 科创板"
+    },
+    {
+      "command": "实验注册表.csv",
+      "result": "10 行；T0005 rev2 done；T0007 val done/discard；holdout 0 行"
+    },
+    {
+      "command": "2021+ 扫描（563 CSV+119 parquet）",
+      "result": "0 个绩效表 max(date)>2020-12-31；2 个 meta/audit 越界无绩效；2 个特征缓存含 2021+ 收益列"
+    },
+    {
+      "command": "文件清单.csv + sha256",
+      "result": "343 行；根文档哈希全匹配；缺 holdout JSON/证据矩阵 CSV"
+    },
+    {
+      "command": "组合模拟_汇总.csv S4 纯时间60",
+      "result": "246 笔/10 槽/7.9945 年=3.08 次/槽/年；avg_ret 4.71%；avg_exposure 76.55%"
+    },
+    {
+      "command": "04_最终结论.json statistics.pbo_maxstat",
+      "result": "16 个 MAXSTAT 行 p 值全为空"
+    }
+  ],
+  "not_done": [
+    "未重跑 733 个回测；未逐族重算全部绩效。",
+    "未做 44 个脚本的逐行代码审计；只抽查费用、撮合、枢轴确认、TREND 限价、2021+ 扫描路径。",
+    "双源 join 只覆盖 2016-10-13 之后（THS 起点）；2005-2016 的 Baostock 单源无法用 THS 交叉验证。",
+    "未读取 2021+ 行情/收益；2021+ 结论只来自文件扫描和作者披露。",
+    "本审计的严重度是交付风险，不是统计显著性；PASS/WARN/FAIL 不是投资建议。",
+    "文中的 path:line 行号以 2026-10-29 审计时的文件为准；若作者后续编辑，行号会移动。"
+  ]
+}

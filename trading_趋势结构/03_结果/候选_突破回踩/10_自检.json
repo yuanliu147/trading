@@ -1,0 +1,247 @@
+{
+  "generated": "2026-10-29T00:17:56",
+  "prereg_sha256": "1ef0b9ca39c24da10c185eff88e27c0854c6b9a1a7606ae7b987d64a58f058ad",
+  "code_sha256": "a281cfafc80431fdb3be7726767988a4577acf1ca34400e0c5fe76713715172f",
+  "panel": {
+    "rows": 7784840,
+    "n_days": 3647,
+    "n_codes": 3117,
+    "days": "2006-01-04..2020-12-31",
+    "n_listed": 7784838,
+    "n_susp_rows": 454808,
+    "n_elig": 4977757,
+    "n_ca_events": 22515,
+    "max_date": "2020-12-31"
+  },
+  "aspce_identity": {
+    "n": 7779687,
+    "max_err": 4.311655199540354e-15,
+    "n_over_1e-5": 0
+  },
+  "hfq_misuse": {
+    "n": 7779687,
+    "max_err": 170.1211713157894,
+    "n_over_1e-5": 7119019,
+    "share_over_1e-5": 0.9150778173980522,
+    "slope_vs_pct": 3.2422510257578967
+  },
+  "limit_flags": {
+    "checked": 34267,
+    "mismatch_up": 4,
+    "mismatch_down": 0,
+    "examples": [
+      {
+        "date": "2010-05-28",
+        "code": "002413.SZ",
+        "side": "up",
+        "open": 22.86,
+        "preclose": 18.0,
+        "recomputed_up": 19.8,
+        "frozen_flag": false
+      },
+      {
+        "date": "2020-12-11",
+        "code": "003023.SZ",
+        "side": "up",
+        "open": 28.67,
+        "preclose": 23.89,
+        "recomputed_up": 26.28,
+        "frozen_flag": false
+      },
+      {
+        "date": "2010-11-23",
+        "code": "002507.SZ",
+        "side": "up",
+        "open": 25.5,
+        "preclose": 13.99,
+        "recomputed_up": 15.39,
+        "frozen_flag": false
+      },
+      {
+        "date": "2015-01-28",
+        "code": "603698.SH",
+        "side": "up",
+        "open": 15.02,
+        "preclose": 12.52,
+        "recomputed_up": 13.77,
+        "frozen_flag": false
+      }
+    ]
+  },
+  "truncation": {
+    "N20": {
+      "n_symbols": 40,
+      "rows": [
+        {
+          "cutoff": "2011-12-30",
+          "n_days": 1459,
+          "mismatch": 0,
+          "n_ref": 1753,
+          "n_slice": 1753
+        },
+        {
+          "cutoff": "2015-12-31",
+          "n_days": 2429,
+          "mismatch": 0,
+          "n_ref": 3106,
+          "n_slice": 3106
+        },
+        {
+          "cutoff": "2019-12-31",
+          "n_days": 3404,
+          "mismatch": 0,
+          "n_ref": 4145,
+          "n_slice": 4145
+        }
+      ]
+    },
+    "N55": {
+      "n_symbols": 40,
+      "rows": [
+        {
+          "cutoff": "2011-12-30",
+          "n_days": 1459,
+          "mismatch": 0,
+          "n_ref": 1138,
+          "n_slice": 1138
+        },
+        {
+          "cutoff": "2015-12-31",
+          "n_days": 2429,
+          "mismatch": 0,
+          "n_ref": 2052,
+          "n_slice": 2052
+        },
+        {
+          "cutoff": "2019-12-31",
+          "n_days": 3404,
+          "mismatch": 0,
+          "n_ref": 2563,
+          "n_slice": 2563
+        }
+      ]
+    },
+    "N120": {
+      "n_symbols": 40,
+      "rows": [
+        {
+          "cutoff": "2011-12-30",
+          "n_days": 1459,
+          "mismatch": 0,
+          "n_ref": 796,
+          "n_slice": 796
+        },
+        {
+          "cutoff": "2015-12-31",
+          "n_days": 2429,
+          "mismatch": 0,
+          "n_ref": 1496,
+          "n_slice": 1496
+        },
+        {
+          "cutoff": "2019-12-31",
+          "n_days": 3404,
+          "mismatch": 0,
+          "n_ref": 1779,
+          "n_slice": 1779
+        }
+      ]
+    }
+  },
+  "trade_checks": {
+    "n": 4562,
+    "n_closed": 4529,
+    "t1_violations": 0,
+    "odd_lot_sells": 47,
+    "odd_lot_without_ca": 0,
+    "buy_at_limit_up_open": 0,
+    "sell_at_limit_down_open": 0,
+    "fills_on_suspension": 0,
+    "min_hold": 0,
+    "median_hold": 20.0
+  },
+  "no_2021": {
+    "event_max_date": "2020-11-30",
+    "nav_max_date": "2020-12-31",
+    "guard_rejects_2021": true
+  },
+  "event_identity": [
+    {
+      "window": "dev",
+      "n_events_total": 100558,
+      "n_touched": 79679,
+      "n_nopull": 10117,
+      "n_fake": 10762,
+      "classify_resid": 0,
+      "n_exec_imm": 98286,
+      "n_exec_pull": 78847,
+      "exec_resid": -1440
+    },
+    {
+      "window": "val",
+      "n_events_total": 63152,
+      "n_touched": 48404,
+      "n_nopull": 6520,
+      "n_fake": 8228,
+      "classify_resid": 0,
+      "n_exec_imm": 61303,
+      "n_exec_pull": 48173,
+      "exec_resid": -1618
+    },
+    {
+      "window": "full",
+      "n_events_total": 188326,
+      "n_touched": 147132,
+      "n_nopull": 19371,
+      "n_fake": 21823,
+      "classify_resid": 0,
+      "n_exec_imm": 183284,
+      "n_exec_pull": 145641,
+      "exec_resid": -3551
+    }
+  ],
+  "account_identity": [
+    {
+      "label": "主-回踩直接买",
+      "window": "dev",
+      "pnl_sum_minus_nav": 0.0,
+      "cash_resid": 5.820766091346741e-11
+    },
+    {
+      "label": "主-回踩直接买",
+      "window": "val",
+      "pnl_sum_minus_nav": -0.004799999995157123,
+      "cash_resid": 1.1641532182693481e-10
+    },
+    {
+      "label": "主-立即突破",
+      "window": "dev",
+      "pnl_sum_minus_nav": 0.006600000080652535,
+      "cash_resid": 1.1641532182693481e-10
+    },
+    {
+      "label": "主-立即突破",
+      "window": "val",
+      "pnl_sum_minus_nav": 0.0,
+      "cash_resid": 5.820766091346741e-11
+    },
+    {
+      "label": "主-转强买",
+      "window": "dev",
+      "pnl_sum_minus_nav": -0.0009999999310821295,
+      "cash_resid": 1.1641532182693481e-10
+    },
+    {
+      "label": "主-转强买",
+      "window": "val",
+      "pnl_sum_minus_nav": -0.004000000073574483,
+      "cash_resid": 2.3283064365386963e-10
+    }
+  ],
+  "trial_counts": {
+    "platform_cells": 144,
+    "account_runs": 44,
+    "unified_runs": 6,
+    "total": 194
+  }
+}

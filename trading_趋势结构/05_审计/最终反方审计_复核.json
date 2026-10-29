@@ -1,0 +1,396 @@
+{
+  "schema": "trend-structure-adversarial-reaudit/v1",
+  "meta": {
+    "project": "trading_趋势结构",
+    "role": "最终反方审计员（未参与设计/参数/结果/报告写作）；对首次反方审计 F01-F16 的复核",
+    "auditor": "deepseek-flash",
+    "audit_date": "2026-10-29",
+    "data_version": "v2-adjspace-2026-10-28",
+    "freeze_date": "2026-10-26",
+    "current_docs": {
+      "00_一页纸.md": "2026-10-29 02:02",
+      "01_完整报告.md": "2026-10-29 02:30",
+      "02_规则手册_研究结论版.md": "2026-10-29 02:08",
+      "03_数据与复现说明.md": "2026-10-29 02:27",
+      "04_最终结论.json": "2026-10-29 02:28",
+      "04_证据/审计整改验收.json": "2026-10-29 02:31",
+      "05_审计/审计问题处置表.csv": "2026-10-29 02:12",
+      "05_审计/2021+未评估文件封存说明.md": "2026-10-29 02:12",
+      "05_审计/2021+未评估文件封存清单.csv": "2026-10-29 02:33",
+      "05_审计/留出准入裁决.md": "2026-10-29 02:11（修订版）",
+      "05_审计/留出准入裁决.json": "2026-10-29 02:09（修订版）"
+    },
+    "discipline": [
+      "未新搜任何参数",
+      "未运行 2021-01-01 之后任何收益",
+      "未读取 2021+ 数值做策略分析；只读列名/行数/哈希",
+      "未修改任何报告/代码/结果",
+      "只写 05_审计/最终反方审计_复核.md 与 05_审计/最终反方审计_复核.json"
+    ]
+  },
+  "overall": {
+    "substantive_verdict": "PASS",
+    "delivery_consistency_verdict": "FAIL",
+    "overall_verdict": "CONDITIONAL_PASS",
+    "f01_f16_closed": false,
+    "severity": "MEDIUM-HIGH",
+    "pass_count": 11,
+    "fail_count": 3,
+    "partial_count": 2,
+    "summary": "研究结论 PASS：0 个全门槛候选、T0005 淘汰、无合规留出、60% 在本项目测试空间内无证据；没有漏掉真能 60% 的候选。F01-F16 关闭 FAIL：F01（01 §3.19 MAIN/EXIT 两行仍错）、F04（根文档仍把修订版裁决写成 00:37 历史快照）、F06（根文档仍写“未做哈希封存”，与 34 文件封存清单矛盾）；F13/F15 仍 PARTIAL。整体 CONDITIONAL_PASS。",
+    "key_facts": {
+      "n_sel": 733,
+      "two_segment_positive": 32,
+      "two_segment_positive_by_family": {"TREND": 5, "VCB": 18, "SMALLLOWVOL": 9},
+      "sel_g_pass": 5,
+      "best_dev": {"cagr": 0.203991, "config": "SMALLLOWVOL:ADVQ12_s5_h40", "mdd": -0.691508, "val_cagr": 0.0327869},
+      "best_val": {"cagr": 0.08704869, "config": "VCB:VCB-N120_T40", "dev_cagr": 0.08323778, "dev_mdd": -0.3527526},
+      "best_min": {"cagr": 0.08323778, "config": "VCB:VCB-N120_T40"},
+      "t0005": {"dev": 0.04156815775673306, "dev_mdd": -0.0905350729763279, "dev_trades": 103, "val": -0.025342280131277373, "val_mdd": -0.13797983512013767, "val_trades": 159},
+      "t0007": "val done discard",
+      "holdout_rows": 0,
+      "maxstat": {"n_p": 16, "global_min": 0.07196401799100449, "global_min_family": "VCB", "global_min_window": "dev", "nine_matrix_min": 0.374},
+      "unifiedengine": {"strategies_dev": [-0.229588, -0.330569, -0.211377, -0.251006], "strategies_val": [-0.472211, -0.415255, -0.218430, -0.182581], "bh10": {"dev": 0.055472, "val": -0.075814}},
+      "seal": {"files_total": 34, "A": 3, "B": 7, "C": 24, "strategy_performance_files": 0, "logical_seal": true, "physical_isolation": false},
+      "holdout_revision": {"current_as_of": "2026-10-29T02:12", "initial_snapshot": "2026-10-29T00:37", "appendix_a_bytes": 42550, "appendix_a_sha256": "ddd8a22016668135d52789a299310d41df38c010f9e7452ceec57e19d487dffa"}
+    }
+  },
+  "checks": [
+    {
+      "id": "A01",
+      "claim": "N_sel=733 / N_cell=1,251 / N_diag=454 / N_platform=257 / N_audit=87 / 1,699 行",
+      "status": "PASS",
+      "evidence": "最终交付.py verify 42/42；最终计数.csv；04_最终结论.json；总账 1,699 行"
+    },
+    {
+      "id": "A02",
+      "claim": "A_candidate=0；5 个 SEL-G 通过者全部被 R/S/T 否决",
+      "status": "PASS",
+      "evidence": "统一门槛.csv 478 行；5 个 B_conditional；S3 R_fail_posthoc、P20 R_fail_grid_promotion；S_unverified、T_fail_stat"
+    },
+    {
+      "id": "A03",
+      "claim": "两段为正 32 = TREND 5 + VCB 18 + 小盘 9",
+      "status": "PASS",
+      "evidence": "统一门槛.csv (dev_cagr>0)&(val_cagr>0)=32；verify two_segment_positive_32 PASS；01 §3.19/00/04 一致"
+    },
+    {
+      "id": "A04",
+      "claim": "5 个 SEL-G 通过者 = 4 S3 + VCB-P20_T40",
+      "status": "PASS",
+      "evidence": "cdf1 1.88/2.19、4094 4.39/3.90、fdc0 1.02/1.87、052b 0.46/1.41、P20 6.50/5.37；两段 MDD≤25"
+    },
+    {
+      "id": "A05",
+      "claim": "G2 5 个全部过 35%；G4 5 个全部过 -20%",
+      "status": "PASS",
+      "evidence": "G2 dev MDD -9.45/-21.20/-9.97/-20.26/-23.56；G4 252 日滚动最差 -7.17~-18.22；verify gate_table_recomputed PASS"
+    },
+    {
+      "id": "A06",
+      "claim": "best dev 20.3991 / best val 8.7049 / best min 8.3238",
+      "status": "PASS",
+      "evidence": "统一门槛.csv；verify family_best_matches_gate_table PASS；01 §3.19/00/04 一致"
+    },
+    {
+      "id": "A07",
+      "claim": "T0005/T0007 当前状态：10 行、T0005 rev2 done discard、T0007 val done discard、holdout 0",
+      "status": "PASS",
+      "evidence": "实验注册表.csv；实验登记.py verify 10 行/35 试验 OK；修订版留出裁决 §1.1；04 holdout.reasons 当前事实"
+    },
+    {
+      "id": "A08",
+      "claim": "UNIFIEDENGINE 4 策略全负；BH10 单列 +5.55/-7.58",
+      "status": "PASS",
+      "evidence": "04 families；01 §3.16/§3.19；verify bh10_separated PASS"
+    },
+    {
+      "id": "A09",
+      "claim": "max-stat 16 个 p，全局最小 0.071964（VCB dev）；9 矩阵最小 0.374；无 <0.05",
+      "status": "PASS",
+      "evidence": "最终判定.json statistics.maxstat；01 §6.3；verify maxstat_global_min PASS；最终PBO CSV 无 p 列已披露"
+    },
+    {
+      "id": "A10",
+      "claim": "2021+ 封存：34 文件 A3/B7/C24、逐文件 SHA-256、0 策略绩效；逻辑封存，物理隔离未做",
+      "status": "PASS_WITH_WARN",
+      "evidence": "2021+未评估文件封存清单.csv 34 行；封存说明 §0/§7；A 级 3 个 SHA e1341069/3559f165/8d9f61c3；未移动/未改权限"
+    },
+    {
+      "id": "A11",
+      "claim": "60% 措辞：本项目测试空间内不被支持；G1 未被直接检验；不等于任何策略都不可能 60%；不是已证伪；约 7 倍",
+      "status": "PASS",
+      "evidence": "00/01/02/04；01 §9.3 撤回“差一个数量级”；02 R8 改为 3.08 次/槽/年、+4.71%/笔、15.3%/19.5% 或约 10 次/槽/年"
+    },
+    {
+      "id": "A12",
+      "claim": "F01-F16 全部关闭",
+      "status": "FAIL",
+      "evidence": "11 PASS、3 FAIL（F01/F04/F06）、2 PARTIAL（F13/F15）；详见 items 与 remaining_issues"
+    }
+  ],
+  "items": [
+    {
+      "id": "F01",
+      "title": "分族“最好”表把主候选当家族最好",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "fixed_parts": "00/04/02 已改：VCB 15.60/8.70、小盘 20.40/6.18、RELSTR 8.15/-4.37、TRENDCALLBACK 1.56/-0.77、STRUCTREV A08 -0.04/+0.73、UNIFIED 4 策略/BH10、MKT -2.35、BREAKPULL 3.31/-5.09",
+      "remaining": [
+        "01_完整报告.md §3.19：MAIN N_sel 仍写 1，应为 19（04 counts.by_family.MAIN.in_Nsel=19；18 邻域是 N_sel，不是 N_diag）",
+        "01_完整报告.md §3.19：EXIT dev 仍写 -8.83%，应为 18 臂 -20.20%（04 families.EXIT.family_best=-0.201996）；-8.83 是 full-window/TB1-B0 敏感性",
+        "01_完整报告.md §3.19：N_sel 列求和 715 ≠ 733（差 18 = MAIN 邻域）",
+        "00_一页纸.md 行 87：MAIN 邻域 S02/S01 标“diagnostic”，应为“N_sel 18 邻域”",
+        "00_一页纸.md 行 88：EXIT“同左”是 18 臂范围，不是 family best（-20.1/-19.8）"
+      ],
+      "evidence": "01 §3.19 行 345/348；04 counts/families；00 行 87/88；478 行统一门槛.csv"
+    },
+    {
+      "id": "F02",
+      "title": "“全部 18 族、733 配置没有一条给出可复现的正净边际”与 24/32 矛盾",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §10 改“0 个通过全部硬门槛；32 个两段为正未过事件层/去尾/多重性/风险”；00 Q6、04 two_segment_positive 32 一致",
+      "remaining": []
+    },
+    {
+      "id": "F03",
+      "title": "G2/G4 写反；G3 未定义候选",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "G2 5 个全部过 35%，-36.3 的 M_T40 不在 5 个内；G4 5 个全部过 -7.17~-18.22；G3 限定 5 个 SEL-G 并单列 M_T60/V7",
+      "remaining": ["G3 “0.05-0.28”只是 dev 区间；val 0.177-0.357；见 F13"]
+    },
+    {
+      "id": "F04",
+      "title": "留出裁决书事实过期",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "fixed_parts": "修订版留出裁决（02:11）已是当前事实：10 行、T0005 rev2 done discard、T0007 val done discard、holdout 0、N=733、DSR 6.63e-4；04 holdout.reasons 已当前事实",
+      "remaining": [
+        "00_一页纸.md 行 40：仍写“裁决书为 00:37 历史快照”",
+        "01_完整报告.md §7 行 670：仍写“05_审计/留出准入裁决.md/.json 是 00:37 的历史快照”；行 669 说“当前事实，不是 00:37 快照”，行 670 与之矛盾",
+        "01_完整报告.md §12 行 812：仍写“00:37 历史快照”",
+        "03_数据与复现说明.md 行 134：仍写“00:37 历史快照”",
+        "04_最终结论.json holdout.adjudication_note：仍写“该裁决书为 00:37 历史快照”",
+        "应统一为“修订版（02:12）；初版 00:37 见附录 A（42,550 bytes，SHA ddd8a220…）”"
+      ],
+      "evidence": "修订版 §0/§1/附录 A；00 行 40；01 §7 行 669/670、§12 行 812；03 行 134；04 adjudication_note"
+    },
+    {
+      "id": "F05",
+      "title": "UNIFIEDENGINE 把 BH10 混进策略区间",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "00/01/04 改为 4 策略 -33.06~-21.14 / -47.22~-18.26；BH10 +5.55/-7.58 单列 benchmark；verify bh10_separated PASS",
+      "remaining": []
+    },
+    {
+      "id": "F06",
+      "title": "2021+ 状态/特征缓存未封存",
+      "status": "FAIL",
+      "severity": "HIGH",
+      "fixed_parts": "新增 34 文件封存清单（A=3/B=7/C=24，逐文件 SHA-256、0 策略绩效、逻辑封存）；封存说明；封存2021文件.py；A 级 3 个 SHA e1341069/3559f165/8d9f61c3",
+      "remaining": [
+        "00/01/03/04/README 仍写“本批未做哈希封存/未封存”，与封存清单矛盾",
+        "01 §7 行 680、§9.2 行 727、§9.4 行 746：写“未做哈希封存/未封存”",
+        "03 行 135/228：写“本批未封存/未封存”",
+        "04 exposure_note：写“本批未做哈希封存/权限隔离”",
+        "README 185/287：写“本批未封存/未封存”",
+        "A 级 3 个文件仍在项目树内；物理隔离（移出/权限/独立保管）未做，是未关闭残余风险",
+        "正确表述：逻辑封存（哈希+清单+契约）已完成；物理隔离未做"
+      ],
+      "evidence": "2021+未评估文件封存说明 §0/§7；封存清单 34 行；01 §7/§9.2/§9.4；03 行 135/228；04 exposure_note；README 185/287"
+    },
+    {
+      "id": "F07",
+      "title": "T0005 top5 分母混用",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §6.5 主数净分母：T0005 dev 45.9%（毛 31.1%）、val -62.6%（毛 40.9%）；S3/VCB/小盘净分母；verify top5_two_denominators PASS",
+      "remaining": []
+    },
+    {
+      "id": "F08",
+      "title": "max-stat 只覆盖 9 矩阵；最终表无 p",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "最终判定.json 16 个族×窗口 p；全局最小 0.071964（VCB dev）；9 矩阵 0.374 单列；最终PBO_maxstat.csv 无 p 列已披露；verify maxstat_global_min PASS",
+      "remaining": []
+    },
+    {
+      "id": "F09",
+      "title": "DSR 跨 N 口径不单调",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §6.2 写明 365：3.00e-4/var_sr 1.34e-3/SR 0.466；733：6.63e-4/1.116e-3/0.498；只有同候选集/同 var_sr 内才随 N 单调；04 dsr_cross_caliber 一致",
+      "remaining": []
+    },
+    {
+      "id": "F10",
+      "title": "S3 “46-50% 空仓 / 1.3-2.1 只”",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §3.1 改“全空仓 46.2%-83.8%、平均持仓 0.39-2.13”；verify s3_exposure_fixed PASS",
+      "remaining": []
+    },
+    {
+      "id": "F11",
+      "title": "STRUCTREV“最好 A17”不是最好",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §3.13/§3.19 改 A08_KNIFE -0.04/+0.73；30 N_sel + 1 audit = 31 行；verify structrev_count_reconciled PASS",
+      "remaining": []
+    },
+    {
+      "id": "F12",
+      "title": "VCB“缺 delist_window 方向保守”不成立",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §3.8/§8.9、02 §3.1 改“方向未证明；基准 delist_haircut=0 偏乐观约 0.6pp；delist30 val 4.96 vs 5.59”；新增 250 日停牌强平 val 偏乐观 0.14-0.77pp/年、成本偏乐观 0.44pp/年",
+      "remaining": []
+    },
+    {
+      "id": "F13",
+      "title": "一页纸 G3/G6/G7/G8 范围过宽",
+      "status": "PARTIAL",
+      "severity": "MEDIUM",
+      "fixed_parts": "G8 改 0.15-5.97/多数为负；G2/G4 已修；G3 限定 5 个 SEL-G；G7 补小盘 0.241/0.338；G6 改 0.9585/0.1139/0.84=dsr_null_p95",
+      "remaining": [
+        "G3：00 行 52/01 §6.6 行 652“0.05-0.28”只是 dev；val 0.177-0.357；应写“dev 0.05-0.28 / val 0.18-0.36”",
+        "G5：00 行 54/01 §6.6 行 654 把不在 5 个内的 T0005 dev -0.03 与 5 个并列；应单列",
+        "G6：00 行 55/01 §6.6 行 655/02 R6 行 95“可用族内最高 VCB-N120 0.1139”漏掉 VCB T40 0.622（N=24）；应写“8 族表最高 0.1139；T40 0.622 更高；两者都 <0.95”",
+        "G7：00 行 56/01 §6.6 行 656“S3 val 0.127/dev 0.452”实为 TREND 42 矩阵；S3 只是子集；应写“TREND 42 矩阵 val 0.127 过/dev 0.452 不过；S3 是子集”"
+      ],
+      "evidence": "00 行 52/54/55/56；01 §6.6 行 652/654/655/656；01 §6.3 行 587/588/612；族内DSR.csv"
+    },
+    {
+      "id": "F14",
+      "title": "cost_paid 不含滑点却写成“累计成本”",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "01 §5.4 改“显性费用”；补全成本约 0.4-0.5%/年；结论不变",
+      "remaining": []
+    },
+    {
+      "id": "F15",
+      "title": "G/G2 命名、MKT 宇宙、VCB 34/22、L3、24/32",
+      "status": "PARTIAL",
+      "severity": "LOW-MEDIUM",
+      "fixed_parts": "SEL-G/RISK-G2/MKT-G2 定义；MKT 686-2,183；VCB 34/32 别名；L3 假阳性；32 个；00/01/02/04 已改",
+      "remaining": [
+        "00 行 26/02 R6 行 95“18.33×/11.45×（分子不含 30 消融）”未给 11.92×=(733+30)/64；11.45 是 733/64 混合口径，不能与 40 的 18.33× 并列读",
+        "00 行 37“最好 PBO（族内）”仍只列 TREND/VCB/T0005，漏掉 ECOLOGY 0.002、LONGMOM 0.020、STRUCTREV 0.043、小盘 0.241；实际“最好”不是 TREND 0.452",
+        "00/01 交付清单未列 2021+封存清单/说明、审计问题处置表、修订版留出裁决、审计整改验收"
+      ],
+      "evidence": "00 行 26/37；02 R6 行 95；01 §6.1 行 561/§6.3 行 610；README/01 §12"
+    },
+    {
+      "id": "F16",
+      "title": "“60% 被拒绝”措辞过强",
+      "status": "PASS",
+      "severity": "NONE",
+      "fixed": "00/01/02/04 统一为“在本项目测试空间内，60% 年化不被支持；G1 未被直接检验；不等于任何策略都不可能 60%，也不等于 60% 已被证伪”；“约 7 倍”；02 R8 改 3.08 次/槽/年、+4.71%/笔、15.3%/19.5% 或约 10 次/槽/年",
+      "remaining": []
+    }
+  ],
+  "remaining_issues": [
+    {
+      "priority": "P0",
+      "id": "R01",
+      "issue": "01 §3.19 MAIN N_sel=1（应 19）、EXIT dev=-8.83%（应 -20.20%）；表内 N_sel 求和 715≠733；00 MAIN“diagnostic”、EXIT“同左”",
+      "severity": "HIGH",
+      "fix": "MAIN 1→19；EXIT -8.83→-20.20（或标 full-window）；N_sel 求和→733；00 MAIN 改“N_sel 18 邻域”；00 EXIT 改“-20.1/-19.8（18 臂）”"
+    },
+    {
+      "priority": "P0",
+      "id": "R02",
+      "issue": "00/01/03/04 仍把修订版留出裁决写成“00:37 历史快照”；01 §7 行 669/670 自相矛盾；04 adjudication_note 仍 00:37",
+      "severity": "HIGH",
+      "fix": "统一改为“修订版（02:12）；初版 00:37 见附录 A（42,550 bytes，SHA ddd8a220…）”；更新 04 adjudication_note、01 §7 行 670、§12 行 812、03 行 134、00 行 40"
+    },
+    {
+      "priority": "P0",
+      "id": "R03",
+      "issue": "00/01/03/04/README 仍写“本批未做哈希封存/未封存”，与 34 文件逐文件 SHA-256 封存清单矛盾；A 级文件仍在树内，物理隔离未做",
+      "severity": "HIGH",
+      "fix": "统一改为“逻辑封存（哈希+清单+契约）已完成；物理隔离（移出/权限/独立保管）未做”；引用封存清单/说明；更新 01 §7/§9.2/§9.4、03 行 135/228、04 exposure_note、README 185/287"
+    },
+    {
+      "priority": "P1",
+      "id": "R04",
+      "issue": "G7“S3 val 0.127/dev 0.452”是 TREND 42 矩阵，不是 S3 逐配置",
+      "severity": "MEDIUM",
+      "fix": "00 行 56/01 §6.6 行 656 改“TREND 42 矩阵 val 0.127 过/dev 0.452 不过；S3 是其中 5 个”"
+    },
+    {
+      "priority": "P1",
+      "id": "R05",
+      "issue": "G6“可用族内最高 VCB-N120 0.1139”漏掉 VCB T40 0.622（N=24）",
+      "severity": "MEDIUM",
+      "fix": "00 行 55/01 §6.6 行 655/02 R6 行 95 改“8 族表最高 0.1139；VCB T40 0.622 更高；两者都 <0.95”"
+    },
+    {
+      "priority": "P1",
+      "id": "R06",
+      "issue": "G3“0.05-0.28”只是 dev；G5 把 T0005 dev -0.03 与 5 个 SEL-G 并列",
+      "severity": "MEDIUM",
+      "fix": "00 行 52/54、01 §6.6 行 652/654 改“dev 0.05-0.28 / val 0.18-0.36；T0005 不在 5 个内，单列”"
+    },
+    {
+      "priority": "P1",
+      "id": "R07",
+      "issue": "00 行 26/02 R6 行 95 预算“18.33/11.45（分子不含 30 消融）”未给 11.92；11.45 是 733/64 混合口径",
+      "severity": "LOW-MEDIUM",
+      "fix": "补 11.92×=(733+30)/64，或写明 11.45× 是混合口径；01 §6.1 已有三种写法"
+    },
+    {
+      "priority": "P1",
+      "id": "R08",
+      "issue": "00 行 37“最好 PBO（族内）”只列 TREND/VCB/T0005，漏掉 ECOLOGY 0.002、LONGMOM 0.020、STRUCTREV 0.043、小盘 0.241",
+      "severity": "MEDIUM",
+      "fix": "改“选中族”或补全；说明低 PBO ≠ 能赚钱"
+    },
+    {
+      "priority": "P2",
+      "id": "R09",
+      "issue": "审计整改验收“0 open”只覆盖其 70 项清单；处置表仍有 21 披露/3 不采纳；verify 42/42 不检查 01 §3.19/00/02/03/04 文字",
+      "severity": "MEDIUM",
+      "fix": "验收 JSON 注明“清单内 0 open；根文档残留 F01/F04/F06 另列”；处置表 02:12 快照与 02:28/02:30 对齐；verify 增加 01 表/00/02 预算/00:37/封存文字断言"
+    },
+    {
+      "priority": "P2",
+      "id": "R10",
+      "issue": "00/01 交付清单未列 2021+封存清单/说明、审计问题处置表、修订版留出裁决、审计整改验收",
+      "severity": "LOW",
+      "fix": "补入“这份交付包含什么”/01 §12"
+    }
+  ],
+  "recomputation": [
+    {"cmd": "python3 02_代码/最终交付.py verify", "result": "42/42 PASS; N=733; T0005 对账; 0 条 2021+ 绩效; family best 20.3991/8.7049/8.3238; 32; 5; 16 p; BH10 separated; top5 45.87/31.06; VCB/STRUCTREV counts; S3 exposure; TREND non-main 15.84%; remediation 70/0"},
+    {"cmd": "python3 02_代码/实验登记.py verify", "result": "10 行 / 35 试验 / OK; T0005 rev2 done discard; T0007 val done discard; holdout 0"},
+    {"cmd": "统一门槛.csv 478 行", "result": "two positive 32 (TREND 5 + VCB 18 + SMALL 9); two positive & MDD25 5; best dev 0.203991; best val 0.08704869; best min 0.08323778"},
+    {"cmd": "5 个 SEL-G G4 复算", "result": "worst rolling 252d: -7.17~-18.22; all pass -20"},
+    {"cmd": "族内DSR.csv", "result": "T0005 0.9585 (N34); VCB-N120 0.1139 (N22); 0.84 = dsr_null_p95=0.8407"},
+    {"cmd": "2021+封存清单.csv", "result": "34 行; A=3/B=7/C=24; 0 策略绩效; A 级 SHA e1341069/3559f165/8d9f61c3"},
+    {"cmd": "修订版留出裁决", "result": "10 行; T0005 rev2 done discard; T0007 val done discard; holdout 0; 附录 A 42,550 bytes SHA ddd8a220…"}
+  ],
+  "not_run": [
+    "未运行 2021-01-01 之后任何收益",
+    "未读取 2021+ 数值做策略分析；只读列名/行数/哈希",
+    "未重跑任何策略（仅只读 verify/登记校验）",
+    "未新搜参数",
+    "未修改任何报告/代码/结果"
+  ],
+  "files_written": [
+    "05_审计/最终反方审计_复核.md",
+    "05_审计/最终反方审计_复核.json"
+  ],
+  "limits": [
+    "未重跑 VCB/小盘/趋势族全部逐笔；未重跑 2021+；未对 ST/停牌/复权做新的数据层核验。",
+    "G4 滚动 12 月按 252 交易日复算，与报告口径一致。",
+    "F01 MAIN/EXIT 的 N_sel 与 18 臂 best 依据 04 counts/families 与 478 行统一门槛；01 §3.19 表未由 verify 覆盖。",
+    "F06 的“逻辑封存”依据封存清单/说明；物理隔离未做是报告自己也承认的残余风险。"
+  ],
+  "disclaimer": "本复核不构成投资建议；不含任何当前买卖点、目标价或仓位建议。"
+}

@@ -1,0 +1,913 @@
+{
+  "schema": "trend-structure-final-reconciliation/v1",
+  "meta": {
+    "project": "trading_趋势结构",
+    "generated_at_local": "2026-10-29T01:35:25",
+    "role": "最终交付口径对账（只读；不重跑策略；不计算 2021+ 收益）",
+    "data_version": "v2-adjspace-2026-10-28",
+    "freeze_date": "2026-10-26",
+    "ledger_rows": 1699
+  },
+  "conclusion": {
+    "n_candidates": 0,
+    "annualized_60pct_supported": false,
+    "holdout_run": false,
+    "main_candidate": "T0005 discard（dev +4.16% / val -2.53%）",
+    "n_sel": 733,
+    "n_cell": 1251,
+    "n_diag": 454
+  },
+  "checks": [
+    {
+      "id": "N01",
+      "item": "总账计数（733/1251/454/257/87；1699 行）",
+      "expected": {
+        "rows": 1699,
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454,
+        "N_platform": 257,
+        "N_audit": 87
+      },
+      "actual": {
+        "rows": 1699,
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454,
+        "N_platform": 257,
+        "N_audit": 87
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv",
+      "note": ""
+    },
+    {
+      "id": "N02",
+      "item": "最终计数.csv 合计与总账一致",
+      "expected": {
+        "rows": 1699,
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454,
+        "N_platform": 257,
+        "N_audit": 87
+      },
+      "actual": {
+        "rows": 1699,
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454,
+        "N_platform": 257,
+        "N_audit": 87
+      },
+      "pass": true,
+      "source": "03_结果/最终统计/最终计数.csv",
+      "note": ""
+    },
+    {
+      "id": "N03",
+      "item": "04_最终结论.json 计数与总账一致",
+      "expected": {
+        "rows": 1699,
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454,
+        "N_platform": 257,
+        "N_audit": 87
+      },
+      "actual": {
+        "rows": 1699,
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454,
+        "N_platform": 257,
+        "N_audit": 87
+      },
+      "pass": true,
+      "source": "04_最终结论.json",
+      "note": ""
+    },
+    {
+      "id": "N04",
+      "item": "最终判定.json 计数与总账一致",
+      "expected": {
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454
+      },
+      "actual": {
+        "N_sel": 733,
+        "N_cell": 1251,
+        "N_diag": 454
+      },
+      "pass": true,
+      "source": "03_结果/最终统计/最终判定.json",
+      "note": ""
+    },
+    {
+      "id": "N05",
+      "item": "DSR 阶梯（733/990/1444；6.6275e-4；SR0 1.6489）",
+      "expected": {
+        "N1": 733,
+        "N2": 990,
+        "N3": 1444,
+        "dsr_dev": 0.0006627544,
+        "sr0": 1.648895
+      },
+      "actual": {
+        "N1": 733,
+        "N2": 990,
+        "N3": 1444,
+        "dsr_dev": 0.0006627544,
+        "sr0": 1.648895
+      },
+      "pass": true,
+      "source": "04_最终结论.json",
+      "note": ""
+    },
+    {
+      "id": "N06",
+      "item": "超预算倍数（5.7031/11.1562/11.4531）",
+      "expected": {
+        "stage1": 5.7031,
+        "snapshot_714": 11.1562,
+        "current_733": 11.4531
+      },
+      "actual": {
+        "stage1": 5.7031,
+        "snapshot_714": 11.1562,
+        "current_733": 11.4531
+      },
+      "pass": true,
+      "source": "05_审计/最终结论证据矩阵_复算.json",
+      "note": ""
+    },
+    {
+      "id": "C01",
+      "item": "门槛行数 478（含 MAIN 19 行）",
+      "expected": {
+        "rows": 478,
+        "main_rows": 19,
+        "non_main_rows": 459
+      },
+      "actual": {
+        "rows": 478,
+        "main_rows": 19,
+        "non_main_rows": 459
+      },
+      "pass": true,
+      "source": "03_结果/最终统计/统一门槛.csv",
+      "note": ""
+    },
+    {
+      "id": "C02",
+      "item": "当前覆盖 505 + 未评级 228 = 733",
+      "expected": {
+        "covered": 505,
+        "unrated": 228,
+        "sum": 733
+      },
+      "actual": {
+        "covered": 505,
+        "unrated": 228,
+        "sum": 733
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv；统一门槛.csv",
+      "note": ""
+    },
+    {
+      "id": "C03",
+      "item": "最终判定.json 覆盖字段已改为 505/228/733",
+      "expected": {
+        "covered": 505,
+        "unrated": 228,
+        "total": 733,
+        "rows": 478
+      },
+      "actual": {
+        "covered": 505,
+        "unrated": 228,
+        "total": 733,
+        "rows": 478
+      },
+      "pass": true,
+      "source": "03_结果/最终统计/最终判定.json",
+      "note": ""
+    },
+    {
+      "id": "C04",
+      "item": "旧 486/228 是 714 口径（486+228=714）",
+      "expected": {
+        "covered_714": 486,
+        "unrated": 228,
+        "sum": 714
+      },
+      "actual": {
+        "covered_714": 486,
+        "unrated": 228,
+        "sum": 714
+      },
+      "pass": true,
+      "source": "05_审计/最终结论证据矩阵_复算.json",
+      "note": ""
+    },
+    {
+      "id": "C05",
+      "item": "未评级去向（STRUCT 219 + STAT 9）",
+      "expected": {
+        "STRUCT": 219,
+        "STAT": 9,
+        "sum": 228
+      },
+      "actual": {
+        "STRUCT": 219,
+        "STAT": 9,
+        "sum": 228
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv",
+      "note": "两种族在总账中各只有合并窗口/夹具，无 dev/val 两窗口记录"
+    },
+    {
+      "id": "T01",
+      "item": "T0005 登记：68 行 done（34 dev + 34 val）",
+      "expected": {
+        "rows": 68,
+        "dev": 34,
+        "val": 34
+      },
+      "actual": {
+        "rows": 68,
+        "dev": 34,
+        "val": 34
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv",
+      "note": ""
+    },
+    {
+      "id": "T02",
+      "item": "T0005 计数增量：19 N_sel / 38 cell / 30 diag",
+      "expected": {
+        "N_sel": 19,
+        "N_cell": 38,
+        "N_diag": 30
+      },
+      "actual": {
+        "N_sel": 19,
+        "N_cell": 38,
+        "N_diag": 30
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv",
+      "note": ""
+    },
+    {
+      "id": "T03",
+      "item": "总账仍保留 2 行历史状态（F00002 not_run、F01629 planned）",
+      "expected": {
+        "stale_ids": [
+          "F00002",
+          "F01629"
+        ],
+        "statuses": [
+          "not_run",
+          "planned"
+        ]
+      },
+      "actual": {
+        "stale_ids": [
+          "F00002",
+          "F01629"
+        ],
+        "statuses": [
+          "not_run",
+          "planned"
+        ]
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv",
+      "note": "历史快照；当前事实以 done 行为准，不删旧行"
+    },
+    {
+      "id": "T04",
+      "item": "T0005 dev/val 数字",
+      "expected": {
+        "dev_cagr": 0.04156816,
+        "dev_mdd": -0.09053507,
+        "dev_trades": 103,
+        "val_cagr": -0.02534228,
+        "val_mdd": -0.13797984,
+        "val_trades": 159
+      },
+      "actual": {
+        "dev_cagr": 0.04156816,
+        "dev_mdd": -0.09053507,
+        "dev_trades": 103,
+        "val_cagr": -0.02534228,
+        "val_mdd": -0.13797984,
+        "val_trades": 159
+      },
+      "pass": true,
+      "source": "05_审计/最终结论证据矩阵_复算.json",
+      "note": ""
+    },
+    {
+      "id": "T05",
+      "item": "04_最终结论 T0005 判定为 discard",
+      "expected": {
+        "decision": "discard",
+        "n_candidates": 0
+      },
+      "actual": {
+        "decision": "discard",
+        "n_candidates": 0
+      },
+      "pass": true,
+      "source": "04_最终结论.json",
+      "note": ""
+    },
+    {
+      "id": "B01",
+      "item": "配置级 B_conditional：5 个配置 / 10 总账行（4 S3 + 1 VCB）",
+      "expected": {
+        "configs": 5,
+        "ledger_rows": 10,
+        "trend_s3": 4,
+        "vcb": 1
+      },
+      "actual": {
+        "configs": 5,
+        "ledger_rows": 10,
+        "trend_s3": 4,
+        "vcb": 1
+      },
+      "pass": true,
+      "source": "03_结果/最终统计/统一门槛.csv；最终试验总账.csv",
+      "note": ""
+    },
+    {
+      "id": "B02",
+      "item": "旧行级 B_conditional：12 行 / 8 配置（11 S3 + 1 S1；仅 TREND）",
+      "expected": {
+        "rows": 12,
+        "configs": 8,
+        "s3_rows": 11,
+        "s1_rows": 1,
+        "families": [
+          "TREND"
+        ]
+      },
+      "actual": {
+        "rows": 12,
+        "configs": 8,
+        "s3_rows": 11,
+        "s1_rows": 1,
+        "families": [
+          "TREND"
+        ]
+      },
+      "pass": true,
+      "source": "03_结果/统计整合/候选分级.csv",
+      "note": ""
+    },
+    {
+      "id": "B03",
+      "item": "04_最终结论 同时记录两个口径",
+      "expected": {
+        "config_n": 5,
+        "config_rows": 10,
+        "row_n": 12,
+        "row_configs": 8,
+        "s1_rows": 1
+      },
+      "actual": {
+        "config_n": 5,
+        "config_rows": 10,
+        "row_n": 12,
+        "row_configs": 8,
+        "s1_rows": 1
+      },
+      "pass": true,
+      "source": "04_最终结论.json",
+      "note": ""
+    },
+    {
+      "id": "S01",
+      "item": "小盘 COMBO dev：首日基准 9.5275% / 初始资金 9.5844%",
+      "expected": {
+        "nav_first": 0.09527546,
+        "initial": 0.09584395
+      },
+      "actual": {
+        "nav_first": 0.09527546,
+        "initial": 0.09584395
+      },
+      "pass": true,
+      "source": "03_结果/候选_小盘低波趋势/13_组合_净值_主单元.csv",
+      "note": ""
+    },
+    {
+      "id": "S02",
+      "item": "小盘 COMBO val：首日基准 +0.3270% / 初始资金 -0.0297%（首日 -1.7618%）",
+      "expected": {
+        "nav_first": 0.00326993,
+        "initial": -0.00029673,
+        "first_day": -0.01761811,
+        "nav_first_value": 982381.89
+      },
+      "actual": {
+        "nav_first": 0.00326993,
+        "initial": -0.00029673,
+        "first_day": -0.01761811,
+        "nav_first_value": 982381.89
+      },
+      "pass": true,
+      "source": "03_结果/候选_小盘低波趋势/13_组合_净值_主单元.csv",
+      "note": "报告 +0.33% 是 nav-first；按初始 100 万为 -0.03%，不得写两段为正"
+    },
+    {
+      "id": "S03",
+      "item": "小盘 COMBO full 与分段链差 2.72pp/年",
+      "expected": {
+        "full": 0.031776,
+        "chain": 0.0589544,
+        "gap_pp": 2.72,
+        "trades_full": 733
+      },
+      "actual": {
+        "full": 0.031776,
+        "chain": 0.0589544,
+        "gap_pp": 2.72,
+        "trades_full": 733
+      },
+      "pass": true,
+      "source": "05_审计/最终结论证据矩阵_复算.json",
+      "note": ""
+    },
+    {
+      "id": "A01",
+      "item": "2021+ 绩效表扫描：469 个 / 0 违规",
+      "expected": {
+        "files": 469,
+        "violations": 0
+      },
+      "actual": {
+        "files": 469,
+        "violations": 0
+      },
+      "pass": true,
+      "source": "04_证据/交付验收.json L1",
+      "note": "历史一轮 470 个，差 1 个文件集；04_最终结论 已同时注明"
+    },
+    {
+      "id": "A02",
+      "item": "净值审计：418 条，max(date)=2020-12-31，0 越界",
+      "expected": {
+        "rows": 418,
+        "max_date": "2020-12-31",
+        "after": 0
+      },
+      "actual": {
+        "rows": 418,
+        "max_date": "2020-12-31",
+        "after": 0
+      },
+      "pass": true,
+      "source": "05_审计/最终结论证据矩阵_复算.json",
+      "note": ""
+    },
+    {
+      "id": "A03",
+      "item": "总账无 2020 后带绩效行",
+      "expected": {
+        "bad": 0
+      },
+      "actual": {
+        "bad": 0
+      },
+      "pass": true,
+      "source": "03_结果/最终试验总账.csv",
+      "note": ""
+    },
+    {
+      "id": "D01",
+      "item": "README 当前口径：733 / 1251 / 454，且 B_conditional 两个口径与 -0.03% 已写明",
+      "expected": [
+        "733",
+        "1,251",
+        "454",
+        "12 行 / 8 配置",
+        "1 行 S1",
+        "-0.03% 或 −0.03%",
+        "505"
+      ],
+      "actual": [
+        "733",
+        "1,251",
+        "454",
+        "12 行 / 8 配置",
+        "1 行 S1",
+        "505",
+        "-0.03% 或 −0.03%"
+      ],
+      "pass": true,
+      "source": "README.md",
+      "note": ""
+    },
+    {
+      "id": "D02",
+      "item": "README 不再把 365/470/未计入 N 当作当前事实",
+      "expected": {
+        "N_sel_365_as_current": false,
+        "470_as_current": false,
+        "not_counted": false
+      },
+      "actual": {
+        "N_sel_365_as_current": false,
+        "470_as_current": false,
+        "not_counted": false
+      },
+      "pass": true,
+      "source": "README.md",
+      "note": ""
+    },
+    {
+      "id": "D03",
+      "item": "01_完整报告：N 三口径 + 覆盖 505/228 + 小盘 -0.03%",
+      "expected": [
+        "365",
+        "714",
+        "733",
+        "505",
+        "228",
+        "12 行/8 配置",
+        "-0.03 或 −0.03"
+      ],
+      "actual": [
+        "365",
+        "714",
+        "733",
+        "505",
+        "228",
+        "12 行/8 配置",
+        "-0.03 或 −0.03"
+      ],
+      "pass": true,
+      "source": "01_完整报告.md",
+      "note": ""
+    },
+    {
+      "id": "D04",
+      "item": "00_一页纸：配置级 5 与行级 12/8 + 小盘 -0.03%",
+      "expected": [
+        "5 个",
+        "12 行/8 配置",
+        "-0.03 或 −0.03"
+      ],
+      "actual": [
+        "5 个",
+        "12 行/8 配置",
+        "-0.03 或 −0.03"
+      ],
+      "pass": true,
+      "source": "00_一页纸.md",
+      "note": ""
+    },
+    {
+      "id": "D05",
+      "item": "02_规则手册：两个口径已写明",
+      "expected": [
+        "12 行/8 配置",
+        "-0.03 或 −0.03"
+      ],
+      "actual": [
+        "12 行/8 配置",
+        "-0.03 或 −0.03"
+      ],
+      "pass": true,
+      "source": "02_规则手册_研究结论版.md",
+      "note": ""
+    },
+    {
+      "id": "D06",
+      "item": "03_数据说明：469 扫描与 19 项 verify 已更新",
+      "expected": [
+        "469",
+        "19 项"
+      ],
+      "actual": [
+        "469",
+        "19 项"
+      ],
+      "pass": true,
+      "source": "03_数据与复现说明.md",
+      "note": ""
+    },
+    {
+      "id": "D07",
+      "item": "历史 00_最终报告已加当前口径横幅与内联历史标记",
+      "expected": [
+        "历史快照",
+        "F_never_run（历史快照",
+        "当前已 done",
+        "505"
+      ],
+      "actual": [
+        "历史快照",
+        "F_never_run（历史快照",
+        "当前已 done",
+        "505"
+      ],
+      "pass": true,
+      "source": "03_结果/最终统计/00_最终报告.md",
+      "note": "不删旧行/不改历史数字，只加当前口径与历史标记"
+    },
+    {
+      "id": "M01",
+      "item": "证据矩阵复算值与当前机器表一致",
+      "expected": true,
+      "actual": true,
+      "pass": true,
+      "source": "05_审计/最终结论证据矩阵_复算.json",
+      "note": "矩阵 P03/P05 指出的 486 覆盖已在最终判定改为 505；其余 478/5/12/8/733 均一致"
+    },
+    {
+      "id": "L01",
+      "item": "文件清单包含本次修改的关键文件",
+      "expected": [],
+      "actual": [],
+      "pass": true,
+      "source": "文件清单.csv",
+      "note": ""
+    },
+    {
+      "id": "L02",
+      "item": "文件清单无重复路径，且行数 > 300",
+      "expected": {
+        "duplicates": 0,
+        "rows_min": 300
+      },
+      "actual": {
+        "duplicates": 0,
+        "rows": 343
+      },
+      "pass": true,
+      "source": "文件清单.csv",
+      "note": ""
+    }
+  ],
+  "summary": {
+    "n_checks": 35,
+    "n_pass": 35,
+    "n_fail": 0
+  },
+  "fixes": [
+    {
+      "file": "00_一页纸.md",
+      "change": "新增 B_conditional 配置级 5/行级 12-8；小盘 COMBO val 首日 +0.33% 与初始 100 万 -0.03% 双基准；交付清单加对账文件"
+    },
+    {
+      "file": "01_完整报告.md",
+      "change": "新增 N 三口径、B_conditional 两口径、门槛 478→505/228、小盘 full/分段链 2.72pp 与笔数 709/728/733；verify/selfcheck 改为 19/36 项"
+    },
+    {
+      "file": "02_规则手册_研究结论版.md",
+      "change": "新增“两个容易误引的口径”框（B_conditional 5 vs 12/8；小盘 val -0.03%）"
+    },
+    {
+      "file": "03_数据与复现说明.md",
+      "change": "2021+ 扫描统一为 469（470 为历史文件集）；verify 19 项/selfcheck 36 项；文件清单 343 行；加对账命令"
+    },
+    {
+      "file": "04_最终结论.json",
+      "change": "新增 candidate_grading（5/10 vs 12/8）与 holdout.gate_coverage（478/505/228/733）；小盘 val 双基准；limits 补 N/B_conditional/小盘/T0005 历史行"
+    },
+    {
+      "file": "README.md",
+      "change": "§1.1 改为 N=733/1251/454、DSR 6.63e-4、B_conditional 两口径、T0005 已完成；§1.2/§5/§8/§10 的小盘基准与 469 扫描；文件清单 343 行、脚本 44 个"
+    },
+    {
+      "file": "03_结果/最终统计/00_最终报告.md",
+      "change": "顶部加“当前口径”横幅与“以下为 00:51 历史正文”分隔；正文 T0005 旧状态/486 覆盖/小盘 +0.33 加历史标记，不删旧行、不改历史数字"
+    },
+    {
+      "file": "03_结果/最终统计/最终判定.json",
+      "change": "N_sel_covered_by_gate_rows 486→505；加 N_sel_unrated 228/N_sel_total 733/coverage_note/coverage_derivation；stage1 对比改 365→733/500→1251/369→454；加 grade_calibers"
+    },
+    {
+      "file": "03_结果/最终统计/T0005_纳入后_汇总.json",
+      "change": "加 gate_coverage（478/505/228/733）与 candidate_grading 两口径"
+    },
+    {
+      "file": "02_代码/最终交付.py",
+      "change": "stage_final_stats 重算覆盖与 B_conditional 口径；报告横幅改为当前口径；verify 加 holdout_gate_coverage（19 项）；selfcheck 改精确计数并加 final_calibers_consistent（36 项）"
+    },
+    {
+      "file": "02_代码/最终口径对账.py",
+      "change": "新增只读对账脚本（35 项），输出 04_证据/最终口径对账.json"
+    },
+    {
+      "file": "02_代码/交付验收.py",
+      "change": "inventory 纳入 00_一页纸/01_完整报告/02_规则手册/03_数据说明/04_最终结论 与 03_结果/最终统计 的 JSON/CSV（文件清单 343 行）"
+    },
+    {
+      "file": "文件清单.csv",
+      "change": "由 交付验收.py 重建，343 行；包含最终交付文档、最终统计与对账文件"
+    }
+  ],
+  "verification": {
+    "experiment_registry_verify": "OK（2 WARN 代码漂移 02_代码/实验登记.py；哈希链/窗口/指标/计数/留出一致性通过）",
+    "final_delivery_verify": "19/19 PASS",
+    "final_delivery_selfcheck": "36/36 PASS",
+    "delivery_acceptance_full": "29 PASS / 0 FAIL / 1 WARN（30 项；WARN=T2 预注册四列）",
+    "evidence_matrix_recompute": "05_审计/最终结论证据矩阵_复算.py 运行 OK；R10/R11/R12/R14/R24/R38 与当前表一致",
+    "reconciliation": "35/35 PASS"
+  },
+  "computed": {
+    "counts": {
+      "rows": 1699,
+      "N_sel": 733,
+      "N_cell": 1251,
+      "N_diag": 454,
+      "N_platform": 257,
+      "N_audit": 87
+    },
+    "gate_coverage": {
+      "n_gate_rows": 478,
+      "covered": 505,
+      "unrated": 228,
+      "total": 733,
+      "identity": "505+228=733"
+    },
+    "b_conditional": {
+      "config_level": {
+        "n_configs": 5,
+        "n_ledger_rows": 10,
+        "trend_s3": 4,
+        "vcb": 1
+      },
+      "row_level_6_families": {
+        "n_rows": 12,
+        "n_configs": 8,
+        "s3_rows": 11,
+        "s1_rows": 1
+      }
+    },
+    "t0005": {
+      "done_rows": 68,
+      "N_sel": 19,
+      "N_cell": 38,
+      "N_diag": 30,
+      "stale_rows": [
+        "F00002",
+        "F01629"
+      ]
+    },
+    "small_combo": {
+      "dev": {
+        "start": "2008-01-02",
+        "nav_first": 1004156.99,
+        "nav_last": 2078605.42,
+        "cagr_nav_first": 0.09527546,
+        "cagr_initial_capital": 0.09584395,
+        "first_day_return": 0.00415699,
+        "mdd": -0.55696629
+      },
+      "val": {
+        "start": "2016-01-04",
+        "nav_first": 982381.89,
+        "nav_last": 998519.85,
+        "cagr_nav_first": 0.00326993,
+        "cagr_initial_capital": -0.00029673,
+        "first_day_return": -0.01761811,
+        "mdd": -0.4108612
+      }
+    },
+    "scan_2021": {
+      "files": 469,
+      "violations": 0
+    }
+  },
+  "evidence_matrix_crosscheck": {
+    "R10_final": {
+      "rows": 1699,
+      "N_sel": 733,
+      "N_cell": 1251,
+      "N_diag": 454,
+      "N_platform": 257,
+      "N_audit": 87
+    },
+    "R10_snapshot": {
+      "rows": 1631,
+      "N_sel": 714,
+      "N_cell": 1213,
+      "N_diag": 424,
+      "N_platform": 257,
+      "N_audit": 87,
+      "source": "03_结果/最终统计/00_最终报告.md；最终判定.json（生成 00:51，未含 01:01 的 T0005 登记）"
+    },
+    "R09_stage1": {
+      "rows": 875,
+      "N_sel": 365,
+      "N_cell": 500,
+      "N_diag": 369
+    },
+    "R11_overrun": {
+      "stage1_x": 5.7031,
+      "snapshot_x": 11.1562,
+      "ledger_x": 11.4531,
+      "budget": 64
+    },
+    "R12_row_level": {
+      "rows": 875,
+      "A_candidate": 0,
+      "B_rows": 12,
+      "B_unique_configs": 8,
+      "B_families": [
+        "TREND"
+      ],
+      "C_negative_valid": 514
+    },
+    "R14_gates": {
+      "rows": 478,
+      "grades": {
+        "C_negative_valid": 364,
+        "E_underpowered": 42,
+        "F_unevaluable": 35,
+        "W_window_mixed": 32,
+        "B_conditional": 5
+      },
+      "pass_both_windows_mdd25": 5
+    },
+    "R24_small_combo": {
+      "dev": {
+        "rows": 1946,
+        "start": "2008-01-02",
+        "end": "2015-12-31",
+        "years": 7.994524,
+        "nav_first": 1004156.99,
+        "nav_last": 2078605.42,
+        "cagr_nav_first": 0.09527546,
+        "cagr_initial_capital": 0.09584395,
+        "mdd": -0.55696629,
+        "first_day_return": 0.00415699
+      },
+      "val": {
+        "rows": 1218,
+        "start": "2016-01-04",
+        "end": "2020-12-31",
+        "years": 4.991102,
+        "nav_first": 982381.89,
+        "nav_last": 998519.85,
+        "cagr_nav_first": 0.00326993,
+        "cagr_initial_capital": -0.00029673,
+        "mdd": -0.4108612,
+        "first_day_return": -0.01761811
+      },
+      "full": {
+        "cagr": 0.031776,
+        "mdd": -0.579336,
+        "n_closed": 733,
+        "years": 12.9966,
+        "nav_end": 1507880.0
+      },
+      "trades_closed_dev": 438,
+      "trades_closed_val": 290,
+      "trades_closed_total": 728,
+      "top5_pnl": {
+        "dev": 482308.9,
+        "val": 398814.0
+      },
+      "cagr_ex_top5": {
+        "dev": 0.05969584,
+        "val": -0.09415235
+      },
+      "capacity": {
+        "cap10wan": 0.020105,
+        "cap100wan": 0.031776,
+        "cap1000wan": 0.022754,
+        "cap10000wan": -0.014527
+      },
+      "capacity_deployment_1e8": 0.136915,
+      "chained_dev_val_cagr": 0.0589544,
+      "top5_share": {
+        "dev_pct": 53.16,
+        "val_pct": 375.62
+      },
+      "full_vs_chain_gap_pp": 2.72
+    },
+    "R38_nav_2021": {
+      "rows": 418,
+      "max_date": "2020-12-31",
+      "n_after_2020": 0
+    }
+  },
+  "not_recomputed": [
+    "未运行任何策略回测；未重跑 2021+ 收益。",
+    "未修改源数据、注册表、总账历史行或各族交易结果。",
+    "未重跑 02_代码/最终试验总账.py --stage all（该脚本不含 T0005，会覆盖最终统计聚合）。",
+    "门槛覆盖、B_conditional、小盘基准均从已落盘 CSV/JSON 重算；未改族报告。"
+  ]
+}

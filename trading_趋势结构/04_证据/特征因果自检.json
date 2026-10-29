@@ -1,0 +1,589 @@
+{
+  "meta": {
+    "generated_at": "2026-10-28T21:38:43",
+    "freeze": "2026-10-26",
+    "scope": "features + multi_timeframe",
+    "python": "3.13.13",
+    "numpy": "2.5.0",
+    "pandas": "3.0.3",
+    "calendar_sessions": 8751,
+    "calendar_window": [
+      "1990-12-19",
+      "2026-10-28"
+    ],
+    "files": {
+      "核心特征.py": "6a3dee194385f508",
+      "多周期.py": "ccfa99b89c8cf3af"
+    },
+    "config": {
+      "sma_windows": [
+        5,
+        10,
+        20,
+        50,
+        200
+      ],
+      "ema_windows": [
+        10,
+        21
+      ],
+      "atr_n": 14,
+      "atr_short": 20,
+      "atr_long": 60,
+      "rsi_n": 14,
+      "adx_n": 14,
+      "don_n": 20,
+      "bb_n": 20,
+      "bb_rank_n": 252,
+      "nr_n": 7,
+      "slope_n": 20,
+      "pivot_k": 5,
+      "pivot_k_w": 3,
+      "pivot_k_m": 2,
+      "pullback_min": 0.236,
+      "pullback_max": 0.618,
+      "vol_contract": 0.85,
+      "restart_vol": 1.2,
+      "restart_lookback": 5,
+      "stop_atr_buffer": 0.5,
+      "min_hist": 250,
+      "drop_partial_start": true
+    },
+    "screen_config": {
+      "stop_min": 0.02,
+      "stop_max": 0.12,
+      "min_amt_ma20": 50000000.0,
+      "require_w_trend": "up",
+      "allow_d_trend": [
+        "up",
+        "transition"
+      ]
+    },
+    "runtime_sec": 86.54,
+    "adjustment": "价格类后复权(baostock adjustflag=1)，量额换手原始口径；宽度用不复权收盘算均线",
+    "sources": {
+      "baostock": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "duckdb": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb"
+    }
+  },
+  "checks": [
+    {
+      "id": "pivot_plateau",
+      "name": "同价平台枢轴唯一性",
+      "status": "pass",
+      "detail": "40 根、5 根等高的平台，k=3；检出枢轴高 [10]（期望 [10]）",
+      "evidence": {
+        "n_pivots": 1,
+        "idx": [
+          10
+        ]
+      }
+    },
+    {
+      "id": "pivot_vector_equiv",
+      "name": "向量化枢轴与逐根实现等价",
+      "status": "pass",
+      "detail": "120 组随机序列（取值 1-5 档，含大量同价），k∈[2,5]；不一致 0 组",
+      "evidence": {
+        "cases": 120,
+        "mismatch": 0
+      }
+    },
+    {
+      "id": "pivot_confirm_lag",
+      "name": "枢轴确认滞后 >= k",
+      "status": "pass",
+      "detail": "合成 400 根，k=5，枢轴 50 个，最小确认滞后 5",
+      "evidence": {
+        "n": 50,
+        "min_lag": 5,
+        "max_lag": 5
+      }
+    },
+    {
+      "id": "pivot_no_backfill",
+      "name": "结构量在确认前不回填",
+      "status": "pass",
+      "detail": "检验创新高枢轴 2 个：确认前不可见、确认当根可见；违反 0 次",
+      "evidence": {
+        "tested": 2,
+        "violations": 0,
+        "n_high_pivots": 26
+      }
+    },
+    {
+      "id": "week_partial_start",
+      "name": "起点不完整周标记",
+      "status": "pass",
+      "detail": "数据从周三 2019-03-06 起；首周 partial_start=True，后续 partial_start 数=0，末周 period_end<=数据末日=True",
+      "evidence": {
+        "n_weeks": 12,
+        "first_period_start": "2019-03-04",
+        "first_date": "2019-03-08"
+      }
+    },
+    {
+      "id": "no_unfinished_period",
+      "name": "未完成周/月不输出",
+      "status": "pass",
+      "detail": "截断至周三 2019-06-05；末周 2019-05-31，末月 2019-05-31",
+      "evidence": {
+        "n_weeks": 22,
+        "n_months": 5
+      }
+    },
+    {
+      "id": "indicator_reference",
+      "name": "指标对照独立实现",
+      "status": "pass",
+      "detail": "SMA20 max|diff|=3.55e-15，Wilder14 max|diff|=0.00e+00，EMA21 max|diff|=0.00e+00",
+      "evidence": {
+        "sma": 3.552713678800501e-15,
+        "wilder": 0.0,
+        "ema": 0.0
+      }
+    },
+    {
+      "id": "warmup_index",
+      "name": "指标预热起点",
+      "status": "pass",
+      "detail": "期望 {'ma20': 19, 'ma200': 199, 'atr14': 14, 'rsi14': 14, 'adx14': 27}，实际 {'ma20': 19, 'ma200': 199, 'atr14': 14, 'rsi14': 14, 'adx14': 27}",
+      "evidence": {
+        "ma20": 19,
+        "ma200": 199,
+        "atr14": 14,
+        "rsi14": 14,
+        "adx14": 27
+      }
+    },
+    {
+      "id": "suspension_not_pivot",
+      "name": "停牌段不生成枢轴",
+      "status": "pass",
+      "detail": "人为停牌 13 根（40-52），段内枢轴数 0，停牌后 ATR 有效=True",
+      "evidence": {
+        "inside": []
+      }
+    },
+    {
+      "id": "limit_price",
+      "name": "涨停价判定（主板 10%）",
+      "status": "pass",
+      "detail": "preclose=10 收盘=11 → 涨停 True；收盘=10 → 涨停 False",
+      "evidence": {
+        "lim": [
+          0.1,
+          0.1
+        ]
+      }
+    },
+    {
+      "id": "truncation_real",
+      "name": "真实数据截断重算一致（日线）",
+      "status": "pass",
+      "detail": "40 只股票、80 个随机截断点，比较 9 列；max|diff|=0.000e+00，失败 0",
+      "evidence": {
+        "cases": 80,
+        "max_abs_diff": 0.0,
+        "failures": 0,
+        "examples": []
+      }
+    },
+    {
+      "id": "future_perturbation",
+      "name": "未来数据扰动不影响截断点",
+      "status": "pass",
+      "detail": "8 只股票，把截断点之后的 OHLC 乘以 0.3~3.0 随机倍数并替换成交量；不一致 0 处",
+      "evidence": {
+        "cases": 8,
+        "mismatches": 0
+      }
+    },
+    {
+      "id": "adjust_bridge",
+      "name": "后复权/原始价桥接与复权失真度",
+      "status": "pass",
+      "detail": "sh.600519: close/price_scale 还原原始价 max|diff|=2.274e-13；hfq 与 raw 的枢轴高重合度 Jaccard=0.9618（raw 在除权日产生假跳空，故不要求枢轴一致，仅作证据）",
+      "evidence": {
+        "bridge_max_abs_diff": 2.2737367544323206e-13,
+        "rows": 6102,
+        "pivot_drift": {
+          "hfq_high_pivots": 386,
+          "raw_high_pivots": 385,
+          "shared": 378,
+          "jaccard": 0.9618
+        }
+      }
+    },
+    {
+      "id": "duckdb_partial_start",
+      "name": "DuckDB 起点不完整周/月剔除",
+      "status": "pass",
+      "detail": "起点 2016-10-13(周四)：首周 2016-10-14 partial=True → 周特征首日 2016-10-21；首月 2016-10-31 partial=True → 月特征首日 2016-11-30",
+      "evidence": {
+        "rows_daily": 2437,
+        "first_week": "2016-10-14",
+        "first_week_feature": "2016-10-21",
+        "first_month": "2016-10-31",
+        "first_month_feature": "2016-11-30"
+      }
+    },
+    {
+      "id": "mp_build",
+      "name": "面板构建",
+      "status": "pass",
+      "detail": "尝试 12 只，成功 12 只；失败 []",
+      "evidence": {
+        "ok": 12,
+        "failed": 0,
+        "rows_total": 59817
+      }
+    },
+    {
+      "id": "mp_no_partial_tail",
+      "name": "末端未完成周/月被剔除",
+      "status": "pass",
+      "detail": "面板末行的最近周/月不得晚于当日且不过期（检查 12 只，异常 0）；聚合层末端周期异常 0",
+      "evidence": {
+        "violations": 0,
+        "aggregate_tail_bad": 0,
+        "examples": [
+          {
+            "symbol": "sz.000709",
+            "last": "2026-10-26",
+            "w_end": "2026-10-23",
+            "m_end": "2026-09-30"
+          },
+          {
+            "symbol": "sh.600051",
+            "last": "2026-10-26",
+            "w_end": "2026-10-23",
+            "m_end": "2026-09-30"
+          },
+          {
+            "symbol": "sh.600097",
+            "last": "2026-10-26",
+            "w_end": "2026-10-23",
+            "m_end": "2026-09-30"
+          },
+          {
+            "symbol": "sh.600798",
+            "last": "2026-10-26",
+            "w_end": "2026-10-23",
+            "m_end": "2026-09-30"
+          },
+          {
+            "symbol": "sh.600449",
+            "last": "2026-10-26",
+            "w_end": "2026-10-23",
+            "m_end": "2026-09-30"
+          }
+        ],
+        "calendar_tail": "2026-10-28"
+      }
+    },
+    {
+      "id": "mp_period_not_future",
+      "name": "周/月周期不越界",
+      "status": "pass",
+      "detail": "12 只股票逐行检查 w/m period_end <= date，越界 0 行",
+      "evidence": {
+        "violations": 0
+      }
+    },
+    {
+      "id": "mp_latest_period",
+      "name": "对齐到最近已结束周期",
+      "status": "pass",
+      "detail": "逐行比对 w_period_end 与 searchsorted 期望值，不一致 0 行",
+      "evidence": {
+        "mismatch": 0
+      }
+    },
+    {
+      "id": "mp_week_bar_manual",
+      "name": "周线 OHLCV 与手工聚合一致",
+      "status": "pass",
+      "detail": "比对 6372 个周 bar 的 O/H/L/C/V，不一致 0 项",
+      "evidence": {
+        "bars": 6372,
+        "mismatch": 0
+      }
+    },
+    {
+      "id": "mp_truncation",
+      "name": "多周期面板截断重算一致",
+      "status": "pass",
+      "detail": "12 个随机截断日，比较 15 个日/周/月列；失败 0，max|diff|=0.000e+00",
+      "evidence": {
+        "cases": 12,
+        "failures": 0,
+        "max_abs_diff": 0.0
+      }
+    },
+    {
+      "id": "mp_resonance",
+      "name": "日/周/月共振列自洽",
+      "status": "pass",
+      "detail": "align_score 与 resonance 由分项重算，不一致 0 行",
+      "evidence": {
+        "mismatch": 0
+      }
+    },
+    {
+      "id": "mp_t_plus_1",
+      "name": "信号收盘生成、次日开盘成交",
+      "status": "pass",
+      "detail": "6 个入场点：entry_px 必须等于次日开盘，且不随后续数据变化；违反 0",
+      "evidence": {
+        "tested": 6,
+        "violations": 0
+      }
+    },
+    {
+      "id": "mp_post_entry_causal",
+      "name": "入场后路径描述因果一致",
+      "status": "pass",
+      "detail": "6 个入场点，截断面板与全量面板的 MFE/MAE/持有根数/止损触发一致；不一致 0",
+      "evidence": {
+        "tested": 6,
+        "mismatch": 0
+      }
+    },
+    {
+      "id": "mp_breadth_causal",
+      "name": "市场宽度因果性",
+      "status": "pass",
+      "detail": "3 个日期：全量计算 vs 截止当日计算，不一致 0，max|diff|=0.000e+00",
+      "evidence": {
+        "dates": [
+          "2026-10-26",
+          "2021-10-15",
+          "2020-02-13"
+        ],
+        "mismatch": 0,
+        "max_abs_diff": 0.0
+      }
+    },
+    {
+      "id": "breadth_survivorship",
+      "name": "宽度口径差（DuckDB 现存 vs baostock 含退市）",
+      "status": "pass",
+      "detail": "2020-12-31: DuckDB n=3964 ma200上方=0.350；baostock n=4118 ma200上方=0.346",
+      "evidence": {
+        "date": "2020-12-31",
+        "duckdb": {
+          "n_stocks": 3964.0,
+          "pct_above_ma50": 0.2898587285570131,
+          "pct_above_ma200": 0.3496468213925328
+        },
+        "baostock": {
+          "n_stocks": 4118.0,
+          "pct_above_ma50": 0.2724623603691112,
+          "pct_above_ma200": 0.34628460417678486
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 25,
+    "pass": 25,
+    "fail": 0,
+    "skip": 0
+  },
+  "dataset_coverage": {
+    "freeze": "2026-10-26",
+    "baostock": {
+      "stock_basic_type1": 5564,
+      "delisted_type1_by_freeze": 340,
+      "trade_days": 8749,
+      "index_window": [
+        {
+          "code": "sh.000001",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        },
+        {
+          "code": "sh.000015",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        },
+        {
+          "code": "sh.000016",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        },
+        {
+          "code": "sh.000300",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        },
+        {
+          "code": "sh.000852",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 4810
+        },
+        {
+          "code": "sh.000905",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        },
+        {
+          "code": "sz.399001",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        },
+        {
+          "code": "sz.399006",
+          "first": "2010-06-01",
+          "last": "2026-10-26",
+          "rows": 3981
+        },
+        {
+          "code": "sz.399106",
+          "first": "2006-01-04",
+          "last": "2026-10-26",
+          "rows": 5053
+        }
+      ]
+    },
+    "duckdb": {
+      "symbols": 5579,
+      "first": "2016-10-13",
+      "last": "2026-10-26",
+      "rows": 10381421
+    },
+    "note": "2021-01-01 起仅做覆盖审计；本文件不含任何 2021+ 收益/行为分布统计。日历读数取到数据源已有末端，仅用于确认周期是否结束。"
+  },
+  "descriptive_stats": {
+    "window": [
+      "2006-01-01",
+      "2020-12-31"
+    ],
+    "note": "行为分布仅统计 <=2020-12-31（开发/验证期）；2021+ 只做覆盖审计",
+    "n_symbols": 40,
+    "rows_total": 145880,
+    "median": {
+      "share_up_d": 0.3267068823690705,
+      "share_up_w": 0.3073759254181519,
+      "share_up_m": 0.27173018919659997,
+      "share_full_up": 0.030161776802851658,
+      "pullback_rate": 0.05881546476556074,
+      "restart_rate": 0.004661365505895256,
+      "broken_rate": 0.1619139018371264,
+      "median_stop_pct": 0.09626421830169002,
+      "median_atr_pct": 0.04062704867743282,
+      "mean_coverage_w": 1.0,
+      "screen_rate": 0.027831094049904033
+    },
+    "p10_p90": {
+      "median_stop_pct": [
+        0.08020559726687648,
+        0.1108012428881699
+      ],
+      "median_atr_pct": [
+        0.0333386561567883,
+        0.04432100012272155
+      ],
+      "share_full_up": [
+        0.0073759254181519065,
+        0.07035919934192487
+      ],
+      "screen_rate": [
+        0.015190567589799836,
+        0.04809432410200165
+      ]
+    },
+    "coverage_2021_plus": [
+      {
+        "symbol": "sz.000727",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.019790223629527013
+      },
+      {
+        "symbol": "sz.000967",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.013853156540668909
+      },
+      {
+        "symbol": "sz.000409",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.007916089451810805
+      },
+      {
+        "symbol": "sh.600230",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.01286364535919256
+      },
+      {
+        "symbol": "sz.002003",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.005937067088858104
+      },
+      {
+        "symbol": "sh.600229",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.007916089451810805
+      },
+      {
+        "symbol": "sh.600559",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.010884622996239858
+      },
+      {
+        "symbol": "sz.002031",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.01286364535919256
+      },
+      {
+        "symbol": "sh.600825",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.009895111814763506
+      },
+      {
+        "symbol": "sh.600694",
+        "rows": 5053,
+        "first": "2006-01-04",
+        "last": "2026-10-26",
+        "nan_share_w": 0.005937067088858104
+      }
+    ]
+  },
+  "limitations": [
+    "DuckDB 宽度仅含现存代码，2016+ 有幸存者偏差；baostock 宽度含退市但需全表扫描（约 40s/次）。",
+    "周/月线在停牌跨周期时只有实际交易日，n_days/coverage 已标注，未做任何回填。",
+    "枢轴确认按可交易 bar 计 k 根；停牌期间不确认，恢复交易后继续计时。",
+    "结构止损为百分比口径，落地委托价需乘 price_scale 转原始价。",
+    "screen_pass 的门槛是常规值，未经收益优化，不作为结论。",
+    "2021-01-01 起不产出任何收益或行为分布；descriptive_stats 窗口截止 2020-12-31。",
+    "因果自检（截断重算、未来扰动）会机械地跑过 2021+ 行情以验证无前视，不产生任何策略结论。",
+    "交易日历读到数据源末个交易日（2026-10-28），仅用于判断周期是否结束，不含价格；行情严格冻结在 2026-10-26。",
+    "本模块不算收益、不做组合回测；MFE/MAE 仅是单笔路径描述原语，供策略层使用。",
+    "源库为 WAL 模式且可能被外部同步/其他进程写入（本次运行期间 baostock.db 的 mtime 与行数确有变化）；本产物的所有查询均带 date<=2026-10-26 过滤且只读打开，复现时应以同一冻结快照为准。"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "event_max_date": "2020-12-31",
+  "no_2021_event": true,
+  "no_2021_daily": true,
+  "n_events": 1561361,
+  "n_entry_ok": 1546266,
+  "entry_reject_rate": 0.00966784747409477,
+  "n_delisted_events": 117290,
+  "lot_violations": 0,
+  "same_day_exit": 0,
+  "min_fee": 5.0,
+  "commission_below_min": 0,
+  "buy_before_signal": 0,
+  "overnight_entry_frac": 1.0,
+  "negative_cash_events": 0,
+  "windows": {
+    "dev": [
+      "2008-01-01",
+      "2015-12-31"
+    ],
+    "val": [
+      "2016-01-01",
+      "2020-12-31"
+    ],
+    "full": [
+      "2008-01-01",
+      "2020-12-31"
+    ]
+  },
+  "n_configs": 35,
+  "n_runs": 105,
+  "hfq_consistency": {
+    "n_rows": 92093,
+    "n_symbols": 30,
+    "tr_max_abs_diff": 5.551115123125783e-16,
+    "tr_pass": true,
+    "frozen_hfq_max_abs_diff": 3.496331748475167,
+    "frozen_hfq_pass": false,
+    "note": "本族 load_market 用 tr 序列；冻结 hfq 仅作缺陷审计"
+  },
+  "data_audit": {
+    "n": 9449673,
+    "bad_frozen": 8668072,
+    "bad_frozen_share": 0.917288037374415,
+    "bad_raw": 28147,
+    "bad_raw_share": 0.0029786215882814148,
+    "median_frozen_diff": 0.013963975409954381,
+    "median_raw_diff": 7.488986792161811e-08,
+    "n_rows_check": 9449775
+  },
+  "code_sha256": "28d2d7872247b219430c6c0852bc1986d6ad49f111e0148945676e0aeff9fe88",
+  "prereg_sha256": "c94e1218f683f65d0966ef24a2f817e861a07e29af2186874f20b0ecf9e2decc"
+}

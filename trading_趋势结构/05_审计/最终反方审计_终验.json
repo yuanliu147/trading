@@ -1,0 +1,159 @@
+{
+  "schema": "trend-structure-final-adversarial-signoff/v1",
+  "meta": {
+    "project": "trading_趋势结构",
+    "role": "首次反方审计员；对整改后根文档/04/剩余项关闭的最终签字复核",
+    "auditor": "deepseek-flash",
+    "audit_date": "2026-10-29",
+    "data_version": "v2-adjspace-2026-10-28",
+    "freeze_date": "2026-10-26",
+    "current_docs": {
+      "00_一页纸.md": "2026-10-29 03:12 rev3",
+      "01_完整报告.md": "2026-10-29 03:13",
+      "02_规则手册_研究结论版.md": "2026-10-29 03:12",
+      "03_数据与复现说明.md": "2026-10-29 03:23",
+      "04_最终结论.json": "2026-10-29 03:19",
+      "04_证据/最终审计剩余项关闭.json": "2026-10-29 03:24",
+      "04_证据/审计整改验收.json": "03:24",
+      "05_审计/留出准入裁决.md": "2026-10-29 03:18 v2",
+      "05_审计/2021+未评估文件封存清单.csv": "34 行",
+      "05_审计/最终结论证据矩阵.md": "已加 486/228→505/228 横幅",
+      "README.md": "2026-10-29 03:21"
+    },
+    "discipline": [
+      "未运行 2021-01-01 之后任何收益",
+      "未新搜参数",
+      "未修改任何报告/代码/结果",
+      "只写 05_审计/最终反方审计_终验.md 与 05_审计/最终反方审计_终验.json"
+    ]
+  },
+  "overall": {
+    "verdict": "PASS",
+    "blockers": [],
+    "research_conclusion": "PASS",
+    "delivery_consistency": "PASS",
+    "severity": "NONE",
+    "summary": "上一轮 P0/P1/P2 八项全部闭合；35 项复核剩余项关闭 35/35；105 项/82 checks；verify 51/51；无真实阻断。物理隔离未做是已声明限制，不是本次签字阻断。",
+    "declared_limitations": [
+      "2021+ 文件已逻辑封存（34 个，A=3/B=7/C=24，逐文件 SHA-256，0 策略绩效，禁止用途契约），未做物理隔离（未移出/改权限/独立保管）；A 级 3 个仍在项目树内。",
+      "2021+ 收益未运行；本终验未运行、也不应运行。",
+      "TREND 创业板限价 bug、VCB 成本/250 日强平、跨族引擎口径未统一：已披露并量化，只会加强负结果。"
+    ]
+  },
+  "checks": [
+    {
+      "id": "S01",
+      "item": "N_sel 合计",
+      "status": "PASS",
+      "evidence": "01 §3.19 MAIN 19（T0005 + 18 邻域）+ 其余 17 族 = 733；00 行 72 MAIN N_sel=19；04 counts MAIN 19；verify rereview_main_nsel_19 PASS"
+    },
+    {
+      "id": "S02",
+      "item": "EXIT",
+      "status": "PASS",
+      "evidence": "01 §3.19 18 臂 best -20.20/-19.84；TB1/B0 -8.83/-19.84 标 full-window 基准单列；00 行 75 同；04 families.EXIT.family_best=-0.201996/-0.198400；verify rereview_exit_18arm_best PASS"
+    },
+    {
+      "id": "S03",
+      "item": "裁决指代",
+      "status": "PASS",
+      "evidence": "00 行 40、01 §7 671/672、03 行 135、04 holdout.adjudication_note 均为 v2 修订版 02:12；00:37 初版仅附录 A/initial_snapshot；04 supersedes.path=#initial_snapshot、current_as_of=02:12、initial_as_of=00:37；05 裁决头部 v2；附录 A 42,886/d0cdf，初版 42,550/ddd8a220 已被覆盖、文件清单只记录修订版"
+    },
+    {
+      "id": "S04",
+      "item": "逻辑封存",
+      "status": "PASS",
+      "evidence": "34 文件 A=3/B=7/C=24，逐文件 SHA-256，0 策略绩效；00 行 41、01 §7/§9.2/§9.4、03 行 136/233、04 exposure_note、README 185/287 统一为“逻辑封存已完成；未做物理隔离”；verify rereview_seal_34 PASS"
+    },
+    {
+      "id": "S05",
+      "item": "G3/G4/G5/G6/G7",
+      "status": "PASS",
+      "evidence": "G3 dev 0.05-0.28 / val 0.18-0.36；G4 -6.44~-18.22（逐配置 -6.44/-7.17/-18.22/-15.33/-14.74）；G5 T0005 dev -0.03 不在 5 个 SEL-G 内、单列；G6 8 族表 0.1139 + VCB T40 0.622（N=24）；G7 TREND 42 矩阵 0.127/0.452，S3 是 5 个子集；verify rereview_g4_range_data PASS"
+    },
+    {
+      "id": "S06",
+      "item": "预算 11.92",
+      "status": "PASS",
+      "evidence": "00 行 26 18.33×（733/40）/11.45×（733/64 混合）/11.92×（(733+30)/64 可比总口径）；02 R6 行 95 同；04 statistics.budget.overrun_comparable_total=11.92；verify conclusion_budget_two_calibers PASS"
+    },
+    {
+      "id": "S07",
+      "item": "PBO 表述",
+      "status": "PASS",
+      "evidence": "00 行 37 改为“PBO（选中族，不是全族最低）”，补 ECOLOGY 0.002/LONGMOM 0.020/STRUCTREV 0.043/小盘 0.241；明确低 PBO ≠ 能赚钱；TREND 42 矩阵 0.452/0.127 不冒充 S3 逐配置"
+    },
+    {
+      "id": "S08",
+      "item": "交付清单",
+      "status": "PASS",
+      "evidence": "00 行 129-139 与 01 §12 补：审计整改验收、最终审计剩余项关闭、2021+ 封存清单/说明、审计问题处置表、留出裁决 v2；清单完整"
+    }
+  ],
+  "closure": {
+    "residual_closure_json": {
+      "path": "04_证据/最终审计剩余项关闭.json",
+      "source_items": 35,
+      "fixed": 35,
+      "check_fail": 0,
+      "unmapped": 0,
+      "needs_resync": 0,
+      "status": "INTERNAL_FIX_COMPLETE_AWAITING_ORIGINAL_AUDITOR_CONFIRMATION",
+      "confirmed_by_this_signoff": true
+    },
+    "acceptance_json": {
+      "path": "04_证据/审计整改验收.json",
+      "items": 105,
+      "fixed": 97,
+      "supersede": 6,
+      "declared_limitation": 2,
+      "open_internal": 0,
+      "needs_resync": 0,
+      "checks_pass": 82,
+      "checks_total": 82,
+      "status": "内部检查通过，等待独立复核"
+    },
+    "verify": {"cmd": "python3 02_代码/最终交付.py verify", "result": "51/51 PASS"},
+    "registry_verify": {"cmd": "python3 02_代码/实验登记.py verify", "result": "10 行 / 35 试验 / OK; T0005 rev2 done discard; T0007 val done discard; holdout 0"},
+    "disposition_table": {"rows": 55, "needs_sync_rows": 0},
+    "evidence_matrix_banner": true,
+    "transfer_fee": {"main": "0.1% (0.0010)", "sensitivity": "0.06% (0.0006)", "main_is_0_06": false},
+    "dynamic_parameters": "1.54%~5.50%",
+    "top5": {"gross": 0.3106, "net": 0.4587}
+  },
+  "research_conclusion": {
+    "n_candidates": 0,
+    "t0005": {"dev": 0.04156815775673306, "val": -0.025342280131277373, "decision": "discard"},
+    "t0007": "val done discard",
+    "holdout_run": false,
+    "two_segment_positive": 32,
+    "two_segment_positive_by_family": {"TREND": 5, "VCB": 18, "SMALLLOWVOL": 9},
+    "sel_g_pass": 5,
+    "best_dev": 0.203991,
+    "best_val": 0.08704869,
+    "best_min": 0.08323778,
+    "maxstat_global_min": 0.07196401799100449,
+    "maxstat_n_p": 16,
+    "annualized_60pct_supported": false,
+    "g1_directly_tested": false,
+    "statement": "在本项目测试空间内，0 个配置通过全部硬门槛；年化 60% 不被支持；G1 未被直接检验；不等于任何策略都不可能 60%，也不是已证伪。没有漏掉真能 60% 的候选。"
+  },
+  "no_new_scope": true,
+  "not_run": [
+    "未运行 2021-01-01 之后任何收益",
+    "未读取 2021+ 数值做策略分析",
+    "未重跑任何策略",
+    "未新搜参数",
+    "未修改任何报告/代码/结果"
+  ],
+  "files_written": [
+    "05_审计/最终反方审计_终验.md",
+    "05_审计/最终反方审计_终验.json"
+  ],
+  "limits": [
+    "本终验只确认上一轮 P0/P1/P2 与四份复核剩余项的文档闭合；不对未重跑的族/逐笔做新证据。",
+    "物理隔离未做是已声明限制；未来跑 2021+ 留出前应由独立协调者完成。",
+    "2021+ 收益未运行；本终验不构成样本外验证。"
+  ],
+  "disclaimer": "本终验不构成投资建议；不含任何当前买卖点、目标价或仓位建议。"
+}

@@ -1,0 +1,10 @@
+family,unit,total,affected,ratio,nav_pp,artifact
+TREND,trade,31961,0,0.0,0.0,03_结果/趋势族/交易明细_全部.parquet
+TREND-event,event(60d),30880,10,0.03238341968911917,0.0,03_结果/趋势族/信号事件_明细.parquet
+EXIT-TB1/B0,trade,329850,35,0.010610883735031074,0.0,03_结果/退出_明细_TB1_B0.csv
+EXIT-TB1/T3,trade,329850,11,0.003334849173866909,0.0,03_结果/退出_明细_TB1_T3.csv
+EXIT-TB1/TG2,trade,329850,11,0.003334849173866909,0.0,03_结果/退出_明细_TB1_TG2.csv
+EXIT-TB1/ALL,trade,329850,9,0.002728512960436562,0.0,03_结果/退出_明细_TB1_ALL.csv
+STRUCT-K2-event,event(60d),134424,38,0.028268761530679046,0.0,03_结果/结构族_事件_K2.parquet
+STRUCT-K3-event,event(60d),163564,45,0.027512166491403978,0.0,03_结果/结构族_事件_K3.parquet
+STRUCT-K5-event,event(60d),200227,50,0.024971657169113058,0.0,03_结果/结构族_事件_K5.parquet

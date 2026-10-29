@@ -1,0 +1,171 @@
+{
+ "by_year": [
+  {
+   "year": 2008,
+   "n_signal": 5804,
+   "signal_fwd20_mean": -0.091202,
+   "signal_fwd20_median": -0.10158,
+   "universe_fwd20_mean": -0.070831,
+   "excess_mean": -0.020371
+  },
+  {
+   "year": 2009,
+   "n_signal": 38673,
+   "signal_fwd20_mean": 0.021179,
+   "signal_fwd20_median": 0.003945,
+   "universe_fwd20_mean": 0.06,
+   "excess_mean": -0.038821
+  },
+  {
+   "year": 2010,
+   "n_signal": 24718,
+   "signal_fwd20_mean": -0.007567,
+   "signal_fwd20_median": -0.023984,
+   "universe_fwd20_mean": 0.004822,
+   "excess_mean": -0.012389
+  },
+  {
+   "year": 2011,
+   "n_signal": 10222,
+   "signal_fwd20_mean": -0.037876,
+   "signal_fwd20_median": -0.050926,
+   "universe_fwd20_mean": -0.028444,
+   "excess_mean": -0.009432
+  },
+  {
+   "year": 2012,
+   "n_signal": 10906,
+   "signal_fwd20_mean": -0.020947,
+   "signal_fwd20_median": -0.028755,
+   "universe_fwd20_mean": -0.002145,
+   "excess_mean": -0.018802
+  },
+  {
+   "year": 2013,
+   "n_signal": 23153,
+   "signal_fwd20_mean": -0.010397,
+   "signal_fwd20_median": -0.027614,
+   "universe_fwd20_mean": 0.002916,
+   "excess_mean": -0.013314
+  },
+  {
+   "year": 2014,
+   "n_signal": 41207,
+   "signal_fwd20_mean": 0.039853,
+   "signal_fwd20_median": 0.023783,
+   "universe_fwd20_mean": 0.034389,
+   "excess_mean": 0.005463
+  },
+  {
+   "year": 2015,
+   "n_signal": 50335,
+   "signal_fwd20_mean": 0.041226,
+   "signal_fwd20_median": 0.055341,
+   "universe_fwd20_mean": 0.039347,
+   "excess_mean": 0.001879
+  },
+  {
+   "year": 2016,
+   "n_signal": 23016,
+   "signal_fwd20_mean": -0.014405,
+   "signal_fwd20_median": -0.021744,
+   "universe_fwd20_mean": 0.011978,
+   "excess_mean": -0.026384
+  },
+  {
+   "year": 2017,
+   "n_signal": 20879,
+   "signal_fwd20_mean": -0.01191,
+   "signal_fwd20_median": -0.020722,
+   "universe_fwd20_mean": -0.008808,
+   "excess_mean": -0.003102
+  },
+  {
+   "year": 2018,
+   "n_signal": 10983,
+   "signal_fwd20_mean": -0.058753,
+   "signal_fwd20_median": -0.060836,
+   "universe_fwd20_mean": -0.030992,
+   "excess_mean": -0.027761
+  },
+  {
+   "year": 2019,
+   "n_signal": 36385,
+   "signal_fwd20_mean": 0.016135,
+   "signal_fwd20_median": 0.00983,
+   "universe_fwd20_mean": 0.013219,
+   "excess_mean": 0.002916
+  },
+  {
+   "year": 2020,
+   "n_signal": 36374,
+   "signal_fwd20_mean": 0.01191,
+   "signal_fwd20_median": -0.016688,
+   "universe_fwd20_mean": 0.012508,
+   "excess_mean": -0.000598
+  }
+ ],
+ "momentum_decile": [
+  {
+   "momentum_decile": 0,
+   "size": 33266,
+   "mean": 0.013683989644050598,
+   "median": 0.0025974512100219727
+  },
+  {
+   "momentum_decile": 1,
+   "size": 33265,
+   "mean": 0.015079337172210217,
+   "median": 0.002364039421081543
+  },
+  {
+   "momentum_decile": 2,
+   "size": 33266,
+   "mean": 0.016049986705183983,
+   "median": 0.0019611716270446777
+  },
+  {
+   "momentum_decile": 3,
+   "size": 33268,
+   "mean": 0.01732395775616169,
+   "median": 0.0014049410820007324
+  },
+  {
+   "momentum_decile": 4,
+   "size": 33265,
+   "mean": 0.01766808144748211,
+   "median": 1.1920928955078125e-07
+  },
+  {
+   "momentum_decile": 5,
+   "size": 33263,
+   "mean": 0.016900239512324333,
+   "median": -0.000635981559753418
+  },
+  {
+   "momentum_decile": 6,
+   "size": 33265,
+   "mean": 0.015008426271378994,
+   "median": -0.004751145839691162
+  },
+  {
+   "momentum_decile": 7,
+   "size": 33266,
+   "mean": 0.010057506151497364,
+   "median": -0.009384125471115112
+  },
+  {
+   "momentum_decile": 8,
+   "size": 33265,
+   "mean": -0.004049932584166527,
+   "median": -0.021931588649749756
+  },
+  {
+   "momentum_decile": 9,
+   "size": 33266,
+   "mean": -0.03479868918657303,
+   "median": -0.052950769662857056
+  }
+ ],
+ "note": "前向 20 日总回报（tr_index）；仅诊断信号/排名机制，不参与任何选择。"
+}

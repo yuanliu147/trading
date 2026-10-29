@@ -1,0 +1,2 @@
+window,candidate,capital,slots,slippage_bps,n_days,nav_engine_end,nav_mine_end,nav_diff_end,max_abs_diff,mean_abs_diff,n_trades_engine_sells,n_trades_mine,fees_engine,fees_mine,algo_engine,participation_engine,participation_mine,note
+2014-01-01..2014-12-31,B55H20,1000000,10,10,245,1096580.051,1329384.375,-0.17512190482906798,0.17512190482906798,0.05224370666723357,122,128,15892.43,17847.7,账户撮合.py,1.0,1.0,引擎无 ADV20 容量与 slot 排序；本对账只验证费用/整股/涨跌停/T+1 口径

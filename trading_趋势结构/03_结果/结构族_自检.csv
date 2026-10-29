@@ -1,0 +1,21 @@
+﻿check,pass,detail
+C1 面板末端 <= 2020-12-31,True,2020-12-31
+C2 面板不含 2021+ 日期,True,4132
+C3 截断不变性(信号集合差异率),True,mean=0.0020 n=40
+C4 枢轴右确认滞后 = K,True,K=3 n_ph=399
+C5 入场严格晚于信号日,True,min_lag=1
+C5 离场>=入场+1 (hold10),True,min=11
+C5 离场>=入场+1 (hold20),True,min=21
+C5 离场>=入场+1 (hold40),True,min=41
+C5 离场>=入场+1 (struct),True,min=2
+C5 离场>=入场+1 (failstruct),True,min=2
+C5 离场>=入场+1 (failbrk),True,min=2
+C5 离场>=入场+1 (struct_tp8),True,min=2
+C5 离场>=入场+1 (tp8),True,min=2
+C5 离场>=入场+1 (trail3),True,min=2
+C5 离场>=入场+1 (gate),True,min=21
+C5 离场>=入场+1 (struct_gate),True,min=2
+C6 周线仅在周期结束后可用,True,n_week=124
+C7 印花税口径(<=2020 卖出 0.1%),True,0.001
+C8 事件年份覆盖,True,2005~2020 年数=16
+C9 特征列无前视命名,True,

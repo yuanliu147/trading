@@ -1,0 +1,28 @@
+== 载入第一阶段总账
+  875 rows; Nsel=365 Ncell=500 Ndiag=369（记录值）
+== 载入第二三阶段新族
+== 总行数 1631
+== 计数 {"rows": 1631, "N_sel": 714.0, "N_cell": 1213.0, "N_diag": 424.0, "N_platform": 257.0, "N_sens_subset": 217.0, "N_audit": 87.0}
+== 净值序列 418 条；全部 max(date) <= 2020-12-31（断言通过）
+== 统计：PBO / max-stat / CI
+  PBO 16 个矩阵；max-stat 16 个；CI 22 条
+  DSR: Var(SR)=0.00111644 trials=418 best={'family': 'VCB', 'config_id': 'VCB:VCB-P20_T40', 'strategy_id': 'VCB-P20_T40', 'nav_key': 'VCB-P20_T40', 'score': 0.22812697352322514, 'is_g_pass': True, 'dev': {'sr_daily': 0.03136382588880035, 'T': 1945, 'skew': -1.3269442237892703, 'kurt': 12.380267149631626}, 'val': {'sr_daily': 0.03645237592615742, 'T': 1217, 'skew': -0.13699921500661527, 'kurt': 13.674549702200133}}
+    N1_sel: N=714 SR0(年化)=1.6449053615180291 DSR_dev=0.0006886707121123202 DSR_val=0.008253975474774437
+    N2_sel_plus_platform: N=971 SR0(年化)=1.6910947078848815 DSR_dev=0.0004386283071925507 DSR_val=0.006203706470983759
+    N3_all_cells: N=1395 SR0(年化)=1.7441578685731307 DSR_dev=0.00025633084032809767 DSR_val=0.004415874806533272
+    族内 BREAKPULL: N=20 best=邻域-STOP SR年化=0.413 DSR=0.0569
+    族内 LONGMOM: N=26 best=C26 SR年化=0.142 DSR=0.0052
+    族内 RELSTR: N=40 best=N02 SR年化=0.272 DSR=0.0074
+    族内 RISKBUDGET: N=29 best=RB021|K1|C1|m0.5|d10|c0.0 SR年化=0.500 DSR=0.0551
+    族内 SMALLLOWVOL: N=109 best=COMBO_s20_h60 SR年化=0.451 DSR=0.0067
+    族内 STRUCTREV: N=30 best=A08_KNIFE SR年化=-0.060 DSR=0.0006
+    族内 VCB: N=22 best=VCB-N120_T40 SR年化=0.578 DSR=0.1139
+== 统一门槛：459 个可评级配置；G_pass=5；全门槛通过 A_candidate=0
+    G_pass TREND/TREND@S3_波动收缩突破 dev=0.0188 val=0.0219 MDD=-0.095/-0.103 grade=B_conditional fail=R_fail_posthoc;S_unverified;T_fail_stat
+    G_pass TREND/TREND@S3_波动收缩突破 dev=0.0102 val=0.0187 MDD=-0.212/-0.094 grade=B_conditional fail=R_fail_posthoc;S_unverified;T_fail_stat
+    G_pass TREND/TREND@S3_波动收缩突破 dev=0.0046 val=0.0141 MDD=-0.100/-0.079 grade=B_conditional fail=R_fail_posthoc;S_unverified;T_fail_stat
+    G_pass TREND/TREND@S3_波动收缩突破 dev=0.0439 val=0.0390 MDD=-0.203/-0.109 grade=B_conditional fail=R_fail_posthoc;S_unverified;T_fail_stat
+    G_pass VCB/VCB-P20_T40 dev=0.0650 val=0.0537 MDD=-0.236/-0.156 grade=B_conditional fail=R_fail_grid_promotion;S_unverified;T_fail_stat
+== 写出 03_结果/最终试验总账.csv (1631 rows)
+== 自检: {"pbo_pure_noise": {"pbo": 0.6170940170940171, "n_splits": 12870, "n_candidates": 20, "T": 2000, "median_oos_rank": 0.38095238095238093, "logit_median": -0.48550781578170094}, "pbo_one_signal": {"pbo": 0.048795648795648794, "n_splits": 12870, "n_candidates": 20, "T": 2000, "median_oos_rank": 0.95238
+总用时 21.6s

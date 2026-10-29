@@ -1,0 +1,25 @@
+{
+  "cash_identity_max": 3.49246e-10,
+  "cash_identity_bad_days": 0,
+  "max_date_in_grid": "2020-12-31",
+  "a_space_vs_pctchg_n": 75690,
+  "a_space_vs_pctchg_max_abs": 1.7136335372924805e-07,
+  "a_space_vs_pctchg_p999": 1.3783574104309082e-07,
+  "n_fills_checked": 10659,
+  "n_forced_excluded": 107,
+  "buy_at_limit_up_open": 0,
+  "sell_at_limit_down_open": 0,
+  "fills_on_suspension": 0,
+  "min_hold_days": 46,
+  "t1_violations": 0,
+  "n_trips_checked": 5245,
+  "repro_max_nav_diff": 0.0,
+  "key_metrics_first": {
+    "cagr": 0.09527545947063687,
+    "mdd": -0.5569662855836479,
+    "n_closed": 438,
+    "turnover_ann": 11.04902518859056,
+    "part_mean": 0.0034038070552039135
+  },
+  "all_pass": 1
+}

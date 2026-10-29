@@ -1,0 +1,75 @@
+{
+  "dev": {
+    "fill_price_check": {
+      "n_fills": 240,
+      "n_stop": 38,
+      "n_open": 202,
+      "max_price_diff": 0.009999999999999787,
+      "n_price_mismatch_gt_1e-6": 1,
+      "max_fee_diff": 0.06125000000000114,
+      "n_fee_mismatch_gt_0.01": 1,
+      "examples": [
+        {
+          "date": "2014-12-24 00:00:00",
+          "code": "600741.SH",
+          "kind": "stop",
+          "qty": 4300,
+          "fill": 14.98,
+          "expected": 14.99,
+          "base": 15.01,
+          "bps": 12.604
+        }
+      ]
+    },
+    "independent_ledger": {
+      "n_days": 1946,
+      "final_nav_independent": 1384856.2736697628,
+      "final_nav_unified": 1384856.2737,
+      "final_diff": -3.023725003004074e-05,
+      "max_abs_diff": 4.9853348173201084e-05,
+      "max_rel_diff": 5.227305578233449e-11,
+      "n_days_diff_gt_1yuan": 0,
+      "n_ca_rows": 2
+    }
+  },
+  "val": {
+    "fill_price_check": {
+      "n_fills": 379,
+      "n_stop": 37,
+      "n_open": 342,
+      "max_price_diff": 0.009999999999999787,
+      "n_price_mismatch_gt_1e-6": 1,
+      "max_fee_diff": 0.059499999999999886,
+      "n_fee_mismatch_gt_0.01": 3,
+      "examples": [
+        {
+          "date": "2020-02-03 00:00:00",
+          "code": "000429.SZ",
+          "kind": "stop",
+          "qty": 5400,
+          "fill": 7.26,
+          "expected": 7.25,
+          "base": 7.269999980926514,
+          "bps": 16.821
+        }
+      ]
+    },
+    "independent_ledger": {
+      "n_days": 1218,
+      "final_nav_independent": 879751.1212474064,
+      "final_nav_unified": 879751.1212,
+      "final_diff": 4.7406298108398914e-05,
+      "max_abs_diff": 4.9998750910162926e-05,
+      "max_rel_diff": 5.6435527289979115e-11,
+      "n_days_diff_gt_1yuan": 0,
+      "n_ca_rows": 10
+    }
+  },
+  "causality": {
+    "n_checked": 480,
+    "n_signal_samples": 200,
+    "n_other_samples": 200,
+    "n_mismatch": 0,
+    "pass": true
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "generated_at_local": "2026-10-29T03:34:25",
+  "tag": "[FINAL-DELIVERY-2026-10-29]",
+  "n_checks": 44,
+  "n_pass": 44,
+  "n_fail": 0,
+  "checks": [
+    {
+      "check": "deliverables_exist",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "根目录"
+    },
+    {
+      "check": "conclusion_json_parses",
+      "pass": true,
+      "detail": "04_最终结论.json",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "conclusion_schema",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "conclusion_no_candidate",
+      "pass": true,
+      "detail": "n_candidates=0",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "conclusion_60_rejected",
+      "pass": true,
+      "detail": "annualized_60pct_supported=False",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "conclusion_holdout_not_run",
+      "pass": true,
+      "detail": "holdout.run=False",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "conclusion_main_candidate_discard",
+      "pass": true,
+      "detail": "T0005 decision=discard",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "onepager_required_terms",
+      "pass": true,
+      "detail": "含 60%/DSR/PBO/N_sel/T0005/留出/证据等级",
+      "evidence": "00_一页纸.md"
+    },
+    {
+      "check": "report_covers_q1_q6",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "report_covers_all_families",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "report_covers_cross_cutting",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "report_keeps_negative_and_retractions",
+      "pass": true,
+      "detail": "含 V1 0 笔、tp8 撤回",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "rulebook_label",
+      "pass": true,
+      "detail": "含“研究结论版/未通过验证”",
+      "evidence": "02_规则手册_研究结论版.md"
+    },
+    {
+      "check": "rulebook_not_live_system",
+      "pass": true,
+      "detail": "含“不构成实盘/不是可实盘”与“可证伪”",
+      "evidence": "02_规则手册_研究结论版.md"
+    },
+    {
+      "check": "rulebook_separates_verified_unverified",
+      "pass": true,
+      "detail": "可证伪风险原则与未验证退出规则分节",
+      "evidence": "02_规则手册_研究结论版.md"
+    },
+    {
+      "check": "data_doc_facts",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "03_数据与复现说明.md"
+    },
+    {
+      "check": "no_forbidden_claims",
+      "pass": true,
+      "detail": "hits=[]",
+      "evidence": "四份 Markdown"
+    },
+    {
+      "check": "report_states_holdout_not_run",
+      "pass": true,
+      "detail": "报告声明 2021+ 未运行",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "report_holdout_reasons",
+      "pass": true,
+      "detail": "含无留出理由",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "verify_all_pass",
+      "pass": true,
+      "detail": "51/51 PASS",
+      "evidence": "verify()"
+    },
+    {
+      "check": "counts_match_current_ledger",
+      "pass": true,
+      "detail": "N_sel=733, N_cell=1251, N_diag=454, rows=1699 (expect 733/1251/454/1699)",
+      "evidence": "03_结果/最终试验总账.csv"
+    },
+    {
+      "check": "t0005_in_ledger",
+      "pass": true,
+      "detail": "T0005 done 行存在",
+      "evidence": "03_结果/最终试验总账.csv"
+    },
+    {
+      "check": "budget_ratio_documented",
+      "pass": true,
+      "detail": "N_sel/64 的倍数在报告披露",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "t0005_numbers_in_docs",
+      "pass": true,
+      "detail": "报告含 dev 4.16% 与 val 2.53%",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "final_calibers_consistent",
+      "pass": true,
+      "detail": "配置级 5/10 行 + 行级 12/8（1 S1）+ 覆盖 505/228 + 小盘 val -0.03% 已写入",
+      "evidence": "04_最终结论.json；最终判定.json；00_一页纸.md；01_完整报告.md"
+    },
+    {
+      "check": "families_count_18",
+      "pass": true,
+      "detail": "families=18",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "questions_count_6",
+      "pass": true,
+      "detail": "questions=6",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "cross_cutting_keys_13",
+      "pass": true,
+      "detail": "missing=[]",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "limits_count_ge_10",
+      "pass": true,
+      "detail": "limits=20",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "restrictions_all_true",
+      "pass": true,
+      "detail": "restrictions={'no_2021_plus_returns': True, 'no_target_backsolving': True, 'no_current_buy_sell_advice': True, 'no_live_trading_claim': True, 'negative_results_retained': True, 'append_only_registry_and_ledger': True}",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "statement_mentions_t0005",
+      "pass": true,
+      "detail": "verdict.statement 提到 T0005",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "registry_rows_10",
+      "pass": true,
+      "detail": "registry rows=10",
+      "evidence": "03_结果/实验注册表.csv"
+    },
+    {
+      "check": "ledger_ablation_rows_30",
+      "pass": true,
+      "detail": "30 行消融（15 配置×2 窗口）",
+      "evidence": "03_结果/最终试验总账.csv"
+    },
+    {
+      "check": "ledger_sensitivity_rows_36",
+      "pass": true,
+      "detail": "36 行邻域（18 配置×2 窗口）",
+      "evidence": "03_结果/最终试验总账.csv"
+    },
+    {
+      "check": "report_cites_2021_scan",
+      "pass": true,
+      "detail": "报告含绩效表扫描与 0 个 2021+ 收益",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "rulebook_has_param_table",
+      "pass": true,
+      "detail": "规则手册含研究用参数表",
+      "evidence": "02_规则手册_研究结论版.md"
+    },
+    {
+      "check": "docs_no_stale_family_best",
+      "pass": true,
+      "detail": "报告已把主候选与族内真实最高分列，并写 32 个两段为正（旧值只在撤回索引）",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "docs_no_stale_gate_cells",
+      "pass": true,
+      "detail": "G2/G6/G8 旧单元格已清",
+      "evidence": "00_一页纸.md；01_完整报告.md"
+    },
+    {
+      "check": "docs_scope_and_60pct",
+      "pass": true,
+      "detail": "主板声明已限定为分族；60% 措辞已改",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "docs_vcb_disclosures",
+      "pass": true,
+      "detail": "VCB 250 日强平与成本偏离已披露",
+      "evidence": "01_完整报告.md"
+    },
+    {
+      "check": "docs_data_limits",
+      "pass": true,
+      "detail": "双源 OHLC 与 v1 两分母已改",
+      "evidence": "01_完整报告.md；03_数据与复现说明.md"
+    },
+    {
+      "check": "acceptance_status_final",
+      "pass": true,
+      "detail": "review_status=四原审计员终验均PASS，方法N7/N8已随后修正",
+      "evidence": "04_最终结论.json"
+    },
+    {
+      "check": "closure_file_present",
+      "pass": true,
+      "detail": "closure items=35 unmapped=0",
+      "evidence": "04_证据/最终审计剩余项关闭.json"
+    },
+    {
+      "check": "no_external_zero_open_claim",
+      "pass": true,
+      "detail": "根 JSON 明确不宣称外部 0 open",
+      "evidence": "04_最终结论.json"
+    }
+  ]
+}

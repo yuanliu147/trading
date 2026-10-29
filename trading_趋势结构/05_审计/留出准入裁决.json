@@ -1,0 +1,1744 @@
+{
+  "schema": "holdout_admission_verdict/v2",
+  "meta": {
+    "role": "independent_admission_adjudicator",
+    "not_involved_in_strategy_design": true,
+    "generated_at": "2026-10-29",
+    "project_root": "/Users/admin/WorkSpace/trading/trading_趋势结构",
+    "data_version": "v2-adjspace-2026-10-28",
+    "freeze_date": "2026-10-26",
+    "data_selfcheck": {
+      "file": "01_数据/_audit/自检结果.json",
+      "generated_at": "2026-10-29T00:05:24",
+      "version": "v2-adjspace-2026-10-28",
+      "pass": 28,
+      "fail": 0
+    },
+    "adjust_space_acceptance": {
+      "file": "01_数据/_audit/修复后自检报告.md",
+      "hfq_ret_vs_pct_chg_max_abs_diff": 4.3e-15,
+      "n_pairs_checked": 16676415,
+      "v1_defect_share_gt_1bp": 0.941,
+      "note": "v1 hfq=raw×factor 双计收益；v2 hfq=raw×A，日收益==pct_chg"
+    },
+    "discipline": {
+      "read_only_on_others_files": true,
+      "new_parameter_search": false,
+      "ran_2021_plus_returns": false,
+      "holdout_run": false,
+      "files_written": [
+        "05_审计/留出准入裁决.md",
+        "05_审计/留出准入裁决.json",
+        "05_审计/审计问题处置表.csv",
+        "05_审计/2021+未评估文件封存清单.csv",
+        "05_审计/2021+未评估文件封存说明.md",
+        "02_代码/封存2021文件.py"
+      ]
+    },
+    "revision": 2,
+    "as_of": "2026-10-29T02:12（当前事实；初版为 2026-10-29T00:37，仅存于 initial_snapshot/附录 A）",
+    "revised_at": "2026-10-29T02:12",
+    "supersedes": "05_审计/留出准入裁决.json#initial_snapshot（初版 00:37；当前文件是 v2 修订版，不是初版）",
+    "appendix_a": {
+      "current_bytes": 42886,
+      "current_sha256": "d0cdf4ea7a55ecc92c156c6a5f4360ddf80a80f6015fbf56f548da8c3c05a302",
+      "recomputable_from_appendix_content": true,
+      "initial_file_bytes": 42550,
+      "initial_file_sha256": "ddd8a22016668135d52789a299310d41df38c010f9e7452ceec57e19d487dffa",
+      "initial_file_retained": false,
+      "file_list_note": "文件清单.csv 只记录修订版文件的大小与 SHA-256；不保留初版文件。"
+    },
+    "revision_note": "事实与理由更新，裁决不变：0 个候选获准、2021+ 不运行。初版的 'PROCEDURAL_NO_DONE_VAL_TRIAL' 与 6 行注册表/N=365/DSR=0.0003 已过期。当前 v2 的 as_of 是 2026-10-29T02:12；初版 00:37 只在 initial_snapshot/附录 A。"
+  },
+  "decision": {
+    "admit_any_candidate": false,
+    "n_admitted": 0,
+    "run_holdout_2021plus": false,
+    "not_running_is_discipline_not_omission": true,
+    "statement": "全项目 0 个候选通过绩效/统计/预注册准入；2021+ 一次性否决测试不应运行。不运行是遵守父预注册 §5.1/§5.2/§10.3/§12.1 与任务纪律，不是遗漏。T0005/T0007 已运行且均已淘汰（discard），不是“从未运行/no done val”。",
+    "reason_codes": [
+      "NO_ELIGIBLE_CANDIDATE",
+      "PERFORMANCE_GATE_FAIL",
+      "STATISTICAL_GATE_FAIL",
+      "PREREG_ADMISSION_FAIL",
+      "E1_WALKFORWARD_NOT_ESTABLISHED",
+      "G1_60PCT_NOT_MET",
+      "NO_PASSED_VAL_TRIAL",
+      "T0005_T0007_DONE_BUT_DISCARD",
+      "POSTHOC_REGISTRATION",
+      "S3_UNREGISTERED",
+      "MULTIPLICITY_N733_VS_BUDGET64",
+      "DSR_0663E4_LT_095",
+      "PBO_0311_0756_AND_0614",
+      "MAXSTAT_MIN_0072_GT_005",
+      "OUT_DATE_LOOKAHEAD_PRESENT",
+      "VCB_DELIST_WINDOW_MISSING",
+      "HOLDOUT_NOT_PHYSICALLY_SEALED"
+    ],
+    "historical_reason_codes": [
+      "PROCEDURAL_NO_DONE_VAL_TRIAL",
+      "PROCEDURAL_NO_HOLDOUT_PLANNED_ROW",
+      "E1_WALKFORWARD_NOT_ESTABLISHED",
+      "G1_60PCT_NOT_MET",
+      "G2_MDD_35_NOT_MET",
+      "G3_CALMAR_1_5_NOT_MET",
+      "G4_WORST_12M_NOT_MET",
+      "G6_DSR_095_NOT_MET",
+      "G7_PBO_025_NOT_MET",
+      "G8_REMOVE_TOP5_40PCT_NOT_MET",
+      "G9_CAPACITY_1E8_NOT_MET",
+      "SELECTION_MDD_25_NOT_MET",
+      "S3_UNREGISTERED_SMALL_SAMPLE",
+      "S3_EVENT_LAYER_NULL",
+      "P20_EVENT_LAYER_NULL",
+      "MULTIPLICITY_N_AT_LEAST_542_VS_BUDGET_64",
+      "RANDOM_NULL_SWING_10PP",
+      "ACCOUNT_PATH_NOISE_5_TO_10PP",
+      "OUT_DATE_LOOKAHEAD_PRESENT"
+    ],
+    "headline_numbers": {
+      "registry_rows": 10,
+      "registry_trials_cumulative": 35,
+      "holdout_rows": 0,
+      "n_sel": 733,
+      "n_cell": 1251,
+      "n_diag": 454,
+      "n_platform": 257,
+      "n_audit": 87,
+      "ledger_rows": 1699,
+      "a_candidate": 0,
+      "b_conditional": 5,
+      "g_pass": 5,
+      "two_window_positive": 32,
+      "two_window_positive_by_family": {
+        "TREND": 5,
+        "VCB": 18,
+        "SMALL": 9
+      },
+      "two_window_positive_and_mdd25": 5,
+      "project_dsr_N733": 0.000662754421907755,
+      "project_sr0_annual": 1.648894753929204,
+      "project_var_sr_daily": 0.0011164356612968494,
+      "project_dsr_N990": 0.0004262688218779341,
+      "project_dsr_N1444": 0.00024346836215178422,
+      "budget_select": 40,
+      "budget_with_ablation": 64,
+      "overrun_x_64": 11.45,
+      "overrun_x_40": 18.33,
+      "best_dev_cagr": 0.203991,
+      "best_dev_config": "SMALLLOWVOL:ADVQ12_s5_h40",
+      "best_dev_mdd": -0.691508,
+      "best_dev_val_cagr": 0.032787,
+      "best_val_cagr": 0.087049,
+      "best_val_config": "VCB:VCB-N120_T40",
+      "best_val_dev_cagr": 0.083238,
+      "best_val_mdd": -0.206223,
+      "best_min_dev_val": 0.083238,
+      "t0005_dev_cagr": 0.0415681578,
+      "t0005_dev_mdd": -0.090535,
+      "t0005_val_cagr": -0.0253422801,
+      "t0005_val_mdd": -0.13798,
+      "t0005_pbo_dev_val": [
+        0.310645,
+        0.756488
+      ],
+      "vcb_pbo": 0.614286,
+      "maxstat_min_16": 0.071964,
+      "maxstat_min_9_matrices": 0.374,
+      "family_dsr_t0005": 0.958504,
+      "family_dsr_vcb_n120": 0.113875,
+      "dsr_null_p95": 0.840672,
+      "n_2021plus_files": 34,
+      "n_2021plus_files_A": 3,
+      "n_2021plus_files_B": 7,
+      "n_2021plus_files_C": 24,
+      "n_2021plus_with_strategy_performance": 0,
+      "state_file_rows": 1406,
+      "state_file_sha256": "e1341069a72327571c993b76a9243d0fede081ce231deab5d22607f4f84f182d"
+    }
+  },
+  "current_facts": {
+    "registry": {
+      "file": "03_结果/实验注册表.csv",
+      "rows": 10,
+      "composition": "4 meta + 1 audit + T0005 rev1 planned + T0005 rev2 done/discard + T0007 done/discard + T0008 done + T0009 done",
+      "t0005_rev1": {
+        "stage": "dev",
+        "status": "planned",
+        "decision": "inconclusive",
+        "note": "历史锚点；不代表当前状态"
+      },
+      "t0005_rev2": {
+        "stage": "dev",
+        "status": "done",
+        "decision": "discard",
+        "registered_at_utc": "2026-10-28T17:01:33+00:00",
+        "note": "本地 2026-10-29 01:01 补登记；dev +4.16%"
+      },
+      "t0007": {
+        "stage": "val",
+        "status": "done",
+        "decision": "discard",
+        "parent_trial": "T0005",
+        "registered_at_utc": "2026-10-28T17:01:33+00:00",
+        "note": "[FINAL-DELIVERY-2026-10-29] 验证段补登记；val -2.53%"
+      },
+      "t0008": {
+        "kind": "ablation",
+        "n_configs": 15,
+        "status": "done",
+        "decision": "discard"
+      },
+      "t0009": {
+        "kind": "sensitivity",
+        "n_configs": 18,
+        "status": "done",
+        "decision": "discard"
+      },
+      "holdout_rows": 0,
+      "trials_cumulative": 35
+    },
+    "counts": {
+      "file": "03_结果/最终统计/最终计数.csv",
+      "rows": 1699,
+      "N_sel": 733,
+      "N_cell": 1251,
+      "N_diag": 454,
+      "N_platform": 257,
+      "N_sens_subset": 235,
+      "N_audit": 87,
+      "grades": {
+        "A_candidate": 0,
+        "B_conditional": 5,
+        "C_negative_valid": 364,
+        "E_underpowered": 42,
+        "F_unevaluable": 35,
+        "W_window_mixed": 32
+      }
+    },
+    "statistics": {
+      "dsr_ladder": {
+        "N733": {
+          "dsr": 0.000662754421907755,
+          "sr0_annual": 1.648894753929204,
+          "var_sr_daily": 0.0011164356612968494
+        },
+        "N990": 0.0004262688218779341,
+        "N1444": 0.00024346836215178422
+      },
+      "pbo": {
+        "t0005_dev": 0.310645,
+        "t0005_val": 0.756488,
+        "vcb": 0.614286,
+        "smallcap_dev": 0.241,
+        "smallcap_val": 0.338
+      },
+      "maxstat": {
+        "n_16_min": 0.071964,
+        "argmin_16": "VCB dev",
+        "n_9_matrices_min": 0.374,
+        "argmin_9": "trend_dev",
+        "n_below_005": 0
+      },
+      "family_dsr": {
+        "T0005": 0.958504,
+        "VCB-N120_T40": 0.113875,
+        "note": "T0005 的 0.9585 来自 18 个高度相关邻域、Var(SR) 低估，不可当门槛；0.84 是 dsr_null_p95，不是 DSR。"
+      }
+    },
+    "2021plus": {
+      "sealing_csv": "05_审计/2021+未评估文件封存清单.csv",
+      "sealing_md": "05_审计/2021+未评估文件封存说明.md",
+      "scanner": "02_代码/封存2021文件.py",
+      "files_total": 34,
+      "tier_A": 3,
+      "tier_B": 7,
+      "tier_C": 24,
+      "with_strategy_performance": 0,
+      "state_file": {
+        "path": "03_结果/市场状态/市场状态_日频许可_扩展2021_2026_未评估.csv",
+        "rows": 1406,
+        "cols": 17,
+        "date_range": "2021-01-04..2026-10-26",
+        "sha256": "e1341069a72327571c993b76a9243d0fede081ce231deab5d22607f4f84f182d",
+        "has_returns": false
+      },
+      "feature_caches_with_returns": [
+        "03_结果/市场状态_缓存/index_feat.parquet",
+        "03_结果/市场状态_缓存/market_feature.parquet"
+      ],
+      "performance_rows_after_2020": 0
+    },
+    "pipeline_guards": {
+      "frozen_panel_raises_after_2020": "02_代码/统一数据适配.py:147,292",
+      "mkt_eval_end": "02_代码/策略族_市场状态.py:56,497,797,915",
+      "trend_analysis_end": "02_代码/策略族_趋势.py:56,1161",
+      "struct_holdout_start": "02_代码/策略族_结构.py:59,1449",
+      "stat_guard_performance": "02_代码/统计验证.py:110-127"
+    }
+  },
+  "gate_status": {
+    "A_procedural": {
+      "status": "FAIL",
+      "detail": "T0005/T0007 均 done，但均 discard；0 个 holdout planned 行；S3 4 个通过者未登记 trial_id。初版 'no done val' 已改为 'no PASSED val'。"
+    },
+    "B_selection": {
+      "status": "FAIL_AT_R",
+      "detail": "5 个过 §7.9.5（4 S3 + VCB-P20_T40）；全部 B_conditional。4 个 S3 的 fail_gate=R_fail_posthoc；VCB-P20 为 R_fail_grid_promotion；均带 S_unverified;T_fail_stat。"
+    },
+    "C_evidence": {
+      "status": "FAIL",
+      "detail": "E1-EVID 未建立（walk-forward 4 折、训练段不选参）；G1 未被直接检验。"
+    },
+    "D_robust": {
+      "status": "FAIL",
+      "detail": "P20 过 G2/G4，败于 G1/G3/G6/G7/G8；T40 dev -36.3%（差 1.3pp）、N120 dev -35.3%（差 0.3pp）；DSR 6.63e-4、PBO 0.614。"
+    },
+    "E_data": {
+      "status": "CONDITIONAL_FAIL",
+      "detail": "out_date 前视 0.0158% 信号；VCB signal_mask 未实现 delist_window；停牌强平跨族未量化；2021+ 状态/特征已登记但未物理隔离。"
+    }
+  },
+  "corrections": [
+    {
+      "id": "registry_rows",
+      "initial": "6 行",
+      "current": "10 行",
+      "where": "初版 §0.2/§5.9"
+    },
+    {
+      "id": "t0005_status",
+      "initial": "planned、从未运行",
+      "current": "rev2 done / discard（dev +4.16%）",
+      "where": "初版 §0.2/§4.1 第 5 条/§5.9"
+    },
+    {
+      "id": "t0007",
+      "initial": "不存在",
+      "current": "done / discard（val -2.53%，parent=T0005，01:01 补登记）",
+      "where": "初版 §5.9"
+    },
+    {
+      "id": "done_val",
+      "initial": "没有任何 done val 试验",
+      "current": "2 个 done val（T0005/T0007），但都 discard；没有通过 val 的父试验",
+      "where": "初版 §0.2/§5.9"
+    },
+    {
+      "id": "n_sel",
+      "initial": "365（估计 542-686）",
+      "current": "733",
+      "where": "初版 §0.3/§5.5"
+    },
+    {
+      "id": "project_dsr",
+      "initial": "0.0003（N=365）",
+      "current": "6.6275e-4（N=733）",
+      "where": "初版 §5.4/§5.5"
+    },
+    {
+      "id": "best_dev",
+      "initial": "+9.35%（TREND S4）",
+      "current": "+20.40%（SMALL ADVQ12_s5_h40）；+9.35% 只是 TREND 族内最好",
+      "where": "初版 §3/§5.1 headline"
+    },
+    {
+      "id": "two_window_positive",
+      "initial": "24",
+      "current": "32（TREND 5 + VCB 18 + SMALL 9）",
+      "where": "初版 §3/§5.5"
+    },
+    {
+      "id": "vcb_count",
+      "initial": "34（族声明）",
+      "current": "34 声明 vs 32 总账（22 N_sel + 10 diag），差 2 未映射",
+      "where": "初版 §3"
+    },
+    {
+      "id": "structrev_count",
+      "initial": "31/32",
+      "current": "30 N_sel + 1 diag；31 是合并计数",
+      "where": "初版 §3"
+    },
+    {
+      "id": "family_dsr",
+      "initial": "最好 DSR 0.84（VCB-N120）",
+      "current": "T0005 0.9585（不可用）/ VCB-N120 0.1139；0.84=dsr_null_p95",
+      "where": "初版 §5.4"
+    },
+    {
+      "id": "maxstat",
+      "initial": "最小 p=0.374",
+      "current": "9 矩阵最小 0.374；16 个族×窗口最小 0.071964（VCB dev）",
+      "where": "初版 §5.4"
+    },
+    {
+      "id": "s3_flat",
+      "initial": "46%-50% 空仓；平均 1.3-2.1 只",
+      "current": "46.2%-83.8% 空仓；平均 0.39-2.13 只",
+      "where": "初版 §4.1"
+    },
+    {
+      "id": "vcb_delist_direction",
+      "initial": "缺 delist_window 方向保守",
+      "current": "方向未证明；基准 delist_haircut=0 偏乐观约 0.63pp",
+      "where": "初版 §5.6"
+    },
+    {
+      "id": "sealing",
+      "initial": "建议留出前封存状态文件",
+      "current": "34 文件机器清单（A=3/B=7/C=24），含策略绩效 0；逻辑封存",
+      "where": "初版 §5.8/§7.7"
+    }
+  ],
+  "criteria": {
+    "A_procedural": {
+      "source": "00_研究预注册.md §5.2/§10.3/§14.3",
+      "requirements": [
+        "candidate has a done val trial in the official registry",
+        "holdout has its own planned row with params identical to val",
+        "globally at most one non-rejected/invalid holdout"
+      ]
+    },
+    "B_selection": {
+      "source": "00_研究预注册.md §7.9.5",
+      "requirements": [
+        "both segments net CAGR > 0",
+        "both segments max drawdown <= 25%",
+        "each segment >= 30 closed trades and >= 10 stocks",
+        "rank score = min(dev_cagr,val_cagr)/max(dev_mdd,val_mdd)"
+      ]
+    },
+    "C_evidence": {
+      "source": "00_研究预注册.md §10.1/§12.1 G1",
+      "requirements": [
+        "5-fold walk-forward 3y train/1y test/1y step/5d embargo with parameter selection inside training",
+        "G1 requires both E1-EVID walk-forward stitched and E2-EVID holdout >= 60%"
+      ]
+    },
+    "D_robustness": {
+      "source": "00_研究预注册.md §12.1 G2-G9",
+      "requirements": [
+        "MDD <= 35%",
+        "Calmar >= 1.5",
+        "worst rolling 12m >= -20%",
+        "bootstrap 5th pct CAGR >= 20%",
+        "DSR >= 0.95",
+        "PBO <= 0.25",
+        "cost x2 + delay 1d + remove top5 still >= 40% annualized",
+        "1e8 capital >= 30% annualized"
+      ]
+    },
+    "E_data": {
+      "source": "00_研究预注册.md §12.1 G10/§4.4/§6",
+      "requirements": [
+        "no unresolved look-ahead, suspension, delisting, adjustment defect",
+        "causal truncation recomputation consistent"
+      ]
+    },
+    "task_extra": "all parent gates passed AND independent coordinator approval before any 2021+ run"
+  },
+  "excluded_artifacts": [
+    {
+      "id": "STAT@walkforward_fold",
+      "reported_value": 0.6044,
+      "why_excluded": "one fold's OOS year, not a stitched project walk-forward; 4 folds, no parameter selection, audit M6 says E1-EVID not established"
+    },
+    {
+      "id": "STRUCT@G_ma_structure_tp8",
+      "reported_value": 0.0734,
+      "why_excluded": "pooled 2008-2020, no separate val NAV; audit says tp8 drops failed exits (-15.4% average) and the positive becomes negative when forced exit is applied"
+    },
+    {
+      "id": "突破回踩_nopull",
+      "reported_value": {
+        "dev": 0.82,
+        "val": 1.0755
+      },
+      "why_excluded": "look-ahead conditional subset: requires knowing the stock will not pull back within W days; not an executable strategy"
+    }
+  ],
+  "holdout": {
+    "run": false,
+    "why": [
+      "绩效：0 个 A_candidate；5 个过 §7.9.5 的配置全部 B_conditional、事件层为零/去尾即负；T0005 已运行并淘汰；最高 min(dev,val)=8.32%/8.70%，离 60% 约 7 倍。",
+      "统计：项目级 DSR 6.63e-4（N=733）；PBO 0.311/0.756 与 0.614；max-stat 最小 0.071964；没有 p<0.05。",
+      "预注册：E1-EVID 未建立；0 个 holdout planned 行；T0005/T0007 虽 done 但均 discard，且为 01:01 事后补登记，不能作为留出前置；S3 未登记。",
+      "资源：5 年留出、σ 20-30% 时年化标准误 9-13pp；只能否决强负结果，不能确认低个位数。",
+      "全局只允许一个 holdout；为非候选消耗唯一 E2-EVID 是负期望。"
+    ],
+    "power": {
+      "window_years": 5,
+      "sigma_20_se_pp": 8.94,
+      "sigma_30_se_pp": 13.4,
+      "sigma_40_se_pp": 17.9,
+      "can_confirm_low_single_digit": false,
+      "only_rejects_strong_negative": true,
+      "source": "00_研究预注册.md §2.4"
+    },
+    "is_omission": false,
+    "statement": "不跑留出是纪律，不是遗漏；正确的交付是 0 个候选 + 真实量级 + 负结果。"
+  },
+  "what_would_change_the_verdict": [
+    "new preregistration with a new trial_id in the finite family, written before running, with power analysis and stopping rule",
+    "both segments CAGR>0 and both MDD<=25%, >=30 trades and >=10 stocks per segment",
+    "event-layer date-clustered bootstrap 95% lower bound >0 with >=200 events/>=100 signal days",
+    "remove-top5 still >=40% annualized; cost x2 + delay 1d still >=40%; 1e8 capital >=30%",
+    "DSR>=0.95 and PBO<=0.25 with the true N including all failures/ablations/platform cells",
+    "E1-EVID established per §10.1: 5 folds, 3y train/1y test/1y step, embargo 5d, parameters selected in training",
+    "out_date look-ahead removed (use t-known delisting risk flag), data layer v2 A-space, full unified-engine replication",
+    "independent coordinator approval before the one-time holdout"
+  ],
+  "artifacts": {
+    "this_md": "05_审计/留出准入裁决.md",
+    "this_json": "05_审计/留出准入裁决.json",
+    "sealing_csv": "05_审计/2021+未评估文件封存清单.csv",
+    "sealing_md": "05_审计/2021+未评估文件封存说明.md",
+    "sealing_scanner": "02_代码/封存2021文件.py",
+    "disposition_csv": "05_审计/审计问题处置表.csv",
+    "inputs": [
+      "00_研究预注册.md",
+      "03_结果/统计整合/01_整合结论.md",
+      "03_结果/统计整合/候选分级.csv",
+      "03_结果/统计整合/多重性.json",
+      "03_结果/统计整合/零假设校准.csv",
+      "03_结果/试验总账.csv",
+      "03_结果/实验注册表.csv",
+      "03_结果/趋势族/组合模拟_汇总.csv",
+      "03_结果/趋势族/交易明细_全部.parquet",
+      "03_结果/趋势族/信号事件_明细.parquet",
+      "03_结果/候选_收缩突破/报告_收缩突破.md",
+      "03_结果/候选_收缩突破/组合_汇总_全部.csv",
+      "03_结果/候选_收缩突破/统计诊断.json",
+      "03_结果/候选_小盘低波趋势/00_一页纸_小盘低波趋势.md",
+      "03_结果/候选_小盘低波趋势/17_关键数字.json",
+      "03_结果/候选_小盘低波趋势/10_组合_网格.csv",
+      "03_结果/候选_突破回踩/05_组合_汇总.csv",
+      "03_结果/候选_长期双动量/04_统计检验.json",
+      "03_结果/候选_结构内反转/00_一页纸_结构内反转.md",
+      "03_结果/统一引擎/结果摘要.md",
+      "03_结果/统一引擎/口径冲突与裁决.md",
+      "05_审计/复权修复影响.md",
+      "05_审计/独立复现_基线.md",
+      "05_审计/第一阶段代码与负结果审计.md",
+      "01_数据/_audit/自检结果.json",
+      "01_数据/meta.json",
+      "03_结果/最终统计/最终计数.csv",
+      "03_结果/最终统计/统一门槛.csv",
+      "03_结果/最终统计/族内DSR.csv",
+      "03_结果/最终统计/最终判定.json",
+      "03_结果/实验注册表.csv",
+      "05_审计/最终数值审计.md",
+      "05_审计/最终方法代码审计.md",
+      "05_审计/最终反方审计.md",
+      "05_审计/最终交付审计.md"
+    ]
+  },
+  "limitations": [
+    "本版未重跑策略、未计算 2021+ 收益；数字来自现成产物的只读复核。",
+    "0 候选依赖 478 行门槛表与 1,699 行总账；未逐配置重算 733 个回测。",
+    "5 个过 §7.9.5 的配置仍是 B_conditional；没有升级，也没有用它们反推 60%。",
+    "不跑留出是决定，不是“任何策略都不可能 60%”的证明；G1 未被直接检验，2021-2025 未运行。",
+    "封存是逻辑封存（哈希 + 清单 + 禁止契约），不是权限隔离；A 级文件仍在项目树内。",
+    "T0005/T0007 的“事后补登记”依据注册表时间戳与 note；哈希链不能防整表重写并重算。",
+    "DSR 跨口径不单调；365→733 的变化不能读成“N 越大 DSR 越低”。"
+  ],
+  "initial_snapshot": {
+    "meta": {
+      "role": "independent_admission_adjudicator",
+      "not_involved_in_strategy_design": true,
+      "generated_at": "2026-10-29",
+      "project_root": "/Users/admin/WorkSpace/trading/trading_趋势结构",
+      "data_version": "v2-adjspace-2026-10-28",
+      "freeze_date": "2026-10-26",
+      "data_selfcheck": {
+        "file": "01_数据/_audit/自检结果.json",
+        "generated_at": "2026-10-29T00:05:24",
+        "version": "v2-adjspace-2026-10-28",
+        "pass": 28,
+        "fail": 0
+      },
+      "adjust_space_acceptance": {
+        "file": "01_数据/_audit/修复后自检报告.md",
+        "hfq_ret_vs_pct_chg_max_abs_diff": 4.3e-15,
+        "n_pairs_checked": 16676415,
+        "v1_defect_share_gt_1bp": 0.941,
+        "note": "v1 hfq=raw×factor 双计收益；v2 hfq=raw×A，日收益==pct_chg"
+      },
+      "discipline": {
+        "read_only_on_others_files": true,
+        "new_parameter_search": false,
+        "ran_2021_plus_returns": false,
+        "holdout_run": false,
+        "files_written": [
+          "05_审计/留出准入裁决.md",
+          "05_审计/留出准入裁决.json"
+        ]
+      }
+    },
+    "decision": {
+      "admit_any_candidate": false,
+      "n_admitted": 0,
+      "run_holdout_2021plus": false,
+      "not_running_is_discipline_not_omission": true,
+      "statement": "全项目 0 个候选通过准入。2021+ 一次性否决测试不应运行；不运行是遵守父预注册 §5.1/§5.2/§10.3/§12.1 与任务默认纪律，不是遗漏。",
+      "reason_codes": [
+        "PROCEDURAL_NO_DONE_VAL_TRIAL",
+        "PROCEDURAL_NO_HOLDOUT_PLANNED_ROW",
+        "E1_WALKFORWARD_NOT_ESTABLISHED",
+        "G1_60PCT_NOT_MET",
+        "G2_MDD_35_NOT_MET",
+        "G3_CALMAR_1_5_NOT_MET",
+        "G4_WORST_12M_NOT_MET",
+        "G6_DSR_095_NOT_MET",
+        "G7_PBO_025_NOT_MET",
+        "G8_REMOVE_TOP5_40PCT_NOT_MET",
+        "G9_CAPACITY_1E8_NOT_MET",
+        "SELECTION_MDD_25_NOT_MET",
+        "S3_UNREGISTERED_SMALL_SAMPLE",
+        "S3_EVENT_LAYER_NULL",
+        "P20_EVENT_LAYER_NULL",
+        "MULTIPLICITY_N_AT_LEAST_542_VS_BUDGET_64",
+        "RANDOM_NULL_SWING_10PP",
+        "ACCOUNT_PATH_NOISE_5_TO_10PP",
+        "OUT_DATE_LOOKAHEAD_PRESENT"
+      ],
+      "headline_numbers": {
+        "project_dsr_N365": 0.0003,
+        "project_sr0_annual": 1.69,
+        "project_sr_hat_annual": 0.466,
+        "project_best_dev_cagr": 0.0935,
+        "project_best_dev_strategy": "TREND@S4_结构突破55",
+        "n_sel_integration": 365,
+        "n_sel_estimate_lower": 542,
+        "n_sel_estimate_upper": 686,
+        "prereg_budget": 64,
+        "budget_overrun_x_lower": 8.47,
+        "best_two_window_cagr_val": 0.0871,
+        "best_two_window_strategy": "VCB-N120_T40 (by CAGR; fails selection MDD)",
+        "best_selection_gate_pass": "VCB-P20_T40 (+6.51%/+5.38%, MDD -23.6%/-15.6%; event layer null)",
+        "best_two_window_dev_mdd": -0.3527,
+        "best_two_window_dsr_range": [
+          0.765,
+          0.841
+        ],
+        "best_two_window_pbo": 0.614,
+        "n_candidates_two_window_positive": 24,
+        "n_candidates_two_window_positive_note": "TREND 5 + VCB 10 portfolio config×exit cells + smallcap 9 grid configs; other families none (STRUCT has no separate val NAV)",
+        "n_candidates_two_window_positive_and_mdd25": 5,
+        "all_five_are": "4 TREND@S3 exit-rule variants (unregistered) + VCB-P20_T40 (sensitivity cell)"
+      }
+    },
+    "criteria": {
+      "A_procedural": {
+        "source": "00_研究预注册.md §5.2/§10.3/§14.3",
+        "requirements": [
+          "candidate has a done val trial in the official registry",
+          "holdout has its own planned row with params identical to val",
+          "globally at most one non-rejected/invalid holdout"
+        ]
+      },
+      "B_selection": {
+        "source": "00_研究预注册.md §7.9.5",
+        "requirements": [
+          "both segments net CAGR > 0",
+          "both segments max drawdown <= 25%",
+          "each segment >= 30 closed trades and >= 10 stocks",
+          "rank score = min(dev_cagr,val_cagr)/max(dev_mdd,val_mdd)"
+        ]
+      },
+      "C_evidence": {
+        "source": "00_研究预注册.md §10.1/§12.1 G1",
+        "requirements": [
+          "5-fold walk-forward 3y train/1y test/1y step/5d embargo with parameter selection inside training",
+          "G1 requires both E1 walk-forward stitched and E2 holdout >= 60%"
+        ]
+      },
+      "D_robustness": {
+        "source": "00_研究预注册.md §12.1 G2-G9",
+        "requirements": [
+          "MDD <= 35%",
+          "Calmar >= 1.5",
+          "worst rolling 12m >= -20%",
+          "bootstrap 5th pct CAGR >= 20%",
+          "DSR >= 0.95",
+          "PBO <= 0.25",
+          "cost x2 + delay 1d + remove top5 still >= 40% annualized",
+          "1e8 capital >= 30% annualized"
+        ]
+      },
+      "E_data": {
+        "source": "00_研究预注册.md §12.1 G10/§4.4/§6",
+        "requirements": [
+          "no unresolved look-ahead, suspension, delisting, adjustment defect",
+          "causal truncation recomputation consistent"
+        ]
+      },
+      "task_extra": "all parent gates passed AND independent coordinator approval before any 2021+ run"
+    },
+    "inventory": {
+      "ledger": {
+        "file": "03_结果/试验总账.csv",
+        "rows_total": 875,
+        "rows_with_meta": 875,
+        "sha256_chain_verified": true
+      },
+      "grades": {
+        "A_candidate": 0,
+        "B_conditional_rows": 12,
+        "B_conditional_configs": 8,
+        "C_negative_valid": 514,
+        "D_contaminated": 0,
+        "E_underpowered": 4,
+        "F_unevaluable": 2
+      },
+      "counts": {
+        "N_sel": 365,
+        "N_cell": 500,
+        "N_diag": 411,
+        "prereg_budget": 64,
+        "overrun_x": 5.7,
+        "post_integration_families_not_in_365": {
+          "VCB_收缩突破": 34,
+          "小盘低波_grid_configs": 63,
+          "小盘低波_all_cells": 130,
+          "突破回踩_account_configs": 22,
+          "突破回踩_platform_cells": 144,
+          "长期双动量": 26,
+          "结构内反转": 32
+        },
+        "N_sel_estimate_lower_no_platform": 542,
+        "N_sel_estimate_upper_with_platform": 686
+      },
+      "family_best": {
+        "TREND": {
+          "n": 60,
+          "best_dev": 0.0935,
+          "best_dev_id": "TREND@S4_结构突破55 纯时间60",
+          "best_val": 0.0646,
+          "best_val_id": "TREND@S3_波动收缩突破 纯时间60",
+          "two_window_positive": 5,
+          "two_window_positive_mdd25": 4
+        },
+        "STRUCT": {
+          "n": 219,
+          "best_pooled": 0.0116,
+          "best_pooled_invalid_cell": 0.0734,
+          "best_pooled_invalid_note": "G+tp8 drops failed exits; audit says positive becomes negative after forcing exit",
+          "has_separate_val_nav": false
+        },
+        "EXIT": {
+          "n": 51,
+          "best_dev": -0.0883,
+          "best_dev_note": "TB1/B0 sensitivity; 18-arm portfolio matrix best is -0.2014",
+          "best_val": -0.1978
+        },
+        "MKT": {
+          "n": 12,
+          "best_dev": 0.1389,
+          "best_dev_id": "MKT@A_状态切换_偏广度",
+          "best_dev_mdd": -0.3819,
+          "best_val": -0.0733,
+          "best_val_mdd": -0.3899
+        },
+        "ECOLOGY": {
+          "n": 14,
+          "best_dev": -0.0013,
+          "best_val": -0.022
+        },
+        "STAT": {
+          "n": 9,
+          "best_fixture": -0.0629,
+          "walkforward_folds": [
+            0.0079,
+            -0.1827,
+            0.6044,
+            -0.1286
+          ],
+          "walkforward_valid": false,
+          "walkforward_note": "4 folds, no parameter selection, not the prereg walk-forward"
+        },
+        "VCB": {
+          "n": 34,
+          "portfolio_cells": 14,
+          "two_window_positive": 10,
+          "two_window_positive_mdd25": 1,
+          "passes_selection_gate": "P20_T40",
+          "best_two_window": "T40 +5.67/+5.59",
+          "closest_by_cagr": "N120_T40 +8.33/+8.71"
+        },
+        "小盘低波": {
+          "n_grid": 63,
+          "two_window_positive": 9,
+          "two_window_positive_mdd25": 0
+        },
+        "突破回踩": {
+          "n_account": 22,
+          "n_platform": 144,
+          "two_window_positive_executable": 0
+        },
+        "长期双动量": {
+          "n": 26,
+          "two_window_positive": 0
+        },
+        "结构内反转": {
+          "n": 32,
+          "two_window_positive": 0
+        }
+      }
+    },
+    "candidates": [
+      {
+        "id": "TREND@S3_波动收缩突破",
+        "short_name": "S3 small-sample 5 configs",
+        "n_configs_two_window_positive": 5,
+        "source": [
+          "03_结果/趋势族/组合模拟_汇总.csv",
+          "03_结果/趋势族/交易明细_全部.parquet",
+          "03_结果/趋势族/信号事件_汇总.csv",
+          "03_结果/统计整合/候选分级.csv"
+        ],
+        "configs": [
+          {
+            "rule": "宽止损4ATR+时间60",
+            "dev_cagr": 0.0439,
+            "dev_mdd": -0.2026,
+            "val_cagr": 0.0389,
+            "val_mdd": -0.1091,
+            "trades_dev": 58,
+            "trades_val": 45,
+            "avg_pos_dev": 1.29,
+            "exposure_dev": 0.134,
+            "exposure_val": 0.175,
+            "top5_share_dev": 0.689,
+            "top5_share_val": 1.585,
+            "per_trade_t_dev": 2.21,
+            "per_trade_t_val": 1.14,
+            "remove5_val_negative": true
+          },
+          {
+            "rule": "纯时间60",
+            "dev_cagr": 0.039,
+            "dev_mdd": -0.2565,
+            "val_cagr": 0.0646,
+            "val_mdd": -0.0961,
+            "trades_dev": 57,
+            "trades_val": 44,
+            "avg_pos_dev": 1.6,
+            "avg_pos_val": 2.13,
+            "exposure_dev": 0.163,
+            "exposure_val": 0.212,
+            "top5_share_dev": 0.749,
+            "top5_share_val": 1.081,
+            "per_trade_t_dev": 1.88,
+            "per_trade_t_val": 1.79,
+            "remove5_val_negative": true
+          },
+          {
+            "rule": "时间40+止损2ATR",
+            "dev_cagr": 0.0102,
+            "dev_mdd": -0.212,
+            "val_cagr": 0.0187,
+            "val_mdd": -0.0936,
+            "trades_dev": 64,
+            "trades_val": 50,
+            "exposure_dev": 0.09,
+            "exposure_val": 0.114,
+            "top5_share_dev": 1.799,
+            "top5_share_val": 2.116,
+            "per_trade_t_dev": 0.95,
+            "per_trade_t_val": 0.84,
+            "remove5_val_negative": true
+          },
+          {
+            "rule": "目标2ATR+止损2",
+            "dev_cagr": 0.0046,
+            "dev_mdd": -0.0997,
+            "val_cagr": 0.0141,
+            "val_mdd": -0.0794,
+            "trades_dev": 71,
+            "trades_val": 66,
+            "exposure_dev": 0.039,
+            "exposure_val": 0.062,
+            "top5_share_dev": 1.874,
+            "top5_share_val": 1.166,
+            "per_trade_t_dev": 0.59,
+            "per_trade_t_val": 1.06,
+            "remove5_val_negative": true
+          },
+          {
+            "rule": "纯时间20",
+            "dev_cagr": 0.0188,
+            "dev_mdd": -0.0945,
+            "val_cagr": 0.0219,
+            "val_mdd": -0.1033,
+            "trades_dev": 67,
+            "trades_val": 59,
+            "exposure_dev": 0.077,
+            "exposure_val": 0.096,
+            "top5_share_dev": 0.943,
+            "top5_share_val": 1.425,
+            "per_trade_t_dev": 1.53,
+            "per_trade_t_val": 1.18,
+            "remove5_val_negative": true
+          }
+        ],
+        "event_layer": {
+          "n_events_full": 146,
+          "n_days_full": 80,
+          "n_codes_full": 140,
+          "exc20_mean_full": 0.0176,
+          "exc20_median_full": -0.0002,
+          "exc20_same_quantile_mean_full": 0.012,
+          "cluster_bootstrap_95_full": [
+            -0.0181,
+            0.0277
+          ],
+          "cluster_bootstrap_p_le_0_full": 0.386,
+          "dev": {
+            "n": 64,
+            "days": 40,
+            "mean": 0.0018,
+            "ci": [
+              -0.0304,
+              0.0197
+            ]
+          },
+          "val": {
+            "n": 79,
+            "days": 37,
+            "mean": 0.0321,
+            "ci": [
+              -0.0218,
+              0.0593
+            ]
+          },
+          "p_maxstat_trend_dev": 0.374,
+          "p_maxstat_trend_val": 0.716,
+          "family_dsr_dev": 0.33,
+          "family_dsr_val": 0.18
+        },
+        "correlation": {
+          "mean_pairwise_dev": 0.722,
+          "mean_pairwise_val": 0.674,
+          "max_pair": 0.96
+        },
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "B_selection_note": "4 of 5 pass; pure-time60 dev MDD -25.65 fails by 0.65pp",
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "partial (Baostock hfq space; 0 trade hits on adjustment defect)"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "44-71 trades per window, avg 1.3-2.1 positions, 46-50% flat days",
+          "event layer median ~0 and date-clustered 95% CI includes 0 in all windows",
+          "top5 winners are 69%-212% of total PnL; removing them makes at least one window negative",
+          "5 positives are 7 exit rules on one signal, pairwise corr 0.67-0.72; not 5 independent findings",
+          "unregistered (not in prereg family, no trial_id); official main candidate never ran",
+          "per-trade t <= 2.21 vs Bonferroni threshold ~3.2 for 42 trials"
+        ]
+      },
+      {
+        "id": "TREND@S4_结构突破55_纯时间60",
+        "short_name": "S4 single-segment positive",
+        "source": [
+          "03_结果/趋势族/净值_S4_结构突破55_纯时间60_dev.parquet",
+          "03_结果/趋势族/净值_S4_结构突破55_纯时间60_val.parquet"
+        ],
+        "dev": {
+          "cagr": 0.0935,
+          "mdd": -0.5434,
+          "worst_12m": -0.48,
+          "trades": 246,
+          "top5_share": 0.869,
+          "remove5_cum_8y": 0.131
+        },
+        "val": {
+          "cagr": -0.0983,
+          "mdd": -0.5639,
+          "worst_12m": -0.46,
+          "trades": 177
+        },
+        "null_check": {
+          "dev_null_mean": 0.0457,
+          "dev_null_sd_approx": 0.0446,
+          "expected_max_42_trials": 0.134,
+          "observed_best_below_null_max": true
+        },
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "partial (limit-pct bug fixed for wide-stop; pure-time60 unaffected)"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "single-segment positive",
+          "val -9.83%, MDD -54%/-56%",
+          "dev +9.35% is below the null expected max of 42 trials (+13.4%)",
+          "top5 86.9% of dev PnL"
+        ]
+      },
+      {
+        "id": "VCB-M_T40",
+        "short_name": "收缩突破 two-segment low single digit",
+        "source": [
+          "03_结果/候选_收缩突破/组合_汇总_全部.csv",
+          "03_结果/候选_收缩突破/统计诊断.json",
+          "03_结果/候选_收缩突破/稳健性_资金持仓成本.csv"
+        ],
+        "dev": {
+          "cagr": 0.0567,
+          "mdd": -0.3632,
+          "worst_12m": -0.209,
+          "calmar": 0.156,
+          "exposure": 0.463,
+          "avg_positions": 4.6,
+          "trades": 222,
+          "top5_share": 0.765,
+          "excess_vs_B1_pp": -5.56
+        },
+        "val": {
+          "cagr": 0.0559,
+          "mdd": -0.2615,
+          "worst_12m": -0.24,
+          "calmar": 0.214,
+          "exposure": 0.533,
+          "avg_positions": 5.3,
+          "trades": 153,
+          "top5_share": 0.98,
+          "excess_vs_B1_pp": 8.37
+        },
+        "remove_top5": {
+          "dev_cum": 0.136,
+          "dev_per_year_approx": 0.016,
+          "val_cum": 0.007,
+          "val_per_year_approx": 0.001,
+          "method": "per-code buy/sell amount reconstruction (approximate)"
+        },
+        "random_rank_control": {
+          "dev_cagr": 0.072,
+          "val_cagr": 0.0616,
+          "beats_strength_rank": true
+        },
+        "event_layer": {
+          "dev_exc20": -0.0072,
+          "dev_t": 0.05,
+          "val_exc20": 0.01,
+          "val_t": 0.16,
+          "val_after_ex_susp_extreme": 0.0009
+        },
+        "dsr": 0.622,
+        "pbo": 0.614,
+        "capm": {
+          "dev_beta": 0.25,
+          "dev_alpha": 0.028,
+          "dev_ir": -0.34,
+          "val_beta": 0.358,
+          "val_alpha": 0.07,
+          "val_ir": 0.32
+        },
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "report claims delist filter but code signal_mask has none (conservative direction)"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "dev MDD -36.3% > 25%/35%",
+          "relative excess sign flip -5.56/+8.37pp",
+          "remove top5 ~0",
+          "PBO 0.614, DSR 0.622",
+          "random rank beats strength rank",
+          "val seen under buggy v1.2-v1.3 before v1.4"
+        ]
+      },
+      {
+        "id": "VCB-P20_T40",
+        "short_name": "only VCB config passing section 7.9.5 selection gate",
+        "source": [
+          "03_结果/候选_收缩突破/组合_净值_VCB-P20_T40_2008_2015.csv",
+          "03_结果/候选_收缩突破/组合_净值_VCB-P20_T40_2016_2020.csv",
+          "03_结果/候选_收缩突破/组合_交易_VCB-P20_T40_*.csv",
+          "03_结果/候选_收缩突破/报告_收缩突破.md"
+        ],
+        "dev": {
+          "cagr": 0.0651,
+          "mdd": -0.2356,
+          "worst_12m": -0.147,
+          "calmar": 0.28,
+          "sharpe": 0.49,
+          "beta": 0.195,
+          "alpha": 0.0498,
+          "alpha_t": 1.03,
+          "ir": -0.17,
+          "trades": 161,
+          "stocks": 161,
+          "top5_share": 0.548,
+          "excess_vs_B1_pp": -4.73
+        },
+        "val": {
+          "cagr": 0.0538,
+          "mdd": -0.156,
+          "worst_12m": -0.136,
+          "calmar": 0.35,
+          "sharpe": 0.57,
+          "beta": 0.213,
+          "alpha": 0.0485,
+          "alpha_t": 1.23,
+          "ir": 0.08,
+          "trades": 86,
+          "stocks": 86,
+          "top5_share": 0.902,
+          "excess_vs_B1_pp": 8.16
+        },
+        "remove_top5": {
+          "dev_cum": 0.272,
+          "dev_per_year_approx": 0.031,
+          "val_cum": 0.035,
+          "val_per_year_approx": 0.007
+        },
+        "event_layer": {
+          "dev_exc20": -0.0108,
+          "dev_t": -0.86,
+          "val_exc20": 0.0092,
+          "val_t": -0.49,
+          "note": "event-layer null; portfolio positive not reproducible from signal"
+        },
+        "dsr_sensitivity": {
+          "N24": 0.704,
+          "N34": 0.683,
+          "val_N24": 0.725,
+          "val_N34": 0.709
+        },
+        "pbo": 0.614,
+        "gates": {
+          "A_procedural": false,
+          "B_selection": true,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "same as VCB"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "passes section 7.9.5 and G2/G4 only",
+          "event layer null (dev -1.08% t=-0.86; val +0.92% t=-0.49)",
+          "relative excess vs B1 sign flip -4.73/+8.16pp",
+          "remove5 3.4%/0.7% per year << 40%",
+          "DSR 0.68-0.73 < 0.95, PBO 0.614 > 0.25",
+          "Calmar 0.28/0.35 < 1.5",
+          "9-cell sensitivity, not main candidate; val only 86 trades"
+        ]
+      },
+      {
+        "id": "VCB-N120_T40",
+        "short_name": "closest near-miss by CAGR",
+        "source": [
+          "03_结果/候选_收缩突破/组合_净值_VCB-N120_T40_2008_2015.csv",
+          "03_结果/候选_收缩突破/组合_净值_VCB-N120_T40_2016_2020.csv",
+          "03_结果/候选_收缩突破/组合_交易_VCB-N120_T40_*.csv"
+        ],
+        "dev": {
+          "cagr": 0.0833,
+          "mdd": -0.3527,
+          "worst_12m": -0.201,
+          "calmar": 0.24,
+          "sharpe": 0.58,
+          "beta": 0.218,
+          "alpha": 0.065,
+          "alpha_t_approx": 0.6,
+          "trades": 192,
+          "top5_share": 0.579,
+          "excess_vs_B1_pp": -2.91
+        },
+        "val": {
+          "cagr": 0.0871,
+          "mdd": -0.206,
+          "worst_12m": -0.189,
+          "calmar": 0.42,
+          "sharpe": 0.68,
+          "beta": 0.306,
+          "alpha": 0.08,
+          "alpha_t_approx": 0.91,
+          "trades": 127,
+          "top5_share": 0.836,
+          "excess_vs_B1_pp": 11.49
+        },
+        "remove_top5": {
+          "dev_cum": 0.357,
+          "dev_per_year_approx": 0.039,
+          "val_cum": 0.107,
+          "val_per_year_approx": 0.02
+        },
+        "dsr_sensitivity": {
+          "N9": 0.835,
+          "N24": 0.784,
+          "N34": 0.765,
+          "val_N9": 0.841,
+          "val_N24": 0.802,
+          "val_N34": 0.788
+        },
+        "pbo": 0.614,
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "same as VCB"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "dev MDD -35.3% > 35% by 0.3pp and > 25% by 10.3pp",
+          "Calmar 0.24/0.42 < 1.5",
+          "worst12m -20.1% < -20%",
+          "DSR 0.77-0.84 < 0.95",
+          "PBO 0.614 > 0.25",
+          "dev excess vs B1 -2.91pp, alpha t<1",
+          "post-hoc sensitivity cell (9-cell platform), not main candidate",
+          "remove5 3.9%/2.0% per year << 40%"
+        ]
+      },
+      {
+        "id": "小盘低波_COMBO_10_40",
+        "short_name": "small-cap COMBO two-segment positive",
+        "source": [
+          "03_结果/候选_小盘低波趋势/13_组合_净值_主单元.csv",
+          "03_结果/候选_小盘低波趋势/12_组合_交易_主单元.csv",
+          "03_结果/候选_小盘低波趋势/17_关键数字.json",
+          "03_结果/候选_小盘低波趋势/10_组合_网格.csv"
+        ],
+        "dev": {
+          "cagr": 0.0953,
+          "mdd": -0.557,
+          "worst_12m": -0.515,
+          "calmar": 0.17,
+          "bootstrap_95_cagr": [
+            -0.122,
+            0.37
+          ],
+          "p_cagr_le_0": 0.207,
+          "cagr_ex_top5": 0.0597,
+          "top5_share_of_pnl": 0.532,
+          "trades": 438,
+          "stocks": 288,
+          "beta": 0.734,
+          "alpha": 0.0446
+        },
+        "val": {
+          "cagr": 0.0033,
+          "mdd": -0.411,
+          "worst_12m": -0.369,
+          "calmar": 0.008,
+          "bootstrap_95_cagr": [
+            -0.189,
+            0.243
+          ],
+          "p_cagr_le_0": 0.4995,
+          "cagr_ex_top5": -0.0942,
+          "top5_share_of_pnl": 3.756,
+          "trades": 290,
+          "stocks": 228,
+          "beta": 0.797,
+          "alpha": -0.0089
+        },
+        "dsr": {
+          "dev_N63": 0.122,
+          "dev_N112": 0.084,
+          "val_N63": 0.05,
+          "val_N112": 0.035
+        },
+        "random_control": {
+          "val_RAND_seed_mean": -0.0249,
+          "val_RAND_seed_sd": 0.0438,
+          "combo_vs_seed_mean_pp": 2.8,
+          "sigma": 0.64
+        },
+        "grid": {
+          "two_window_positive": 9,
+          "two_window_positive_and_mdd25": 0
+        },
+        "capacity": {
+          "1e8_deployment": 0.137,
+          "1e8_cagr": -0.015
+        },
+        "gates": {
+          "A_procedural": false,
+          "A_procedural_note": "prereg + local trial ledger exist, but no official registry row and no done val trial",
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "out_date look-ahead disclosed; delisted trips 0-2"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "val +0.33% statistically zero (P<=0 = 49.95%)",
+          "val positive entirely from top5 (remove -> -9.42%)",
+          "MDD -55.7%/-41.1%",
+          "0/63 grid cells pass both-window MDD<=25%",
+          "val vs RAND +2.8pp < 4.4pp seed SD",
+          "capacity at 1e8 negative",
+          "9/63 two-window positive but none admissible"
+        ]
+      },
+      {
+        "id": "突破回踩_main",
+        "short_name": "pullback policy",
+        "source": [
+          "03_结果/候选_突破回踩/05_组合_汇总.csv",
+          "03_结果/候选_突破回踩/13_报告_突破回踩.md"
+        ],
+        "dev": {
+          "cagr": -0.1902,
+          "mdd": -0.882,
+          "trades": 939
+        },
+        "val": {
+          "cagr": -0.1985,
+          "mdd": -0.789
+        },
+        "policy_gain": {
+          "dev_negative_cells": "144/144",
+          "val_positive_cells": "144/144",
+          "sign_flip": true
+        },
+        "lookahead_arm_nopull": {
+          "dev": 0.82,
+          "val": 1.0755,
+          "is_executable": false,
+          "reason": "subset selected by knowing no pullback occurs in future W days"
+        },
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "delist_window uses future out_date"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "all executable arms deeply negative",
+          "policy gain sign flip",
+          "highest number is a look-ahead conditional subset"
+        ]
+      },
+      {
+        "id": "长期双动量_C12",
+        "short_name": "long-term dual momentum",
+        "source": [
+          "03_结果/候选_长期双动量/07_报告_长期双动量.md",
+          "03_结果/候选_长期双动量/04_统计检验.json"
+        ],
+        "dev": {
+          "cagr": -0.0837,
+          "mdd": -0.7752
+        },
+        "val": {
+          "cagr": -0.1302,
+          "mdd": -0.7059
+        },
+        "n_configs": 26,
+        "n_negative": 26,
+        "dsr": 0.038,
+        "pbo": 0.02,
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "delist_window uses future out_date"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "26/26 negative",
+          "IC dev -0.0308 (t=-1.99)",
+          "DSR 0.038",
+          "PBO 0.020 with all-negative candidates"
+        ]
+      },
+      {
+        "id": "结构内反转_A01",
+        "short_name": "structure-internal mild reversal",
+        "source": [
+          "03_结果/候选_结构内反转/00_一页纸_结构内反转.md",
+          "03_结果/候选_结构内反转/11_统计.json"
+        ],
+        "dev": {
+          "cagr": -0.2361,
+          "mdd": -0.9068,
+          "per_trade": -0.0108
+        },
+        "val": {
+          "cagr": -0.218,
+          "mdd": -0.7617,
+          "per_trade": -0.0101
+        },
+        "n_configs": 32,
+        "n_two_window_positive": 0,
+        "best_non_underpowered": {
+          "id": "A17",
+          "dev": -0.0556,
+          "val": -0.0496
+        },
+        "dsr": 0.0,
+        "pbo": 0.043,
+        "gates": {
+          "A_procedural": false,
+          "B_selection": false,
+          "C_evidence": false,
+          "D_robustness": false,
+          "E_data": "delist_window uses future out_date"
+        },
+        "verdict": "REJECT",
+        "reasons": [
+          "main candidate -23.6%/-21.8%",
+          "0/31 two-window positive",
+          "DSR 0.00",
+          "prereg v1.1/v1.2 additions disclosed as post-hoc after seeing results"
+        ]
+      }
+    ],
+    "excluded_artifacts": [
+      {
+        "id": "STAT@walkforward_fold",
+        "reported_value": 0.6044,
+        "why_excluded": "one fold's OOS year, not a stitched project walk-forward; 4 folds, no parameter selection, audit M6 says E1 not established"
+      },
+      {
+        "id": "STRUCT@G_ma_structure_tp8",
+        "reported_value": 0.0734,
+        "why_excluded": "pooled 2008-2020, no separate val NAV; audit says tp8 drops failed exits (-15.4% average) and the positive becomes negative when forced exit is applied"
+      },
+      {
+        "id": "突破回踩_nopull",
+        "reported_value": {
+          "dev": 0.82,
+          "val": 1.0755
+        },
+        "why_excluded": "look-ahead conditional subset: requires knowing the stock will not pull back within W days; not an executable strategy"
+      }
+    ],
+    "cross_checks": {
+      "random_control": {
+        "source": [
+          "03_结果/统计整合/零假设校准.csv",
+          "05_审计/独立复现_基线.md"
+        ],
+        "null_10pos_21d_200seeds": {
+          "dev_no_cost": 0.0457,
+          "dev_25bp": 0.0163,
+          "val_no_cost": -0.0581,
+          "val_25bp": -0.0851,
+          "full_no_cost": 0.0086,
+          "full_25bp": -0.0199
+        },
+        "dev_val_swing_pp": 10.4,
+        "null_sd_approx_pp": 4.5,
+        "expected_max_42_trials": {
+          "dev": 0.134,
+          "val": 0.04
+        },
+        "expected_max_365_trials": {
+          "dev": 0.17,
+          "val": 0.079
+        },
+        "two_random_baselines_annual_diff_pp": "5-10",
+        "per_trade_se_pct": 0.375,
+        "annualized_sampling_noise_pp": 4.5,
+        "vcb_random_rank": {
+          "dev": 0.072,
+          "val": 0.0616,
+          "beats_strength": true
+        },
+        "smallcap_rand_seed_mean_val": -0.0249,
+        "smallcap_rand_seed_sd_pp": 4.38,
+        "conclusion": "2-6pp two-segment positives are inside the null/path noise; dev/val swing alone is ~10pp"
+      },
+      "mdd": {
+        "selection_threshold": 0.25,
+        "acceptance_threshold": 0.35,
+        "n_two_window_positive": 24,
+        "n_two_window_positive_and_mdd25": 5,
+        "all_five_are": "4 TREND@S3 exit-rule variants + VCB-P20_T40",
+        "best_selection_gate_pass": {
+          "id": "VCB-P20_T40",
+          "dev_mdd": -0.2356,
+          "val_mdd": -0.156,
+          "dev_cagr": 0.0651,
+          "val_cagr": 0.0538
+        },
+        "best_non_selection": {
+          "id": "VCB-N120_T40",
+          "dev_mdd": -0.3527,
+          "val_mdd": -0.206
+        },
+        "conclusion": "only 5 configs pass the 25% selection gate; all are rejected by event layer / tail / DSR / PBO / relative-excess criteria"
+      },
+      "remove_winners": {
+        "threshold": "G8 requires >=40% annualized after removing top5",
+        "S3_top5_share_range": [
+          0.689,
+          2.116
+        ],
+        "S3_remove5": "at least one window negative for every config",
+        "S4_top5_share_dev": 0.869,
+        "S4_remove5_dev_per_year": 0.016,
+        "VCB_T40_top5_share": [
+          0.765,
+          0.98
+        ],
+        "VCB_T40_remove5_per_year": [
+          0.016,
+          0.001
+        ],
+        "VCB_P20_top5_share": [
+          0.548,
+          0.902
+        ],
+        "VCB_P20_remove5_per_year": [
+          0.034,
+          0.007
+        ],
+        "VCB_N120_remove5_per_year": [
+          0.039,
+          0.02
+        ],
+        "smallcap_COMBO_top5_share": [
+          0.532,
+          3.756
+        ],
+        "smallcap_COMBO_cagr_ex_top5": [
+          0.0597,
+          -0.0942
+        ],
+        "conclusion": "every candidate fails G8 by an order of magnitude"
+      },
+      "dsr_pbo": {
+        "project": {
+          "N": 365,
+          "T": 1945,
+          "sr_hat_annual": 0.466,
+          "sr0_annual": 1.69,
+          "dsr": 0.0003,
+          "dsr_N700": 9e-05
+        },
+        "family": {
+          "trend_dev": {
+            "N": 42,
+            "sr0_annual": 0.623,
+            "dsr": 0.33,
+            "pbo": 0.452,
+            "p_maxstat": 0.374
+          },
+          "trend_val": {
+            "N": 42,
+            "sr0_annual": 1.018,
+            "dsr": 0.18,
+            "pbo": 0.127,
+            "p_maxstat": 0.716
+          },
+          "VCB_T40": {
+            "N": 24,
+            "sr0_annual": 0.585,
+            "dsr": 0.622,
+            "pbo": 0.614
+          },
+          "VCB_P20": {
+            "N24": 0.704,
+            "N34": 0.683,
+            "val_N24": 0.725,
+            "val_N34": 0.709,
+            "pbo": 0.614
+          },
+          "VCB_N120": {
+            "N9": 0.835,
+            "N24": 0.784,
+            "N34": 0.765,
+            "pbo": 0.614
+          },
+          "smallcap_COMBO": {
+            "dev": [
+              0.122,
+              0.084
+            ],
+            "val": [
+              0.05,
+              0.035
+            ]
+          },
+          "long_term_dual_momentum": {
+            "N": 26,
+            "dsr": 0.038,
+            "pbo": 0.02
+          },
+          "structure_internal_reversal": {
+            "N": 32,
+            "dsr": 0.0,
+            "pbo": 0.043
+          }
+        },
+        "low_pbo_with_negative_returns": [
+          "ECOLOGY 0.002",
+          "struct_rules 0.021",
+          "long-term dual momentum 0.020",
+          "structure-internal reversal 0.043"
+        ],
+        "conclusion": "no candidate reaches DSR 0.95 or PBO 0.25; low PBO alone is not evidence of edge"
+      },
+      "multiplicity": {
+        "integration_N_sel": 365,
+        "prereg_budget": 64,
+        "overrun_x": 5.7,
+        "n_estimate_lower": 542,
+        "n_estimate_upper": 686,
+        "official_dsr_uses": 365,
+        "official_dsr_is_optimistic_upper_bound": true,
+        "conclusion": "best cell must be read in a >=542 selection space; project DSR 0.0003 is already far below 0.95"
+      },
+      "lookahead_out_date": {
+        "rule": "prereg §4.4: no new entry in 30 trading days before out_date; out_date unknown at t",
+        "unified_engine_audit": {
+          "n_signals_total": 342387,
+          "n_blocked": 54,
+          "blocked_share": 0.000158,
+          "blocked_fwd20_mean": -0.01126,
+          "allowed_fwd20_mean": 0.008559,
+          "file": "03_结果/统一引擎/自检_统一引擎.json"
+        },
+        "smallcap": {
+          "delisted_trips": "0-2",
+          "impact": "0",
+          "file": "03_结果/候选_小盘低波趋势/14b_停牌退市暴露.json"
+        },
+        "breakout_pullback": "implements delist_window",
+        "structure_internal_reversal": "implements delist_window",
+        "long_term_dual_momentum": "implements delist_window",
+        "VCB": "report claims delist filter but signal_mask has none; direction is conservative (would add bad trades)",
+        "conclusion": "real but small (0.016% of signals); cannot explain 2-6pp; must be fixed before any future holdout"
+      },
+      "account_path": {
+        "evidence": [
+          "two random 10-position baselines differ 5-10pp/yr (independent_replication §4d/§6)",
+          "5 vs 20 slots: VCB 1.92/2.23 vs 6.28/4.14 dev/val",
+          "20 vs 21 days: paired +0.113%/trade (t=1.30), full-window CAGR diff ~5pp from path divergence",
+          "breakout-pullback engine-to-engine annualized diff 0.2-7.4pp with identical fills (slot competition)",
+          "per-trade SE 0.375% x 12 turns ~4.5pp/yr",
+          "S3 avg 1.3-2.1 positions, 46-50% flat days",
+          "small-cap COMBO val bootstrap [-18.9%, +24.3%]; RAND seed sd 4.4pp"
+        ],
+        "conclusion": "all two-segment low-single-digit candidates are inside path noise; their difference is not evidence of rule superiority"
+      },
+      "2021_leakage": {
+        "checked_files": {
+          "TREND NAV 84 files": "2020-12-31",
+          "VCB NAV 28 files": "2020-12-31",
+          "unified engine NAV 14 files": "2020-12-31",
+          "smallcap NAV": "2020-12-31",
+          "breakout pullback NAV": "2020-12-31",
+          "structure-internal reversal NAV": "2020-12-31",
+          "long-term dual momentum NAV": "2020-12-31"
+        },
+        "ledger_rows_with_window_end_gt_2020": 2,
+        "ledger_rows_with_performance_gt_2020": 0,
+        "ledger_flag_PERFORMANCE_2021_SUSPECT": "stale false positive (scan at 22:54, ledger rebuilt 23:06)",
+        "derived_2021_files_exist": [
+          "市场状态_日频许可_扩展2021_2026_未评估.csv (state only, no return column)"
+        ],
+        "conclusion": "no computed 2021+ performance found; state sequence should stay sealed before any holdout"
+      },
+      "registry": {
+        "verify_command": "python3 02_代码/实验登记.py verify",
+        "rows": 6,
+        "trials": 0,
+        "hash_chain_broken": 0,
+        "code_drift_warnings": 2,
+        "done_val_trials": 0,
+        "holdout_rows": 0,
+        "only_experiment": "T0005 F1-S1-E2-X3-G1, status planned, n_configs=1, trials_cumulative=0, never run",
+        "e1_walkforward": "4 folds (2012-2015, missing 2011), no parameter selection, not prereg §10.1",
+        "conclusion": "procedural gate A fails: holdout cannot be registered without a done val parent; E1 not established"
+      }
+    },
+    "holdout": {
+      "run": false,
+      "why": [
+        "no done val trial to parent a holdout (prereg §5.2)",
+        "no holdout planned row with params identical to val (prereg §10.3)",
+        "E1 walk-forward not established (prereg §10.1/§12.1 G1)",
+        "no candidate passes §7.9.5 selection gates",
+        "no candidate passes G1-G9; best two-window val is 8.71% vs 60%",
+        "5-year holdout SE 9-13pp cannot confirm a 3-6% candidate; only a strongly negative result would reject",
+        "globally one holdout only (§5.2); spending it on a non-candidate destroys the only remaining E2",
+        "task default: no 2021+ unless all gates pass and independent coordinator approves"
+      ],
+      "power": {
+        "window_years": 5,
+        "sigma_20_se_pp": 8.94,
+        "sigma_30_se_pp": 13.4,
+        "sigma_40_se_pp": 17.9,
+        "can_confirm_low_single_digit": false,
+        "only_rejects_strong_negative": true,
+        "source": "00_研究预注册.md §2.4"
+      },
+      "is_omission": false,
+      "statement": "不跑留出是遵守纪律，不是遗漏；正确的交付是 0 个候选 + 真实量级 + 负结果。"
+    },
+    "what_would_change_the_verdict": [
+      "new preregistration with a new trial_id in the finite family, written before running, with power analysis and stopping rule",
+      "both segments CAGR>0 and both MDD<=25%, >=30 trades and >=10 stocks per segment",
+      "event-layer date-clustered bootstrap 95% lower bound >0 with >=200 events/>=100 signal days",
+      "remove-top5 still >=40% annualized; cost x2 + delay 1d still >=40%; 1e8 capital >=30%",
+      "DSR>=0.95 and PBO<=0.25 with the true N including all failures/ablations/platform cells",
+      "E1 established per §10.1: 5 folds, 3y train/1y test/1y step, embargo 5d, parameters selected in training",
+      "out_date look-ahead removed (use t-known delisting risk flag), data layer v2 A-space, full unified-engine replication",
+      "independent coordinator approval before the one-time holdout"
+    ],
+    "artifacts": {
+      "this_md": "05_审计/留出准入裁决.md",
+      "this_json": "05_审计/留出准入裁决.json",
+      "inputs": [
+        "00_研究预注册.md",
+        "03_结果/统计整合/01_整合结论.md",
+        "03_结果/统计整合/候选分级.csv",
+        "03_结果/统计整合/多重性.json",
+        "03_结果/统计整合/零假设校准.csv",
+        "03_结果/试验总账.csv",
+        "03_结果/实验注册表.csv",
+        "03_结果/趋势族/组合模拟_汇总.csv",
+        "03_结果/趋势族/交易明细_全部.parquet",
+        "03_结果/趋势族/信号事件_明细.parquet",
+        "03_结果/候选_收缩突破/报告_收缩突破.md",
+        "03_结果/候选_收缩突破/组合_汇总_全部.csv",
+        "03_结果/候选_收缩突破/统计诊断.json",
+        "03_结果/候选_小盘低波趋势/00_一页纸_小盘低波趋势.md",
+        "03_结果/候选_小盘低波趋势/17_关键数字.json",
+        "03_结果/候选_小盘低波趋势/10_组合_网格.csv",
+        "03_结果/候选_突破回踩/05_组合_汇总.csv",
+        "03_结果/候选_长期双动量/04_统计检验.json",
+        "03_结果/候选_结构内反转/00_一页纸_结构内反转.md",
+        "03_结果/统一引擎/结果摘要.md",
+        "03_结果/统一引擎/口径冲突与裁决.md",
+        "05_审计/复权修复影响.md",
+        "05_审计/独立复现_基线.md",
+        "05_审计/第一阶段代码与负结果审计.md",
+        "01_数据/_audit/自检结果.json",
+        "01_数据/meta.json"
+      ]
+    },
+    "limitations": [
+      "read-only adjudication; no strategy rerun; some families (STRUCT/EXIT/MKT/ECOLOGY/STAT) are cited from the ledger and first-stage audit, not re-verified trade by trade",
+      "TREND S3/S4 returns are in Baostock adjustflag=1 space, not the v2 frozen A-space; adjustment defect impact is 0 trades / 10 of 30,880 events, but 0.2pp-level residual uncertainty remains",
+      "VCB remove-top5 is a per-code buy/sell amount reconstruction, not FIFO-matched round trips; direction agrees with reported top5_share",
+      "small-cap remove-top5 uses the report's cagr_ex_top5 (profit removed from NAV from exit date); a crude PnL removal gives a more negative bound",
+      "null expected max is a normal approximation from p5/p95, not an exact extreme-value computation",
+      "N estimate 542-686 depends on whether the 144-cell platform and stress/capacity/seed cells are counted; official DSR uses 365, so the DSR conclusion is an optimistic upper bound",
+      "2021+ state sequence exists and was not joined to 2021+ prices; it should stay sealed before any holdout",
+      "the PERFORMANCE_2021+_SUSPECT flag on 试验总账.csv is a stale scan false positive; no 2021+ performance row was found"
+    ]
+  }
+}

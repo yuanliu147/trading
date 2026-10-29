@@ -1,0 +1,11 @@
+{
+  "n_trades_used": 384,
+  "participation_limit": 0.05,
+  "lookback_days": 20,
+  "capital_at_limit_p10": 842545706.7043241,
+  "capital_at_limit_median": 1280403014.8969498,
+  "capital_at_limit_p90": 3999049728.548028,
+  "entry_participation_median": 2.9091668479629158e-05,
+  "entry_participation_p90": 5.184592091466313e-05,
+  "note": "线性近似；未计冲击成本平方项，未计涨跌停/停牌时的流动性真空"
+}

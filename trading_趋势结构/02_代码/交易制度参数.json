@@ -1,0 +1,821 @@
+{
+  "schema_version": "1.0.0",
+  "meta": {
+    "title": "A股交易制度与成本参数（2005-2026，机器可读保守口径）",
+    "as_of_freeze": "2026-10-26",
+    "generated_at": "2026-10-28",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "rate_unit": "fraction_of_turnover",
+    "scope": "A股：沪市主板、深市主板（含原中小板）、创业板、科创板、北交所；不含B股、基金、债券、可转债、权证",
+    "purpose": "为趋势/结构/波段回测提供可审计的涨跌停、T+1、停牌、最小单位、费用与公司行动参数；不以收益目标倒推参数。",
+    "disclaimer": "本文件是制度参数与保守建模假设，不是收益预测。佣金实际费率因账户而异，只有3‰上限与5元最低是法规可证；其余佣金情景是研究假设，必须标注。",
+    "confidence_levels": {
+      "high": "交易所/财政部/证监会正式规则原文，或本机数据可重复验证",
+      "medium": "官方答问、权威媒体转述，或历史费率仅有二手来源",
+      "low": "行业惯例/研究假设，无法从公开规则唯一确定"
+    },
+    "files": {
+      "report": "05_审计/A股交易制度与成本.md",
+      "adapter": "02_代码/交易制度适配器.py",
+      "self_check": "02_代码/交易制度自检.py",
+      "evidence_dir": "05_审计/"
+    }
+  },
+
+  "board_definitions": {
+    "SSE_main": {
+      "name": "上海证券交易所主板",
+      "exchange": "SSE",
+      "code_prefixes": ["600", "601", "603", "605"],
+      "launch_date": "1990-12-19",
+      "price_limit_ref": "price_limits.SSE_main",
+      "min_buy_unit_ref": "execution_rules.min_buy_unit.SSE_main",
+      "notes": ["含沪市A股；不含科创板688/689、B股900"]
+    },
+    "SZSE_main": {
+      "name": "深圳证券交易所主板",
+      "exchange": "SZSE",
+      "code_prefixes": ["000", "001"],
+      "launch_date": "1991-04-03",
+      "price_limit_ref": "price_limits.SZSE_main",
+      "min_buy_unit_ref": "execution_rules.min_buy_unit.SZSE_main",
+      "notes": ["2021-04-06 中小板并入主板；000/001 与 002/003 的交易规则在合并后一致"]
+    },
+    "SME": {
+      "name": "深圳证券交易所中小板（已并入主板）",
+      "exchange": "SZSE",
+      "code_prefixes": ["002", "003"],
+      "launch_date": "2004-06-25",
+      "merge_into": "SZSE_main",
+      "merge_date": "2021-04-06",
+      "price_limit_ref": "price_limits.SME",
+      "min_buy_unit_ref": "execution_rules.min_buy_unit.SME",
+      "notes": ["存续期内涨跌幅与主板一致；独立指数与代码段保留"]
+    },
+    "ChiNext": {
+      "name": "深圳证券交易所创业板",
+      "exchange": "SZSE",
+      "code_prefixes": ["300", "301", "302"],
+      "launch_date": "2009-10-30",
+      "price_limit_ref": "price_limits.ChiNext",
+      "min_buy_unit_ref": "execution_rules.min_buy_unit.ChiNext",
+      "notes": ["2020-08-24 注册制改革：涨跌幅10%→20%，新股前5日无涨跌幅；302为2026年前后启用的扩展号段"]
+    },
+    "STAR": {
+      "name": "上海证券交易所科创板",
+      "exchange": "SSE",
+      "code_prefixes": ["688", "689"],
+      "launch_date": "2019-07-22",
+      "price_limit_ref": "price_limits.STAR",
+      "min_buy_unit_ref": "execution_rules.min_buy_unit.STAR",
+      "notes": ["689为CDR/存托凭证号段，交易规则同科创板；200股起、1股递增"]
+    },
+    "BSE": {
+      "name": "北京证券交易所",
+      "exchange": "BSE",
+      "code_prefixes": ["920"],
+      "legacy_prefixes": ["8", "4"],
+      "launch_date": "2021-11-15",
+      "predecessor": "新三板精选层（2020-07-27起，30%涨跌幅）",
+      "price_limit_ref": "price_limits.BSE",
+      "min_buy_unit_ref": "execution_rules.min_buy_unit.BSE",
+      "notes": ["本机DuckDB已把北交所历史代码回填为920xxx；8/4开头还包含新三板挂牌公司，不能一律当北交所", "Baostock无北交所数据"]
+    },
+    "EXCLUDED": {
+      "name": "不纳入A股股票池",
+      "code_prefixes": ["900", "200", "5", "1", "11", "12", "13", "18", "sh.000", "sz.399"],
+      "notes": ["B股、基金、ETF、LOF、债券、可转债、指数；本参数文件不覆盖"]
+    }
+  },
+
+  "price_limits": {
+    "SSE_main": [
+      {"from": "2005-01-01", "to": "2026-07-05", "normal": 0.10, "st": 0.05, "rule_id": "main_10_st_5"},
+      {"from": "2026-07-06", "to": null, "normal": 0.10, "st": 0.10, "rule_id": "main_10_st_10_2026"}
+    ],
+    "SZSE_main": [
+      {"from": "2005-01-01", "to": "2026-07-05", "normal": 0.10, "st": 0.05, "rule_id": "main_10_st_5"},
+      {"from": "2026-07-06", "to": null, "normal": 0.10, "st": 0.10, "rule_id": "main_10_st_10_2026"}
+    ],
+    "SME": [
+      {"from": "2005-01-01", "to": "2026-07-05", "normal": 0.10, "st": 0.05, "rule_id": "sme_10_st_5"},
+      {"from": "2026-07-06", "to": null, "normal": 0.10, "st": 0.10, "rule_id": "sme_10_st_10_2026"}
+    ],
+    "ChiNext": [
+      {"from": "2009-10-30", "to": "2020-08-23", "normal": 0.10, "st": 0.10, "rule_id": "chinext_10", "note": "注册制前创业板不设主板式ST 5%档；风险警示股票仍按10%"},
+      {"from": "2020-08-24", "to": null, "normal": 0.20, "st": 0.20, "rule_id": "chinext_20"}
+    ],
+    "STAR": [
+      {"from": "2019-07-22", "to": null, "normal": 0.20, "st": 0.20, "rule_id": "star_20"}
+    ],
+    "BSE": [
+      {"from": "2020-07-27", "to": null, "normal": 0.30, "st": 0.30, "rule_id": "bse_30", "note": "精选层与北交所均为30%；风险警示股票30%"}
+    ],
+    "rounding": {
+      "method": "round_half_up_to_tick",
+      "tick_size": 0.01,
+      "formula": "limit_price = round(prev_close * (1 +/- pct), 2)",
+      "tolerance_cny": 0.001,
+      "note": "前收盘价必须使用除权除息参考价（Baostock preclose）；四舍五入后实际涨跌幅可能略偏离名义比例"
+    },
+    "special_no_limit": [
+      {"case": "ipo_first_sessions", "ref": "ipo_rules"},
+      {"case": "delisting_first_day", "ref": "delisting_rules"},
+      {"case": "relisting_first_day", "boards": ["SSE_main", "SZSE_main", "SME"], "note": "退市后重新上市首个交易日不设涨跌幅；本机数据中极少，建议从股票池剔除"},
+      {"case": "major_asset_restructuring_resume", "note": "重大资产重组/股改复牌首日可能不设涨跌幅；日线无法事前识别，建议剔除复牌首日或按无涨跌幅处理"}
+    ]
+  },
+
+  "ipo_rules": {
+    "SSE_main": [
+      {"from": "2005-01-01", "to": "2013-12-31", "first_n_sessions_no_limit": 1, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10},
+      {"from": "2014-01-01", "to": "2023-04-09", "first_n_sessions_no_limit": 0, "first_day_cap_up": 0.44, "first_day_cap_down": 0.36, "cap_basis": "issue_price", "day_after_limit": 0.10},
+      {"from": "2023-04-10", "to": null, "first_n_sessions_no_limit": 5, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10}
+    ],
+    "SZSE_main": [
+      {"from": "2005-01-01", "to": "2013-12-31", "first_n_sessions_no_limit": 1, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10},
+      {"from": "2014-01-01", "to": "2023-04-09", "first_n_sessions_no_limit": 0, "first_day_cap_up": 0.44, "first_day_cap_down": 0.36, "cap_basis": "issue_price", "day_after_limit": 0.10},
+      {"from": "2023-04-10", "to": null, "first_n_sessions_no_limit": 5, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10}
+    ],
+    "SME": [
+      {"from": "2005-01-01", "to": "2013-12-31", "first_n_sessions_no_limit": 1, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10},
+      {"from": "2014-01-01", "to": "2021-04-05", "first_n_sessions_no_limit": 0, "first_day_cap_up": 0.44, "first_day_cap_down": 0.36, "cap_basis": "issue_price", "day_after_limit": 0.10},
+      {"from": "2021-04-06", "to": "2023-04-09", "first_n_sessions_no_limit": 0, "first_day_cap_up": 0.44, "first_day_cap_down": 0.36, "cap_basis": "issue_price", "day_after_limit": 0.10},
+      {"from": "2023-04-10", "to": null, "first_n_sessions_no_limit": 5, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10}
+    ],
+    "ChiNext": [
+      {"from": "2009-10-30", "to": "2013-12-31", "first_n_sessions_no_limit": 1, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.10},
+      {"from": "2014-01-01", "to": "2020-08-23", "first_n_sessions_no_limit": 0, "first_day_cap_up": 0.44, "first_day_cap_down": 0.36, "cap_basis": "issue_price", "day_after_limit": 0.10},
+      {"from": "2020-08-24", "to": null, "first_n_sessions_no_limit": 5, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.20}
+    ],
+    "STAR": [
+      {"from": "2019-07-22", "to": null, "first_n_sessions_no_limit": 5, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.20}
+    ],
+    "BSE": [
+      {"from": "2020-07-27", "to": null, "first_n_sessions_no_limit": 1, "first_day_cap_up": null, "first_day_cap_down": null, "day_after_limit": 0.30}
+    ],
+    "research_convention": {
+      "recommended_exclusion_sessions": 60,
+      "minimum_exclusion_sessions": 5,
+      "reason": "IPO初期无涨跌幅/44%制度、换手与价格发现不稳定；策略研究应至少剔除前5个交易日，建议剔除前60个交易日",
+      "note": "剔除是研究约定，不是交易所规则"
+    }
+  },
+
+  "delisting_rules": {
+    "pre_2012": {
+      "no_delisting_period": true,
+      "from": "2005-01-01",
+      "to": "2011-12-31",
+      "rule": "2012年退市制度改革前无退市整理期；退市后直接转三板/停止交易",
+      "research_handling": "不要假设30日整理期；按最后可交易日平仓，无法平仓按0计值"
+    },
+    "SSE_main": [
+      {"from": "2012-01-01", "to": "2020-12-30", "sessions": 30, "first_day_no_limit": false, "daily_limit": 0.10},
+      {"from": "2020-12-31", "to": null, "sessions": 15, "first_day_no_limit": true, "daily_limit": 0.10}
+    ],
+    "SZSE_main": [
+      {"from": "2012-01-01", "to": "2020-12-30", "sessions": 30, "first_day_no_limit": false, "daily_limit": 0.10},
+      {"from": "2020-12-31", "to": null, "sessions": 15, "first_day_no_limit": true, "daily_limit": 0.10}
+    ],
+    "SME": [
+      {"from": "2012-01-01", "to": "2020-12-30", "sessions": 30, "first_day_no_limit": false, "daily_limit": 0.10},
+      {"from": "2020-12-31", "to": null, "sessions": 15, "first_day_no_limit": true, "daily_limit": 0.10}
+    ],
+    "ChiNext": [
+      {"from": "2012-01-01", "to": "2020-12-30", "sessions": 30, "first_day_no_limit": false, "daily_limit": 0.10},
+      {"from": "2020-12-31", "to": null, "sessions": 15, "first_day_no_limit": true, "daily_limit": 0.20}
+    ],
+    "STAR": [
+      {"from": "2019-07-22", "to": "2020-12-30", "sessions": 30, "first_day_no_limit": false, "daily_limit": 0.20},
+      {"from": "2020-12-31", "to": null, "sessions": 15, "first_day_no_limit": true, "daily_limit": 0.20}
+    ],
+    "BSE": [
+      {"from": "2020-07-27", "to": null, "sessions": 15, "first_day_no_limit": true, "daily_limit": 0.30}
+    ],
+    "trading_force_delisting_no_period_since": "2020-12-31",
+    "research_convention": {
+      "force_exit": "在最后可交易日收盘前平仓；若无法平仓，按最后收盘价减半或0计值",
+      "writeoff_if_no_exit": true,
+      "exclude_delisting_period_from_new_buys": true,
+      "reason": "退市整理期流动性差、跌停连续，回测若按正常成交价卖出会高估退出能力"
+    }
+  },
+
+  "execution_rules": {
+    "t_plus": {
+      "share_sell_lock_days": 1,
+      "same_day_buy_sell_allowed": false,
+      "same_day_cash_reuse_for_buy": true,
+      "cash_withdraw_lock_days": 1,
+      "basis": "上交所交易规则3.1.4：买入的证券在交收前不得卖出；A股T+1"
+    },
+    "suspension": {
+      "detect": "trade_status=0 或 volume 为 NULL/0 或 OHLC 全部等于 preclose 且成交量为0",
+      "tradable_on_suspension_day": false,
+      "held_position_mark": "last_close",
+      "blocked_order_policy": "expire",
+      "note": "全天停牌无法成交；盘中临时停牌日线无法识别，若 high==low 且触板则按不可成交处理"
+    },
+    "limit_block": {
+      "block_buy_if_open_at_limit_up": true,
+      "block_sell_if_open_at_limit_down": true,
+      "block_if_one_price_board": true,
+      "one_price_board_definition": "high == low == close 且 close 等于涨停价或跌停价（容差0.001元）",
+      "blocked_order_policy": "expire",
+      "retry_days": 0,
+      "note": "更保守的做法：只要开盘价等于涨停价就不买；只要开盘价等于跌停价就不卖。若要求可成交，必须验证当日有成交量且非一字板。"
+    },
+    "price_cage": [
+      {"from": "2019-07-22", "boards": ["STAR"], "pct": 0.02, "min_ticks": 10, "phase": "continuous_auction"},
+      {"from": "2020-08-24", "boards": ["ChiNext"], "pct": 0.02, "min_ticks": 10, "phase": "continuous_auction"},
+      {"from": "2021-11-15", "boards": ["BSE"], "pct": 0.05, "min_ticks": 10, "phase": "continuous_auction", "note": "北交所为基准价±5%或10个最小变动单位"},
+      {"from": "2023-04-10", "boards": ["SSE_main", "SZSE_main", "SME"], "pct": 0.02, "min_ticks": 10, "phase": "continuous_auction"}
+    ],
+    "auction_windows": {
+      "opening_call": "09:15-09:25",
+      "continuous_am": "09:30-11:30",
+      "continuous_pm": "13:00-14:57",
+      "closing_call": "14:57-15:00",
+      "after_hours_fixed_price": "15:05-15:30"
+    },
+    "after_hours_fixed_price": [
+      {"from": "2019-07-22", "boards": ["STAR"]},
+      {"from": "2020-08-24", "boards": ["ChiNext"]},
+      {"from": "2026-07-06", "boards": ["SSE_main", "SZSE_main", "SME", "ChiNext", "STAR"], "note": "2026新规扩展至沪深全部A股；北交所另行通知，历史回测不得使用该机制"}
+    ],
+    "min_buy_unit": {
+      "SSE_main": 100,
+      "SZSE_main": 100,
+      "SME": 100,
+      "ChiNext": 100,
+      "STAR": 200,
+      "BSE": 100
+    },
+    "share_increment": {
+      "SSE_main": 100,
+      "SZSE_main": 100,
+      "SME": 100,
+      "ChiNext": 100,
+      "STAR": 1,
+      "BSE": 1
+    },
+    "odd_lot_sell": {
+      "SSE_main": "余额不足100股一次性卖出",
+      "SZSE_main": "余额不足100股一次性卖出",
+      "SME": "余额不足100股一次性卖出",
+      "ChiNext": "余额不足100股一次性卖出",
+      "STAR": "余额不足200股一次性卖出",
+      "BSE": "余额不足100股一次性卖出"
+    },
+    "tick_size": 0.01,
+    "max_order_shares": {
+      "SSE_main": 1000000,
+      "SZSE_main": 1000000,
+      "SME": 1000000,
+      "ChiNext": 300000,
+      "STAR": 100000,
+      "BSE": 1000000
+    },
+    "risk_warning_buy_limit": {
+      "SSE_main": {"max_shares_per_day": 500000, "from": "2026-07-06"},
+      "SZSE_main": {"max_shares_per_day": 500000, "from": "2026-07-06"},
+      "note": "2026新规对风险警示股票单日累计买入50万股上限；小账户通常不触发"
+    }
+  },
+
+  "fees": {
+    "commission": {
+      "legal_ceiling_pct": 0.003,
+      "min_per_order_cny": 5.0,
+      "includes": ["broker_commission", "exchange_handling_fee", "regulatory_fee"],
+      "legal_basis": "证监发〔2002〕21号：A股佣金不得高于成交金额3‰，不足5元按5元；佣金含代收的证券交易监管费和交易所手续费",
+      "scenarios": {
+        "stress_ceiling": [
+          {"from": "2005-01-01", "to": null, "pct": 0.003}
+        ],
+        "conservative": [
+          {"from": "2005-01-01", "to": "2009-12-31", "pct": 0.0015},
+          {"from": "2010-01-01", "to": "2014-12-31", "pct": 0.0008},
+          {"from": "2015-01-01", "to": "2019-12-31", "pct": 0.0005},
+          {"from": "2020-01-01", "to": null, "pct": 0.0003}
+        ],
+        "modern_low": [
+          {"from": "2020-01-01", "to": null, "pct": 0.0001}
+        ]
+      },
+      "scenario_evidence": {
+        "stress_ceiling": "high（法规上限）",
+        "conservative": "low（研究假设；2005-2019为行业常见区间，2020+取万3偏保守）",
+        "modern_low": "low（研究假设；万1账户）"
+      }
+    },
+    "stamp_duty": [
+      {"from": "2001-11-16", "to": "2005-01-23", "buy": 0.002, "sell": 0.002, "note": "2‰双边"},
+      {"from": "2005-01-24", "to": "2007-05-29", "buy": 0.001, "sell": 0.001, "note": "1‰双边"},
+      {"from": "2007-05-30", "to": "2008-04-23", "buy": 0.003, "sell": 0.003, "note": "3‰双边（5·30）"},
+      {"from": "2008-04-24", "to": "2008-09-18", "buy": 0.001, "sell": 0.001, "note": "1‰双边"},
+      {"from": "2008-09-19", "to": "2023-08-27", "buy": 0.0, "sell": 0.001, "note": "单边卖出1‰"},
+      {"from": "2023-08-28", "to": null, "buy": 0.0, "sell": 0.0005, "note": "单边卖出0.5‰"}
+    ],
+    "transfer_fee": {
+      "basis_note": "沪市2015-08-01前按成交面值收取；本机无面值字段，保守假设面值1元/股，用成交股数计算",
+      "schedule": [
+        {"from": "2005-01-01", "to": "2012-05-31", "SSE": {"basis": "par_value", "pct": 0.0005}, "SZSE": {"basis": "amount", "pct": 0.0000255}},
+        {"from": "2012-06-01", "to": "2012-08-31", "SSE": {"basis": "par_value", "pct": 0.000375}, "SZSE": {"basis": "amount", "pct": 0.0000255}},
+        {"from": "2012-09-01", "to": "2015-07-31", "SSE": {"basis": "par_value", "pct": 0.0003}, "SZSE": {"basis": "amount", "pct": 0.0000255}},
+        {"from": "2015-08-01", "to": "2022-04-28", "SSE": {"basis": "amount", "pct": 0.00002}, "SZSE": {"basis": "amount", "pct": 0.00002}, "BSE": {"basis": "amount", "pct": 0.000025, "from": "2021-11-15"}},
+        {"from": "2022-04-29", "to": null, "ALL": {"basis": "amount", "pct": 0.00001}}
+      ],
+      "direction": "both_sides"
+    },
+    "exchange_handling_fee": {
+      "included_in_commission": true,
+      "schedule_by_exchange": {
+        "SSE": [
+          {"from": "2005-01-01", "to": "2012-05-31", "pct": 0.00011},
+          {"from": "2012-06-01", "to": "2012-08-31", "pct": 0.000087},
+          {"from": "2012-09-01", "to": "2015-07-31", "pct": 0.0000696},
+          {"from": "2015-08-01", "to": "2023-08-27", "pct": 0.0000487},
+          {"from": "2023-08-28", "to": null, "pct": 0.0000341}
+        ],
+        "SZSE": [
+          {"from": "2005-01-01", "to": "2012-05-31", "pct": 0.00011},
+          {"from": "2012-06-01", "to": "2012-08-31", "pct": 0.000087},
+          {"from": "2012-09-01", "to": "2015-07-31", "pct": 0.0000696},
+          {"from": "2015-08-01", "to": "2023-08-27", "pct": 0.0000487},
+          {"from": "2023-08-28", "to": null, "pct": 0.0000341}
+        ],
+        "BSE": [
+          {"from": "2021-11-15", "to": "2023-08-27", "pct": 0.00025},
+          {"from": "2023-08-28", "to": null, "pct": 0.000125}
+        ]
+      },
+      "note": "仅作核对；不得在佣金之外重复加收"
+    },
+    "regulatory_fee": {
+      "included_in_commission": true,
+      "pct": 0.00002,
+      "direction": "both_sides",
+      "from": "2005-01-01",
+      "note": "证管费0.002%；仅作核对，不重复加收"
+    },
+    "dividend_tax": [
+      {"from": "2005-01-01", "to": "2012-12-31", "le_1m": 0.20, "m1_to_y1": 0.10, "gt_1y": 0.10, "note": "20%法定税率暂减按50%计入，实际10%"},
+      {"from": "2013-01-01", "to": "2015-09-07", "le_1m": 0.20, "m1_to_y1": 0.10, "gt_1y": 0.05, "note": "财税〔2012〕85号"},
+      {"from": "2015-09-08", "to": null, "le_1m": 0.20, "m1_to_y1": 0.10, "gt_1y": 0.0, "note": "财税〔2015〕101号；持股超过1年免征"}
+    ],
+    "other_costs_not_modeled": [
+      "券商最低佣金外的平台费/流量费（通常已含在佣金）",
+      "大宗交易折价、冲击成本、冲击成本随资金规模上升",
+      "融券费用、融资利息",
+      "红利税在除权日的现金流时点差异",
+      "股票质押、投票权等非交易成本"
+    ]
+  },
+
+  "cost_scenarios": {
+    "named": {
+      "research_conservative": {
+        "commission_scenario": "conservative",
+        "min_commission_cny": 5.0,
+        "stamp_duty": "statutory_schedule",
+        "transfer_fee": "statutory_schedule",
+        "slippage_per_side": 0.001,
+        "slippage_small_cap_per_side": 0.002,
+        "note": "默认研究口径；2023-08-28后100万/10仓的往返成本约0.31%，2万/10仓约0.75%"
+      },
+      "stress_ceiling": {
+        "commission_scenario": "stress_ceiling",
+        "min_commission_cny": 5.0,
+        "stamp_duty": "statutory_schedule",
+        "transfer_fee": "statutory_schedule",
+        "slippage_per_side": 0.002,
+        "note": "压力口径；佣金按3‰法规上限，滑点加倍"
+      },
+      "modern_low": {
+        "commission_scenario": "modern_low",
+        "min_commission_cny": 5.0,
+        "stamp_duty": "statutory_schedule",
+        "transfer_fee": "statutory_schedule",
+        "slippage_per_side": 0.0005,
+        "note": "低费率口径；仅作乐观边界，不得作为基准"
+      }
+    },
+    "account_sensitivity": {
+      "account_sizes_cny": [20000, 100000, 1000000],
+      "position_counts": [5, 10, 20],
+      "equal_weight": true,
+      "results_file": "05_审计/证据_成本敏感性.csv",
+      "key_finding": "最低佣金5元在小账户/多仓位上主导成本：2万/10仓单边有效佣金0.25%，2万/20仓0.50%；100万/10仓仅0.03%"
+    }
+  },
+
+  "research_defaults": {
+    "time_windows": {
+      "warmup": ["2005-01-01", "2007-12-31"],
+      "development": ["2008-01-01", "2015-12-31"],
+      "validation": ["2016-01-01", "2020-12-31"],
+      "holdout": ["2021-01-01", "2025-12-31"],
+      "extension": ["2026-01-01", "2026-10-26"],
+      "holdout_rule": "2021+ 只允许数据覆盖审计；策略研究员不得查看收益或据此改规则",
+      "not_clean_oos": true,
+      "disclosure": "工作区已有类似研究；时间留出不是项目级纯净样本外，只能算时间分段"
+    },
+    "universe": {
+      "boards": ["SSE_main", "SZSE_main", "SME", "ChiNext", "STAR"],
+      "exclude_bse": true,
+      "exclude_bse_reason": "Baostock无北交所；DuckDB北交所prev_close全空且仅2020-07-27起",
+      "exclude_st": true,
+      "exclude_st_reason": "ST/退市风险与5%/10%制度切换会污染趋势信号；如实盘要交易ST，必须单独建模",
+      "exclude_ipo_sessions": 60,
+      "exclude_delisting_period": true,
+      "min_listing_days": 60
+    },
+    "signal_timing": {
+      "signal_generated_at": "close",
+      "earliest_fill": "next_trading_day_open",
+      "no_same_day_close_fill": true,
+      "no_lookahead": true
+    },
+    "execution": {
+      "buy_price": "next_open * (1 + slippage)",
+      "sell_price": "next_open * (1 - slippage)",
+      "block_limit_up_buy": true,
+      "block_limit_down_sell": true,
+      "block_suspension": true,
+      "t_plus_one": true,
+      "lot_rounding": "floor_to_min_buy_unit"
+    },
+    "cost": {
+      "scenario": "research_conservative",
+      "apply_stamp_duty": true,
+      "apply_transfer_fee": true,
+      "apply_commission": true,
+      "apply_dividend_tax": false,
+      "dividend_tax_reason": "使用后复权价时分红已按除权价再投资，未扣红利税；若用现金分红账本，必须另扣"
+    },
+    "portfolio": {
+      "base_account_cny": 1000000,
+      "base_positions": 10,
+      "equal_weight": true,
+      "account_sizes_cny": [20000, 100000, 1000000],
+      "position_counts": [5, 10, 20],
+      "max_position_pct": 0.10,
+      "cash_buffer_pct": 0.02
+    },
+    "reporting": {
+      "must_report": ["data_window", "row_counts", "adjustment", "fee_scenario", "slippage", "limit_rule_version", "survivorship_note"],
+      "freeze_date": "2026-10-26"
+    }
+  },
+
+  "data_sources": {
+    "duckdb": {
+      "path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+      "tables": ["raw_kline_daily", "v_daily", "v_daily_hfq", "v_daily_qfq", "raw_adjustment_events", "dim_symbol"],
+      "coverage": "2016-10-13 至 2026-10-28；5,579 个A股代码；10,392,558 行",
+      "adjustment": "v_daily 不复权；v_daily_hfq 后复权；v_daily_qfq 前复权；raw_kline_daily 不复权",
+      "limitations": [
+        "无退市股（仅5个代码最后交易日早于2026-10-01）",
+        "dim_symbol.name 全为 NULL",
+        "北交所 prev_close 全为 NULL（277,174行）",
+        "含2026-10-27/28共11,137行，超出冻结日"
+      ]
+    },
+    "baostock": {
+      "path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "tables": ["stock_kline_d", "stock_basic", "index_kline_d", "trade_dates", "adjust_factor"],
+      "coverage": "1990-12-19 至 2026-10-28；type=1 股票5,564只（含340只退市）；55,803,375行（三复权合计）",
+      "adjustment": "adjustflag=1 后复权；2 前复权；3 不复权",
+      "limitations": [
+        "无北交所",
+        "退市股仅341只，历史退市覆盖可能不完整",
+        "源库在线同步，行数会漂移；必须按日期截断",
+        "后复权因子存在少量跳变（历史研究记录16行）"
+      ]
+    },
+    "freeze": {
+      "date": "2026-10-26",
+      "rule": "所有查询必须 date <= 2026-10-26；2026-10-27/28 数据只能用于覆盖审计，不得进入收益计算",
+      "rows_after_freeze": {
+        "duckdb": 11137,
+        "baostock_adjustflag_1": 6704,
+        "baostock_adjustflag_2": 6744,
+        "baostock_adjustflag_3": 6798
+      }
+    }
+  },
+
+  "data_quality_findings": {
+    "source_is_live": "Baostock stock_kline_d 在本次审计期间从55,795,773行增至55,803,375行；说明源库在持续同步。冻结必须靠查询条件，不能靠文件快照。",
+    "survivorship": "DuckDB无退市股；Baostock有340只退市股，但A股1990年以来退市数量应更多，仍可能有幸存者偏差。",
+    "st_flag": "Baostock is_st 可用于ST过滤；中小板2005-2007年ST计数为0，创业板2020年前ST计数为0（后者是制度事实，前者可能是覆盖缺口）。",
+    "extreme_returns": "close/preclose 在除权日会跳变；2007年主板最大日收益1097%、2024年主板最小-96%均为公司行动/复牌伪影，不能直接用 pct_chg 判断涨跌停。",
+    "bse": "DuckDB北交所30%涨跌幅在数据中最大日收益恰为0.3000；但prev_close全空，需用lag(close)。",
+    "st_2026": "2024-01至2026-06主板ST最大日收益约5.9%，2026-07起约10.7%，与2026-07-06新规一致；创业板/科创板ST为20%。"
+  },
+
+  "known_approximations": [
+    {
+      "item": "盘中涨跌停/一字板成交",
+      "issue": "日线只能看到OHLC，无法判断封单量、排队位置、开板次数",
+      "conservative_alternative": "开盘价等于涨跌停价则不买/不卖；high==low==close且触板视为不可成交",
+      "impact": "会低估成交率，但避免把一字板当成可成交"
+    },
+    {
+      "item": "盘中止损/止盈",
+      "issue": "日线无法知道盘中是否触发止损价",
+      "conservative_alternative": "收盘确认后次日开盘执行；若用盘中触发，必须处理跳空（max(open, stop)）",
+      "impact": "收盘确认更慢、回撤更大；盘中触发更接近手册但需分钟数据"
+    },
+    {
+      "item": "佣金实际费率",
+      "issue": "佣金由券商与客户协商，历史账户费率不可从公开数据唯一确定",
+      "conservative_alternative": "提供conservative/stress_ceiling/modern_low三套情景；基准用conservative",
+      "impact": "2005-2019佣金假设比实际可能偏高或偏低，必须做敏感性"
+    },
+    {
+      "item": "沪市2015年前过户费",
+      "issue": "按成交面值收取，面值不全是1元",
+      "conservative_alternative": "假设面值1元/股，用成交股数计算",
+      "impact": "对低面值股票高估费用；对高面值股票低估"
+    },
+    {
+      "item": "经手费/证管费",
+      "issue": "已含在佣金中，单独列示会重复",
+      "conservative_alternative": "只列示不叠加",
+      "impact": "无重复计算"
+    },
+    {
+      "item": "红利税",
+      "issue": "后复权价把分红按除权价再投资，未扣税；持股期限未知",
+      "conservative_alternative": "研究默认不扣；若做现金账本，按持有期20%/10%/0%三档扣除",
+      "impact": "取决于股息率与持有期；5%股息率、20%税率、持有不超过1个月时约1%/年，持有超过1年为0"
+    },
+    {
+      "item": "停牌",
+      "issue": "日线trade_status=0可识别全天停牌，但盘中临时停牌不可识别",
+      "conservative_alternative": "停牌日不成交；一字板按不可成交",
+      "impact": "低估极端行情下的流动性"
+    },
+    {
+      "item": "退市",
+      "issue": "退市整理期成交价与最后交易日不确定",
+      "conservative_alternative": "最后可交易日收盘平仓；无法平仓按0或半价计值",
+      "impact": "避免高估退市退出能力"
+    },
+    {
+      "item": "IPO初期",
+      "issue": "首日44%/前5日无涨跌幅/临停机制",
+      "conservative_alternative": "至少剔除前5日，建议剔除前60日",
+      "impact": "避免用制度性暴涨暴跌训练策略"
+    },
+    {
+      "item": "北交所",
+      "issue": "Baostock无数据；DuckDB prev_close全空、2020-07-27起",
+      "conservative_alternative": "默认剔除北交所",
+      "impact": "策略股票池少了北交所，但对2005-2020无影响"
+    },
+    {
+      "item": "价格笼子",
+      "issue": "2%/10档限制影响限价单成交，不影响集合竞价市价单",
+      "conservative_alternative": "回测按次日开盘成交，不模拟盘中限价单",
+      "impact": "对开盘成交策略影响小"
+    },
+    {
+      "item": "2026新规",
+      "issue": "2026-07-06主板ST 5%→10%、盘后固定价格交易全A扩容",
+      "conservative_alternative": "参数按日期切换；历史回测不得使用2026新机制",
+      "impact": "2026-07后ST波动翻倍，必须单独分段"
+    }
+  ],
+
+  "evidence": [
+    {
+      "id": "E01",
+      "claim": "2002-05-01起A股佣金上限3‰、每笔不足5元按5元，佣金含代收规费和交易所手续费",
+      "source_type": "official",
+      "source": "中国证监会《关于调整证券交易佣金收取标准的通知》（证监发〔2002〕21号）",
+      "url": "https://neris.csrc.gov.cn/falvfagui/rdqsHeader/mainbody?navbarId=1&secFutrsLawId=b25a17fb262742f2aea99515380cf3bb",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E02",
+      "claim": "2023-08-28起证券交易印花税减半，卖出单边0.5‰",
+      "source_type": "official",
+      "source": "财政部 税务总局公告2023年第39号",
+      "url": "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5211343/content.html",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E03",
+      "claim": "2005-01-24印花税2‰→1‰双边；2007-05-30 1‰→3‰双边；2008-04-24 3‰→1‰双边；2008-09-19改为卖出单边1‰；2023-08-28单边0.5‰",
+      "source_type": "official_media",
+      "source": "财政部历次公告；新华社2005-01-24、财新2008-09-18、财政部2023年第39号公告",
+      "url": "https://finance.caixin.com/2008-09-18/100066448.html",
+      "access_date": "2026-10-28",
+      "confidence": "high",
+      "note": "2005-01-24新华社稿：https://news.sina.com.cn/c/2005-01-24/09104927990s.shtml；2007-05-30与2008-04-24见财新时间线；2008-09-19单边征收见同页"
+    },
+    {
+      "id": "E04",
+      "claim": "2015-08-01起沪深A股过户费统一按成交金额0.02‰双向收取；此前沪市按成交面值0.3‰、深市按成交金额0.0255‰",
+      "source_type": "official_media",
+      "source": "中国结算《关于调整A股交易过户费收费标准有关事项的通知》，人民网/财新报道",
+      "url": "http://finance.people.com.cn/n1/2022/0429/c1004-32411923.html",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E05",
+      "claim": "2022-04-29起股票交易过户费总体下调50%，沪深A股由0.02‰降至0.01‰，北交所由0.025‰降至0.01‰",
+      "source_type": "official_media",
+      "source": "中国结算《关于降低股票交易过户费收费标准的通知》，财新/界面报道",
+      "url": "https://finance.caixin.com/2022-04-28/101878118.html",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E06",
+      "claim": "2026-07-06起沪深主板风险警示股票涨跌幅由5%调整为10%；创业板/科创板风险警示20%、北交所30%不变；盘后固定价格交易扩展至全部A股",
+      "source_type": "official",
+      "source": "上海证券交易所《交易规则（2026年修订）》发布稿；证监会上海监管局转载",
+      "url": "https://www.csrc.gov.cn/shanghai/c105566/c7643909/content.shtml",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E07",
+      "claim": "创业板竞价交易涨跌幅20%，IPO前5个交易日不设涨跌幅；连续竞价限价申报2%价格笼子",
+      "source_type": "official",
+      "source": "深交所《创业板交易特别规定》",
+      "url": "http://docs.static.szse.cn/www/disclosure/notice/general/W020200612831351578076.pdf",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E08",
+      "claim": "科创板涨跌幅20%，IPO前5个交易日不设涨跌幅；限价申报单笔不小于200股，1股递增",
+      "source_type": "official",
+      "source": "上交所《交易规则（2026年修订）》第6.6/6.7条；证监会投资者教育",
+      "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20260424_10816492.shtml",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E09",
+      "claim": "北交所涨跌幅30%，上市首日/退市整理首日不设涨跌幅；单笔申报不低于100股，1股递增；0.01元最小变动单位",
+      "source_type": "official",
+      "source": "北交所《交易规则》（2026年修订）",
+      "url": "https://www.bseinfo.net/jygl_list/200028217.html",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E10",
+      "claim": "1996-12-16起沪深A股实行10%涨跌幅限制；1995-01-01起T+1",
+      "source_type": "official_media",
+      "source": "深交所《深市涨跌停板制度的由来》；新华网证券市场大事记",
+      "url": "https://www.szse.cn/aboutus/sse/documents/P020180328485825173419.pdf",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E11",
+      "claim": "上交所买入证券100股整数倍，余额不足100股一次性卖出；A股最小变动单位0.01元；买入证券交收前不得卖出（T+1）",
+      "source_type": "official",
+      "source": "上交所《交易规则（2026年修订）》第3.1.4/3.3.8/3.3.11条",
+      "url": "https://www.sse.com.cn/lawandrules/sselawsrules2025/trade/universal/c/c_20260424_10816492.shtml",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E12",
+      "claim": "2014-01-01至2023-04-09主板新股首日涨幅上限44%、跌幅36%，次日起10%；2023-04-10起主板注册制新股前5日不设涨跌幅",
+      "source_type": "official_media",
+      "source": "财新《解读全面注册制（二）》；深交所投资者问答",
+      "url": "https://finance.caixin.com/2023-02-02/101994000.html",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E13",
+      "claim": "退市整理期15个交易日（2020-12-31新规），首个交易日无涨跌幅，之后主板10%、创业板/科创板20%；此前30个交易日、10%",
+      "source_type": "official",
+      "source": "上交所交易规则4.4.3；上交所退市公告；证监会退市制度80问",
+      "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2024-04-19/603603_20240419_IXDR.pdf",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E14",
+      "claim": "股息红利差别化个税：持股≤1个月20%、1个月至1年10%、超过1年免征（2015-09-08起）；2013-2015超过1年5%",
+      "source_type": "official",
+      "source": "财税〔2015〕101号；财税〔2012〕85号",
+      "url": "https://fgk.chinatax.gov.cn/zcfgk/c102416/c5203902/content.html",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E15",
+      "claim": "沪深A股经手费2023-08-28起0.00341%双向；2015-08-01至2023-08-27为0.00487%",
+      "source_type": "official",
+      "source": "上交所收费一览表",
+      "url": "https://www.sse.com.cn/services/tradingservice/charge/ssecharge/",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E16",
+      "claim": "2009-10-30创业板首批上市首日不设涨跌幅，次日起10%；2014-2019首日44%上限；2020-08-24起前5日不设涨跌幅、之后20%",
+      "source_type": "local_data",
+      "source": "Baostock stock_kline_d 首日收益统计（05_审计/证据_年度板块收益分布.csv 与首日案例）",
+      "url": "local:baostock.db",
+      "access_date": "2026-10-28",
+      "confidence": "high",
+      "note": "300001 2009-10-30 +84.87%，次日-10.00%；2014-2019创业板IPO首日收益全部≈43.9%-44.1%；2020-08-24后出现+1000%级首日"
+    },
+    {
+      "id": "E17",
+      "claim": "主板ST 5%在2026-07-06前有效，2026-07-06起变10%；创业板/科创板ST为20%",
+      "source_type": "local_data",
+      "source": "Baostock is_st 分板块月度收益统计（05_审计/证据_ST分板块月度.csv）",
+      "url": "local:baostock.db",
+      "access_date": "2026-10-28",
+      "confidence": "high",
+      "note": "2024-01至2026-06主板ST最大日收益5.2%-5.9%；2026-07至10为10.3%-10.7%；创业板ST 20.0%-22.2%"
+    },
+    {
+      "id": "E18",
+      "claim": "北交所30%涨跌幅在数据中可验证，最大日收益恰为0.3000",
+      "source_type": "local_data",
+      "source": "DuckDB raw_kline_daily 北交所353只、277,174行",
+      "url": "local:market.duckdb",
+      "access_date": "2026-10-28",
+      "confidence": "high",
+      "note": "2021-2026每年max=0.3000；prev_close全空，用lag(close)"
+    },
+    {
+      "id": "E19",
+      "claim": "DuckDB无退市股、Baostock有340只退市股；Baostock无北交所；DuckDB北交所prev_close全空",
+      "source_type": "local_data",
+      "source": "05_审计/证据_数据画像.json",
+      "url": "local:market.duckdb;local:baostock.db",
+      "access_date": "2026-10-28",
+      "confidence": "high"
+    },
+    {
+      "id": "E20",
+      "claim": "2万账户10仓等权时，最低佣金5元使单边有效佣金达0.25%，往返成本约0.75%",
+      "source_type": "derived",
+      "source": "05_审计/证据_成本敏感性.csv",
+      "url": "local:evidence",
+      "access_date": "2026-10-28",
+      "confidence": "high",
+      "note": "按2023-08后印花税0.5‰、滑点0.1%/边、过户费0.001%/边计算"
+    },
+    {
+      "id": "E21",
+      "claim": "1999-2021年末A股累计退市146家；2022-2026每年约20-52家，与Baostock 341只量级接近",
+      "source_type": "official_media",
+      "source": "财新周刊《A股退市潮起》2022-05-14；东方财富2025年退市统计",
+      "url": "https://weekly.caixin.com/2022-05-14/101884913.html",
+      "access_date": "2026-10-28",
+      "confidence": "medium",
+      "note": "仅作量级核对；逐只清单仍需交易所/交易所公告核对"
+    }
+  ],
+
+  "adapter_contract": {
+    "purpose": "供主协调者集成；不修改公共撮合。所有函数只读本JSON，不写源库。",
+    "python_module": "02_代码/交易制度适配器.py",
+    "functions": [
+      {"name": "board_of(code)", "input": "code: 'sh.600000'|'sz.300750'|'920242.BJ'", "output": "board key or 'UNKNOWN'", "note": "按code_prefixes最长匹配；BSE只认920，8/4开头归NEEQ/UNKNOWN"},
+      {"name": "price_limit_pct(code, date, is_st=False, ipo_session=None, delisting=False)", "input": "date ISO; ipo_session 1-based; delisting bool", "output": "float or None (None=无涨跌幅)", "note": "先判IPO前N日/退市首日，再判ST，再判normal"},
+      {"name": "limit_prices(prev_close, pct)", "input": "prev_close CNY; pct fraction", "output": "[down, up]", "note": "round half up to 0.01"},
+      {"name": "is_limit_up(bar, prev_close, pct)", "input": "bar dict open/high/low/close; prev_close", "output": "bool", "note": "high>=up-0.001 或 close>=up-0.001"},
+      {"name": "is_limit_down(...)", "output": "bool"},
+      {"name": "is_one_price_board(bar, prev_close, pct)", "output": "bool", "note": "high==low==close且触板"},
+      {"name": "min_buy_shares(code)", "output": "int"},
+      {"name": "round_lot(shares, code)", "output": "int", "note": "买入向下取整到最小单位；STAR/BSE按1股递增"},
+      {"name": "commission(date, amount, side, scenario='conservative')", "output": "float CNY", "note": "max(5, amount*pct)"},
+      {"name": "stamp_duty(date, side, amount)", "output": "float"},
+      {"name": "transfer_fee(date, board, amount, shares)", "output": "float", "note": "沪市2015前按par_value*shares"},
+      {"name": "total_fees(date, board, side, amount, shares, scenario='conservative')", "output": "dict", "note": "commission/stamp/transfer/total"},
+      {"name": "dividend_tax_rate(date, holding_days)", "output": "float"},
+      {"name": "can_buy(code, date, bar, prev_close, is_st, ipo_session, delisting, suspended, scenario)", "output": "(bool, reason)"},
+      {"name": "can_sell(code, date, bar, prev_close, is_st, delisting, suspended, held_days, ipo_session, issue_price)", "output": "(bool, reason)", "note": "held_days<1= T+1 不可卖；IPO首日按发行价36%跌幅帽"}
+    ],
+    "data_contract": {
+      "bar_fields": ["date", "open", "high", "low", "close", "preclose", "volume", "amount", "trade_status", "is_st"],
+      "price_fields": "不复权价用于成交；后复权价只用于收益/信号",
+      "preclose": "必须使用除权除息参考价（Baostock preclose）",
+      "volume": "股数；amount 元",
+      "suspension": "trade_status=0 或 volume为空/0"
+    }
+  }
+}

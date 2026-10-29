@@ -1,0 +1,688 @@
+{
+  "schema": "trend-structure-final-audit-residual-closure/v1",
+  "generated_at_local": "2026-10-29T03:34:25",
+  "project": "trading_趋势结构",
+  "status": "FINAL_ACCEPTANCE_PASS_N7_N8_FIXED",
+  "status_zh": "四原审计员终验均PASS，方法N7/N8已随后修正",
+  "source_audits": [
+    {
+      "path": "05_审计/最终数值审计_复核.json",
+      "fail_warn": [
+        "F01",
+        "F06",
+        "F09",
+        "N01",
+        "N02",
+        "N03",
+        "N04"
+      ]
+    },
+    {
+      "path": "05_审计/最终交付审计_复核.json",
+      "fail_warn": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "M10",
+        "M23"
+      ]
+    },
+    {
+      "path": "05_审计/最终反方审计_复核.json",
+      "fail_warn": [
+        "F01",
+        "F04",
+        "F06",
+        "F13",
+        "F15",
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R08",
+        "R09",
+        "R10"
+      ]
+    },
+    {
+      "path": "05_审计/最终方法代码审计_复核.json",
+      "fail_warn": [
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6"
+      ]
+    }
+  ],
+  "aliases": {
+    "交付复核:M10": "交付复核:R02",
+    "交付复核:M23": "交付复核:R05"
+  },
+  "summary": {
+    "n_source_items": 35,
+    "n_dedup_items": 35,
+    "n_fixed": 35,
+    "n_check_fail": 0,
+    "n_unmapped": 0,
+    "n_needs_resync": 0,
+    "external_open_claims": 0,
+    "claim_scope": "仅本文件映射的复核项；四份终验均 PASS，N7/N8 已随后修正；仍不宣称无残余。"
+  },
+  "items": [
+    {
+      "source": "数值复核",
+      "id": "F01",
+      "severity": "MODERATE",
+      "claim": "01 §5.8/04 cross_cutting MKT 主口径 val -7.33 未与族内 best -2.35 分开；04 RELSTR 冗余字段错；01 §3.19 MAIN/EXIT 行仍错",
+      "where": [
+        "01_完整报告.md §5.8/§3.19",
+        "04_最终结论.json cross_cutting.market_state / families.MKT / families.RELSTR / families.EXIT"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_f01_mkt_relstr_main_exit",
+      "check_pass": true,
+      "check_detail": "01 §5.8/§3.19 与 04 MKT/RELSTR/MAIN/EXIT 字段全部对齐",
+      "evidence": "01 §5.8 改“主口径 A 偏广度 +13.89%/−7.33%；族内真实最高 val D_串联过滤 −2.35%”；04 MKT 用 main_dev_config_val=-0.0733 与 family_best_val=-0.0235；RELSTR B02 val=-0.255681、N02 dev=+0.037473；MAIN N_sel=19、EXIT 18 臂 best=−20.20%/−19.84%、表内合计 733。",
+      "needs_resync": false
+    },
+    {
+      "source": "数值复核",
+      "id": "F06",
+      "severity": "MODERATE",
+      "claim": "根文档/04 仍把 v2 修订版留出裁决写成“00:37 历史快照”",
+      "where": [
+        "00_一页纸.md",
+        "01_完整报告.md §7/§12",
+        "03_数据与复现说明.md",
+        "04_最终结论.json holdout"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_holdout_v2",
+      "check_pass": true,
+      "check_detail": "留出裁决统一为 v2 修订版 + 附录 A/initial_snapshot 初版",
+      "evidence": "统一为“v2 修订版（2026-10-29 02:12）；00:37 初版只作附录 A/initial_snapshot”；04 supersedes.path 指向 `#initial_snapshot`、as_of=02:12。",
+      "needs_resync": false
+    },
+    {
+      "source": "数值复核",
+      "id": "F09",
+      "severity": "LOW",
+      "claim": "04 cross_cutting.dynamic_parameters 仍写 2.11%~5.50%",
+      "where": [
+        "04_最终结论.json cross_cutting.dynamic_parameters",
+        "01_完整报告.md §2.5/§5.1"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_dynamic_154",
+      "check_pass": true,
+      "check_detail": "04 cross_cutting.dynamic_parameters = 1.54%~5.50%",
+      "evidence": "04 改 1.54%~5.50%（S06 最低）；与 statistics.neighborhood_range 一致。",
+      "needs_resync": false
+    },
+    {
+      "source": "数值复核",
+      "id": "N01",
+      "severity": "MODERATE",
+      "claim": "03 把过户费敏感性 0.06% 写成主口径；transfer_fee_aligned 把错误固化为 PASS",
+      "where": [
+        "03_数据与复现说明.md §3.2",
+        "02_代码/最终交付.py transfer_fee_aligned"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_transfer_fee",
+      "check_pass": true,
+      "check_detail": "过户费主口径 0.1%（0.0010）；0.06% 只作敏感性",
+      "evidence": "03 改主口径 0.1%（0.0010），0.06% 仅 `--transfer-par 0.0006` 敏感性；影响 T0005 dev 57 笔沪市、约 543 元/8 年≈0.007%/年；检查改为读代码默认 0.0010 + 文档主/敏感性双写。",
+      "needs_resync": false
+    },
+    {
+      "source": "数值复核",
+      "id": "N02",
+      "severity": "MODERATE",
+      "claim": "根文档/04 说 2021+ “未封存/未哈希封存”，与 34 文件封存清单矛盾",
+      "where": [
+        "01_完整报告.md §7/§9.2",
+        "03_数据与复现说明.md §4/§7",
+        "README.md §5/§8",
+        "04_最终结论.json holdout"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_seal_logical",
+      "check_pass": true,
+      "check_detail": "逻辑封存 34 文件 + 未物理隔离，已链接清单/说明",
+      "evidence": "统一为“逻辑封存已完成（34 文件、A3/B7/C24、逐文件 SHA-256、0 策略绩效、禁止用途）；未做物理隔离（未移出/改权限/独立保管）”；并链接封存清单/说明。",
+      "needs_resync": false
+    },
+    {
+      "source": "数值复核",
+      "id": "N03",
+      "severity": "HIGH",
+      "claim": "验收 70 项/60 checks 的闭合声明过度；检查过窄",
+      "where": [
+        "04_证据/审计整改验收.json",
+        "02_代码/最终交付.py _acceptance_checks"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_acceptance_status",
+      "check_pass": true,
+      "check_detail": "review_status=四原审计员终验均PASS，方法N7/N8已随后修正",
+      "evidence": "验收改为“内部检查通过，等待独立复核”；新增 30+ 断言覆盖 MKT/RELSTR/MAIN/EXIT/版本标签/过户费/封存/G3-G7/预算 11.92/top5 毛净/证据矩阵横幅/交付清单；新增 `04_证据/最终审计剩余项关闭.json` 逐项映射。",
+      "needs_resync": false
+    },
+    {
+      "source": "数值复核",
+      "id": "N04",
+      "severity": "LOW",
+      "claim": "G4 区间 −7.2~−18.2 漏掉 −6.44",
+      "where": [
+        "00_一页纸.md G4",
+        "01_完整报告.md §6.6"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_g4_range",
+      "check_pass": true,
+      "check_detail": "G4 区间改为 −6.44%~−18.22%",
+      "evidence": "改 −6.44%~−18.22%（逐配置 −6.44/−7.17/−18.22/−15.33/−14.74，252 日滚动复算）。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "R01",
+      "severity": "MEDIUM",
+      "claim": "修订版留出裁决被根文档描述成 00:37 历史快照",
+      "where": [
+        "00/01/03/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_holdout_v2",
+      "check_pass": true,
+      "check_detail": "留出裁决统一为 v2 修订版 + 附录 A/initial_snapshot 初版",
+      "evidence": "同数值复核 F06；另 `05_审计/留出准入裁决.md` 头部改为“附录 A 可由内容复算；初版文件已被覆盖，文件清单只记录修订版”。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "R02",
+      "severity": "MEDIUM",
+      "claim": "04 cross_cutting 仍 2.11%；top5_share 旧字段未标毛/净",
+      "where": [
+        "04_最终结论.json"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_top5_fields",
+      "check_pass": true,
+      "check_detail": "top5_share_gross/net 双字段已回填",
+      "evidence": "dynamic 改 1.54；main_candidate.dev/val 增加 top5_share_gross/top5_share_net/top5_share_denominator（dev net 0.4587/gross 0.3106；val net −0.6258/gross 0.4092）。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "R03",
+      "severity": "MEDIUM",
+      "claim": "“未封存/未哈希封存”与逻辑封存清单冲突",
+      "where": [
+        "01/03/README/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_seal_logical",
+      "check_pass": true,
+      "check_detail": "逻辑封存 34 文件 + 未物理隔离，已链接清单/说明",
+      "evidence": "同数值复核 N02；链接 34 文件清单与说明。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "R04",
+      "severity": "MEDIUM",
+      "claim": "验收闭合声明与处置表状态标注冲突",
+      "where": [
+        "04_证据/审计整改验收.json",
+        "05_审计/审计问题处置表.csv"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_acceptance_status",
+      "check_pass": true,
+      "check_detail": "review_status=四原审计员终验均PASS，方法N7/N8已随后修正",
+      "evidence": "验收状态改“内部检查通过，等待独立复核”；处置表快照状态同步为“已同步（本轮）”，最终状态见剩余项关闭 JSON；不再作外部闭合声明。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "R05",
+      "severity": "LOW",
+      "claim": "证据矩阵 P03 仍 486/228，无横幅",
+      "where": [
+        "05_审计/最终结论证据矩阵.md"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_evidence_banner",
+      "check_pass": true,
+      "check_detail": "证据矩阵顶部含 486/228→505/228 横幅",
+      "evidence": "文件顶部加横幅：01:12 历史；P03/§6#11 的 486/228 已被根文档 505/228/733 取代；不改历史复算。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "M10",
+      "severity": "LOW-MEDIUM",
+      "claim": "04 cross_cutting.dynamic_parameters 仍 2.11%~5.50%（M10 WARN）",
+      "where": [
+        "04_最终结论.json cross_cutting.dynamic_parameters",
+        "01_完整报告.md §2.5/§5.1"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_dynamic_154",
+      "check_pass": true,
+      "check_detail": "04 cross_cutting.dynamic_parameters = 1.54%~5.50%",
+      "evidence": "04 改 1.54%~5.50%；与 statistics.neighborhood_range 一致。",
+      "needs_resync": false
+    },
+    {
+      "source": "交付复核",
+      "id": "M23",
+      "severity": "LOW",
+      "claim": "证据矩阵 P03 486/228 无横幅（M23 WARN）",
+      "where": [
+        "05_审计/最终结论证据矩阵.md"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_evidence_banner",
+      "check_pass": true,
+      "check_detail": "证据矩阵顶部含 486/228→505/228 横幅",
+      "evidence": "顶部横幅已加；历史复算不改。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "F01",
+      "severity": "HIGH",
+      "claim": "01 §3.19 MAIN N_sel=1/EXIT −8.83；表内 715≠733；00 MAIN“diagnostic”/EXIT“同左”",
+      "where": [
+        "01_完整报告.md §3.19",
+        "00_一页纸.md"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_f01_mkt_relstr_main_exit",
+      "check_pass": true,
+      "check_detail": "01 §5.8/§3.19 与 04 MKT/RELSTR/MAIN/EXIT 字段全部对齐",
+      "evidence": "MAIN 19（T0005+18 邻域）、EXIT 18 臂 best −20.20/−19.84；表内 N_sel 合计 733；00 MAIN 标“N_sel 18 邻域”、EXIT 标“18 臂 best”。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "F04",
+      "severity": "HIGH",
+      "claim": "00/01/03/04 仍把修订版裁决写成 00:37 快照；01 §7 行 669/670 自相矛盾",
+      "where": [
+        "00/01/03/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_holdout_v2",
+      "check_pass": true,
+      "check_detail": "留出裁决统一为 v2 修订版 + 附录 A/initial_snapshot 初版",
+      "evidence": "同数值复核 F06；01 §7 统一为 v2 修订版 + 附录 A 初版。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "F06",
+      "severity": "HIGH",
+      "claim": "根文档仍写“未做哈希封存/未封存”",
+      "where": [
+        "00/01/03/04/README"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_seal_logical",
+      "check_pass": true,
+      "check_detail": "逻辑封存 34 文件 + 未物理隔离，已链接清单/说明",
+      "evidence": "同数值复核 N02；统一逻辑封存 + 未物理隔离。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "F13",
+      "severity": "MEDIUM",
+      "claim": "G3 只写 dev；G5 把 T0005 混入 5 个；G6 漏 VCB T40 0.622；G7 把 TREND 42 矩阵当 S3",
+      "where": [
+        "00_一页纸.md G3/G5/G6/G7",
+        "01_完整报告.md §6.6"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_g3_g5_g6_g7",
+      "check_pass": true,
+      "check_detail": "G3 dev/val、G5 单列 T0005、G6 T40 0.622、G7 TREND 42 矩阵",
+      "evidence": "G3 dev 0.05–0.28 / val 0.18–0.36；G5 只列 5 个并单列 T0005；G6 8 族表 0.1139 + VCB T40 0.622（N=24）；G7 标 TREND 42 矩阵、S3 是子集。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "F15",
+      "severity": "LOW-MEDIUM",
+      "claim": "00/02 预算未给 11.92；00 “最好 PBO”漏全族；交付清单缺封存/处置表/修订裁决/整改验收",
+      "where": [
+        "00_一页纸.md",
+        "02_规则手册 R5",
+        "01_完整报告.md §12",
+        "README.md"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_budget_pbo_delivery",
+      "check_pass": true,
+      "check_detail": "预算 11.92、PBO 选中族、交付清单 6 项",
+      "evidence": "预算补 11.92× 可比总口径；PBO 行改“选中族，不是全族最低”并补 ECOLOGY/LONGMOM/STRUCTREV/小盘；交付清单补 6 项。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R01",
+      "severity": "HIGH",
+      "claim": "MAIN/EXIT 两行与 N_sel 合计",
+      "where": [
+        "01 §3.19",
+        "00"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_f01_mkt_relstr_main_exit",
+      "check_pass": true,
+      "check_detail": "01 §5.8/§3.19 与 04 MKT/RELSTR/MAIN/EXIT 字段全部对齐",
+      "evidence": "同反方 F01。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R02",
+      "severity": "HIGH",
+      "claim": "修订版裁决被标 00:37",
+      "where": [
+        "00/01/03/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_holdout_v2",
+      "check_pass": true,
+      "check_detail": "留出裁决统一为 v2 修订版 + 附录 A/initial_snapshot 初版",
+      "evidence": "同数值 F06。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R03",
+      "severity": "HIGH",
+      "claim": "未封存表述与 34 清单矛盾",
+      "where": [
+        "00/01/03/04/README"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_seal_logical",
+      "check_pass": true,
+      "check_detail": "逻辑封存 34 文件 + 未物理隔离，已链接清单/说明",
+      "evidence": "同数值 N02。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R04",
+      "severity": "MEDIUM",
+      "claim": "G7 0.127/0.452 是 TREND 42 矩阵",
+      "where": [
+        "00 G7",
+        "01 §6.6"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_g3_g5_g6_g7",
+      "check_pass": true,
+      "check_detail": "G3 dev/val、G5 单列 T0005、G6 T40 0.622、G7 TREND 42 矩阵",
+      "evidence": "已标 TREND 42 矩阵、S3 子集。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R05",
+      "severity": "MEDIUM",
+      "claim": "G6 漏 VCB T40 0.622",
+      "where": [
+        "00 G6",
+        "01 §6.6/§6.3",
+        "02 R5"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_g3_g5_g6_g7",
+      "check_pass": true,
+      "check_detail": "G3 dev/val、G5 单列 T0005、G6 T40 0.622、G7 TREND 42 矩阵",
+      "evidence": "已写 8 族表 0.1139 + T40 0.622（N=24）。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R06",
+      "severity": "MEDIUM",
+      "claim": "G3 只 dev；G5 混入 T0005",
+      "where": [
+        "00 G3/G5",
+        "01 §6.6"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_g3_g5_g6_g7",
+      "check_pass": true,
+      "check_detail": "G3 dev/val、G5 单列 T0005、G6 T40 0.622、G7 TREND 42 矩阵",
+      "evidence": "G3 dev/val 分列；G5 单列 T0005。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R07",
+      "severity": "LOW-MEDIUM",
+      "claim": "预算缺 11.92",
+      "where": [
+        "00",
+        "02 R5"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_budget_pbo_delivery",
+      "check_pass": true,
+      "check_detail": "预算 11.92、PBO 选中族、交付清单 6 项",
+      "evidence": "已补 11.92 可比总口径。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R08",
+      "severity": "MEDIUM",
+      "claim": "“最好 PBO”漏全族",
+      "where": [
+        "00"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_budget_pbo_delivery",
+      "check_pass": true,
+      "check_detail": "预算 11.92、PBO 选中族、交付清单 6 项",
+      "evidence": "改“选中族，不是全族最低”并补 4 个低 PBO。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R09",
+      "severity": "MEDIUM",
+      "claim": "验收闭合声明 / verify 不查文档",
+      "where": [
+        "04_证据/审计整改验收.json",
+        "最终交付.py"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_acceptance_status",
+      "check_pass": true,
+      "check_detail": "review_status=四原审计员终验均PASS，方法N7/N8已随后修正",
+      "evidence": "新增 30+ 文档/JSON 字段断言；验收状态改内部检查通过；剩余项关闭 JSON。",
+      "needs_resync": false
+    },
+    {
+      "source": "反方复核",
+      "id": "R10",
+      "severity": "LOW",
+      "claim": "00/01 交付清单缺封存/处置表/修订裁决/整改验收",
+      "where": [
+        "00/01"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_budget_pbo_delivery",
+      "check_pass": true,
+      "check_detail": "预算 11.92、PBO 选中族、交付清单 6 项",
+      "evidence": "已补 6 项。",
+      "needs_resync": false
+    },
+    {
+      "source": "方法复核",
+      "id": "N1",
+      "severity": "MEDIUM",
+      "claim": "根文档称 2021+ 未封存",
+      "where": [
+        "01/03/README/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_seal_logical",
+      "check_pass": true,
+      "check_detail": "逻辑封存 34 文件 + 未物理隔离，已链接清单/说明",
+      "evidence": "同数值 N02。",
+      "needs_resync": false
+    },
+    {
+      "source": "方法复核",
+      "id": "N2",
+      "severity": "MEDIUM",
+      "claim": "修订版裁决被标未改写/保留原样",
+      "where": [
+        "00/01/03/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_holdout_v2",
+      "check_pass": true,
+      "check_detail": "留出裁决统一为 v2 修订版 + 附录 A/initial_snapshot 初版",
+      "evidence": "同数值 F06；01 §9.4 已改“v2 修订版”。",
+      "needs_resync": false
+    },
+    {
+      "source": "方法复核",
+      "id": "N3",
+      "severity": "LOW",
+      "claim": "附录 A 哈希被谎称与当前文件清单一致",
+      "where": [
+        "05_审计/留出准入裁决.md"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_appendix_hash",
+      "check_pass": true,
+      "check_detail": "附录 A 哈希改为“可按附录 A 内容复算”；不谎称清单保留初版",
+      "evidence": "头注改为“附录 A 当前内容 42,886 bytes，SHA-256 可按附录内容复算；初版 42,550 bytes/SHA ddd8a220 已被覆盖，项目内不保留原件；文件清单只记录修订版文件（大小与 SHA-256 见清单）”。",
+      "needs_resync": false
+    },
+    {
+      "source": "方法复核",
+      "id": "N4",
+      "severity": "LOW",
+      "claim": "“三个文件”未指向 34 文件清单，未提 C 级数据源",
+      "where": [
+        "01 §7",
+        "03 §4",
+        "README §5"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_seal_logical",
+      "check_pass": true,
+      "check_detail": "逻辑封存 34 文件 + 未物理隔离，已链接清单/说明",
+      "evidence": "已写 34 个（A3/B7/C24），C 级 24 个可重建 2021+ 行情，链接清单/说明。",
+      "needs_resync": false
+    },
+    {
+      "source": "方法复核",
+      "id": "N5",
+      "severity": "LOW",
+      "claim": "03_结果 内 2021+ 文件 6 vs 9 口径未说明",
+      "where": [
+        "01 §7",
+        "03 §4",
+        "README §5"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_six_nine",
+      "check_pass": true,
+      "check_detail": "6=date 列口径、9=A3+B6 已在根文档说明",
+      "evidence": "已注明 6=date 列口径、9=date/calendar_date/out_date 口径（A3+B6）。",
+      "needs_resync": false
+    },
+    {
+      "source": "方法复核",
+      "id": "N6",
+      "severity": "LOW",
+      "claim": "E1/E2 与入场规则重名",
+      "where": [
+        "00/01/02/04"
+      ],
+      "disposition": "FIXED",
+      "status": "FIXED_IN_THIS_BATCH",
+      "verified_by": "rereview_e1e2_naming",
+      "check_pass": true,
+      "check_detail": "证据等级 E1-EVID/E2-EVID；入场 E1-ENTRY/E2-ENTRY",
+      "evidence": "证据等级统一 E1-EVID/E2-EVID；入场规则 E1-ENTRY/E2-ENTRY。",
+      "needs_resync": false
+    }
+  ],
+  "unmapped": [],
+  "verification": {
+    "verify": "python3 02_代码/最终交付.py verify",
+    "selfcheck": "python3 02_代码/最终交付.py selfcheck",
+    "remediation": "python3 02_代码/最终交付.py remediation",
+    "delivery_acceptance": "python3 02_代码/交付验收.py",
+    "seal_scan": "python3 02_代码/封存2021文件.py",
+    "inventory": "python3 02_代码/交付验收.py --inventory-only"
+  },
+  "declared_residuals": [
+    "2021+ 物理隔离/独立保管未做（逻辑封存已完成；清单 `05_审计/2021+未评估文件封存清单.csv`、说明 `05_审计/2021+未评估文件封存说明.md`）。",
+    "TREND 创业板限价 bug、VCB 成本/250 日强平未改代码、未重跑。",
+    "跨族引擎/价格口径未统一，矩阵只作披露。"
+  ],
+  "not_run": [
+    "任何策略回测",
+    "任何 2021+ 收益",
+    "任何交易结果/注册表/总账修改"
+  ]
+}

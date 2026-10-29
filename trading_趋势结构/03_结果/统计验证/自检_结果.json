@@ -1,0 +1,197 @@
+{
+  "generated_at": "2026-10-29T03:36:51",
+  "n_checks": 20,
+  "n_passed": 20,
+  "all_passed": true,
+  "checks": [
+    {
+      "name": "最大回撤与水下期",
+      "passed": true,
+      "detail": {
+        "mdd": -0.25,
+        "peak": 1,
+        "trough": 2
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "累计收益口径",
+      "passed": true,
+      "detail": {
+        "total_return": 0.6549125505299835,
+        "cagr": 0.29820744328482274
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "夏普手算一致",
+      "passed": true,
+      "detail": {
+        "sharpe": 1.394464785880384,
+        "manual": 1.3944647858803854
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "留出期护栏",
+      "passed": true,
+      "detail": {
+        "raised": true
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "费用与印花税分段",
+      "passed": true,
+      "detail": {
+        "buy_bps": 12.6,
+        "sell_bps": 17.6
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "涨跌停分段",
+      "passed": true,
+      "detail": {
+        "ok": true
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "p值校正",
+      "passed": true,
+      "detail": {
+        "bh": [
+          0.03,
+          0.04,
+          0.04
+        ],
+        "holm": [
+          0.03,
+          0.06,
+          0.06
+        ]
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "DSR随试验数递减",
+      "passed": true,
+      "detail": {
+        "dsr_1": 0.9941270475892304,
+        "dsr_100": 0.938597746280258,
+        "srn0": 0.40172075534833224
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "PBO噪声≈0.5且信号更低",
+      "passed": true,
+      "detail": {
+        "pbo_noise": 0.5428571428571428,
+        "pbo_signal": 0.44285714285714284
+      },
+      "sec": 0.01
+    },
+    {
+      "name": "聚类方差膨胀",
+      "passed": true,
+      "detail": {
+        "se_ratio": 2.7142114374018633,
+        "p": 0.5408222744086305
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "区块bootstrap覆盖率",
+      "passed": true,
+      "detail": {
+        "coverage": 1.0,
+        "reps": 60
+      },
+      "sec": 2.39
+    },
+    {
+      "name": "T+1契约拦截",
+      "passed": true,
+      "detail": {
+        "caught": "回测结果未通过契约检查：存在成交日不晚于信号日（T+1 违规）"
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "曲面平台/尖峰判别",
+      "passed": true,
+      "detail": {
+        "plateau": 1.0,
+        "isolation": 3.0
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "最优区块长度",
+      "passed": true,
+      "detail": {
+        "block_len": 43.146224727152315
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "walk-forward折不重叠",
+      "passed": true,
+      "detail": {
+        "n_folds": 2,
+        "oos_cagr": 0.1631765388865838
+      },
+      "sec": 0.02
+    },
+    {
+      "name": "延迟重估",
+      "passed": true,
+      "detail": {
+        "rows": 2,
+        "delays": [
+          1,
+          2
+        ]
+      },
+      "sec": 0.02
+    },
+    {
+      "name": "剔除最大赢家",
+      "passed": true,
+      "detail": {
+        "rows": 2
+      },
+      "sec": 0.0
+    },
+    {
+      "name": "功效：真实夏普1.0可检出",
+      "passed": true,
+      "detail": {
+        "cagr_lo": 0.05591850111838381,
+        "p_le_0": 0.005,
+        "dsr": 0.997810008232134
+      },
+      "sec": 0.57
+    },
+    {
+      "name": "尺寸：零均值不误判",
+      "passed": true,
+      "detail": {
+        "p_le_0": 0.835,
+        "dsr": 0.06526441367794827
+      },
+      "sec": 0.47
+    },
+    {
+      "name": "SPA：真实候选可检出",
+      "passed": true,
+      "detail": {
+        "p_spa": 0.0016638935108153079,
+        "p_rc": 0.0016638935108153079
+      },
+      "sec": 0.55
+    }
+  ]
+}

@@ -1,0 +1,2308 @@
+{
+  "meta": {
+    "generated_at": "2026-10-28T21:54:02+08:00",
+    "freeze_date": "2026-10-26",
+    "code_files": {
+      "账户撮合.py": {
+        "path": "/Users/admin/WorkSpace/trading/trading_趋势结构/02_代码/账户撮合.py",
+        "sha256": "73547906445f3132ae76cb785dd434dc47316786e1f03696f240082bb3f96f29"
+      },
+      "费用与交易约束.py": {
+        "path": "/Users/admin/WorkSpace/trading/trading_趋势结构/02_代码/费用与交易约束.py",
+        "sha256": "149b0f7f1d4bfdb6f77cb3cc82e14e007f3a4b7f7d96c88bd0bb5d0542c33d7f"
+      }
+    },
+    "data_sources": {
+      "duckdb": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+      "baostock": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "mode": "read_only"
+    },
+    "window": {
+      "duckdb_start": "2016-10-13",
+      "end": "2026-10-26",
+      "baostock_start": "1990-12-19",
+      "note": "DuckDB 日线 2016-10-13 起；2005-2015 与退市股走 Baostock；统一冻结至 2026-10-26。"
+    },
+    "adjustment_convention": "DuckDB 用 raw_kline_daily 原始价 + raw_adjustment_events 做股数/现金调整；Baostock 用 adjustflag=3 不复权价 + preclose（除权日已是交易所参考价）。复权因子只用于一致性审计，不参与撮合定价。",
+    "line_counts": {
+      "账户撮合.py": 2878,
+      "费用与交易约束.py": 458
+    },
+    "python": "3.13.13",
+    "duckdb": "1.5.6"
+  },
+  "account_config_defaults": {
+    "initial_cash": 1000000.0,
+    "cash_settle_days": 1,
+    "enforce_t1": true,
+    "rights_policy": "subscribe",
+    "delisting_missing_days": 10,
+    "delisting_haircut": 0.1,
+    "fee": {
+      "commission_rate": 0.00025,
+      "min_commission": 5.0,
+      "slippage_bps": 5.0,
+      "max_participation": 0.1,
+      "dividend_tax_rate": 0.2,
+      "stamp_schedule": [
+        {
+          "effective": "2005-01-24",
+          "rate": 0.001,
+          "sides": "both"
+        },
+        {
+          "effective": "2007-05-30",
+          "rate": 0.003,
+          "sides": "both"
+        },
+        {
+          "effective": "2008-04-24",
+          "rate": 0.001,
+          "sides": "both"
+        },
+        {
+          "effective": "2008-09-19",
+          "rate": 0.001,
+          "sides": "sell"
+        },
+        {
+          "effective": "2023-08-28",
+          "rate": 0.0005,
+          "sides": "sell"
+        }
+      ],
+      "transfer_schedule": [
+        {
+          "effective": "2005-01-01",
+          "mode": "par_sh",
+          "rate": 0.0006,
+          "scope": "SH"
+        },
+        {
+          "effective": "2015-08-01",
+          "mode": "amount",
+          "rate": 2e-05,
+          "scope": "BOTH"
+        },
+        {
+          "effective": "2022-04-29",
+          "mode": "amount",
+          "rate": 1e-05,
+          "scope": "BOTH"
+        }
+      ]
+    }
+  },
+  "self_tests": {
+    "total": 31,
+    "passed": 31,
+    "failed": 0,
+    "cases": [
+      {
+        "name": "t1_buy_then_stop_same_day",
+        "passed": true,
+        "detail": {
+          "sell": {
+            "date": "2024-01-04",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 9.6,
+            "amount": 960.0,
+            "commission": 5.0,
+            "stamp_duty": 0.48,
+            "transfer_fee": 0.01,
+            "fees": 5.49,
+            "cash_after": 99939.5,
+            "kind": "stop",
+            "order_id": "O000002",
+            "tag": "",
+            "reason": "stop_trigger"
+          },
+          "stop_order": {
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "kind": "stop",
+            "price": 9.0,
+            "tif": "gtc",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000002",
+            "filled_qty": 100,
+            "avg_price": 9.6,
+            "status": "filled",
+            "reason": "stop_trigger",
+            "triggered": true,
+            "seq": 2
+          }
+        }
+      },
+      {
+        "name": "lot_main_100",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 100,
+            "avg_price": 10.0,
+            "status": "filled",
+            "reason": "open",
+            "triggered": false,
+            "seq": 1
+          },
+          "rejected": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 0,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000002",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "rejected",
+            "reason": "lot_below_min",
+            "triggered": false,
+            "seq": 2
+          }
+        }
+      },
+      {
+        "name": "lot_star_bse",
+        "passed": true,
+        "detail": {
+          "star_ok": {
+            "code": "688001.SH",
+            "side": "buy",
+            "qty": 250,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 250,
+            "avg_price": 10.0,
+            "status": "filled",
+            "reason": "open",
+            "triggered": false,
+            "seq": 1
+          },
+          "star_bad": {
+            "code": "688001.SH",
+            "side": "buy",
+            "qty": 0,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000002",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "rejected",
+            "reason": "lot_below_min",
+            "triggered": false,
+            "seq": 2
+          },
+          "star_sell_bad": {
+            "code": "688001.SH",
+            "side": "sell",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-03",
+            "execute_from": "2024-01-04",
+            "order_id": "O000003",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "rejected",
+            "reason": "sell_qty_invalid:below_sell_min",
+            "triggered": false,
+            "seq": 3
+          },
+          "bse": {
+            "code": "830001.BJ",
+            "side": "buy",
+            "qty": 150,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 150,
+            "avg_price": 10.0,
+            "status": "filled",
+            "reason": "open",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "odd_lot_sell",
+        "passed": true,
+        "detail": {
+          "bad": {
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 120,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-04",
+            "execute_from": "2024-01-05",
+            "order_id": "O000002",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "rejected",
+            "reason": "sell_qty_invalid:not_lot_multiple",
+            "triggered": false,
+            "seq": 2
+          },
+          "ok": {
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-05",
+            "execute_from": "2024-01-08",
+            "order_id": "O000003",
+            "filled_qty": 100,
+            "avg_price": 10.0,
+            "status": "filled",
+            "reason": "open",
+            "triggered": false,
+            "seq": 3
+          },
+          "last": {
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 50,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-08",
+            "execute_from": "2024-01-09",
+            "order_id": "O000004",
+            "filled_qty": 50,
+            "avg_price": 10.0,
+            "status": "filled",
+            "reason": "open",
+            "triggered": false,
+            "seq": 4
+          }
+        }
+      },
+      {
+        "name": "open_slippage_fees",
+        "passed": true,
+        "detail": {
+          "trade": {
+            "date": "2024-01-03",
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "price": 10.01,
+            "amount": 1001.0,
+            "commission": 5.0,
+            "stamp_duty": 0.0,
+            "transfer_fee": 0.01,
+            "fees": 5.01,
+            "cash_after": 998993.99,
+            "kind": "open",
+            "order_id": "O000001",
+            "tag": "",
+            "reason": "open"
+          },
+          "cash": 998993.99
+        }
+      },
+      {
+        "name": "fee_schedules",
+        "passed": true,
+        "detail": {
+          "sell_2024": {
+            "commission": 5.0,
+            "stamp_duty": 0.5,
+            "transfer_fee": 0.01,
+            "total": 5.51
+          }
+        }
+      },
+      {
+        "name": "limit_up_buy_blocked",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "limit_up_open",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "limit_down_sell_blocked",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-03",
+            "execute_from": "2024-01-04",
+            "order_id": "O000002",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "limit_down_open",
+            "triggered": false,
+            "seq": 2
+          }
+        }
+      },
+      {
+        "name": "board_and_st_limits",
+        "passed": true,
+        "detail": {
+          "checks": {
+            "main": true,
+            "st_main": true,
+            "chinext_old": true,
+            "chinext_new": true,
+            "star": true,
+            "bse": true
+          },
+          "st_blocked": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "limit_up_open",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "suspension_and_persistence",
+        "passed": true,
+        "detail": {
+          "open_order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "no_bar_or_suspended",
+            "triggered": false,
+            "seq": 1
+          },
+          "stop": {
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "kind": "stop",
+            "price": 9.0,
+            "tif": "gtc",
+            "tag": "",
+            "decision_date": "2024-01-03",
+            "execute_from": "2024-01-04",
+            "order_id": "O000002",
+            "filled_qty": 100,
+            "avg_price": 9.0,
+            "status": "filled",
+            "reason": "stop_trigger",
+            "triggered": true,
+            "seq": 2
+          }
+        }
+      },
+      {
+        "name": "stop_gap_and_intraday",
+        "passed": true,
+        "detail": {
+          "gap": {
+            "date": "2024-01-04",
+            "code": "688001.SH",
+            "side": "sell",
+            "qty": 200,
+            "price": 8.49,
+            "amount": 1698.0,
+            "commission": 5.0,
+            "stamp_duty": 0.85,
+            "transfer_fee": 0.02,
+            "fees": 5.87,
+            "cash_after": 99685.11,
+            "kind": "stop",
+            "order_id": "O000002",
+            "tag": "",
+            "reason": "stop_trigger"
+          },
+          "intraday": {
+            "date": "2024-01-04",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 9.49,
+            "amount": 949.0,
+            "commission": 5.0,
+            "stamp_duty": 0.47,
+            "transfer_fee": 0.01,
+            "fees": 5.48,
+            "cash_after": 99937.51,
+            "kind": "stop",
+            "order_id": "O000002",
+            "tag": "",
+            "reason": "stop_trigger"
+          }
+        }
+      },
+      {
+        "name": "stop_target_same_day_loss_first",
+        "passed": true,
+        "detail": {
+          "sell": {
+            "date": "2024-01-04",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 9.49,
+            "amount": 949.0,
+            "commission": 5.0,
+            "stamp_duty": 0.47,
+            "transfer_fee": 0.01,
+            "fees": 5.48,
+            "cash_after": 99937.51,
+            "kind": "stop",
+            "order_id": "O000002",
+            "tag": "",
+            "reason": "stop_trigger"
+          },
+          "flags": [
+            {
+              "date": "2024-01-04",
+              "code": "600000.SH",
+              "kind": "intraday_ambiguity_loss_first",
+              "detail": {
+                "stop": true,
+                "target": 10.5
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "cash_no_intraday_recycle",
+        "passed": true,
+        "detail": {
+          "same_day": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-03",
+            "execute_from": "2024-01-04",
+            "order_id": "O000003",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "insufficient_cash",
+            "triggered": false,
+            "seq": 3
+          },
+          "next_day": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-04",
+            "execute_from": "2024-01-05",
+            "order_id": "O000004",
+            "filled_qty": 100,
+            "avg_price": 10.0,
+            "status": "filled",
+            "reason": "open",
+            "triggered": false,
+            "seq": 4
+          },
+          "trades": [
+            {
+              "date": "2024-01-03",
+              "code": "600000.SH",
+              "side": "buy",
+              "qty": 100,
+              "price": 10.0,
+              "amount": 1000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.0,
+              "transfer_fee": 0.01,
+              "fees": 5.01,
+              "cash_after": 94.99,
+              "kind": "open",
+              "order_id": "O000001",
+              "tag": "",
+              "reason": "open"
+            },
+            {
+              "date": "2024-01-04",
+              "code": "600000.SH",
+              "side": "sell",
+              "qty": 100,
+              "price": 10.0,
+              "amount": 1000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.5,
+              "transfer_fee": 0.01,
+              "fees": 5.51,
+              "cash_after": 1089.48,
+              "kind": "open",
+              "order_id": "O000002",
+              "tag": "",
+              "reason": "open"
+            },
+            {
+              "date": "2024-01-05",
+              "code": "600000.SH",
+              "side": "buy",
+              "qty": 100,
+              "price": 10.0,
+              "amount": 1000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.0,
+              "transfer_fee": 0.01,
+              "fees": 5.01,
+              "cash_after": 84.47,
+              "kind": "open",
+              "order_id": "O000004",
+              "tag": "",
+              "reason": "open"
+            }
+          ]
+        }
+      },
+      {
+        "name": "cash_settle_zero",
+        "passed": true,
+        "detail": {
+          "trades": [
+            {
+              "date": "2024-01-03",
+              "code": "600000.SH",
+              "side": "buy",
+              "qty": 100,
+              "price": 10.0,
+              "amount": 1000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.0,
+              "transfer_fee": 0.01,
+              "fees": 5.01,
+              "cash_after": 94.99,
+              "kind": "open",
+              "order_id": "O000001",
+              "tag": "",
+              "reason": "open"
+            },
+            {
+              "date": "2024-01-04",
+              "code": "600000.SH",
+              "side": "sell",
+              "qty": 100,
+              "price": 10.0,
+              "amount": 1000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.5,
+              "transfer_fee": 0.01,
+              "fees": 5.51,
+              "cash_after": 1089.48,
+              "kind": "open",
+              "order_id": "O000003",
+              "tag": "",
+              "reason": "open"
+            },
+            {
+              "date": "2024-01-04",
+              "code": "600000.SH",
+              "side": "buy",
+              "qty": 100,
+              "price": 10.0,
+              "amount": 1000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.0,
+              "transfer_fee": 0.01,
+              "fees": 5.01,
+              "cash_after": 84.47,
+              "kind": "open",
+              "order_id": "O000002",
+              "tag": "",
+              "reason": "open"
+            }
+          ]
+        }
+      },
+      {
+        "name": "participation_partial",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 300,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 100,
+            "avg_price": 10.0,
+            "status": "cancelled",
+            "reason": "open_partial+day_end",
+            "triggered": false,
+            "seq": 1
+          },
+          "trade": {
+            "date": "2024-01-03",
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "price": 10.0,
+            "amount": 1000.0,
+            "commission": 5.0,
+            "stamp_duty": 0.0,
+            "transfer_fee": 0.01,
+            "fees": 5.01,
+            "cash_after": 998994.99,
+            "kind": "open",
+            "order_id": "O000001",
+            "tag": "",
+            "reason": "open_partial"
+          }
+        }
+      },
+      {
+        "name": "dividend_tax",
+        "passed": true,
+        "detail": {
+          "tax20_delta": 400.0,
+          "tax0_delta": 500.0
+        }
+      },
+      {
+        "name": "bonus_t1",
+        "passed": true,
+        "detail": {
+          "position": {
+            "code": "600000.SH",
+            "shares": 1300,
+            "available": 1300,
+            "avg_cost": 7.69623,
+            "cost_total": 10005.1,
+            "last_price": 7.7,
+            "last_date": "2024-01-05",
+            "first_buy_date": "2024-01-03",
+            "realized_pnl": 0.0,
+            "fees_paid": 5.1,
+            "missing_days": 0
+          },
+          "actions": [
+            {
+              "date": "2024-01-04",
+              "ex_date": "2024-01-04",
+              "code": "600000.SH",
+              "applied": true,
+              "shares_before": 1000,
+              "dividend_per_share": 0.0,
+              "dividend_gross": 0.0,
+              "dividend_tax": 0.0,
+              "dividend_net": 0.0,
+              "bonus_raw": 300.0,
+              "bonus_credited": 300,
+              "rights_raw": 0.0,
+              "rights_credited": 0,
+              "rights_cost": 0.0,
+              "late": false,
+              "source": "duckdb.raw_adjustment_events"
+            }
+          ]
+        }
+      },
+      {
+        "name": "event_price_conflict_skipped",
+        "passed": true,
+        "detail": {
+          "position": {
+            "code": "600000.SH",
+            "shares": 100,
+            "available": 100,
+            "avg_cost": 10.0501,
+            "cost_total": 1005.01,
+            "last_price": 10.0,
+            "last_date": "2024-01-04",
+            "first_buy_date": "2024-01-03",
+            "realized_pnl": 0.0,
+            "fees_paid": 5.01,
+            "missing_days": 0
+          },
+          "actions": [
+            {
+              "date": "2024-01-04",
+              "ex_date": "2024-01-04",
+              "code": "600000.SH",
+              "applied": false,
+              "reason": "corporate_action_price_conflict",
+              "dividend_per_share": 0.0,
+              "per_share_bonus": 0.5,
+              "rights_ratio": 0.0,
+              "rights_price": 0.0,
+              "source": "duckdb.raw_adjustment_events"
+            }
+          ],
+          "flags": [
+            {
+              "date": "2024-01-04",
+              "code": "600000.SH",
+              "kind": "corporate_action_price_conflict",
+              "detail": {
+                "ex_date": "2024-01-04",
+                "raw_prev": 10.0,
+                "event_ref": 6.6667,
+                "open": 10.0,
+                "open_vs_ref": 0.5,
+                "tolerance": 0.12,
+                "is_st": false
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "rights_subscribe_and_skip",
+        "passed": true,
+        "detail": {
+          "subscribed": {
+            "code": "600000.SH",
+            "shares": 1200,
+            "available": 1000,
+            "avg_cost": 9.17092,
+            "cost_total": 11005.1,
+            "last_price": 8.4,
+            "last_date": "2024-01-04",
+            "first_buy_date": "2024-01-03",
+            "realized_pnl": 0.0,
+            "fees_paid": 5.1,
+            "missing_days": 0
+          },
+          "skipped": {
+            "code": "600000.SH",
+            "shares": 1000,
+            "available": 1000,
+            "avg_cost": 10.0051,
+            "cost_total": 10005.1,
+            "last_price": 8.4,
+            "last_date": "2024-01-04",
+            "first_buy_date": "2024-01-03",
+            "realized_pnl": 0.0,
+            "fees_paid": 5.1,
+            "missing_days": 0
+          }
+        }
+      },
+      {
+        "name": "ex_rights_limit",
+        "passed": true,
+        "detail": {
+          "ref": 6.333333333333333,
+          "limits": {
+            "up": 6.96,
+            "down": 5.7
+          },
+          "order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "limit_up_open",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "delisting_force_liquidation",
+        "passed": true,
+        "detail": {
+          "forced": {
+            "date": "2024-01-08",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 9.0,
+            "amount": 900.0,
+            "commission": 5.0,
+            "stamp_duty": 0.45,
+            "transfer_fee": 0.01,
+            "fees": 5.46,
+            "cash_after": 99889.53,
+            "kind": "forced",
+            "order_id": "FORCED",
+            "tag": "",
+            "reason": "delisting_missing_bars"
+          },
+          "flags": [
+            {
+              "date": "2024-01-08",
+              "code": "600000.SH",
+              "kind": "forced_liquidation",
+              "detail": {
+                "reason": "delisting_missing_bars",
+                "qty": 100,
+                "price": 9.0,
+                "haircut": 0.1
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "finalize_valuation",
+        "passed": true,
+        "detail": {
+          "final": {
+            "date": "2024-01-04",
+            "cash_total": 98994.99,
+            "cash_available": 98994.99,
+            "market_value": 1200.0,
+            "nav": 100194.99,
+            "n_positions": 1,
+            "n_active_orders": 0,
+            "n_trades": 1,
+            "flags_total": 0
+          },
+          "position": {
+            "code": "600000.SH",
+            "shares": 100,
+            "available": 100,
+            "avg_cost": 10.0501,
+            "cost_total": 1005.01,
+            "last_price": 12.0,
+            "last_date": "2024-01-04",
+            "first_buy_date": "2024-01-03",
+            "realized_pnl": 0.0,
+            "fees_paid": 5.01,
+            "missing_days": 0
+          }
+        }
+      },
+      {
+        "name": "lookahead_guard",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "pending",
+            "reason": "",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "limit_target_gap_and_partial_stop",
+        "passed": true,
+        "detail": {
+          "limit_gap": {
+            "date": "2024-01-04",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 10.8,
+            "amount": 1080.0,
+            "commission": 5.0,
+            "stamp_duty": 0.54,
+            "transfer_fee": 0.01,
+            "fees": 5.55,
+            "cash_after": 100069.44,
+            "kind": "limit",
+            "order_id": "O000002",
+            "tag": "",
+            "reason": "limit_hit"
+          },
+          "partial_stop": [
+            {
+              "date": "2024-01-04",
+              "code": "600000.SH",
+              "side": "sell",
+              "qty": 100,
+              "price": 9.5,
+              "amount": 950.0,
+              "commission": 5.0,
+              "stamp_duty": 0.48,
+              "transfer_fee": 0.01,
+              "fees": 5.49,
+              "cash_after": 97939.48,
+              "kind": "stop",
+              "order_id": "O000002",
+              "tag": "",
+              "reason": "stop_trigger_partial"
+            },
+            {
+              "date": "2024-01-05",
+              "code": "600000.SH",
+              "side": "sell",
+              "qty": 200,
+              "price": 10.0,
+              "amount": 2000.0,
+              "commission": 5.0,
+              "stamp_duty": 1.0,
+              "transfer_fee": 0.02,
+              "fees": 6.02,
+              "cash_after": 99933.46,
+              "kind": "stop",
+              "order_id": "O000002",
+              "tag": "",
+              "reason": "stop_trigger"
+            }
+          ]
+        }
+      },
+      {
+        "name": "ipo_no_limit",
+        "passed": true,
+        "detail": {
+          "ipo_fill": [
+            {
+              "date": "2024-01-03",
+              "code": "688001.SH",
+              "side": "buy",
+              "qty": 200,
+              "price": 15.0,
+              "amount": 3000.0,
+              "commission": 5.0,
+              "stamp_duty": 0.0,
+              "transfer_fee": 0.03,
+              "fees": 5.03,
+              "cash_after": 96994.97,
+              "kind": "open",
+              "order_id": "O000001",
+              "tag": "",
+              "reason": "open"
+            }
+          ],
+          "no_info": {
+            "code": "688001.SH",
+            "side": "buy",
+            "qty": 200,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "limit_up_open",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "ipo_before_calendar",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "688001.SH",
+            "side": "buy",
+            "qty": 200,
+            "kind": "open",
+            "price": null,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 0,
+            "avg_price": 0.0,
+            "status": "cancelled",
+            "reason": "limit_up_open",
+            "triggered": false,
+            "seq": 1
+          }
+        }
+      },
+      {
+        "name": "bar_validation",
+        "passed": true,
+        "detail": {
+          "errors": {
+            "high_lt_low": "raised",
+            "open_outside": "raised",
+            "close_outside": "raised"
+          }
+        }
+      },
+      {
+        "name": "future_event_queue",
+        "passed": true,
+        "detail": {
+          "delta": 400.0
+        }
+      },
+      {
+        "name": "sell_fees_exact",
+        "passed": true,
+        "detail": {
+          "trade": {
+            "date": "2024-01-04",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 10.0,
+            "amount": 1000.0,
+            "commission": 5.0,
+            "stamp_duty": 0.5,
+            "transfer_fee": 0.01,
+            "fees": 5.51,
+            "cash_after": 99989.48,
+            "kind": "open",
+            "order_id": "O000002",
+            "tag": "",
+            "reason": "open"
+          },
+          "cash_delta": 994.4900000000052
+        }
+      },
+      {
+        "name": "delisting_out_date",
+        "passed": true,
+        "detail": {
+          "forced": {
+            "date": "2024-01-05",
+            "code": "600000.SH",
+            "side": "sell",
+            "qty": 100,
+            "price": 9.0,
+            "amount": 900.0,
+            "commission": 5.0,
+            "stamp_duty": 0.45,
+            "transfer_fee": 0.01,
+            "fees": 5.46,
+            "cash_after": 99889.53,
+            "kind": "forced",
+            "order_id": "FORCED",
+            "tag": "",
+            "reason": "delisting_out_date"
+          },
+          "position": {
+            "code": "600000.SH",
+            "shares": 0,
+            "available": 0,
+            "avg_cost": 0.0,
+            "cost_total": 0.0,
+            "last_price": 10.0,
+            "last_date": "2024-01-03",
+            "first_buy_date": "2024-01-03",
+            "realized_pnl": -110.47,
+            "fees_paid": 10.47,
+            "missing_days": 0
+          }
+        }
+      },
+      {
+        "name": "limit_buy",
+        "passed": true,
+        "detail": {
+          "order": {
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "kind": "limit",
+            "price": 9.5,
+            "tif": "day",
+            "tag": "",
+            "decision_date": "2024-01-02",
+            "execute_from": "2024-01-03",
+            "order_id": "O000001",
+            "filled_qty": 100,
+            "avg_price": 9.5,
+            "status": "filled",
+            "reason": "limit_hit",
+            "triggered": false,
+            "seq": 1
+          },
+          "trade": {
+            "date": "2024-01-03",
+            "code": "600000.SH",
+            "side": "buy",
+            "qty": 100,
+            "price": 9.5,
+            "amount": 950.0,
+            "commission": 5.0,
+            "stamp_duty": 0.0,
+            "transfer_fee": 0.01,
+            "fees": 5.01,
+            "cash_after": 99044.99,
+            "kind": "limit",
+            "order_id": "O000001",
+            "tag": "",
+            "reason": "limit_hit"
+          }
+        }
+      }
+    ]
+  },
+  "known_limitations": [
+    "日线撮合无盘中路径：同日止损与止盈同时触及时按损失优先（保守），但无法还原真实先后顺序。",
+    "DuckDB prev_close 全空；适配器用上一交易日收盘补，除权日由事件计算参考价。回测起点首日无前收，会用开盘价并打 flag。",
+    "DuckDB 无 is_st 字段；未注入 Baostock/外部 ST 日历时，5% 涨跌停会漏检。正式回测必须注入 ST 集合。",
+    "DuckDB 2016-2026 日线对退市股覆盖很少（Baostock 341 只退市股中仅 3 只有 DuckDB 日线）；直接用 DuckDB 回测存在生存者偏差，退市股与 2016 前历史必须走 Baostock 适配器或并集。",
+    "股息税按固定税率（默认 20%）在除权日扣除，未按持股期限（1 月/1 年）分档，也未在卖出时清算。",
+    "送股小数部分向下取整、不补现金；配股默认在现金足够时全额认购，现金不足则跳过并打 flag；均非精确券商口径。",
+    "公司行动事件覆盖 99%+ 的复权因子变动；少量无事件因子变动（送转/配股缺失）会制造原始价格假跌。DuckDBMarketData.factor_changes_on(d) 可列出这些变动，撮合层提供 note_flag 记录，但不会擅自推断改股数；协调者需决定推断/剔除。",
+    "2005-2015 DuckDB 事件与 Baostock 原始价存在冲突（审计抽样会给出数量）；账户层已加价格一致性门控，冲突事件不应用、只标注，这是避免凭空加股的保守取舍，但会漏掉部分真实公司行动。",
+    "退市按连续 N 个交易日无 bar 或 out_date 之后强制按最后收盘价打折卖出；真实退市整理期/三板转让回收率可能不同。",
+    "参与率按日成交量比例限制，未建模盘中成交量分布、排队与冲击成本；滑点仅为固定基点。",
+    "现金 T+1 结算按“卖出/分红回款次日可用”处理，比 A 股“当日可用、T+1 可取”更严格；可用 cash_settle_days=0 切换。",
+    "整股规则按主板/创业板 100 股、科创板 200 股起 1 股递增、北交所 100 股起 1 股递增近似；以券商实际申报规则为准。",
+    "过户费 2015 年前沪市按面值 0.6‰、深市 0、2015 后按成交额；历史费率可能有地区/券商差异。",
+    "未建模融资融券、ETF/债券、B 股、可转债、停复牌公告日、盘中临时停牌、龙虎榜等。",
+    "期末估值按最后收盘价；若期末流动性差或停牌，市值可能不可实现。",
+    "DuckDB dim_symbol 无 ipo_date/out_date；用 DuckDB 适配器时需由 Baostock stock_basic 注入 SymbolInfo，否则新股无涨跌幅窗口与 out_date 退市处理不可用。",
+    "数据审计的涨跌停/停牌/ST 为抽样（300/100/100 只），不是全市场逐日扫描；全市场结论需扩大样本或单独跑全量审计。"
+  ],
+  "not_done": [
+    "未运行任何真实策略回测，也未生成真实收益/净值结论（本文件只做撮合与数据口径验证）。",
+    "未把撮合引擎接入策略层组合构建器；接口为 submit_* + on_day，需主协调者集成。",
+    "未对 2005-2015 全市场逐日跑账户；Baostock 适配器只做了单日烟测，事件仍来自 DuckDB。",
+    "未构建 DuckDB+Baostock 的并集行情层；退市股/2016 前历史需要主协调者用 Baostock 适配器接入。",
+    "未实现按持股期限分档的股息税和卖出时清算。",
+    "未实现盘中分批成交/排队/冲击成本模型。"
+  ],
+  "data_audit": {
+    "coverage": {
+      "ok": true,
+      "result": {
+        "rows": 10381421,
+        "symbols": 5579,
+        "min_date": "2016-10-13",
+        "max_date": "2026-10-26",
+        "trading_days": 2437,
+        "rows_after_freeze_excluded": 11137,
+        "symbols_with_rows_after_freeze": 5569,
+        "freeze_date": "2026-10-26"
+      }
+    },
+    "quality": {
+      "ok": true,
+      "result": {
+        "duplicate_symbol_date_groups": 0,
+        "nonpositive_ohlc_rows": 0,
+        "ohlc_inconsistent_rows": 0,
+        "zero_volume_rows": 0,
+        "prev_close_null_rows": 10381421,
+        "amount_null_or_nonpositive_rows": 0,
+        "interpretation": "prev_close 全空是数据源特性，撮合层用上一交易日收盘价补；除权日由事件计算参考价。"
+      }
+    },
+    "calendar_vs_baostock": {
+      "ok": true,
+      "result": {
+        "duckdb_days": 2437,
+        "baostock_days": 2437,
+        "missing_in_duckdb": [],
+        "extra_in_duckdb": [],
+        "agree": true
+      }
+    },
+    "corporate_actions": {
+      "ok": true,
+      "result": {
+        "events_in_window": 35426,
+        "symbols": 5262,
+        "dividend_events": 34880,
+        "bonus_events": 4568,
+        "rights_events": 71,
+        "empty_events": 44,
+        "rights_with_missing_price": 0,
+        "events_after_freeze_excluded": 38,
+        "symbols_after_freeze_excluded": 38,
+        "events_on_non_trading_days": 0,
+        "by_year": [
+          {
+            "year": 2016,
+            "events": 48,
+            "symbols": 48,
+            "bonus_events": 16,
+            "rights_events": 0
+          },
+          {
+            "year": 2017,
+            "events": 2415,
+            "symbols": 2349,
+            "bonus_events": 456,
+            "rights_events": 10
+          },
+          {
+            "year": 2018,
+            "events": 2791,
+            "symbols": 2702,
+            "bonus_events": 603,
+            "rights_events": 12
+          },
+          {
+            "year": 2019,
+            "events": 2641,
+            "symbols": 2570,
+            "bonus_events": 455,
+            "rights_events": 11
+          },
+          {
+            "year": 2020,
+            "events": 2811,
+            "symbols": 2731,
+            "bonus_events": 381,
+            "rights_events": 17
+          },
+          {
+            "year": 2021,
+            "events": 3207,
+            "symbols": 3120,
+            "bonus_events": 413,
+            "rights_events": 6
+          },
+          {
+            "year": 2022,
+            "events": 3487,
+            "symbols": 3392,
+            "bonus_events": 508,
+            "rights_events": 10
+          },
+          {
+            "year": 2023,
+            "events": 3740,
+            "symbols": 3581,
+            "bonus_events": 548,
+            "rights_events": 4
+          },
+          {
+            "year": 2024,
+            "events": 4769,
+            "symbols": 3978,
+            "bonus_events": 399,
+            "rights_events": 0
+          },
+          {
+            "year": 2025,
+            "events": 4913,
+            "symbols": 3794,
+            "bonus_events": 370,
+            "rights_events": 0
+          },
+          {
+            "year": 2026,
+            "events": 4604,
+            "symbols": 3739,
+            "bonus_events": 419,
+            "rights_events": 1
+          }
+        ]
+      }
+    },
+    "event_price_consistency_2005_2015": {
+      "ok": true,
+      "result": {
+        "universe_events_2005_2015_with_bonus_or_rights": 5316,
+        "sampled_events": 300,
+        "checked_tradable": 294,
+        "no_trade_on_ex_date": 6,
+        "no_prev_close": 0,
+        "conflict_count": 20,
+        "conflict_rate": 0.068027,
+        "examples": [
+          {
+            "code": "600375.SH",
+            "ex_date": "2006-01-13",
+            "dividend": 0.0,
+            "bonus": 0.33,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 4.08,
+            "event_ref": 3.0677,
+            "open": 3.52,
+            "open_vs_ref": 0.147451,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600159.SH",
+            "ex_date": "2006-02-06",
+            "dividend": 0.0,
+            "bonus": 0.2,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 2.84,
+            "event_ref": 2.3667,
+            "open": 2.6,
+            "open_vs_ref": 0.098592,
+            "limit": 0.05,
+            "is_st": true
+          },
+          {
+            "code": "000960.SZ",
+            "ex_date": "2006-02-14",
+            "dividend": 0.0,
+            "bonus": 0.3,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 6.5,
+            "event_ref": 5.0,
+            "open": 5.81,
+            "open_vs_ref": 0.162,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "000029.SZ",
+            "ex_date": "2006-02-17",
+            "dividend": 0.0,
+            "bonus": 0.48,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 4.73,
+            "event_ref": 3.1959,
+            "open": 3.68,
+            "open_vs_ref": 0.151459,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600322.SH",
+            "ex_date": "2006-03-28",
+            "dividend": 0.0,
+            "bonus": 0.37,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 4.36,
+            "event_ref": 3.1825,
+            "open": 4.3,
+            "open_vs_ref": 0.351147,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600219.SH",
+            "ex_date": "2006-03-31",
+            "dividend": 0.0,
+            "bonus": 1.0,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 6.69,
+            "event_ref": 3.345,
+            "open": 4.94,
+            "open_vs_ref": 0.476831,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600887.SH",
+            "ex_date": "2006-04-24",
+            "dividend": 0.3947,
+            "bonus": 0.439,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 17.85,
+            "event_ref": 12.1302,
+            "open": 16.8,
+            "open_vs_ref": 0.384978,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600740.SH",
+            "ex_date": "2006-05-10",
+            "dividend": 0.0,
+            "bonus": 0.3,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 7.78,
+            "event_ref": 5.9846,
+            "open": 6.8,
+            "open_vs_ref": 0.136247,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600082.SH",
+            "ex_date": "2006-05-17",
+            "dividend": 0.0,
+            "bonus": 0.22,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 3.52,
+            "event_ref": 2.8852,
+            "open": 3.3,
+            "open_vs_ref": 0.14375,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600389.SH",
+            "ex_date": "2006-05-25",
+            "dividend": 0.0,
+            "bonus": 0.35,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 5.41,
+            "event_ref": 4.0074,
+            "open": 4.5,
+            "open_vs_ref": 0.122921,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600873.SH",
+            "ex_date": "2006-06-06",
+            "dividend": 0.0,
+            "bonus": 0.28,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 4.03,
+            "event_ref": 3.1484,
+            "open": 3.68,
+            "open_vs_ref": 0.168834,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "600497.SH",
+            "ex_date": "2006-06-12",
+            "dividend": 0.0,
+            "bonus": 0.27,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 30.42,
+            "event_ref": 23.9528,
+            "open": 32.0,
+            "open_vs_ref": 0.335963,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "000705.SZ",
+            "ex_date": "2006-07-10",
+            "dividend": 0.0,
+            "bonus": 0.2,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 4.73,
+            "event_ref": 3.9417,
+            "open": 4.58,
+            "open_vs_ref": 0.161945,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "000966.SZ",
+            "ex_date": "2006-07-31",
+            "dividend": 0.0,
+            "bonus": 0.35,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 5.17,
+            "event_ref": 3.8296,
+            "open": 3.3,
+            "open_vs_ref": -0.138298,
+            "limit": 0.1,
+            "is_st": false
+          },
+          {
+            "code": "000887.SZ",
+            "ex_date": "2006-12-22",
+            "dividend": 0.0,
+            "bonus": 2.52,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "raw_prev": 5.05,
+            "event_ref": 1.4347,
+            "open": 2.03,
+            "open_vs_ref": 0.41497,
+            "limit": 0.05,
+            "is_st": true
+          }
+        ],
+        "note": "以 Baostock adjustflag=3 原始价的前收 + DuckDB 事件算参考价；开盘偏离超过当日涨跌停+2% 视为冲突。冲突事件账户层不应用，只标注。"
+      }
+    },
+    "adjustment_factors": {
+      "ok": true,
+      "result": {
+        "rows_without_factor": 0,
+        "factor_changes": 35366,
+        "factor_changes_with_event": 35104,
+        "factor_changes_without_event": 262,
+        "events_with_factor_change": 35104,
+        "events_without_factor_change": 322,
+        "dividend_only_consistency_n": 30525,
+        "dividend_only_mean_abs_error": 3.026789847970697e-17,
+        "dividend_only_median_abs_error": 0.0,
+        "dividend_only_within_0p5pct": 30525,
+        "unexplained_examples": [
+          {
+            "code": "601238.SH",
+            "date": "2016-11-01",
+            "factor_change": 0.003578,
+            "open": 24.6,
+            "close": 23.11
+          },
+          {
+            "code": "002685.SZ",
+            "date": "2017-05-22",
+            "factor_change": 0.002509,
+            "open": 9.48,
+            "close": 8.97
+          },
+          {
+            "code": "600173.SH",
+            "date": "2017-05-24",
+            "factor_change": 0.004374,
+            "open": 10.29,
+            "close": 10.29
+          },
+          {
+            "code": "300235.SZ",
+            "date": "2017-05-26",
+            "factor_change": 0.000581,
+            "open": 21.92,
+            "close": 21.92
+          },
+          {
+            "code": "603268.SH",
+            "date": "2017-05-31",
+            "factor_change": 0.002856,
+            "open": 44.12,
+            "close": 44.12
+          },
+          {
+            "code": "603108.SH",
+            "date": "2017-06-06",
+            "factor_change": 0.804191,
+            "open": 16.11,
+            "close": 16.11
+          },
+          {
+            "code": "002151.SZ",
+            "date": "2017-06-14",
+            "factor_change": 0.001774,
+            "open": 28.88,
+            "close": 28.69
+          },
+          {
+            "code": "000981.SZ",
+            "date": "2017-06-15",
+            "factor_change": 0.002075,
+            "open": 9.13,
+            "close": 9.81
+          },
+          {
+            "code": "002115.SZ",
+            "date": "2017-06-15",
+            "factor_change": 0.009588,
+            "open": 9.58,
+            "close": 10.03
+          },
+          {
+            "code": "600797.SH",
+            "date": "2017-06-15",
+            "factor_change": 0.002558,
+            "open": 12.08,
+            "close": 12.07
+          },
+          {
+            "code": "002664.SZ",
+            "date": "2017-06-16",
+            "factor_change": 0.002369,
+            "open": 26.0,
+            "close": 25.99
+          },
+          {
+            "code": "300490.SZ",
+            "date": "2017-06-16",
+            "factor_change": 0.002004,
+            "open": 23.0,
+            "close": 25.81
+          },
+          {
+            "code": "000488.SZ",
+            "date": "2017-06-19",
+            "factor_change": 0.049261,
+            "open": 11.97,
+            "close": 11.84
+          },
+          {
+            "code": "000821.SZ",
+            "date": "2017-06-20",
+            "factor_change": 0.001233,
+            "open": 14.6,
+            "close": 14.6
+          },
+          {
+            "code": "603909.SH",
+            "date": "2017-06-20",
+            "factor_change": 0.001849,
+            "open": 42.83,
+            "close": 42.83
+          }
+        ],
+        "interpretation": "复权因子变动与事件高度一致；少量无事件变动会制造原始价格假跌，撮合层必须标注而非静默忽略。"
+      }
+    },
+    "price_limits": {
+      "ok": true,
+      "result": {
+        "sample_symbols": 300,
+        "rows_checked": 715466,
+        "ex_rights_rows_excluded": 1918,
+        "exceedance_count": 11,
+        "exceedance_rate": 1.542e-05,
+        "by_board": {
+          "MAIN": 11
+        },
+        "classification_counts": {
+          "unexplained_factor_change": 8,
+          "large_positive_move_no_factor_change": 3
+        },
+        "examples": [
+          {
+            "code": "000007.SZ",
+            "date": "2017-07-17",
+            "pct": -0.400252,
+            "limit": 0.1,
+            "close": 14.28,
+            "prev_close": 23.81,
+            "board": "MAIN",
+            "factor_change": 0.5,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000552.SZ",
+            "date": "2022-04-25",
+            "pct": -0.111392,
+            "limit": 0.1,
+            "close": 3.51,
+            "prev_close": 3.95,
+            "board": "MAIN",
+            "factor_change": 0.01282051,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000711.SZ",
+            "date": "2018-10-22",
+            "pct": -0.249584,
+            "limit": 0.1,
+            "close": 9.02,
+            "prev_close": 12.02,
+            "board": "MAIN",
+            "factor_change": 0.2,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000792.SZ",
+            "date": "2021-08-10",
+            "pct": 3.061086,
+            "limit": 0.1,
+            "close": 35.9,
+            "prev_close": 8.84,
+            "board": "MAIN",
+            "factor_change": 0.0,
+            "has_corporate_event": false,
+            "classification": "large_positive_move_no_factor_change"
+          },
+          {
+            "code": "000008.SZ",
+            "date": "2018-08-07",
+            "pct": -0.10978,
+            "limit": 0.1,
+            "close": 4.46,
+            "prev_close": 5.01,
+            "board": "MAIN",
+            "factor_change": 0.01008065,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000525.SZ",
+            "date": "2024-12-13",
+            "pct": -0.146535,
+            "limit": 0.1,
+            "close": 8.62,
+            "prev_close": 10.1,
+            "board": "MAIN",
+            "factor_change": 0.1136,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000656.SZ",
+            "date": "2017-07-05",
+            "pct": -0.126113,
+            "limit": 0.1,
+            "close": 5.89,
+            "prev_close": 6.74,
+            "board": "MAIN",
+            "factor_change": 0.03058104,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000670.SZ",
+            "date": "2022-08-22",
+            "pct": 4.884444,
+            "limit": 0.1,
+            "close": 13.24,
+            "prev_close": 2.25,
+            "board": "MAIN",
+            "factor_change": 0.0,
+            "has_corporate_event": false,
+            "classification": "large_positive_move_no_factor_change"
+          },
+          {
+            "code": "000669.SZ",
+            "date": "2018-08-06",
+            "pct": -0.35665,
+            "limit": 0.1,
+            "close": 6.53,
+            "prev_close": 10.15,
+            "board": "MAIN",
+            "factor_change": 0.4,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          },
+          {
+            "code": "000629.SZ",
+            "date": "2018-08-24",
+            "pct": 0.250814,
+            "limit": 0.1,
+            "close": 3.84,
+            "prev_close": 3.07,
+            "board": "MAIN",
+            "factor_change": 0.0,
+            "has_corporate_event": false,
+            "classification": "large_positive_move_no_factor_change"
+          },
+          {
+            "code": "000812.SZ",
+            "date": "2018-06-05",
+            "pct": -0.403068,
+            "limit": 0.1,
+            "close": 4.28,
+            "prev_close": 7.17,
+            "board": "MAIN",
+            "factor_change": 0.50630252,
+            "has_corporate_event": false,
+            "classification": "unexplained_factor_change"
+          }
+        ],
+        "note": "未接 ST 标记时按非 ST 涨停幅度审计；ST 5% 只会导致漏检、不会导致误报。超额样本多为 IPO/退市/无事件送转，需逐条核对。"
+      }
+    },
+    "suspension_vs_baostock": {
+      "ok": true,
+      "result": {
+        "sample_symbols": 100,
+        "counts": {
+          "agree_trading": 237752,
+          "agree_suspended": 5946
+        },
+        "examples": [],
+        "note": "以 Baostock trade_status 为停牌基准；DuckDB 缺失行视为停牌。差异需在正式回测前清零或标注。"
+      }
+    },
+    "delisting": {
+      "ok": true,
+      "result": {
+        "delisted_in_baostock": 341,
+        "delisted_with_duckdb_bars": 3,
+        "delisted_never_in_duckdb": 338,
+        "delisted_never_in_duckdb_after_2016_10_13": 248,
+        "delisted_last_bar_before_freeze": 3,
+        "examples": [
+          {
+            "code": "601059.SH",
+            "name": "信达证券",
+            "out_date": "2026-10-19",
+            "duckdb_last": "2026-09-14",
+            "rows": 861
+          },
+          {
+            "code": "601198.SH",
+            "name": "东兴证券",
+            "out_date": "2026-10-19",
+            "duckdb_last": "2026-09-14",
+            "rows": 2393
+          },
+          {
+            "code": "000016.SZ",
+            "name": "*ST康佳A",
+            "out_date": "2026-10-23",
+            "duckdb_last": "2026-09-03",
+            "rows": 2382
+          }
+        ],
+        "never_examples": [
+          {
+            "code": "600001.SH",
+            "name": "邯郸钢铁",
+            "out_date": "2009-12-29"
+          },
+          {
+            "code": "600002.SH",
+            "name": "齐鲁石化",
+            "out_date": "2006-04-24"
+          },
+          {
+            "code": "600003.SH",
+            "name": "ST东北高",
+            "out_date": "2010-02-26"
+          },
+          {
+            "code": "600005.SH",
+            "name": "武钢股份",
+            "out_date": "2017-02-14"
+          },
+          {
+            "code": "600065.SH",
+            "name": "*ST联谊",
+            "out_date": "2007-12-13"
+          },
+          {
+            "code": "600068.SH",
+            "name": "葛洲坝",
+            "out_date": "2021-09-13"
+          },
+          {
+            "code": "600069.SH",
+            "name": "退市银鸽",
+            "out_date": "2020-08-27"
+          },
+          {
+            "code": "600070.SH",
+            "name": "*ST富润",
+            "out_date": "2025-04-30"
+          },
+          {
+            "code": "600074.SH",
+            "name": "退市保千",
+            "out_date": "2020-06-02"
+          },
+          {
+            "code": "600077.SH",
+            "name": "*ST宋都",
+            "out_date": "2023-07-25"
+          }
+        ],
+        "never_after_2016_examples": [
+          {
+            "code": "600005.SH",
+            "name": "武钢股份",
+            "out_date": "2017-02-14"
+          },
+          {
+            "code": "600068.SH",
+            "name": "葛洲坝",
+            "out_date": "2021-09-13"
+          },
+          {
+            "code": "600069.SH",
+            "name": "退市银鸽",
+            "out_date": "2020-08-27"
+          },
+          {
+            "code": "600070.SH",
+            "name": "*ST富润",
+            "out_date": "2025-04-30"
+          },
+          {
+            "code": "600074.SH",
+            "name": "退市保千",
+            "out_date": "2020-06-02"
+          },
+          {
+            "code": "600077.SH",
+            "name": "*ST宋都",
+            "out_date": "2023-07-25"
+          },
+          {
+            "code": "600083.SH",
+            "name": "*ST博信",
+            "out_date": "2025-03-05"
+          },
+          {
+            "code": "600086.SH",
+            "name": "退市金钰",
+            "out_date": "2021-03-17"
+          },
+          {
+            "code": "600090.SH",
+            "name": "退市济堂",
+            "out_date": "2022-07-07"
+          },
+          {
+            "code": "600091.SH",
+            "name": "退市明科",
+            "out_date": "2022-06-21"
+          },
+          {
+            "code": "600093.SH",
+            "name": "退市易见",
+            "out_date": "2022-06-23"
+          },
+          {
+            "code": "600112.SH",
+            "name": "*ST天成",
+            "out_date": "2024-08-15"
+          },
+          {
+            "code": "600122.SH",
+            "name": "*ST宏图",
+            "out_date": "2023-06-26"
+          },
+          {
+            "code": "600139.SH",
+            "name": "*ST西源",
+            "out_date": "2023-03-27"
+          },
+          {
+            "code": "600145.SH",
+            "name": "退市新亿",
+            "out_date": "2022-04-28"
+          }
+        ],
+        "note": "Baostock status=0 含退市/吸收合并/暂停上市；DuckDB 对 2016 年后退市股覆盖很少，直接用 DuckDB 回测有生存者偏差，退市股与 2016 前历史应走 Baostock 适配器。"
+      }
+    },
+    "st_coverage": {
+      "ok": true,
+      "result": {
+        "duckdb_has_is_st_column": false,
+        "sample_codes": 100,
+        "baostock_st_rows_in_sample": 8382,
+        "baostock_st_symbols_in_sample": 17,
+        "by_year": [
+          {
+            "year": "2016",
+            "rows": 57,
+            "symbols": 1
+          },
+          {
+            "year": "2017",
+            "rows": 414,
+            "symbols": 3
+          },
+          {
+            "year": "2018",
+            "rows": 566,
+            "symbols": 3
+          },
+          {
+            "year": "2019",
+            "rows": 807,
+            "symbols": 4
+          },
+          {
+            "year": "2020",
+            "rows": 1406,
+            "symbols": 9
+          },
+          {
+            "year": "2021",
+            "rows": 1596,
+            "symbols": 9
+          },
+          {
+            "year": "2022",
+            "rows": 1000,
+            "symbols": 7
+          },
+          {
+            "year": "2023",
+            "rows": 703,
+            "symbols": 4
+          },
+          {
+            "year": "2024",
+            "rows": 668,
+            "symbols": 4
+          },
+          {
+            "year": "2025",
+            "rows": 292,
+            "symbols": 4
+          },
+          {
+            "year": "2026",
+            "rows": 873,
+            "symbols": 6
+          }
+        ],
+        "note": "抽样 100 只（按代码排序）做 ST 覆盖审计，非全表；DuckDB 原始日线无 is_st，正式回测必须由 Baostock 或外部 ST 日历注入，否则 5% 涨跌停判断会漏检。"
+      }
+    },
+    "adapter_smoke": {
+      "ok": true,
+      "result": {
+        "duckdb": {
+          "calendar": [
+            "2024-10-08",
+            "2024-10-09",
+            "2024-10-10",
+            "2024-10-11"
+          ],
+          "bar": {
+            "code": "000001.SZ",
+            "date": "2024-10-10",
+            "open": 11.62,
+            "high": 12.26,
+            "low": 11.6,
+            "close": 11.98,
+            "volume": 342642168.0,
+            "amount": 4095573500.64,
+            "prev_close": 11.68,
+            "prev_close_is_ref": false,
+            "is_st": false,
+            "trade_status": 1
+          },
+          "event": {
+            "code": "000001.SZ",
+            "ex_date": "2024-10-10",
+            "dividend_per_share": 0.246,
+            "per_share_bonus": 0.0,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "source": "duckdb.raw_adjustment_events"
+          },
+          "limit": {
+            "ref": 11.434,
+            "up": 12.57,
+            "down": 10.29
+          },
+          "account_smoke": {
+            "trades": 0,
+            "daily_last": {
+              "date": "2024-10-11",
+              "cash_total": 1000000.0,
+              "cash_available": 1000000.0,
+              "market_value": 0.0,
+              "nav": 1000000.0,
+              "n_positions": 0,
+              "n_active_orders": 0,
+              "n_trades": 0,
+              "flags_total": 66
+            },
+            "limit_000001": {
+              "up": 12.57,
+              "down": 10.29,
+              "ref": 11.43
+            },
+            "flag_counts": {
+              "corporate_action_no_prev_skipped": 8,
+              "ex_rights_reference_used": 58
+            },
+            "note": "首日无前收的 no_prev_close flag 属预期；正式回测应从预热日之后开始，避免首日全市场 flag。"
+          },
+          "factor_change_probe": [
+            {
+              "code": "000007.SZ",
+              "date": "2017-07-17",
+              "prev_factor": 1.0,
+              "factor": 1.5,
+              "change": 0.5,
+              "has_event": false
+            }
+          ]
+        },
+        "baostock": {
+          "bar": {
+            "code": "600000.SH",
+            "date": "2024-10-10",
+            "open": 10.06,
+            "high": 10.49,
+            "low": 10.05,
+            "close": 10.31,
+            "volume": 101639927.0,
+            "amount": 1044726818.6,
+            "prev_close": 9.91,
+            "prev_close_is_ref": true,
+            "is_st": false,
+            "trade_status": 1
+          },
+          "event_000001": {
+            "code": "000001.SZ",
+            "ex_date": "2024-10-10",
+            "dividend_per_share": 0.246,
+            "per_share_bonus": 0.0,
+            "rights_ratio": 0.0,
+            "rights_price": 0.0,
+            "source": "duckdb.raw_adjustment_events"
+          },
+          "delisted_probe": {
+            "bar": {
+              "code": "600005.SH",
+              "date": "2017-01-23",
+              "open": 3.72,
+              "high": 3.76,
+              "low": 3.69,
+              "close": 3.71,
+              "volume": 78221626.0,
+              "amount": 291606368.0,
+              "prev_close": 3.74,
+              "prev_close_is_ref": true,
+              "is_st": false,
+              "trade_status": 1
+            },
+            "symbol_info": {
+              "code": "600005.SH",
+              "name": "武钢股份",
+              "ipo_date": "1999-08-03",
+              "out_date": "2017-02-14"
+            }
+          },
+          "probe_2008": {
+            "bar": {
+              "code": "600000.SH",
+              "date": "2008-04-24",
+              "open": 29.68,
+              "high": 29.72,
+              "low": 28.55,
+              "close": 29.72,
+              "volume": 77580627.0,
+              "amount": 2271880881.0,
+              "prev_close": 27.02,
+              "prev_close_is_ref": true,
+              "is_st": false,
+              "trade_status": 1
+            },
+            "event": {
+              "code": "600000.SH",
+              "ex_date": "2008-04-24",
+              "dividend_per_share": 0.16,
+              "per_share_bonus": 0.3,
+              "rights_ratio": 0.0,
+              "rights_price": 0.0,
+              "source": "duckdb.raw_adjustment_events"
+            },
+            "limit": {
+              "up": 29.72,
+              "down": 24.32,
+              "ref": 27.02
+            }
+          }
+        }
+      }
+    }
+  },
+  "key_findings": [
+    "冻结窗口：2016-10-13 至 2026-10-26，10381421 行、5579 只、2437 个交易日；冻结日后 11137 行已排除。",
+    "DuckDB 日线从 2016-10-13 起；2005-2015 与退市股必须走 Baostock 适配器（2008-04-24 路径已烟测）。",
+    "OHLC 质量：重复(代码,日) 0 组、非正价格 0 行、OHLC 不一致 0 行；prev_close 空值 10381421 行（数据源特性）。",
+    "交易日历与 Baostock 完全一致：2437 天，agree=True。",
+    "公司行动 35426 条（送转 4568、配股 71）；复权因子变动 35366 次，其中无事件 262 次，纯分红事件与因子一致性 30525/30525。",
+    "2005-2015 送转/配股事件抽样 300 条（可交易 294）：与 Baostock 原始价冲突 20 条（0.068027），冲突事件账户层跳过并标注，避免凭空加股/分红。",
+    "涨跌停抽样 300 只/715466 行：超额 11 行，其中无事件因子变动 8 行、无因子变动大额正跳 3 行、无因子变动大额负跳 0 行；前者是公司行动缺口，后者需人工核对复牌/重新上市。",
+    "停牌抽样 100 只：与 Baostock 一致交易 237752 行、一致停牌 5946 行，差异 0 行。",
+    "退市覆盖：Baostock 退市/合并 341 只，DuckDB 有日线仅 3 只，2016-10-13 后退出但 DuckDB 完全缺失 248 只——直接用 DuckDB 有生存者偏差。",
+    "ST：DuckDB 是否含 is_st 列=False；抽样 100 只中 ST 行 8382、涉及 17 只，正式回测必须注入 ST 日历。",
+    "适配器烟测：DuckDB 2024-10-10 000001.SZ 除权参考价 11.434、涨停 12.57；Baostock 2008-04-24 600000.SH 参考价 27.02、涨停 29.72；已退市 600005.SH 可由 Baostock 读取。"
+  ]
+}

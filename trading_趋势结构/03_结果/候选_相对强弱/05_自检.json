@@ -1,0 +1,18 @@
+{
+  "panel_dates": [
+    "2006-01-04",
+    "2020-12-31",
+    3647
+  ],
+  "codes": 3807,
+  "main_codes": 2955,
+  "cyb_codes": 791,
+  "eligible_main_2008": 875,
+  "eligible_main_2020": 1976,
+  "tradable_cells": 8547838,
+  "suspended_cells": 524237,
+  "st_cells": 438239,
+  "resume_cells": 55317,
+  "anomaly_cells": 3809,
+  "event_count_2008_2020": 269548
+}

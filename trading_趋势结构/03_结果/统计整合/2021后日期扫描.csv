@@ -1,0 +1,15 @@
+file,max_date,kind,rows
+03_结果/_审计缓存/bs_window_all_flags.parquet,2026-10-26,derived_state_only,31769553
+03_结果/候选_生态切换/07_试验清单.csv,2026-10-28,non_performance_metadata,1
+03_结果/实验注册表.csv,2026-10-28,metadata_self,6
+03_结果/市场状态/市场状态_日频许可_扩展2021_2026_未评估.csv,2026-10-26,derived_state_only,1406
+03_结果/市场状态_缓存/calendar.parquet,2026-10-26,derived_state_only,8427
+03_结果/市场状态_缓存/index_daily.parquet,2026-10-26,derived_state_only,44162
+03_结果/市场状态_缓存/index_feat.parquet,2026-10-26,derived_state_only,44162
+03_结果/市场状态_缓存/market_feature.parquet,2026-10-26,derived_state_only,5540
+03_结果/市场状态_缓存/panel_hfq.parquet,2026-10-26,derived_state_only,16764215
+03_结果/市场状态_缓存/stock_basic.parquet,2026-10-28,derived_state_only,5564
+03_结果/统计整合/2021后日期扫描.csv,2026-10-28,metadata_self,14
+03_结果/统计验证/数据覆盖_逐年.csv,2026-10-26,non_performance_metadata,22
+03_结果/试验总账.csv,2026-10-26,PERFORMANCE_2021+_SUSPECT,842
+03_结果/趋势族/数据审计_年度覆盖.csv,2026-10-26,non_performance_metadata,37

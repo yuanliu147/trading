@@ -1,0 +1,116 @@
+{
+  "multiple_testing": {
+    "reality_check": {
+      "n_obs": 1219,
+      "n_candidates": 9,
+      "block_len": 2.8444012459639385,
+      "n_boot": 1000,
+      "best_mean_daily": -0.000213937631710037,
+      "best_annualized": -0.05391228319092932,
+      "observed_stat": -0.7239881721774354,
+      "p_reality_check": 0.9020979020979021,
+      "p_spa": 0.6053946053946054,
+      "studentized": true,
+      "note": "零基准、单侧最大值检验；不能用它证明某候选未来有效"
+    },
+    "romano_wolf": [
+      {
+        "candidate": "c5",
+        "mean_daily": -0.000213937631710037,
+        "t": -0.7239881721774354,
+        "p_stepdown": 0.902,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c2",
+        "mean_daily": -0.0002256402474285056,
+        "t": -0.7592282532132066,
+        "p_stepdown": 0.905,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c4",
+        "mean_daily": -0.0002386332244847569,
+        "t": -0.7995364443610513,
+        "p_stepdown": 0.909,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c1",
+        "mean_daily": -0.0002446913354712544,
+        "t": -0.8199624009837989,
+        "p_stepdown": 0.909,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c3",
+        "mean_daily": -0.0002746117819579808,
+        "t": -0.8761533744404085,
+        "p_stepdown": 0.916,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c0",
+        "mean_daily": -0.0002763804561047672,
+        "t": -0.877970001464376,
+        "p_stepdown": 0.916,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c8",
+        "mean_daily": -0.0003004465501455274,
+        "t": -0.9839093982016708,
+        "p_stepdown": 0.916,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c7",
+        "mean_daily": -0.00033438934038514193,
+        "t": -1.0750380919663705,
+        "p_stepdown": 0.916,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      },
+      {
+        "candidate": "c6",
+        "mean_daily": -0.00047317350911211745,
+        "t": -1.441420098120481,
+        "p_stepdown": 0.944,
+        "p_bh": 0.46921202554880853,
+        "reject_5pct": false
+      }
+    ],
+    "n_candidates": 9
+  },
+  "pbo": {
+    "pbo": 0.8571428571428571,
+    "n_combinations": 70,
+    "n_valid": 63,
+    "n_sampled_combinations": false,
+    "blocks": 8,
+    "n_candidates": 9,
+    "n_obs": 1219,
+    "note": "PBO 是选择流程的诊断，不是策略未来亏损概率；并列组合已剔除"
+  },
+  "deflated_sharpe": {
+    "dsr": 0.1428726982003964,
+    "sr_daily": -0.020736221266125673,
+    "sr_annual": -0.3291773076082647,
+    "sr0_daily": 0.009639600502138683,
+    "sr0_annual": 0.15302391400003384,
+    "n_trials": 9,
+    "sr_variance": 4.017781547024247e-05,
+    "skew": -0.7423004198052441,
+    "kurtosis": 15.841812932481218,
+    "z": -1.0675015892011186,
+    "min_track_record_years": Infinity,
+    "note": "DSR 校正的是试验次数与收益非正态，不校正序列相关；须与区块 bootstrap 同看"
+  }
+}

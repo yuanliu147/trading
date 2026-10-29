@@ -1,0 +1,19 @@
+family,D_gate,evidence,source
+BREAKPULL,D_pass_selfcheck,族内 A 空间恒等式/日收益==pct_chg 自检通过；未进 11 组复算名单,05_审计/复权修复影响.md
+ECOLOGY,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+EXECPRESSURE,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+EXIT,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+EXITUNI,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+LONGMOM,D_pass_selfcheck,族内 A 空间恒等式/日收益==pct_chg 自检通过；未进 11 组复算名单,05_审计/复权修复影响.md
+MKT,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+RELSTR,D_pass_with_caveat,含分批离场，A 空间仍优于 H 3.4×；逐笔口径 1.956pp,05_审计/复权修复影响.md
+RISKBUDGET,D_pass_selfcheck,族内 A 空间恒等式/日收益==pct_chg 自检通过；未进 11 组复算名单,05_审计/复权修复影响.md
+SMALLLOWVOL,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+STAT,D_na_fixture,统计框架夹具，无策略收益,05_审计/复权修复影响.md
+STRUCT,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+STRUCTREV,D_pass_selfcheck,族内 A 空间恒等式/日收益==pct_chg 自检通过；未进 11 组复算名单,05_审计/复权修复影响.md
+TREND,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+TRENDCALLBACK,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+UNIFIEDENGINE,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+VCB,D_pass,复权审计 11 组逐笔/事件复算：A 空间可复现，未用冻结 v1 hfq,05_审计/复权修复影响.md
+ALL,2021_guard,载入 418 条净值序列，max(date)<=2020-12-31 全部通过；2021+ 收益 0 行,03_结果/最终统计/净值序列_2021审计.csv

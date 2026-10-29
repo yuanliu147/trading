@@ -1,0 +1,396 @@
+{
+  "schema": "trend-structure-final-delivery-audit-rereview/v1",
+  "meta": {
+    "project": "trading_趋势结构",
+    "project_root": "/Users/admin/WorkSpace/trading/trading_趋势结构",
+    "auditor": "deepseek-flash",
+    "thinking": "max",
+    "role": "未参与设计、整改与最终报告写作的独立复核审计员",
+    "generated_at_local": "2026-10-29",
+    "review_of": "05_审计/最终交付审计.md/.json（首次审计，FAIL）",
+    "scope": [
+      "00_一页纸.md",
+      "01_完整报告.md",
+      "02_规则手册_研究结论版.md",
+      "03_数据与复现说明.md",
+      "04_最终结论.json",
+      "README.md",
+      "文件清单.csv",
+      "04_证据/审计整改验收.json",
+      "05_审计/审计问题处置表.csv",
+      "05_审计/2021+未评估文件封存说明.md",
+      "05_审计/2021+未评估文件封存清单.csv",
+      "05_审计/留出准入裁决.md/.json",
+      "关键结果表与代码"
+    ],
+    "discipline": {
+      "read_only_on_others_files": true,
+      "ran_strategy_backtests": false,
+      "read_or_computed_2021_plus_returns": false,
+      "files_written": [
+        "05_审计/最终交付审计_复核.md",
+        "05_审计/最终交付审计_复核.json"
+      ]
+    }
+  },
+  "overall": {
+    "verdict": "PASS_WITH_WARN",
+    "severity": "中",
+    "conclusion_sound": true,
+    "deliverable": true,
+    "clean_pass": false,
+    "one_line": "首次审计的 6 个高严重度矛盾已实质修复；但整改验收的 60/60、0 open 未覆盖 M05 的文件描述、M10 的 04 JSON 副本和 M23 的证据矩阵，留下 R01-R05（3 处根文档/机器副本 + 1 处验收过闭合 + 1 处历史审计副本）。修完 R01-R05 后可给干净 PASS；R05 只需加横幅。",
+    "counts": {
+      "m01_m13": {
+        "PASS": 12,
+        "WARN": 1,
+        "FAIL": 0
+      },
+      "m14_m23": {
+        "PASS": 9,
+        "WARN": 1,
+        "FAIL": 0
+      },
+      "new_residuals": 5
+    }
+  },
+  "m_items": [
+    {
+      "id": "M01",
+      "original_severity": "高",
+      "verdict": "PASS",
+      "evidence": [
+        "00_一页纸.md:15,143；01_完整报告.md §1.4/§3.20/§5.6；README.md §4；03_数据与复现说明.md §3.1",
+        "TREND 成交 5,064/31,961=15.84% 非主板；STRUCT 事件 22,779/163,564=13.93% 非主板",
+        "04_最终结论.json cross_family_matrix 18 行"
+      ],
+      "finding": "已改为分族声明：T0005/VCB/小盘主板；TREND sh.60/68+sz.00/30；STRUCT 未排除 300/688；跨族表不能横向排名。"
+    },
+    {
+      "id": "M02",
+      "original_severity": "高",
+      "verdict": "PASS",
+      "evidence": [
+        "01_完整报告.md §3.1/§8.9/§9.2；03_数据与复现说明.md §3.3；04_最终结论.json limits",
+        "S3 826 笔中 136 笔非主板（16.46%）；5 个两段正 S3 581 笔中 96 笔（16.52%）",
+        "17-18 个唯一涨停开盘买入、45 个唯一跌停开盘卖出；S4 +9.35% 不受影响，宽止损 +7.80→+7.12、val −2.65→−3.64"
+      ],
+      "finding": "限价 bug 未改代码、未重跑，但已量化并明确标为“执行口径污染”，S3 不再当干净的两段正证据；负结论不依赖 S3。"
+    },
+    {
+      "id": "M03",
+      "original_severity": "高",
+      "verdict": "PASS",
+      "evidence": [
+        "00_一页纸.md:55；01_完整报告.md §6.3/§6.6；02_规则手册_研究结论版.md R5",
+        "族内DSR.csv：T0005 0.9585、VCB-N120 0.1139",
+        "自检.json dsr_null_p95=0.8407；VCB 统计诊断 DSR 0.622（N=24）"
+      ],
+      "finding": "G6 已写 T0005 0.9585（不可用）/可用最高 VCB-N120 0.1139；0.84 明确为零分布 p95，不是 DSR。"
+    },
+    {
+      "id": "M04",
+      "original_severity": "高",
+      "verdict": "PASS",
+      "evidence": [
+        "00_一页纸.md:38；01_完整报告.md §6.3",
+        "04_最终结论.json statistics.maxstat：16 p，min 0.071964（VCB dev）",
+        "统计整合/多重性.json：9 矩阵 min 0.374（trend_dev）"
+      ],
+      "finding": "全局最小与 9 矩阵最小分开写；均未过 0.05；04 JSON 的 16 个 MAXSTAT 行 p 已回填。"
+    },
+    {
+      "id": "M05",
+      "original_severity": "高",
+      "verdict": "PASS",
+      "evidence": [
+        "00_一页纸.md:111；01_完整报告.md §7.1；04_最终结论.json holdout.reasons",
+        "03_结果/实验注册表.csv：10 行；T0005 rev2 dev done/discard；T0007 val done/discard；holdout 0",
+        "05_审计/留出准入裁决.md/.json：修订版，当前事实 + 附录 A 初版"
+      ],
+      "finding": "理由已改为“无通过 val 的父试验 + 两者均 discard + 事后补登记”；不再写“no done val/T0005 从未运行”。残余 R01：根文档/04 JSON 仍把修订版裁决书描述为 00:37 历史快照。"
+    },
+    {
+      "id": "M06",
+      "original_severity": "高",
+      "verdict": "PASS",
+      "evidence": [
+        "01_完整报告.md §3.20：18 族 × 宇宙/复权/引擎/成本/限制",
+        "04_最终结论.json cross_family_matrix 18 行",
+        "README.md §8.11：跨族表不能横向排名；§1.2 仅 4 个公开基线 + T0005 统一引擎"
+      ],
+      "finding": "跨族口径已披露；只有 T0005 与 4 个公开基线接入统一引擎，TREND/STRUCT 等为族自建引擎/更宽宇宙。"
+    },
+    {
+      "id": "M07",
+      "original_severity": "中",
+      "verdict": "PASS",
+      "evidence": [
+        "00_一页纸.md:90；README.md §1.2；01_完整报告.md §3.8",
+        "34 = 可行性 4 + 实验 15 + 消融 6 + 敏感性 9；22 N_sel + 10 diag = 32 唯一；2 别名"
+      ],
+      "finding": "VCB 计数已对账；README 指针已改到 §3.8，不再指向空 §1。"
+    },
+    {
+      "id": "M08",
+      "original_severity": "中",
+      "verdict": "PASS",
+      "evidence": [
+        "03_数据与复现说明.md §3.2",
+        "02_代码/费用与交易约束.py TransferRule(2005-01-01,'par_sh',0.0006,'SH')"
+      ],
+      "finding": "过户费统一为面额 0.06%（每股 0.0006 元）；量化差 0.001%-0.02%/年，不改结论。"
+    },
+    {
+      "id": "M09",
+      "original_severity": "中",
+      "verdict": "PASS",
+      "evidence": [
+        "02_规则手册_研究结论版.md R8；01_完整报告.md §4 Q6",
+        "S4 246 笔 / 10 槽 / 7.99 年 = 3.08 次/槽/年；+4.71%/笔",
+        "需 15.3%/笔（对数）或 19.5%/笔（简单），约 10 次/槽/年"
+      ],
+      "finding": "21.8%/12.8 已撤回；60% 结论不变，但数字已按 3.08 次重算。"
+    },
+    {
+      "id": "M10",
+      "original_severity": "中",
+      "verdict": "WARN",
+      "evidence": [
+        "01_完整报告.md §2.5/§5.1：dev 1.54%~5.50%（S06 最低）",
+        "04_最终结论.json cross_cutting.dynamic_parameters：仍写 2.11%~5.50%"
+      ],
+      "finding": "根报告/一页纸已改 1.54；机器可读 JSON 的 cross_cutting 副本仍是 2.11。残余 R02。"
+    },
+    {
+      "id": "M11",
+      "original_severity": "中",
+      "verdict": "PASS",
+      "evidence": [
+        "01_完整报告.md §7；03_数据与复现说明.md §4；README.md §5；04_最终结论.json holdout.exposure_paths",
+        "3 个路径：state/pos CSV、index_feat.parquet（ret1）、market_feature.parquet（ew_ret1/csd_ret1）",
+        "封存清单 34 行：A=3/B=7/C=24；3 个 A 级 SHA-256 全部匹配"
+      ],
+      "finding": "3 个间接风险已列出；逻辑封存已做。残余 R03：根文档/验收仍写“未封存/未哈希封存”，与清单事实冲突。"
+    },
+    {
+      "id": "M12",
+      "original_severity": "中",
+      "verdict": "PASS",
+      "evidence": [
+        "文件清单.csv：350 行；根文档六个哈希全部匹配",
+        "README.md §9：05_审计 只收 *.md；05_审计/*.json/*.csv 不收录；04_证据/*.json 全收"
+      ],
+      "finding": "采用首次审计允许的第二选项（明示收录规则）；清单不是审计文件全集，但路径与哈希可核。"
+    },
+    {
+      "id": "M13",
+      "original_severity": "中",
+      "verdict": "PASS",
+      "evidence": [
+        "00_一页纸.md:26；01_完整报告.md §0/§6.1；README.md §1.1；04_最终结论.json statistics.budget",
+        "选择 40 / 含消融 64；733/40=18.33×；733/64=11.45×"
+      ],
+      "finding": "两个预算口径都已写；并注明 733 不含 30 个消融。"
+    }
+  ],
+  "other_items": [
+    {
+      "id": "M14",
+      "verdict": "PASS",
+      "evidence": "00 G2、01 §6.6：5 个 SEL-G 全部过 35%（−9.45/−21.20/−9.97/−20.26/−23.56）；VCB-M_T40 −36.3%、N120 −35.3% 不在 5 个内",
+      "finding": "G2 逻辑已改对。"
+    },
+    {
+      "id": "M15",
+      "verdict": "PASS",
+      "evidence": "00:57、01 §6.5/§6.6：0.15%-5.97%/年，多数为负",
+      "finding": "G8 区间统一。"
+    },
+    {
+      "id": "M16",
+      "verdict": "PASS",
+      "evidence": "README §5/§10、03 §4/§8：92 行 / 36 护栏 / 1 条未分类说明字符串；交付验收 L4 WARN 已披露",
+      "finding": "README 旧值 85/30 已废；L4 WARN 不是隐藏缺陷。"
+    },
+    {
+      "id": "M17",
+      "verdict": "PASS",
+      "evidence": "00/01/04 JSON 统一“敏感性网格”；grep 无“敏感性格”",
+      "finding": "错字已清。"
+    },
+    {
+      "id": "M18",
+      "verdict": "PASS",
+      "evidence": "03 §9：“复权/价格层可以信；ST、退市、成交量、停牌语义、Baostock 重定基仍有明确限制”",
+      "finding": "不再绝对化。"
+    },
+    {
+      "id": "M19",
+      "verdict": "PASS",
+      "evidence": "00/01 §0/02 §5：“约 7 倍”（60/8.70）；“一个数量级”只在撤回索引出现",
+      "finding": "措辞已改。"
+    },
+    {
+      "id": "M20",
+      "verdict": "PASS",
+      "evidence": "03 §2.2：全样本 2.6196 / 截尾 2.0119",
+      "finding": "斜率口径并列。"
+    },
+    {
+      "id": "M21",
+      "verdict": "PASS",
+      "evidence": "01 §8、03 §7、README §8：63 个证券日（39 只）+ 广义 79 行/16,682,010 行",
+      "finding": "两个口径并列。"
+    },
+    {
+      "id": "M22",
+      "verdict": "PASS",
+      "evidence": "01 §1.4、README §4、02 §1：td_since_list ≥120 且 days_since_ipo ≥250",
+      "finding": "上市条件补全。"
+    },
+    {
+      "id": "M23",
+      "verdict": "WARN",
+      "evidence": "根文档/04 JSON 505/228（478 行）；05_审计/最终结论证据矩阵.md:33/179 仍 486/228，无横幅",
+      "finding": "根文档已对；证据矩阵是 01:12 历史文件，未改写，也未在文件内标“已被根文档取代”。残余 R05。"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R01",
+      "severity": "中",
+      "type": "stale_description",
+      "title": "修订版留出裁决被根文档描述成 00:37 历史快照",
+      "evidence": [
+        "00_一页纸.md:40：“裁决书为 00:37 历史快照，理由已被本版取代”",
+        "01_完整报告.md:670：“05_审计/留出准入裁决.md/.json 是 00:37 的历史快照…已过期”",
+        "01_完整报告.md:812：“00:37 历史快照”",
+        "03_数据与复现说明.md:134：“00:37 历史快照，理由已被报告 §7 取代”",
+        "04_最终结论.json holdout.adjudication_note：“该裁决书为 2026-10-29 00:37 历史快照…已过期”；supersedes.as_of=00:37 且 path 指向同一文件",
+        "05_审计/留出准入裁决.md:1/3/6：“修订版；初版 00:37；附录 A 历史快照”；当前事实 10 行/0 holdout/T0005+T0007 discard"
+      ],
+      "finding": "裁决文件本身已修订为当前事实；根文档/04 JSON 仍称其为 00:37 旧快照，读者会误以为引用的是过期文件。结论不变。",
+      "fix": "5 处改为“修订版（2026-10-29 02:09-02:12；初版 00:37 见附录 A）”；supersedes 指向 initial_snapshot/初版副本，as_of 用当前修订时间。",
+      "must_fix": true
+    },
+    {
+      "id": "R02",
+      "severity": "中",
+      "type": "stale_machine_field",
+      "title": "04 JSON cross_cutting 仍写 2.11%；top5 字段未标分母",
+      "evidence": [
+        "04_最终结论.json cross_cutting.dynamic_parameters.evidence：“dev 2.11%~5.50%”",
+        "01_完整报告.md §2.5/§5.1：dev 1.54%~5.50%（S06 最低）",
+        "04_最终结论.json main_candidate.dev.top5_share=0.3106、val.top5_share=0.4092（毛分母）",
+        "04_最终结论.json statistics.top5_denominators：dev net 0.4587/gross 0.3106；val net -0.6258/gross 0.4092"
+      ],
+      "finding": "机器可读 JSON 仍留 M10 的旧区间；top5_share 旧字段是毛分母且未命名，机器读者可能把 31.1% 当净分母。报告/一页纸正确。",
+      "fix": "2.11→1.54；top5_share 改名 top5_share_gross，补 top5_share_net（dev 0.4587/val -0.6258）或删除旧字段；verify 增加对 04 JSON 文本的检查。",
+      "must_fix": true
+    },
+    {
+      "id": "R03",
+      "severity": "中",
+      "type": "seal_status_mismatch",
+      "title": "“未封存/未哈希封存”与逻辑封存清单冲突",
+      "evidence": [
+        "05_审计/2021+未评估文件封存清单.csv：34 行；A=3/B=7/C=24；3 个 A 级 SHA-256 全部匹配",
+        "05_审计/2021+未评估文件封存说明.md：逻辑封存 = 哈希登记 + 机器清单 + 禁止用途；未做物理隔离",
+        "01_完整报告.md:680/727、03_数据与复现说明.md:135/228、README.md:185/287、04_最终结论.json holdout.exposure_note、04_证据/审计整改验收.json declared_limitations 仍写“未封存/未哈希封存”"
+      ],
+      "finding": "逻辑封存已做且可验证；物理隔离未做。根文档/验收的“未封存”把两者混为一谈，读者会认为封存工作完全没做。",
+      "fix": "统一为“已做逻辑封存（3 个 A 级 SHA-256 + 34 行清单 + 禁止用途）；未做物理隔离/独立保管，A 级文件仍在项目树内”；在交付表加封存说明/清单指针；修验收 declared_limitations。",
+      "must_fix": true
+    },
+    {
+      "id": "R04",
+      "severity": "中",
+      "type": "acceptance_overclose",
+      "title": "验收 60/60、0 open 与处置表“需再同步”冲突",
+      "evidence": [
+        "04_证据/审计整改验收.json summary：70 项，62 fixed/6 supersede/2 limitation/0 open；M05/M10/M23 均 DONE",
+        "05_审计/审计问题处置表.csv（02:12 快照）：HOLDOUT_ROOT 序号 2/54“披露/需再同步”；JSON_04_STALE 序号 55“成立”；SEAL 序号 3“已修（逻辑封存）”",
+        "R01/R02/R03/R05 仍存在",
+        "验收 checks holdout_reasons_current/neighborhood_range_154/gate_coverage_505 只检查根文档/源表，不检查 04 JSON 旧副本/封存措辞"
+      ],
+      "finding": "验收的 60/60 是必要不充分；“0 open”不成立。处置表是 02:12 中间快照，但也未被最终验收对账。",
+      "fix": "M05/M10/M23 改 PARTIAL 或加 residual；summary 改 n_open=4/PASS_WITH_RESIDUALS；处置表加“02:12 快照，最终见验收+本复核”横幅；补跨文档旧串扫描。",
+      "must_fix": true
+    },
+    {
+      "id": "R05",
+      "severity": "低",
+      "type": "stale_audit_file",
+      "title": "证据矩阵 P03 仍 486/228",
+      "evidence": [
+        "05_审计/最终结论证据矩阵.md:33/179：最终判定报 covered=486/228",
+        "03_结果/最终统计/最终判定.json holdout_gate：505/228/733（01:28）"
+      ],
+      "finding": "根文档/04 JSON 已 505；证据矩阵是 01:12 他人审计产物，未改写，也无文件内横幅。",
+      "fix": "顶部加“01:12 历史；P03 486/228 已被根文档 505/228 取代”横幅，或改 P03/§6#11 两处数字。",
+      "must_fix": true
+    }
+  ],
+  "must_fix": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05"
+  ],
+  "optional": [
+    {
+      "id": "O01",
+      "improvement": "把 05_审计 的 JSON/CSV（处置表、封存清单、两份最终审计 JSON）纳入文件清单的“审计机器证据”分组，或保留规则但在 README §9 列完整目录",
+      "value": "让清单可当审计文件全集使用"
+    },
+    {
+      "id": "O02",
+      "improvement": "04 JSON families[MKT].best_val=-7.33 加“主口径”标签（已有 caliber）；family_best_val=-2.35 保留",
+      "value": "避免机器读者把主口径当族内最高"
+    },
+    {
+      "id": "O03",
+      "improvement": "把 R01-R05 的旧串扫描加入 verify：2.11%~5.50、00:37 历史快照、486/228、未哈希封存+封存清单并存",
+      "value": "防止再次旧口径残留"
+    },
+    {
+      "id": "O04",
+      "improvement": "在报告 §9.4 的“未关闭残余风险”表里写 R01-R05 实时状态，而不是只写验收 0 open",
+      "value": "让根文档与验收同步"
+    }
+  ],
+  "verification": {
+    "verify": "42/42 PASS（python3 02_代码/最终交付.py verify，只读）",
+    "gate_table": "478 行；5 SEL-G；32 两段>0；max dev 20.40（SMALLLOWVOL:ADVQ12_s5_h40）、max val 8.70（VCB:VCB-N120_T40）、max min 8.32",
+    "g4_rolling_252": "5 个 SEL-G 最差 -18.2214%（S3 时间40+止损2ATR dev）；全部 >-20%",
+    "maxstat": "16 p；min 0.071964（VCB dev）；9 矩阵 min 0.374（trend_dev）",
+    "pbo_maxstat_p": "16 个 MAXSTAT 行 p 全部非空",
+    "stale_fields": [
+      "04 JSON cross_cutting.dynamic_parameters 2.11%~5.50%（R02）",
+      "04 JSON main_candidate.dev/val.top5_share 0.3106/0.4092（毛分母未标，R02b）",
+      "00:40/01:670/812/03:134/04 JSON note 仍 00:37 历史快照（R01）"
+    ],
+    "holdout": "05_审计/留出准入裁决.md 修订版；当前 10 行/0 holdout/T0005+T0007 discard；附录 A 初版 00:37",
+    "seal": "34 行；A=3/B=7/C=24；3 个 A 级 SHA-256 全部匹配；物理隔离未做",
+    "inventory": "文件清单.csv 350 行；根文档哈希全部匹配；05_审计 仅 .md 规则",
+    "acceptance": "04_证据/交付验收.json 28 PASS/0 FAIL/2 WARN（T2；L4 92/36/1）",
+    "remediation": "04_证据/审计整改验收.json 70 项/60 checks/62 fixed/6 supersede/2 limitation/0 open（R04 认为过乐观）",
+    "disposition": "05_审计/审计问题处置表.csv 55 组/31 已修/21 披露/3 不采纳；快照 02:12",
+    "no_2021_plus": "未运行/未计算 2021+ 收益；L1 469 表 0 违规；682 文件 6 个 >2020 日期但带绩效列 0",
+    "inventory_note": "本复核 MD/JSON 写于清单 02:33 快照之后；未重建清单。按 README §9，重建会收录复核 .md，不收录 .json；首次审计 .md 已在清单。"
+  },
+  "conclusion": {
+    "negative_result_sound": true,
+    "summary": "0 候选、T0005 淘汰、60% 不支持/G1 未直接检验、2021+ 未运行均成立；32 个两段为正但全不过门槛；G4 独立复核通过；负结果不由实现 bug 造成。",
+    "boundary": "60% 的拒绝是本项目测试空间（日线/仅做多/无杠杆/10 仓/2008-2020/18 族/733 配置）内的拒绝，不是“A 股不存在 60% 策略”。"
+  },
+  "not_done": [
+    "未重跑 733 个回测；未逐族重算全部绩效；只独立重算了 M01-M13 相关计数、G4、maxstat、封存哈希与关键路径。",
+    "未做 44 个脚本的逐行代码审计；TREND 限价、VCB 成本/250 日强平只验证披露与量化，不验证修复（本批未改代码）。",
+    "未读取 2021+ 行情/收益；封存复核只用到 SHA-256/行数/列名。",
+    "严重度是交付风险，不是统计显著性；PASS/WARN/FAIL 不是投资建议。",
+    "只写本复核 MD/JSON；未覆盖首次审计，未修改任何报告/代码/结果/他人审计文件。"
+  ]
+}

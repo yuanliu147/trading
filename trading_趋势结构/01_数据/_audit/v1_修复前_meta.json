@@ -1,0 +1,397 @@
+{
+  "freeze_date": "2026-10-26",
+  "start_date": "2004-01-01",
+  "index_start": "2006-01-01",
+  "built_at": "2026-10-28T21:55:30",
+  "sources": {
+    "baostock_sqlite": {
+      "path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "bytes": 10323742720,
+      "mtime": "2026-10-28T21:55:25"
+    },
+    "hithink_duckdb": {
+      "path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+      "bytes": 1863593984,
+      "mtime": "2026-10-28T19:01:31"
+    }
+  },
+  "tables": {
+    "daily": {
+      "rows": 16698536,
+      "symbols": 5549,
+      "date_min": "2004-01-02",
+      "date_max": "2026-10-26",
+      "partitions": 23,
+      "bytes": 1388658748
+    },
+    "index_daily": {
+      "rows": 44162,
+      "symbols": 9,
+      "date_min": "2006-01-04",
+      "date_max": "2026-10-26"
+    },
+    "calendar": {
+      "rows": 13096,
+      "trading_days": 8749
+    },
+    "symbols": {
+      "rows": 5549
+    },
+    "corp_actions": {
+      "rows": 57607
+    },
+    "corp_actions_implied": {
+      "rows": 52316
+    },
+    "market_daily": {
+      "rows": 5538
+    },
+    "bj_daily": {
+      "rows": 276468,
+      "symbols": 353
+    }
+  },
+  "by_board": {
+    "主板": 3474,
+    "创业板": 1454,
+    "科创板": 621
+  },
+  "files": [
+    {
+      "path": "frozen/bj_daily/year=2020/data_0.parquet",
+      "rows": 3294,
+      "bytes": 75500,
+      "sha256": "5c2c89165d0637356c0d5cda6b835f73952280460f1e46b19356aba7e647102a"
+    },
+    {
+      "path": "frozen/bj_daily/year=2021/data_0.parquet",
+      "rows": 13572,
+      "bytes": 319115,
+      "sha256": "a0389d32327ef0e1b93e9c80054cb11bead03723712208a978740f6bea61b503"
+    },
+    {
+      "path": "frozen/bj_daily/year=2022/data_0.parquet",
+      "rows": 24291,
+      "bytes": 527709,
+      "sha256": "7ecd4f9119b4e8f18f94396c027cada65cedcd6e27b866c9659de09dfb082cf2"
+    },
+    {
+      "path": "frozen/bj_daily/year=2023/data_0.parquet",
+      "rows": 48550,
+      "bytes": 1023746,
+      "sha256": "4b3399600ae162f352572af49c5bcd894368a723ea49774cd377de220fd2acdf"
+    },
+    {
+      "path": "frozen/bj_daily/year=2024/data_0.parquet",
+      "rows": 59965,
+      "bytes": 1424252,
+      "sha256": "82c9a379bc29a09f2b5bc025f151b8ee7cb1b39b76480522da548d70efa46a83"
+    },
+    {
+      "path": "frozen/bj_daily/year=2025/data_0.parquet",
+      "rows": 65373,
+      "bytes": 1668381,
+      "sha256": "f61103e166b9e42d614757bbc8ffdd6d201f6262cc29c205deec34dd8cd3cb83"
+    },
+    {
+      "path": "frozen/bj_daily/year=2026/data_0.parquet",
+      "rows": 61423,
+      "bytes": 1549835,
+      "sha256": "bdd695263253ed9e3c0c84b6231942ad73cc8524904efc0deab1ce4abc73bc6e"
+    },
+    {
+      "path": "frozen/calendar.parquet",
+      "rows": 13096,
+      "bytes": 53239,
+      "sha256": "0edd400b0fbcd5b0abaa8d018fab016364ffcb46d557a8e86c995169be42cd4d"
+    },
+    {
+      "path": "frozen/corp_actions.parquet",
+      "rows": 57607,
+      "bytes": 464244,
+      "sha256": "90162d49c48e5ab219e5b25d134e0397e3f5e5be7fc0f1f9f0a571473ae80f6a"
+    },
+    {
+      "path": "frozen/corp_actions_implied.parquet",
+      "rows": 52316,
+      "bytes": 1058300,
+      "sha256": "11fa0eda99254415fd40577612b1f3c9bcbe23962c61491affdd8b0795b61ec1"
+    },
+    {
+      "path": "frozen/daily/year=2004/data_0.parquet",
+      "rows": 320846,
+      "bytes": 23754631,
+      "sha256": "aa314da85430d1207749562a4d4b832ab1141035588de4487d18e28c0240f1d1"
+    },
+    {
+      "path": "frozen/daily/year=2005/data_0.parquet",
+      "rows": 329542,
+      "bytes": 23474861,
+      "sha256": "a59ad77a654d2feabea184f92240659b88f576878d3d2b9cf3591bd8ddfa4bb5"
+    },
+    {
+      "path": "frozen/daily/year=2006/data_0.parquet",
+      "rows": 329357,
+      "bytes": 22807564,
+      "sha256": "9634a9fe7efd5ae1a569c13f011f1c8d4cd60a0614170a32191191d86684eec0"
+    },
+    {
+      "path": "frozen/daily/year=2007/data_0.parquet",
+      "rows": 354952,
+      "bytes": 29891562,
+      "sha256": "2e97f7e813b1d0c404d640a1e660844e95989eeea4a07feb588fb3c889ec8a7d"
+    },
+    {
+      "path": "frozen/daily/year=2008/data_0.parquet",
+      "rows": 388176,
+      "bytes": 32411118,
+      "sha256": "04aed60d93cb8c8987045796300f8bd52c92bd44f4df3885afd22209ce10f2dd"
+    },
+    {
+      "path": "frozen/daily/year=2009/data_0.parquet",
+      "rows": 395732,
+      "bytes": 32709883,
+      "sha256": "3b4b0a804f3a7b1667941818e1b5a55c2142ef6243ed80c98a971928dc24bd49"
+    },
+    {
+      "path": "frozen/daily/year=2010/data_0.parquet",
+      "rows": 453319,
+      "bytes": 38231540,
+      "sha256": "b075e3f1be8f0772dd476975dfc934dfb3ca8b6b76c0eb4ffea8e227652d77d6"
+    },
+    {
+      "path": "frozen/daily/year=2011/data_0.parquet",
+      "rows": 537338,
+      "bytes": 44835303,
+      "sha256": "01ddd328302a619c6488f59ab04d923f3d405ab63602cf66e4470c860a1c42c2"
+    },
+    {
+      "path": "frozen/daily/year=2012/data_0.parquet",
+      "rows": 587438,
+      "bytes": 47387266,
+      "sha256": "68f1ff8229c039a413fbfc5eaa000d88e4bf3e4b4dd4cf629b223eec41f28103"
+    },
+    {
+      "path": "frozen/daily/year=2013/data_0.parquet",
+      "rows": 588294,
+      "bytes": 47173159,
+      "sha256": "d353829db1d2fedd40f5f7e95e929eed6e2636e127920c009814093c4deb8920"
+    },
+    {
+      "path": "frozen/daily/year=2014/data_0.parquet",
+      "rows": 620803,
+      "bytes": 48311668,
+      "sha256": "a3adae88709e4a1957690b61038d6f1942534fed1580cf59e1615897d0ca6d44"
+    },
+    {
+      "path": "frozen/daily/year=2015/data_0.parquet",
+      "rows": 665917,
+      "bytes": 52778768,
+      "sha256": "2f4eadd03e23cc4e88ed19728c1a2c1b3033385efa41c6a931b7c682481f744e"
+    },
+    {
+      "path": "frozen/daily/year=2016/data_0.parquet",
+      "rows": 704878,
+      "bytes": 57483805,
+      "sha256": "124d5774cfff4113994a94451770a37bd93759f8242d9c6f21343615904d689f"
+    },
+    {
+      "path": "frozen/daily/year=2017/data_0.parquet",
+      "rows": 799801,
+      "bytes": 66026123,
+      "sha256": "264c8c55199aea80d222cf9585db9c69cf09ead96bf06c884e3a3460fa2a6dd9"
+    },
+    {
+      "path": "frozen/daily/year=2018/data_0.parquet",
+      "rows": 857532,
+      "bytes": 71559587,
+      "sha256": "ac4fe5fc9d442f7a8621d794ff497467a4e322283dc583ee38d4a007e84267c0"
+    },
+    {
+      "path": "frozen/daily/year=2019/data_0.parquet",
+      "rows": 890739,
+      "bytes": 74818751,
+      "sha256": "7672ec8a71beb9ab1810b79f36b2a103101c6a960061440e44557e553aefc53a"
+    },
+    {
+      "path": "frozen/daily/year=2020/data_0.parquet",
+      "rows": 952245,
+      "bytes": 80062869,
+      "sha256": "1b64aec5bcfc14e667eac9e57539f55ffe9fb74a7773623b1e18985c70dde063"
+    },
+    {
+      "path": "frozen/daily/year=2021/data_0.parquet",
+      "rows": 1062633,
+      "bytes": 91517941,
+      "sha256": "19ea9ab1742c8fd1a767921d1bda01e4972cc71f41941002c39648229aaa11e3"
+    },
+    {
+      "path": "frozen/daily/year=2022/data_0.parquet",
+      "rows": 1149504,
+      "bytes": 98928234,
+      "sha256": "6488d4bd0ff6bdab179a426c1715c625d03f90650500c64398f1461da7021a9e"
+    },
+    {
+      "path": "frozen/daily/year=2023/data_0.parquet",
+      "rows": 1212196,
+      "bytes": 102268425,
+      "sha256": "118871686ceb2ab6fa91766ee4d2b176d5695a94164263021749ddefcd0405c3"
+    },
+    {
+      "path": "frozen/daily/year=2024/data_0.parquet",
+      "rows": 1236574,
+      "bytes": 104953735,
+      "sha256": "fa4bf4e05997ddc05fdc9f810d5c4e6f5c42497d63454bdf4b01d57d53322c9b"
+    },
+    {
+      "path": "frozen/daily/year=2025/data_0.parquet",
+      "rows": 1251474,
+      "bytes": 107273001,
+      "sha256": "75e3be011ded810c7f5a77a6952142fa6ed907a91ec64a193c130c3a0c98aed0"
+    },
+    {
+      "path": "frozen/daily/year=2026/data_0.parquet",
+      "rows": 1009246,
+      "bytes": 89998954,
+      "sha256": "164ef85cf86e687a7ef24edc5ffd26b65654f49352f1fa9af8efef0158064103"
+    },
+    {
+      "path": "frozen/index_daily/year=2006/data_0.parquet",
+      "rows": 1928,
+      "bytes": 76696,
+      "sha256": "cdc39dd4fb7698dfd4f035e217a0e8048f0058412a44bde620351a9ab0a50255"
+    },
+    {
+      "path": "frozen/index_daily/year=2007/data_0.parquet",
+      "rows": 1936,
+      "bytes": 79364,
+      "sha256": "066d218029fc60b1611c200f4931a5ee77351fedcfba160bf93dbeaae9bb9fdd"
+    },
+    {
+      "path": "frozen/index_daily/year=2008/data_0.parquet",
+      "rows": 1968,
+      "bytes": 80995,
+      "sha256": "3bc7157487217ecf2327296dcc88b8c2ca8284c4b0bee5d0dcdb67e5aa8fdf5e"
+    },
+    {
+      "path": "frozen/index_daily/year=2009/data_0.parquet",
+      "rows": 1952,
+      "bytes": 80290,
+      "sha256": "03c01907e5602091281cebb5cfa802381a8f4c79265bf4909fd150270432b74b"
+    },
+    {
+      "path": "frozen/index_daily/year=2010/data_0.parquet",
+      "rows": 2079,
+      "bytes": 87900,
+      "sha256": "1233ea46e8f6a578de4b28d101e797576bd8214b6b1d80a1e79b9c80b74c7118"
+    },
+    {
+      "path": "frozen/index_daily/year=2011/data_0.parquet",
+      "rows": 1953,
+      "bytes": 82002,
+      "sha256": "f90fdaabf80eabdd1d7fd3fe8f04d577514d2b3a7c06583dc961c88e4c991b0c"
+    },
+    {
+      "path": "frozen/index_daily/year=2012/data_0.parquet",
+      "rows": 2187,
+      "bytes": 94320,
+      "sha256": "8ade8047bafb7d0d666af62fd35b218d8b6a50ff0ecd7f288f0dfa0cadef546b"
+    },
+    {
+      "path": "frozen/index_daily/year=2013/data_0.parquet",
+      "rows": 2142,
+      "bytes": 90970,
+      "sha256": "7cd16752a3159fb966228bb40efda58397295dbbed24aa67e687c632333e6f61"
+    },
+    {
+      "path": "frozen/index_daily/year=2014/data_0.parquet",
+      "rows": 2205,
+      "bytes": 89806,
+      "sha256": "00317a41c744aaedb16a831acb3990fa6b6695ae2bbf78bce0ba53c0fcbdfe86"
+    },
+    {
+      "path": "frozen/index_daily/year=2015/data_0.parquet",
+      "rows": 2196,
+      "bytes": 89602,
+      "sha256": "f51147a28805dc4f23689dcae5b65eea6bf18da3e3ecab154c60cec9380f1a13"
+    },
+    {
+      "path": "frozen/index_daily/year=2016/data_0.parquet",
+      "rows": 2196,
+      "bytes": 80455,
+      "sha256": "0a5d558661381f09ce39bbd703fbbefe103a31faad611de94bc4733843583041"
+    },
+    {
+      "path": "frozen/index_daily/year=2017/data_0.parquet",
+      "rows": 2196,
+      "bytes": 78528,
+      "sha256": "eccd716ff7eb324a70f8ea23c6904f8ebe6a6d529c3f098c759ed56f6159f574"
+    },
+    {
+      "path": "frozen/index_daily/year=2018/data_0.parquet",
+      "rows": 2187,
+      "bytes": 78986,
+      "sha256": "1a6c60de22291945d0c03cd1def3d40147dacebdbdb20c92f5f7f03690dcf873"
+    },
+    {
+      "path": "frozen/index_daily/year=2019/data_0.parquet",
+      "rows": 2196,
+      "bytes": 80565,
+      "sha256": "3e0402f01f5b8c944ec28142b5f00ba4dd0ddc3c80cafadce404df83837b78a8"
+    },
+    {
+      "path": "frozen/index_daily/year=2020/data_0.parquet",
+      "rows": 2187,
+      "bytes": 106434,
+      "sha256": "877be8207efbd3d42046e25599932a99c7e1ee38481095738cc5ac63d79d4211"
+    },
+    {
+      "path": "frozen/index_daily/year=2021/data_0.parquet",
+      "rows": 2187,
+      "bytes": 108303,
+      "sha256": "6e40094b03101b6be9541132f0f772a62ceb697084040a3cf93587d47a467d54"
+    },
+    {
+      "path": "frozen/index_daily/year=2022/data_0.parquet",
+      "rows": 2178,
+      "bytes": 106971,
+      "sha256": "fb07d047d5dc578b8a11bdf800c63e08fb99c957bfa6b4bf819a585731386ecf"
+    },
+    {
+      "path": "frozen/index_daily/year=2023/data_0.parquet",
+      "rows": 2178,
+      "bytes": 106241,
+      "sha256": "dbc9849375ab622a7ca30c170ced6d021511a4b9863d7f7cb6fe158f51520823"
+    },
+    {
+      "path": "frozen/index_daily/year=2024/data_0.parquet",
+      "rows": 2178,
+      "bytes": 106999,
+      "sha256": "260d62d7a2cc3f36a97eadf3f9db9a383d4be915ca89da8d7346c378a54a5cf6"
+    },
+    {
+      "path": "frozen/index_daily/year=2025/data_0.parquet",
+      "rows": 2187,
+      "bytes": 108737,
+      "sha256": "edbea97ea1cb53c9f0d1287d4c0ada2ba7ecd9308674de027b62deac443fc7e6"
+    },
+    {
+      "path": "frozen/index_daily/year=2026/data_0.parquet",
+      "rows": 1746,
+      "bytes": 85569,
+      "sha256": "801f01283107c844738e85df1f31dd9f470de1f56d8af554a42bdc67670cec0f"
+    },
+    {
+      "path": "frozen/market_daily.parquet",
+      "rows": 5538,
+      "bytes": 243029,
+      "sha256": "027c238341fc860e5068f84776060c94190906615b61f2159478f6ed677012fa"
+    },
+    {
+      "path": "frozen/symbols.parquet",
+      "rows": 5549,
+      "bytes": 84081,
+      "sha256": "e4308b0b9c046cc014cbc6c903baace9792f2d3aa60ddb4d9d6da122129d3390"
+    }
+  ]
+}
