@@ -1,0 +1,13 @@
+{
+  "status": "COMPLETED",
+  "candidate": "three_of_two_low_vol",
+  "output_dir": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_candidates/three_of_two_low_vol",
+  "start_date": "2016-10-13",
+  "end_date": "2026-10-29",
+  "initial_equity": 20000.0,
+  "final_equity": 4159.97,
+  "total_return": -0.7920015,
+  "cagr": -0.14474781959117322,
+  "max_drawdown": 0.8132163141193354,
+  "round_trips": null
+}

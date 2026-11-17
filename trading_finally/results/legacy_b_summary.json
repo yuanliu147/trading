@@ -1,0 +1,42 @@
+{
+  "candidate": "early_trend_breadth",
+  "status": "EVALUABLE",
+  "full_a_context_pass": true,
+  "industry_daily_min": 0.9973253092611167,
+  "industry_days_below_min": 0,
+  "industry_entry_coverage": 1.0,
+  "required_entry_coverage": 1.0,
+  "proposed_entries": 116568,
+  "entry_count": 114424,
+  "entry_codes": 3198,
+  "first_entry": "2017-10-13",
+  "last_entry": "2026-09-22",
+  "eligibility_start": "2017-10-13",
+  "st_rejected_proposed": 1965,
+  "inputs": {
+    "full_a": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/legacy_full_a_panel_completed.parquet",
+      "sha256": "12e92da7600f59c72851da194ac13fca237d593d1cb8c2a0c329e4c28c23d9fb"
+    },
+    "main": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a"
+    },
+    "industry": {
+      "path": "/Users/admin/WorkSpace/trading/2026-10-18_成交量融合_2010-2025/01_数据/申万行业分类_时点.csv",
+      "sha256": "3ebc1a6c22c1b17f137470bb0c040c31b055b5d805fe29f4b55ce53d8ee62872"
+    },
+    "config": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/config/legacy_b_recovery.json",
+      "sha256": "d77b88c7303b1567406e0f396b242a7b991d8998186ee704ba0f45f766552c1e"
+    }
+  },
+  "outputs": {
+    "signals": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_b_signals.parquet",
+      "rows": 10776532,
+      "sha256": "831e8460837c046b054e715cbdb1ccfc87bfc7aa28a76a2f70a6149a8ff33833"
+    }
+  },
+  "account_returns_run": false
+}

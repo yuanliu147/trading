@@ -1,0 +1,1 @@
+Invalidated 2026-11-05: candidate B entry signals did not exclude stocks already ST; 46 ST entries caused next-day st_exit and contaminated main/double/random results. Archived before rebuilding with is_st==0 entry eligibility.

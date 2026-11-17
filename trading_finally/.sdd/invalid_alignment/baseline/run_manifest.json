@@ -1,0 +1,140 @@
+{
+  "config": {
+    "source": "file",
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/config/baseline.json",
+    "sha256": "eb0cca4439a4da3a3a6f835eb18f09d055a7b56a16cb8b1e8d875dd239c3e8ca",
+    "values": {
+      "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+      "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "start_date": "2016-10-13",
+      "end_date": "2026-10-29",
+      "initial_cash": 20000,
+      "slots": 3,
+      "max_weight": 0.2,
+      "max_exposure": 0.6,
+      "entry_lookback": 120,
+      "trend_window": 200,
+      "trend_slope_window": 20,
+      "exit_lookback": 20,
+      "commission_rate": 0.00025,
+      "min_commission": 5,
+      "slippage_bps": 10,
+      "random_seed": 20261101
+    }
+  },
+  "design_documents": [
+    {
+      "path": "00_设计_主板趋势波段交易系统研究.md",
+      "sha256": "9483ba789ba859259b3b8676704175ac5c69ef23eea67200d761bd99ac544cb8"
+    },
+    {
+      "path": "01_实施计划_主板趋势波段交易系统.md",
+      "sha256": "2014a1dc9a676a01726b2ac9ada81c0c4b214da68c4d111141124c13d68187ba"
+    },
+    {
+      "path": "02_预注册_极简趋势消融.md",
+      "sha256": "54b47bcea8c524167a2358b5974079cda23bdb2f6dd62e6a211675127b691b35"
+    }
+  ],
+  "code_files": [
+    {
+      "path": "src/trend_system/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/trend_system/broker.py",
+      "sha256": "d42718077e86a7d8376574aac001e2a36fc4cf470514cb88df58bb62c711da2c"
+    },
+    {
+      "path": "src/trend_system/config.py",
+      "sha256": "50718c68857dc33413b5fd671d19af51ee3580f65f93037bc07a62dd975c00e8"
+    },
+    {
+      "path": "src/trend_system/data.py",
+      "sha256": "10cc71a5255eba743524961eaff28dfa15e3914bba18bd19664cad768914656c"
+    },
+    {
+      "path": "src/trend_system/execution.py",
+      "sha256": "5461e2d28f2460f4392c00148645c3b4cf3f064d7b9bb52d946ccd3ce8f864df"
+    },
+    {
+      "path": "src/trend_system/metrics.py",
+      "sha256": "27babaf8e0345b091bc3fd9362ba968a38b8812f91ff2f227d1bd48215a328b2"
+    },
+    {
+      "path": "src/trend_system/report.py",
+      "sha256": "1ec944c9571a38a34fe22be976841c8e9087e4c38862fa839981daa387f8679e"
+    },
+    {
+      "path": "src/trend_system/robustness.py",
+      "sha256": "2396e616c971e5d371ee8707a86db2c20b69a9a9366a6bb87a17312b8d904cd9"
+    },
+    {
+      "path": "src/trend_system/signals.py",
+      "sha256": "e0634ca6b2afb88353392ec02926ddd65eaf1954c1526a2def5075c9b684d0c1"
+    },
+    {
+      "path": "scripts/run_baseline.py",
+      "sha256": "e89943afe362c460bf616437f3a08713bb774bba505e0a08a416ffd00597c991"
+    }
+  ],
+  "inputs": {
+    "main_panel": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "rows": 10776532,
+      "codes": 3425,
+      "first_date": "2010-01-04",
+      "last_date": "2026-10-29"
+    },
+    "backtest_panel": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "rows": 7335154,
+      "codes": 3400,
+      "first_date": "2016-10-13",
+      "last_date": "2026-10-29"
+    },
+    "index_panel": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/index_panel.parquet",
+      "rows": 44189,
+      "codes": 9,
+      "first_date": "2006-01-04",
+      "last_date": "2026-10-29"
+    },
+    "corporate_actions": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/corporate_actions.parquet",
+      "rows": 43577,
+      "codes": 3178,
+      "first_date": "1991-02-26",
+      "last_date": "2026-10-29"
+    }
+  },
+  "dependencies": {
+    "python": "3.13.13",
+    "pandas": "3.0.3",
+    "numpy": "2.5.0",
+    "pyarrow": "26.0.0",
+    "duckdb": "1.5.6"
+  },
+  "benchmarks": {
+    "现金": {
+      "code": "",
+      "dividends_included": false,
+      "note": "现金研究基准，收益率设为0。"
+    },
+    "上证综指": {
+      "code": "000001.SH",
+      "dividends_included": false,
+      "note": "价格指数基准，不含股息。"
+    },
+    "沪深300": {
+      "code": "000300.SH",
+      "dividends_included": false,
+      "note": "价格指数基准，不含股息。"
+    },
+    "主板等权": {
+      "code": "",
+      "dividends_included": true,
+      "note": "主板同宇宙后复权收益日度等权再平衡研究基准，不可由2万元账户直接复制。"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "note": "Historical run_manifest code hashes are from the A run; later optional policy plumbing changes were verified behavior-preserving by a temp-root rerun.",
+  "current_code_sha256": {
+    "src/trend_system/broker.py": "57cf7e3276a768c567417756d6c123efcf225fb5eb62bceaf71a59845c53d1dd",
+    "src/trend_system/legacy_policy.py": "cf2d32b583aef0f2cfdd5485f5b9527f1aed0f114906e5605e01854d8f38c405",
+    "src/trend_system/legacy_runner.py": "ca29c22f0b994c9916a65a0769cafbfcc3fe1d5b4fa2191a016a1c1ec2c40973"
+  },
+  "temp_rerun_root": "/tmp/legacy-a-repro/results/legacy_candidates/three_of_two_low_vol",
+  "core_outputs": {
+    "daily_account.parquet": {
+      "frozen": "8190ab0ae951796a107425417f9bd5c152afb4e4b1e88a0330ed6e4aff7ece18",
+      "rerun": "8190ab0ae951796a107425417f9bd5c152afb4e4b1e88a0330ed6e4aff7ece18",
+      "match": true
+    },
+    "daily_positions.parquet": {
+      "frozen": "32519dcb92115dc62b679ae0517b34bddab0c7f841c1dbee6f1e6cfb808b0c6f",
+      "rerun": "32519dcb92115dc62b679ae0517b34bddab0c7f841c1dbee6f1e6cfb808b0c6f",
+      "match": true
+    },
+    "trades.parquet": {
+      "frozen": "cca81c659764acf6e07c04b7a0ecd2fea9f231f40019b07db2727d995eb8cca0",
+      "rerun": "cca81c659764acf6e07c04b7a0ecd2fea9f231f40019b07db2727d995eb8cca0",
+      "match": true
+    },
+    "orders.parquet": {
+      "frozen": "f56c7a9ec4d5c4098e95ded1b92e686ee49cd59af1f5548102b0ed9d06bf4d7f",
+      "rerun": "f56c7a9ec4d5c4098e95ded1b92e686ee49cd59af1f5548102b0ed9d06bf4d7f",
+      "match": true
+    },
+    "round_trips.parquet": {
+      "frozen": "e5f2552672aac50fdffa119bf0e841c631b7999de10e93f7d40802397675fdd4",
+      "rerun": "e5f2552672aac50fdffa119bf0e841c631b7999de10e93f7d40802397675fdd4",
+      "match": true
+    },
+    "action_log.parquet": {
+      "frozen": "e53861d97759dfe2477345aa08e7509d5e40e993f455d15cb0a1f44be0ad962b",
+      "rerun": "e53861d97759dfe2477345aa08e7509d5e40e993f455d15cb0a1f44be0ad962b",
+      "match": true
+    },
+    "performance_summary.json": {
+      "frozen": "d488ac36c5813af32c8fa574b0279c484b2efc21e9a81a799c14012a128022dd",
+      "rerun": "d488ac36c5813af32c8fa574b0279c484b2efc21e9a81a799c14012a128022dd",
+      "match": true
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "config": {
+    "source": "file",
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/config/baseline.json",
+    "sha256": "eb0cca4439a4da3a3a6f835eb18f09d055a7b56a16cb8b1e8d875dd239c3e8ca",
+    "values": {
+      "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+      "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "start_date": "2016-10-13",
+      "end_date": "2026-10-29",
+      "initial_cash": 20000,
+      "slots": 3,
+      "max_weight": 0.2,
+      "max_exposure": 0.6,
+      "entry_lookback": 120,
+      "trend_window": 200,
+      "trend_slope_window": 20,
+      "exit_lookback": 20,
+      "commission_rate": 0.00025,
+      "min_commission": 5,
+      "slippage_bps": 10,
+      "random_seed": 20261101
+    }
+  },
+  "design_documents": [
+    {
+      "path": "00_设计_主板趋势波段交易系统研究.md",
+      "sha256": "8484ab17ce8d4c01964355a326c2d816b0c64134f99902e44846b25056f7f7d8"
+    },
+    {
+      "path": "01_实施计划_主板趋势波段交易系统.md",
+      "sha256": "5acac2b32d9bd5070121c7b1ad956c00f44aeaccd576c0f81bfff59b4f556906"
+    },
+    {
+      "path": "02_预注册_极简趋势消融.md",
+      "sha256": "5917917c7b9c7d18d537e830ee83b25e7cb6ed9c44595d213ae0e227dc7735f2"
+    }
+  ],
+  "code_files": [
+    {
+      "path": "src/trend_system/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/trend_system/broker.py",
+      "sha256": "ad2252353179f345e4dd1f5829ac466e76ab7ec16940e1cddc9e7b7086ea0da0"
+    },
+    {
+      "path": "src/trend_system/config.py",
+      "sha256": "50718c68857dc33413b5fd671d19af51ee3580f65f93037bc07a62dd975c00e8"
+    },
+    {
+      "path": "src/trend_system/data.py",
+      "sha256": "10cc71a5255eba743524961eaff28dfa15e3914bba18bd19664cad768914656c"
+    },
+    {
+      "path": "src/trend_system/execution.py",
+      "sha256": "5461e2d28f2460f4392c00148645c3b4cf3f064d7b9bb52d946ccd3ce8f864df"
+    },
+    {
+      "path": "src/trend_system/legacy_a.py",
+      "sha256": "aff1653eb3d3d4586181aaea02c5dddd2ee133c4d3884519c2c4849811f2ca52"
+    },
+    {
+      "path": "src/trend_system/legacy_config.py",
+      "sha256": "56b05420c1afa09540222ffc1b770080d49e287b37cd266460977d72953dcaca"
+    },
+    {
+      "path": "src/trend_system/legacy_data.py",
+      "sha256": "b9e480dd8324e1152d5df8e5a4f9a66e30f3d48697306143a1bac3211ef48512"
+    },
+    {
+      "path": "src/trend_system/legacy_policy.py",
+      "sha256": "d5ddbbc4e8abc1de54c1b4d16bd3cd62d3518dbd4904b25d8c0eb7b6f73bf528"
+    },
+    {
+      "path": "src/trend_system/metrics.py",
+      "sha256": "22ee33b077227dcfe86c6c5a66997cc26a4b0eab3c23d355179ee7699df42595"
+    },
+    {
+      "path": "src/trend_system/report.py",
+      "sha256": "6486fe511aa5736158aebd12224fe16b25737ec3cbfb802de417ddd3f712de5b"
+    },
+    {
+      "path": "src/trend_system/risk.py",
+      "sha256": "12eeeed221a9da42e59b1add7320d9908e3b0c4bb4fb61180f8b1ed985a5f427"
+    },
+    {
+      "path": "src/trend_system/robustness.py",
+      "sha256": "a1678e102fe993786e99823534e236c2ec56c79a690bd74d28ee9239ab5d0791"
+    },
+    {
+      "path": "src/trend_system/signals.py",
+      "sha256": "1f03b18c4661c39c8f673116f3e723159ac5aaee337b241d912c0f3c7901fd9d"
+    },
+    {
+      "path": "scripts/run_baseline.py",
+      "sha256": "e89943afe362c460bf616437f3a08713bb774bba505e0a08a416ffd00597c991"
+    }
+  ],
+  "inputs": {
+    "main_panel": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a",
+      "rows": 10776532,
+      "codes": 3425,
+      "first_date": "2010-01-04",
+      "last_date": "2026-10-29"
+    },
+    "backtest_panel": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a",
+      "rows": 7335154,
+      "codes": 3400,
+      "first_date": "2016-10-13",
+      "last_date": "2026-10-29"
+    },
+    "index_panel": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/index_panel.parquet",
+      "sha256": "8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a",
+      "rows": 44189,
+      "codes": 9,
+      "first_date": "2006-01-04",
+      "last_date": "2026-10-29"
+    },
+    "corporate_actions": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/corporate_actions.parquet",
+      "sha256": "f7a924a63091af282b8d37ed2120ae9bae0598846d5d414edc7191a9769bb575",
+      "rows": 43577,
+      "codes": 3178,
+      "first_date": "1991-02-26",
+      "last_date": "2026-10-29"
+    }
+  },
+  "dependencies": {
+    "python": "3.13.13",
+    "pandas": "3.0.3",
+    "numpy": "2.5.0",
+    "pyarrow": "26.0.0",
+    "duckdb": "1.5.6"
+  },
+  "benchmarks": {
+    "现金": {
+      "code": "",
+      "dividends_included": false,
+      "note": "现金研究基准，收益率设为0。"
+    },
+    "上证综指": {
+      "code": "000001.SH",
+      "dividends_included": false,
+      "note": "价格指数基准，不含股息。"
+    },
+    "沪深300": {
+      "code": "000300.SH",
+      "dividends_included": false,
+      "note": "价格指数基准，不含股息。"
+    },
+    "主板等权": {
+      "code": "",
+      "dividends_included": true,
+      "note": "主板同宇宙后复权收益日度等权再平衡研究基准，不可由2万元账户直接复制。"
+    }
+  },
+  "alignment": {
+    "method": "signals自身日期筛选后与面板按(date,code)一对一连接；run_backtest前硬校验",
+    "panel_rows": 7335154,
+    "signal_rows": 7335154,
+    "key_difference_count": 0,
+    "window_start": "2016-10-13",
+    "window_end": "2026-10-29"
+  }
+}

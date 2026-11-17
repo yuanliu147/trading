@@ -1,0 +1,23 @@
+{
+  "status": "REJECTED",
+  "output_dir": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_robustness",
+  "main": {
+    "total_return": -0.7920015,
+    "cagr": -0.14474781959117322,
+    "final_equity": 4159.97,
+    "rolling_3y_positive_share": 0.0,
+    "closed_round_trips": 417,
+    "win_rate": 0.2446043165467626
+  },
+  "double_cost": {
+    "total_return": -0.8705185,
+    "max_drawdown": 0.8835141820380193
+  },
+  "random_positive_paths": 0,
+  "stress_2010_2015": {
+    "total_return": -0.30230500000000005,
+    "max_drawdown": 0.42361555513399674,
+    "final_equity": 13953.9,
+    "closed_round_trips": 159
+  }
+}

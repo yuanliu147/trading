@@ -1,0 +1,21 @@
+/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/legacy_b.py:129: RuntimeWarning: Mean of empty slice
+  sector_ret[:, industry_id] = np.nanmean(np.where(mask, ret20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/legacy_b.py:128: RuntimeWarning: Mean of empty slice
+  sector_breadth[:, industry_id] = np.nanmean(np.where(mask, above20, np.nan), axis=1)
+{
+  "candidate": "early_trend_breadth",
+  "status": "EVALUABLE",
+  "full_a_context_pass": true,
+  "industry_daily_min": 0.9973253092611167,
+  "industry_days_below_min": 0,
+  "industry_entry_coverage": 1.0,
+  "required_entry_coverage": 1.0,
+  "proposed_entries": 116568,
+  "entry_count": 114424,
+  "entry_codes": 3198,
+  "first_entry": "2017-10-13",
+  "last_entry": "2026-09-22",
+  "eligibility_start": "2017-10-13",
+  "st_rejected_proposed": 1965,
+  "account_returns_run": false
+}

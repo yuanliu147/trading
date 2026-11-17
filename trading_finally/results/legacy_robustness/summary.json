@@ -1,0 +1,259 @@
+{
+  "candidate_status": "EVALUABLE",
+  "main_max_drawdown": 0.8132163141193354,
+  "gates": {
+    "data_execution_integrity": {
+      "passed": true
+    },
+    "main_window_positive": {
+      "passed": false
+    },
+    "rolling_3y_majority_positive": {
+      "passed": false
+    },
+    "double_cost_positive_and_executable": {
+      "passed": false
+    },
+    "random_order_at_least_16_positive": {
+      "passed": false
+    },
+    "remaining_years_equity_pnl_positive": {
+      "passed": false
+    },
+    "fully_after_close_reproducible": {
+      "passed": true
+    },
+    "drawdown_within_limit": {
+      "passed": false
+    }
+  },
+  "main": {
+    "total_return": -0.7920015,
+    "cagr": -0.14474781959117322,
+    "final_equity": 4159.97,
+    "rolling_3y_positive_share": 0.0,
+    "closed_round_trips": 417,
+    "win_rate": 0.2446043165467626
+  },
+  "double_cost": {
+    "total_return": -0.8705185,
+    "max_drawdown": 0.8835141820380193
+  },
+  "random_order": {
+    "positive_paths": 0,
+    "paths_completed": 12,
+    "early_stop_reason": "12 completed paths include 12 negatives; maximum possible positives 8 < 16",
+    "paths": [
+      {
+        "path_id": 0,
+        "total_return": -0.7488604999999999,
+        "max_drawdown": 0.7631569392542645,
+        "positive": false
+      },
+      {
+        "path_id": 1,
+        "total_return": -0.63645,
+        "max_drawdown": 0.6719268465902681,
+        "positive": false
+      },
+      {
+        "path_id": 2,
+        "total_return": -0.8057635,
+        "max_drawdown": 0.8087794308171519,
+        "positive": false
+      },
+      {
+        "path_id": 3,
+        "total_return": -0.6046795,
+        "max_drawdown": 0.6906502725570576,
+        "positive": false
+      },
+      {
+        "path_id": 4,
+        "total_return": -0.671745,
+        "max_drawdown": 0.6787223474199081,
+        "positive": false
+      },
+      {
+        "path_id": 5,
+        "total_return": -0.631554,
+        "max_drawdown": 0.6540916580216025,
+        "positive": false
+      },
+      {
+        "path_id": 6,
+        "total_return": -0.7361155,
+        "max_drawdown": 0.7783423841143045,
+        "positive": false
+      },
+      {
+        "path_id": 7,
+        "total_return": -0.852186,
+        "max_drawdown": 0.883119303882893,
+        "positive": false
+      },
+      {
+        "path_id": 8,
+        "total_return": -0.855856,
+        "max_drawdown": 0.8680471260264191,
+        "positive": false
+      },
+      {
+        "path_id": 9,
+        "total_return": -0.55597,
+        "max_drawdown": 0.6853318496566159,
+        "positive": false
+      },
+      {
+        "path_id": 10,
+        "total_return": -0.8977995,
+        "max_drawdown": 0.9140385270224255,
+        "positive": false
+      },
+      {
+        "path_id": 11,
+        "total_return": -0.43133750000000004,
+        "max_drawdown": 0.5590024943878672,
+        "positive": false
+      }
+    ]
+  },
+  "remaining_years": {
+    "best_year": "2024",
+    "remaining_pnl": -16738.510000000002
+  },
+  "annual_equity_pnl": {
+    "2016": 665.4400000000023,
+    "2017": -5202.260000000002,
+    "2018": -1940.7200000000012,
+    "2019": -1055.989999999998,
+    "2020": 800.6399999999994,
+    "2021": -654.6599999999999,
+    "2022": -2725.0699999999997,
+    "2023": -2065.180000000001,
+    "2024": 898.4800000000005,
+    "2025": -2579.1100000000006,
+    "2026": -1981.5999999999995
+  },
+  "stress_2010_2015": {
+    "total_return": -0.30230500000000005,
+    "max_drawdown": 0.42361555513399674,
+    "final_equity": 13953.9,
+    "closed_round_trips": 159
+  },
+  "scenario": {
+    "annual_equity_pnl": {
+      "2016": 665.4400000000023,
+      "2017": -5202.260000000002,
+      "2018": -1940.7200000000012,
+      "2019": -1055.989999999998,
+      "2020": 800.6399999999994,
+      "2021": -654.6599999999999,
+      "2022": -2725.0699999999997,
+      "2023": -2065.180000000001,
+      "2024": 898.4800000000005,
+      "2025": -2579.1100000000006,
+      "2026": -1981.5999999999995
+    },
+    "market_state": [
+      {
+        "state": "above_ma20",
+        "days": 1295,
+        "avg_daily_return": 0.0008079252610525075,
+        "avg_exposure": 0.5317753250331034
+      },
+      {
+        "state": "below_ma20",
+        "days": 1145,
+        "avg_daily_return": -0.002104956579367304,
+        "avg_exposure": 0.23067263610309796
+      }
+    ],
+    "exit_reasons": [
+      {
+        "exit_reason": "close_below_ma20",
+        "count": 274,
+        "net_pnl": 4803.4099999999935,
+        "gross_pnl": 8034.879999999999,
+        "costs": 3231.47,
+        "avg_return": 0.00887088643920464
+      },
+      {
+        "exit_reason": "ma5_below_ma20",
+        "count": 1,
+        "net_pnl": -22.519999999999982,
+        "gross_pnl": -11.070000000000164,
+        "costs": 11.45,
+        "avg_return": -0.015623157237503888
+      },
+      {
+        "exit_reason": "ma5_below_ma20|close_below_ma20",
+        "count": 14,
+        "net_pnl": 925.7100000000003,
+        "gross_pnl": 1092.8699999999994,
+        "costs": 167.16,
+        "avg_return": 0.034076305807422304
+      },
+      {
+        "exit_reason": "ma5_below_ma20|whist_negative|close_below_ma20",
+        "count": 1,
+        "net_pnl": -1439.23,
+        "gross_pnl": -1426.54,
+        "costs": 12.690000000000001,
+        "avg_return": -0.3604328509964789
+      },
+      {
+        "exit_reason": "max_hold",
+        "count": 5,
+        "net_pnl": 5032.199999999999,
+        "gross_pnl": 5098.42,
+        "costs": 66.22,
+        "avg_return": 0.5630460414606387
+      },
+      {
+        "exit_reason": "max_hold|close_below_ma20",
+        "count": 1,
+        "net_pnl": 315.55999999999995,
+        "gross_pnl": 327.8699999999999,
+        "costs": 12.309999999999999,
+        "avg_return": 0.16556659705971852
+      },
+      {
+        "exit_reason": "stop_loss",
+        "count": 67,
+        "net_pnl": -14840.87,
+        "gross_pnl": -14066.400000000001,
+        "costs": 774.47,
+        "avg_return": -0.11857210422978837
+      },
+      {
+        "exit_reason": "stop_loss|close_below_ma20",
+        "count": 46,
+        "net_pnl": -10046.36,
+        "gross_pnl": -9516.56,
+        "costs": 529.8,
+        "avg_return": -0.11810602467653487
+      },
+      {
+        "exit_reason": "stop_loss|ma5_below_ma20|close_below_ma20",
+        "count": 2,
+        "net_pnl": -733.6500000000001,
+        "gross_pnl": -708.1799999999998,
+        "costs": 25.47,
+        "avg_return": -0.12453431327372629
+      },
+      {
+        "exit_reason": "whist_negative",
+        "count": 6,
+        "net_pnl": -263.7800000000001,
+        "gross_pnl": -200.43999999999994,
+        "costs": 63.339999999999996,
+        "avg_return": -0.04632121106485019
+      }
+    ],
+    "total_trade_costs": 4894.379999999999,
+    "closed_net_pnl": -16269.530000000008,
+    "closed_gross_pnl": -11375.150000000003
+  },
+  "verdict": "REJECTED"
+}

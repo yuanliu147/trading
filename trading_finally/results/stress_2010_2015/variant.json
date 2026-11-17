@@ -1,0 +1,29 @@
+{
+  "family": "historical_stress",
+  "name": "stress_2010_2015",
+  "status": "completed",
+  "config": {
+    "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "start_date": "2010-01-01",
+    "end_date": "2015-12-31",
+    "initial_cash": 20000,
+    "slots": 3,
+    "max_weight": 0.2,
+    "max_exposure": 0.6,
+    "entry_lookback": 120,
+    "trend_window": 200,
+    "trend_slope_window": 20,
+    "exit_lookback": 20,
+    "commission_rate": 0.00025,
+    "min_commission": 5,
+    "slippage_bps": 10,
+    "random_seed": 20261101
+  },
+  "config_sha256": "47da94a86163ec1a119320e43d598e066ca775c3e5d69da6033cbc4a1d8d7450",
+  "changed_fields": {
+    "start_date": "2010-01-01",
+    "end_date": "2015-12-31"
+  },
+  "double_all_fee_components": false
+}

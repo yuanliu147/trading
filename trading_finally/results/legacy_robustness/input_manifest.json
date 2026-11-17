@@ -1,0 +1,53 @@
+{
+  "signal": {
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_a_signals.parquet",
+    "sha256": "a3b274ad470f0aff9ce268e4cf172a437f864b963eda3703969aecbfde5fc390"
+  },
+  "main_panel": {
+    "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a"
+  },
+  "corporate_actions": {
+    "sha256": "f7a924a63091af282b8d37ed2120ae9bae0598846d5d414edc7191a9769bb575"
+  },
+  "main_freeze": {
+    "candidate_id": "three_of_two_low_vol",
+    "files": {
+      "action_log.parquet": {
+        "bytes": 8920,
+        "sha256": "e53861d97759dfe2477345aa08e7509d5e40e993f455d15cb0a1f44be0ad962b"
+      },
+      "annual_and_rolling.csv": {
+        "bytes": 6477,
+        "sha256": "10daca9e5b67ced0ffdce84af2ea461ad05f1ff922797afebc057d07c36e61cc"
+      },
+      "daily_account.parquet": {
+        "bytes": 79713,
+        "sha256": "8190ab0ae951796a107425417f9bd5c152afb4e4b1e88a0330ed6e4aff7ece18"
+      },
+      "daily_positions.parquet": {
+        "bytes": 66610,
+        "sha256": "32519dcb92115dc62b679ae0517b34bddab0c7f841c1dbee6f1e6cfb808b0c6f"
+      },
+      "orders.parquet": {
+        "bytes": 208498,
+        "sha256": "f56c7a9ec4d5c4098e95ded1b92e686ee49cd59af1f5548102b0ed9d06bf4d7f"
+      },
+      "performance_summary.json": {
+        "bytes": 18629,
+        "sha256": "d488ac36c5813af32c8fa574b0279c484b2efc21e9a81a799c14012a128022dd"
+      },
+      "round_trips.parquet": {
+        "bytes": 34718,
+        "sha256": "e5f2552672aac50fdffa119bf0e841c631b7999de10e93f7d40802397675fdd4"
+      },
+      "run_manifest.json": {
+        "bytes": 22718,
+        "sha256": "32c4ea1f0f22207419868f738ea15e9c543c7b3d3a010ffc21e1c65459aa6faf"
+      },
+      "trades.parquet": {
+        "bytes": 44363,
+        "sha256": "cca81c659764acf6e07c04b7a0ecd2fea9f231f40019b07db2727d995eb8cca0"
+      }
+    }
+  }
+}

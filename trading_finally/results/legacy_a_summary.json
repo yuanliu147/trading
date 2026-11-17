@@ -1,0 +1,191 @@
+{
+  "candidate": "three_of_two_low_vol",
+  "candidate_a_status": "EVALUABLE",
+  "task2_status": "PENDING_DATA_GATE",
+  "full_a_context_gate": true,
+  "account_backtest_allowed": true,
+  "config": {
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/config/legacy_candidates.json",
+    "sha256": "09096fc0cd796e0cfa0fd603a898f7b307b2a216ca771c4ae0500c55515e5e74",
+    "candidate": {
+      "name": "three_of_two_low_vol",
+      "evaluation_status": "PENDING_DATA_GATE",
+      "sources": [
+        {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-18_最优策略_原版三法取二_低波活跃/04_复现与代码/backtest.py",
+          "sha256": "73b5eb05cba0f7090386f2d07de471bbff75b37c68c6151bc7f201635253c8a3"
+        },
+        {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-18_最优策略_原版三法取二_低波活跃/04_复现与代码/股性分类.py",
+          "sha256": "52400a17160771a7846cf8f58a9e4899cdc2be5c3f541769dcbf32ace7ad2406"
+        }
+      ],
+      "cooldown": 5,
+      "max_slots": 4,
+      "max_weight": 0.2,
+      "max_new_per_day": 2,
+      "market_ma_window": 20,
+      "stock_ma_fast": 5,
+      "stock_ma_slow": 20,
+      "amount_ma20_min": 30000000,
+      "m2_ema_fast": 34,
+      "m2_ema_slow": 200,
+      "m2_signal_ema": 13,
+      "m3_breakout_window": 20,
+      "m3_volume_window": 20,
+      "m3_volume_ratio_min": 1.3,
+      "low10_window": 10,
+      "low10_includes_signal_day": true,
+      "entry_stop_pct": 0.08,
+      "skip_if_stop_at_or_above_entry": true,
+      "max_hold": 40,
+      "entry_day_counts_toward_hold": true,
+      "suspension_counts_toward_hold": false,
+      "exit_priority": [
+        "stop",
+        "time_exit",
+        "ma5_below_ma20",
+        "whist_negative",
+        "close_below_ma20"
+      ],
+      "stock_history_tail": 300,
+      "stock_history_min": 260,
+      "stock_amount_ma60_min": 20000000,
+      "stock_vol_window": 120,
+      "stock_range_window": 250,
+      "stock_activity_short_window": 20,
+      "stock_activity_long_window": 120,
+      "stock_limit_window": 250,
+      "stock_gap_window": 250,
+      "stock_gap_threshold": 0.02,
+      "stock_main_limit_threshold": 0.095,
+      "stock_growth_limit_threshold": 0.195,
+      "s_vol_max": 0.5,
+      "s_heat_min": 0.5,
+      "score_hit_weight": 2,
+      "score_volume_weight": 0.2
+    }
+  },
+  "input_mode": "frozen hash-verified Parquet only; no source database connection",
+  "source_databases_connected": false,
+  "inputs_before": {
+    "full_a_completed": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/legacy_full_a_panel_completed.parquet",
+      "bytes": 834672567,
+      "sha256": "12e92da7600f59c72851da194ac13fca237d593d1cb8c2a0c329e4c28c23d9fb"
+    },
+    "main": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "bytes": 609299737,
+      "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a"
+    },
+    "index": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/index_panel.parquet",
+      "bytes": 2627944,
+      "sha256": "8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a"
+    },
+    "context_audit": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_context_audit.json",
+      "bytes": 1518262,
+      "sha256": "d2e375ae169f078522d8b979dbea13f457b678d5325d3c77f2a8877d37d56c98"
+    }
+  },
+  "inputs_after": {
+    "full_a_completed": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/legacy_full_a_panel_completed.parquet",
+      "bytes": 834672567,
+      "sha256": "12e92da7600f59c72851da194ac13fca237d593d1cb8c2a0c329e4c28c23d9fb"
+    },
+    "main": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet",
+      "bytes": 609299737,
+      "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a"
+    },
+    "index": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/data/index_panel.parquet",
+      "bytes": 2627944,
+      "sha256": "8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a"
+    },
+    "context_audit": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_context_audit.json",
+      "bytes": 1518262,
+      "sha256": "d2e375ae169f078522d8b979dbea13f457b678d5325d3c77f2a8877d37d56c98"
+    }
+  },
+  "window": {
+    "start_date": "2016-10-13",
+    "end_date": "2026-10-29"
+  },
+  "rows": {
+    "context": 14595370,
+    "signals": 10776532,
+    "unique_signal_keys": 10776532,
+    "main_keys_without_point_in_time_context": 198,
+    "raw_signals": 42999,
+    "accepted_signals_full_history": 30079,
+    "proposed_entries": 21554,
+    "entry_signals": 21237,
+    "entry_codes": 3094,
+    "entry_first_date": "2016-10-18",
+    "entry_last_date": "2026-09-23"
+  },
+  "permission_assertions": {
+    "non_main_board_entries": 0,
+    "st_entries": 0,
+    "execution_conflict_entries": 0,
+    "outside_window_entries": 0,
+    "suspended_or_zero_liquidity_entries": 0
+  },
+  "cooldown_assertion": {
+    "minimum_original_row_gap": 5,
+    "violations": 0,
+    "passes": true
+  },
+  "required_entry_coverage": {
+    "denominator": 21554,
+    "valid_numerator": 21554,
+    "coverage": 1.0,
+    "threshold": 1.0,
+    "passes": true,
+    "candidate_a_status": "EVALUABLE"
+  },
+  "outputs": {
+    "signals": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_a_signals.parquet",
+      "rows": 10776532,
+      "bytes": 1985889439,
+      "sha256": "a3b274ad470f0aff9ce268e4cf172a437f864b963eda3703969aecbfde5fc390"
+    },
+    "entry_coverage": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_a_entry_coverage.parquet",
+      "rows": 21554,
+      "bytes": 1577181,
+      "sha256": "b91342891360a87dccfbe4c7bc82c0caeff7ac62fd0d7dd069fba2fbd493129c"
+    }
+  },
+  "returns_run": false,
+  "account_returns_run": false,
+  "ranking_contract": {
+    "authoritative_field": "legacy_rank_score",
+    "compatibility_alias": "rank_return_120",
+    "ordering": "legacy_rank_score DESC, code ASC",
+    "donchian_return_recomputed": false
+  },
+  "fix_round_1": {
+    "change": "append authoritative legacy_rank_score exactly equal to existing rank_return_120; all original columns unchanged",
+    "original_signal_sha256": "7571903ec0d4daec89cd1a598e535944ddcd70160b1ba844836e1aa07152ab02",
+    "derived_signal_sha256": "a3b274ad470f0aff9ce268e4cf172a437f864b963eda3703969aecbfde5fc390",
+    "rows": [
+      10776532,
+      10776532,
+      10776532,
+      10776532
+    ],
+    "key_mismatches": 0,
+    "original_columns_row_hash_mismatches": 0,
+    "ranking_alias_mismatches": 0,
+    "full_signal_recompute": false,
+    "source_databases_connected": false,
+    "account_returns_run": false
+  }
+}

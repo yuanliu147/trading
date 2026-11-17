@@ -1,0 +1,65 @@
+{
+  "candidate": "three_of_two_low_vol",
+  "groups": {
+    "entry_amount_groups": [
+      {
+        "group": "high",
+        "trades": 139,
+        "net_pnl": -12249.540000000008,
+        "gross_pnl": -10474.190000000002,
+        "win_rate": 0.2733812949640288
+      },
+      {
+        "group": "low",
+        "trades": 139,
+        "net_pnl": -3786.280000000001,
+        "gross_pnl": -2299.3,
+        "win_rate": 0.19424460431654678
+      },
+      {
+        "group": "mid",
+        "trades": 139,
+        "net_pnl": -233.70999999999822,
+        "gross_pnl": 1398.3399999999988,
+        "win_rate": 0.26618705035971224
+      }
+    ],
+    "holding_volatility_groups": [
+      {
+        "group": "high",
+        "trades": 126,
+        "net_pnl": 10481.14,
+        "gross_pnl": 11961.779999999999,
+        "win_rate": 0.42063492063492064
+      },
+      {
+        "group": "low",
+        "trades": 127,
+        "net_pnl": -11090.600000000002,
+        "gross_pnl": -9601.720000000001,
+        "win_rate": 0.11023622047244094
+      },
+      {
+        "group": "mid",
+        "trades": 126,
+        "net_pnl": -7530.380000000003,
+        "gross_pnl": -6043.790000000002,
+        "win_rate": 0.2777777777777778
+      },
+      {
+        "group": "short_hold_lt3",
+        "trades": 38,
+        "net_pnl": -8129.690000000001,
+        "gross_pnl": -7691.42,
+        "win_rate": 0.0
+      }
+    ]
+  },
+  "rolling_3y": {
+    "windows": 85,
+    "positive_share": 0.0,
+    "min": -0.4791407756064624,
+    "median": -0.29510240409636357,
+    "max": -0.028069338111314956
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "candidate": "early_trend_breadth",
+  "restored": true,
+  "status": "EVALUABLE",
+  "config": {
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/config/legacy_b_recovery.json",
+    "sha256": "d77b88c7303b1567406e0f396b242a7b991d8998186ee704ba0f45f766552c1e"
+  },
+  "sources": [
+    {
+      "path": "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/30b_组合回测_含退市.py",
+      "sha256": "8406120aedd2ad21cbbca35e87fb784262434730b3399697b7afbe822b4686e8"
+    },
+    {
+      "path": "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/10b_构建全A面板_含退市.py",
+      "sha256": "d45892c97a2995d1c3fc7349c2dd9162be6b1d11825a330673136c88300f3d37"
+    },
+    {
+      "path": "/Users/admin/WorkSpace/trading/2026-10-18_成交量融合_2010-2025/01_数据/申万行业分类_时点.csv",
+      "sha256": "3ebc1a6c22c1b17f137470bb0c040c31b055b5d805fe29f4b55ce53d8ee62872"
+    }
+  ],
+  "industry_daily_min": 0.9973253092611167,
+  "industry_entry_coverage": 1.0,
+  "required_entry_coverage": 1.0
+}

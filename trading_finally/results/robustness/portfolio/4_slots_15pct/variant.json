@@ -1,0 +1,29 @@
+{
+  "family": "portfolio",
+  "name": "4_slots_15pct",
+  "status": "completed",
+  "config": {
+    "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "start_date": "2016-10-13",
+    "end_date": "2026-10-29",
+    "initial_cash": 20000,
+    "slots": 4,
+    "max_weight": 0.15,
+    "max_exposure": 0.6,
+    "entry_lookback": 120,
+    "trend_window": 200,
+    "trend_slope_window": 20,
+    "exit_lookback": 20,
+    "commission_rate": 0.00025,
+    "min_commission": 5,
+    "slippage_bps": 10,
+    "random_seed": 20261101
+  },
+  "config_sha256": "c909980ed332f75c2940173c4ccd98840bd5cbcf6357aa68a927dda684d0610e",
+  "changed_fields": {
+    "slots": 4,
+    "max_weight": 0.15
+  },
+  "double_all_fee_components": false
+}

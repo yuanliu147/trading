@@ -1,0 +1,24 @@
+{
+  "inputs": {
+    "main_panel.parquet": {
+      "path": "data/main_panel.parquet",
+      "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a"
+    },
+    "hithink_signal_panel.parquet": {
+      "path": "data/hithink_signal_panel.parquet",
+      "sha256": "6c7c8c070eca05e273fa67463787d085bbc8c8fbe38ed8ffc00d1b7245ccc53d"
+    },
+    "index_panel.parquet": {
+      "path": "data/index_panel.parquet",
+      "sha256": "8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a"
+    },
+    "corporate_actions.parquet": {
+      "path": "data/corporate_actions.parquet",
+      "sha256": "f7a924a63091af282b8d37ed2120ae9bae0598846d5d414edc7191a9769bb575"
+    },
+    "stress_panel.parquet": {
+      "path": "data/stress_panel.parquet",
+      "sha256": "cd9e482306476ca61dcfb54f373764cc675f6e081089a3165aa44895829d4d28"
+    }
+  }
+}

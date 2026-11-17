@@ -1,0 +1,65 @@
+[robustness] baseline/baseline: completed; return=-0.926505; mdd=0.926956
+[robustness] neighborhood/entry_lookback_90: completed; return=-0.939804; mdd=0.941733
+[robustness] neighborhood/entry_lookback_150: completed; return=-0.921503; mdd=0.929946
+[robustness] neighborhood/trend_window_180: completed; return=-0.880228; mdd=0.880968
+[robustness] neighborhood/trend_window_220: completed; return=-0.931303; mdd=0.933941
+[robustness] neighborhood/trend_slope_window_10: completed; return=-0.940305; mdd=0.942231
+[robustness] neighborhood/trend_slope_window_30: completed; return=-0.911058; mdd=0.911603
+[robustness] neighborhood/exit_lookback_15: completed; return=-0.912640; mdd=0.938058
+[robustness] neighborhood/exit_lookback_25: completed; return=-0.924185; mdd=0.929924
+[robustness] dual_source/baostock_common: completed; return=-0.905885; mdd=0.908975
+[robustness] dual_source/hithink_common: completed; return=-0.905885; mdd=0.908975
+[robustness] double_cost/double_fees_20bp_slippage: completed; return=-0.937977; mdd=0.939435
+[robustness] random_order/path_00: completed; return=-0.834262; mdd=0.861674
+[robustness] random_order/path_01: completed; return=-0.919004; mdd=0.919694
+[robustness] random_order/path_02: completed; return=-0.818140; mdd=0.835521
+[robustness] random_order/path_03: completed; return=-0.922700; mdd=0.924756
+[robustness] random_order/path_04: completed; return=-0.823051; mdd=0.851289
+[robustness] random_order/path_05: completed; return=-0.912803; mdd=0.921396
+[robustness] random_order/path_06: completed; return=-0.939945; mdd=0.942427
+[robustness] random_order/path_07: completed; return=-0.883147; mdd=0.887722
+[robustness] random_order/path_08: completed; return=-0.901904; mdd=0.906058
+[robustness] random_order/path_09: completed; return=-0.882031; mdd=0.883346
+[robustness] random_order/path_10: completed; return=-0.911268; mdd=0.916256
+[robustness] random_order/path_11: completed; return=-0.866846; mdd=0.873665
+[robustness] random_order/path_12: completed; return=-0.888819; mdd=0.894580
+[robustness] random_order/path_13: completed; return=-0.791696; mdd=0.856710
+[robustness] random_order/path_14: completed; return=-0.923642; mdd=0.926591
+[robustness] random_order/path_15: completed; return=-0.785183; mdd=0.827583
+[robustness] random_order/path_16: completed; return=-0.884124; mdd=0.886491
+[robustness] random_order/path_17: completed; return=-0.829251; mdd=0.830566
+[robustness] random_order/path_18: completed; return=-0.630915; mdd=0.680233
+[robustness] random_order/path_19: completed; return=-0.915788; mdd=0.919435
+[robustness] random_entry/path_00: completed; return=-0.680967; mdd=0.737243
+[robustness] random_entry/path_01: completed; return=-0.811130; mdd=0.834921
+[robustness] random_entry/path_02: completed; return=-0.351647; mdd=0.530875
+[robustness] random_entry/path_03: completed; return=-0.467166; mdd=0.699220
+[robustness] random_entry/path_04: completed; return=-0.537921; mdd=0.658025
+[robustness] random_entry/path_05: completed; return=0.313502; mdd=0.388759
+[robustness] random_entry/path_06: completed; return=-0.844423; mdd=0.848966
+[robustness] random_entry/path_07: completed; return=-0.614659; mdd=0.646799
+[robustness] random_entry/path_08: completed; return=-0.582222; mdd=0.635441
+[robustness] random_entry/path_09: completed; return=-0.524134; mdd=0.581053
+[robustness] random_entry/path_10: completed; return=-0.685173; mdd=0.750233
+[robustness] random_entry/path_11: completed; return=-0.752298; mdd=0.780616
+[robustness] random_entry/path_12: completed; return=-0.695626; mdd=0.760164
+[robustness] random_entry/path_13: completed; return=-0.666578; mdd=0.754577
+[robustness] random_entry/path_14: completed; return=-0.576889; mdd=0.650670
+[robustness] random_entry/path_15: completed; return=-0.661744; mdd=0.744700
+[robustness] random_entry/path_16: completed; return=-0.338697; mdd=0.682762
+[robustness] random_entry/path_17: completed; return=-0.702292; mdd=0.721575
+[robustness] random_entry/path_18: completed; return=-0.653312; mdd=0.658973
+[robustness] random_entry/path_19: completed; return=-0.405361; mdd=0.627464
+[robustness] portfolio/2_slots_20pct: completed; return=-0.824940; mdd=0.827026
+[robustness] portfolio/4_slots_15pct: completed; return=-0.883164; mdd=0.883164
+[robustness] historical_stress/stress_2010_2015: completed; return=-0.305295; mdd=0.588423
+{
+  "status": "completed",
+  "verdict": "REJECTED",
+  "output_dir": "/Users/admin/WorkSpace/trading/trading_finally/results/robustness",
+  "stress_output_dir": "/Users/admin/WorkSpace/trading/trading_finally/results/stress_2010_2015",
+  "report_path": "/Users/admin/WorkSpace/trading/trading_finally/90_研究结论.md",
+  "completed_real_variants": 53,
+  "bootstrap_rows": 1000,
+  "elapsed_seconds": 5668.533420042135
+}

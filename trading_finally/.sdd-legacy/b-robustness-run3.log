@@ -1,0 +1,21 @@
+{
+  "status": "REJECTED",
+  "output_dir": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_b_robustness",
+  "main": {
+    "total_return": -0.12114799999999992,
+    "cagr": -0.012776978618361023,
+    "final_equity": 17577.04,
+    "rolling_3y_positive_share": 0.4117647058823529,
+    "closed_round_trips": 408,
+    "win_rate": 0.43137254901960786
+  },
+  "double_cost": {
+    "total_return": -0.39144650000000003,
+    "max_drawdown": 0.39144650000000003
+  },
+  "random_positive_paths": 1,
+  "stress_2010_2015": {
+    "status": "NOT_APPLICABLE",
+    "reason": "原规则资格日期为 2017-10-13，2010-2015 结构性无入场"
+  }
+}

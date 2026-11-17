@@ -1,0 +1,960 @@
+--- a/11_设计_旧候选统一复核.md
++++ b/11_设计_旧候选统一复核.md
+@@ -120,6 +120,13 @@
+ 4. 用合成数据证明 T 日信号不会改写历史，T+1 开盘执行、现金非负、持股非负和账户恒等式成立；
+ 5. 冻结配置、规则文档、输入数据及代码 SHA256 后，才允许查看真实账户结果。
+ 
++### 2026-11-04 用户确认的数据口径修正（任何候选收益之前）
++
++- 原 100% 入场字段检查被实现为所有点时活跃主板 stock-day，连正常停牌日也要求完整可交易。用户明确改为：只对实际触发且拟入场的候选要求必需字段覆盖 100%；停牌、零成交和执行冲突仍禁止买入。该检查在信号产生后、账户收益运行前完成。
++- 全 A 逐日 99% 覆盖要求保留，但正常停牌股不再进入当日可排名横截面，也不把正常停牌导致的空量额视为数据损坏；停牌股仍保留在点时活跃宇宙审计中。正常交易股票的上下文字段仍按每日至少 99% 覆盖检查。
++- 上述修正只澄清数据语义，不改变任何策略规则、参数或收益门槛；原始失败审计必须保留，修正前后结果并列披露。
++- 2026-11-04 检测到外部进程正在写入两个活源库。后续不再连接活库，不更新原冻结哈希冒充旧版本；下游只使用哈希已核验的冻结 Parquet。源库级重建限制必须披露，冻结研究输入仍须可复现。
++
+ ## 7. 冻结试验与机械裁决
+ 
+ 每个候选只运行一个主版本，并执行同一组有限复核：
+--- a/12_实施计划_旧候选统一复核.md
++++ b/12_实施计划_旧候选统一复核.md
+@@ -64,12 +64,12 @@
+ - Produces: `build_legacy_context(config) -> LegacyContextResult`；`data/legacy_full_a_panel.parquet`、`data/legacy_industry_panel.parquet`、`results/legacy_context_audit.json`。
+ 
+ - [ ] **Step 1: 写点时和覆盖率失败测试**
+-  覆盖未来行业记录不可用于截断日、当前行业不能回填、每日分母固定、98.99% 与 99% 边界、实际候选字段缺失必失败；缺少有效日期行业源时候选 B 返回 `NOT_EVALUABLE`。
++  覆盖未来行业记录不可用于截断日、当前行业不能回填、每日分母固定、98.99% 与 99% 边界；按 2026-11-04 用户确认，正常停牌不进入可排名横截面且其空量额不算数据损坏，正常交易字段缺失仍失败。实际拟入场候选的 100% 字段检查移至 Task 3 信号后、收益前；缺少有效日期行业源时候选 B 返回 `NOT_EVALUABLE`。
+ - [ ] **Step 2: 运行测试确认接口缺失 RED。**
+ - [ ] **Step 3: 实现只读上下文构建**
+   全 A 仅作排名/宽度/行业上下文，执行宇宙仍为主板；保留原始与点时复权 OHLC、量额、状态、上市退市日期和行业有效起止日。若本地只有当前行业快照，保留审计证据并判 B 不可评价，不构造伪历史。
+ - [ ] **Step 4: 真实构建并验证**
+-  检查主键、日期、行数、覆盖率、数据库 SHA256；候选 A/B 分别给出 `EVALUABLE` 或 `NOT_EVALUABLE`，大表只落盘。
++  检查主键、日期、行数、覆盖率、数据库 SHA256；候选 A 给出全 A 上下文是否通过及 `PENDING_DATA_GATE`/`NOT_EVALUABLE`，实际拟入场候选的 100% 检查由 Task 3 完成；候选 B 仍为 `EVALUABLE` 或 `NOT_EVALUABLE`，大表只落盘。若活源库已被外部修改，不重建或改写原哈希，下游使用哈希核验的冻结 Parquet 并披露源库级重建限制。
+ 
+ ### Task 3: 实现候选 A 点时信号
+ 
+@@ -86,7 +86,7 @@
+ - [ ] **Step 3: 实现固定信号**
+   所有窗口使用完整历史；T 日量额只用于 T 日收盘信号；不使用持仓信息或未来成分。
+ - [ ] **Step 4: 真实面板检查**
+-  仅在数据闸门允许时计算，保存信号摘要与行数；断言非主板、ST、执行冲突和窗口外入场为 0，不运行账户收益。
++  仅在全 A 上下文数据闸门允许时计算，保存信号摘要与行数；断言非主板、ST、执行冲突和窗口外入场为 0。按 2026-11-04 用户确认，对实际触发且拟入场的候选逐键检查必需字段覆盖 100%，不足则候选 `NOT_EVALUABLE` 且不得运行账户；通过后才允许 Task 6 收益运行。本步骤自身不运行账户收益。
+ 
+ ### Task 4: 实现候选 B 点时信号与风险元数据
+ 
+--- a/13_预注册_旧候选统一复核.md
++++ b/13_预注册_旧候选统一复核.md
+@@ -42,6 +42,8 @@
+ 
+ 该登记仅冻结输入文件字节及可获取的文件头版本，不构成数据库内容审计或许可运行候选收益。若后续重建面板，必须使用与此 manifest 一致的只读输入；文件字节或哈希变化时不得沿用本冻结版本。
+ 
++2026-11-04 数据语义修正：当前活源库正被外部进程写入，Task 2 fix round 1 不得再连接、查询或计算其当前哈希，也不得更新上述历史 manifest。原源级构建标记为 `source_level_rebuild_reproducible=false`；修正仅使用 SHA256 仍匹配登记的冻结 Parquet 和原构建审计，冻结下游输入可复现性标记为 `frozen_input_reproducible=true`。原失败审计必须保留，不得删除或覆盖。
++
+ 候选 B 的母版只引用旧 pickle 面板，未给出历史行业辅助数据的来源、有效日期、版本或哈希。历史行业输入因此为 `NOT_EVALUABLE`；不得用当前行业回填，也不得从后续优化版选择来源。
+ 
+ ## 2. 共同账户与执行口径
+@@ -162,12 +164,13 @@
+ 
+ ## 6. 数据可行性闸门（任何候选收益之前）
+ 
+-1. **全 A 点时覆盖**：上下文沿用旧源码沪深 A 股范围并排除 BJ。逐日分母为当日已上市且未退市的点时活跃全 A 宇宙；所需上下文字段完整的证券数为分子。每个交易日覆盖率均须 >=99%，不得用全期 pooled 比率掩盖单日不足；不足则对应候选 `NOT_EVALUABLE`。
+-2. **实际候选入场字段**：所有用于实际候选入场决策的必需字段覆盖率必须为 100%；缺一即对应候选 `NOT_EVALUABLE`。不得把不可交易当成字段完整。
++1. **全 A 点时覆盖**：上下文沿用旧源码沪深 A 股范围并排除 BJ。逐日分母为当日已上市且未退市的点时活跃全 A 宇宙；所需上下文字段完整的证券数为分子。每个交易日覆盖率均须 >=99%，不得用全期 pooled 比率掩盖单日不足；不足则对应候选 `NOT_EVALUABLE`。2026-11-04 修正：`trade_status=0` 的正常停牌行仍留在活跃分母，可豁免 NULL 成交量/成交额，但其余必需上下文字段必须完整有效，且 `rank_eligible=false`、不得交易；`trade_status=1` 的正常交易行仍须所有上下文字段完整有效。预期交易日集合须来自冻结主板面板或独立保存日历，不得由实际全 A 行自证；整日缺失必须失败。
++2. **实际候选入场字段**：2026-11-04 修正为只检查实际触发且拟入场的候选行，该检查在 Task 3 信号生成后、任何账户收益前执行，覆盖率必须为 100%；缺一即对应候选 `NOT_EVALUABLE`。Task 2 不再以全部活跃主板 stock-day 作为该门槛分母，也不能据此提前把 A 判为 `EVALUABLE`。供 Task 3 复用的有效行判定必须同时满足字段完整、原始/点时复权价格有效、正常交易、正成交量和正成交额、`execution_conflict=false`；停牌、零成交、NULL 量额、执行冲突或缺失冲突标志全部 fail-closed。
+ 3. **历史行业**：行业记录须有有效起止日期并点时适用；逐日覆盖 >=99%，实际候选入场行业字段覆盖 100%。任何不足、当前行业回填或未来成分重建均使候选 B `NOT_EVALUABLE`。
+ 4. **执行冲突**：沿用 `data.py` 既有定义。双源实际未复权 OHLC 任一侧缺失，或绝对差 >0.011 元（含既有数值容差），属于 `execution_conflict`；入场及已有持仓执行按既有引擎阻断。成交量/金额差异属于审计总冲突，不单独构成执行冲突。
+ 5. **复权差异**：`adjustment_source_conflict` 及归一化复权差异只作披露和既定敏感性，不冒充实际成交冲突；`source_conflict` 是审计并集，不单独阻断成交。不得因辅助复权差异改写实际成交价。
+ 6. **通过前置测试**：合成数据须证明 T 日信号不改写历史、后续交易日开盘执行、现金和持股非负及账户恒等式成立。Task 1 不执行这些后续数据构建或收益步骤。
++7. **冻结输入同字段补齐**：Task 2 fix round 1 只可从哈希匹配的冻结 `hithink_signal_panel.parquet` 按精确 `(date,code)` 补齐原全 A 面板中 NULL 的同方向后复权 signal OHLC；不得覆盖非空值、前值/未来填充、跨日期插值或推断 `trade_status/is_st`。必须保留原面板、逐键补齐记录及补齐前后剩余原因。补齐本身不代表任何数据闸门通过，也不改变 B 的规则冻结。
+ 
+ ## 7. 冻结试验与机械裁决
+ 
+--- /dev/null
++++ b/src/trend_system/legacy_data.py
+@@ -0,0 +1,550 @@
++"""Frozen-panel point-in-time context and feasibility gates for legacy candidates."""
++
++import hashlib
++import json
++from dataclasses import asdict, dataclass
++from pathlib import Path
++
++import pandas as pd
++
++from .data import PRICE_THRESHOLD
++from .legacy_config import LegacyResearchConfig
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[2]
++SQL_PATH = PROJECT_ROOT / "sql" / "legacy_context.sql"
++RAW_PRICE_FIELDS = ("open", "high", "low", "close")
++SIGNAL_FIELDS = tuple(f"signal_{field}" for field in RAW_PRICE_FIELDS)
++CONTEXT_REQUIRED_FIELDS = (
++    *RAW_PRICE_FIELDS,
++    "prev_close",
++    *SIGNAL_FIELDS,
++    "volume",
++    "amount",
++    "trade_status",
++    "is_st",
++    "ipo_date",
++)
++A_ENTRY_REQUIRED_FIELDS = (*CONTEXT_REQUIRED_FIELDS, "execution_conflict")
++FROZEN_INPUT_MANIFEST = {
++    "full_a_original": {
++        "path": PROJECT_ROOT / "data" / "legacy_full_a_panel.parquet",
++        "sha256": "8183acce5607b04946d80c05477fc26fd60791748a590200e5096d2d0e525a85",
++    },
++    "main": {
++        "path": PROJECT_ROOT / "data" / "main_panel.parquet",
++        "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a",
++    },
++    "hithink_signal": {
++        "path": PROJECT_ROOT / "data" / "hithink_signal_panel.parquet",
++        "sha256": "6c7c8c070eca05e273fa67463787d085bbc8c8fbe38ed8ffc00d1b7245ccc53d",
++    },
++    "industry": {
++        "path": PROJECT_ROOT / "data" / "legacy_industry_panel.parquet",
++        "sha256": "6f49b7207340b863380c7c6c389224024ab639def8c64e3ce3b3ee9530a2f53d",
++    },
++    "pre_amendment_audit": {
++        "path": PROJECT_ROOT / "results" / "legacy_context_audit_pre_amendment.json",
++        "sha256": "c30375094d8584131e529a50833d69ab5fabe479042e68bc05d2bc5f1a4ce899",
++    },
++}
++
++
++@dataclass(frozen=True)
++class LegacyContextResult:
++    full_a_panel_path: Path
++    source_full_a_panel_path: Path
++    industry_panel_path: Path
++    audit_path: Path
++    full_a_rows: int
++    industry_rows: int
++    candidate_a_status: str
++    candidate_b_status: str
++
++
++def _complete_mask(frame: pd.DataFrame, required_fields) -> pd.Series:
++    if any(field not in frame for field in required_fields):
++        return pd.Series(False, index=frame.index, dtype=bool)
++    return frame[list(required_fields)].notna().all(axis=1)
++
++
++def point_in_time_industry(records: pd.DataFrame, as_of_date: str) -> pd.DataFrame:
++    """Select only industry records whose explicit effective interval contains the date."""
++    required = {"code", "industry", "valid_from", "valid_to"}
++    missing = required - set(records)
++    if missing:
++        raise ValueError(f"Missing industry columns: {sorted(missing)}")
++    selected = records.loc[
++        records["valid_from"].notna()
++        & (records["valid_from"].astype(str) <= as_of_date)
++        & (
++            records["valid_to"].isna()
++            | (records["valid_to"].astype(str) >= as_of_date)
++        )
++    ].copy()
++    if selected["code"].duplicated().any():
++        raise ValueError("Overlapping point-in-time industry records")
++    return selected.reset_index(drop=True)
++
++
++def daily_coverage(
++    active_universe: pd.DataFrame,
++    panel: pd.DataFrame,
++    required_fields,
++) -> pd.DataFrame:
++    """Use the active date/code grid as the fixed denominator for every day."""
++    if active_universe.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate active-universe key")
++    if panel.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate panel key")
++    active = active_universe[["date", "code"]].copy()
++    complete = panel.loc[_complete_mask(panel, required_fields), ["date", "code"]]
++    complete = complete.merge(active, on=["date", "code"], how="inner")
++    denominator = active.groupby("date", as_index=False).size().rename(
++        columns={"size": "denominator"}
++    )
++    numerator = complete.groupby("date", as_index=False).size().rename(
++        columns={"size": "numerator"}
++    )
++    result = denominator.merge(numerator, on="date", how="left", validate="one_to_one")
++    result["numerator"] = result["numerator"].fillna(0).astype(int)
++    result["coverage"] = result["numerator"] / result["denominator"]
++    return result[["date", "denominator", "numerator", "coverage"]]
++
++
++def coverage_gate_passes(daily: pd.DataFrame, minimum: float) -> bool:
++    """Every active day must meet the threshold; pooled coverage is not a substitute."""
++    return bool(
++        len(daily)
++        and daily["denominator"].gt(0).all()
++        and daily["coverage"].notna().all()
++        and daily["coverage"].ge(minimum).all()
++    )
++
++
++def required_field_coverage(panel: pd.DataFrame, required_fields) -> float:
++    if not len(panel):
++        return 0.0
++    return float(_complete_mask(panel, required_fields).mean())
++
++
++def assert_expected_trading_dates(actual_dates, expected_dates) -> None:
++    """Fail closed when the panel drops or adds an entire expected trading day."""
++    actual = set(actual_dates)
++    expected = set(expected_dates)
++    missing = sorted(expected - actual)
++    unexpected = sorted(actual - expected)
++    if missing:
++        raise ValueError(f"Missing expected trading dates: {missing}")
++    if unexpected:
++        raise ValueError(f"Unexpected trading dates: {unexpected}")
++
++
++def refresh_context_flags(frame: pd.DataFrame) -> pd.DataFrame:
++    """Exempt NULL liquidity only for normal suspensions, never for ranking eligibility."""
++    result = frame.copy()
++    valid_raw = result[[*RAW_PRICE_FIELDS, "prev_close"]].gt(0).all(axis=1)
++    valid_signal = result[list(SIGNAL_FIELDS)].gt(0).all(axis=1)
++    result["data_valid"] = valid_raw & valid_signal
++    normal_trading = result["trade_status"].eq(1)
++    normal_suspension = result["trade_status"].eq(0)
++    base_complete = _complete_mask(
++        result,
++        (
++            *RAW_PRICE_FIELDS,
++            "prev_close",
++            *SIGNAL_FIELDS,
++            "trade_status",
++            "is_st",
++            "ipo_date",
++        ),
++    )
++    trading_liquidity_valid = (
++        normal_trading
++        & result[["volume", "amount"]].notna().all(axis=1)
++        & result["volume"].ge(0)
++        & result["amount"].ge(0)
++    )
++    suspension_liquidity_valid = (
++        normal_suspension
++        & (result["volume"].isna() | result["volume"].ge(0))
++        & (result["amount"].isna() | result["amount"].ge(0))
++    )
++    result["context_complete"] = (
++        result["data_valid"]
++        & base_complete
++        & (trading_liquidity_valid | suspension_liquidity_valid)
++    )
++    result["rank_eligible"] = result["context_complete"] & normal_trading
++    return result
++
++
++def candidate_entry_valid(frame: pd.DataFrame) -> pd.Series:
++    """Strict reusable validity predicate for Task 3's actually triggered entries."""
++    complete = _complete_mask(frame, A_ENTRY_REQUIRED_FIELDS)
++    if not complete.any():
++        return pd.Series(False, index=frame.index, dtype=bool)
++    valid = (
++        complete
++        & frame[[*RAW_PRICE_FIELDS, "prev_close", *SIGNAL_FIELDS]].gt(0).all(axis=1)
++        & frame["trade_status"].eq(1)
++        & frame["volume"].gt(0)
++        & frame["amount"].gt(0)
++        & frame["execution_conflict"].eq(False).fillna(False)
++    )
++    return valid.fillna(False).astype(bool)
++
++
++def complete_hfq_signals(
++    panel: pd.DataFrame, hithink: pd.DataFrame
++) -> tuple[pd.DataFrame, pd.DataFrame]:
++    """Fill only NULL hfq fields at exact keys from positive frozen hfq values."""
++    if panel.duplicated(["date", "code"]).any() or hithink.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate hfq completion key")
++    left = panel.copy()
++    left["date"] = left["date"].astype(str)
++    right = hithink[["date", "code", *SIGNAL_FIELDS]].copy()
++    right["date"] = right["date"].astype(str)
++    right = right.loc[right[list(SIGNAL_FIELDS)].gt(0).all(axis=1)]
++    helper_names = {field: f"_hithink_{field}" for field in SIGNAL_FIELDS}
++    right = right.rename(columns=helper_names)
++    merged = left.merge(
++        right,
++        on=["date", "code"],
++        how="left",
++        validate="one_to_one",
++        sort=False,
++    )
++    normal_trading = merged["trade_status"].eq(1)
++    fill_masks = {}
++    for field in SIGNAL_FIELDS:
++        helper = helper_names[field]
++        fill_masks[field] = (
++            normal_trading & merged[field].isna() & merged[helper].notna()
++        )
++        merged.loc[fill_masks[field], field] = merged.loc[fill_masks[field], helper]
++    filled = pd.DataFrame(fill_masks).any(axis=1)
++    audit = merged.loc[filled, ["date", "code"]].copy()
++    if len(audit):
++        filled_fields = pd.DataFrame(fill_masks).loc[filled]
++        audit["completed_fields"] = filled_fields.apply(
++            lambda row: "|".join(field for field in SIGNAL_FIELDS if row[field]),
++            axis=1,
++        )
++    else:
++        audit["completed_fields"] = pd.Series(dtype="string")
++    audit["source"] = "frozen_hithink_signal_panel"
++    return merged.drop(columns=list(helper_names.values())), audit.reset_index(drop=True)
++
++
++def evaluate_candidate_statuses(
++    config: LegacyResearchConfig, gates: dict[str, bool]
++) -> dict[str, str]:
++    """Apply Task 2 gates; A's actual-triggered-entry gate belongs to Task 3."""
++    candidates = {candidate.name: candidate for candidate in config.candidates}
++    candidate_a = candidates["three_of_two_low_vol"]
++    candidate_b = candidates["early_trend_breadth"]
++    a_pass = (
++        candidate_a.evaluation_status == "PENDING_DATA_GATE"
++        and gates["full_a_point_in_time"]
++    )
++    b_pass = (
++        candidate_b.evaluation_status == "PENDING_DATA_GATE"
++        and not candidate_b.not_evaluable_fields
++        and gates["full_a_point_in_time"]
++        and gates["industry_point_in_time"]
++        and gates["b_entry_fields"]
++    )
++    return {
++        "three_of_two_low_vol": "PENDING_DATA_GATE" if a_pass else "NOT_EVALUABLE",
++        "early_trend_breadth": "EVALUABLE" if b_pass else "NOT_EVALUABLE",
++    }
++
++
++def _sha256(path: str | Path) -> str:
++    digest = hashlib.sha256()
++    with Path(path).open("rb") as file:
++        for chunk in iter(lambda: file.read(8 * 1024 * 1024), b""):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
++def _verify_frozen_inputs() -> dict:
++    result = {}
++    for name, expected in FROZEN_INPUT_MANIFEST.items():
++        path = expected["path"]
++        actual = _sha256(path)
++        if actual != expected["sha256"]:
++            raise ValueError(f"Frozen input manifest mismatch: {name}")
++        result[name] = {
++            "path": str(path),
++            "bytes": path.stat().st_size,
++            "sha256": actual,
++        }
++    return result
++
++
++def _daily_records(frame: pd.DataFrame) -> list[dict]:
++    return [
++        {
++            "date": str(row.date),
++            "denominator": int(row.denominator),
++            "numerator": int(row.numerator),
++            "coverage": float(row.coverage),
++        }
++        for row in frame.itertuples(index=False)
++    ]
++
++
++def _coverage_summary(frame: pd.DataFrame, threshold: float) -> dict:
++    return {
++        "passes": coverage_gate_passes(frame, threshold),
++        "minimum": float(frame["coverage"].min()),
++        "days_below_threshold": int(frame["coverage"].lt(threshold).sum()),
++        "daily": _daily_records(frame),
++    }
++
++
++def _completion_reason_counts(original: pd.DataFrame, completed: pd.DataFrame, config) -> dict:
++    original_main = original["is_main_board"] & original["date"].between(
++        config.start_date, config.end_date
++    )
++    completed_main = completed["is_main_board"] & completed["date"].between(
++        config.start_date, config.end_date
++    )
++    before_signal_missing = ~original[list(SIGNAL_FIELDS)].gt(0).all(axis=1)
++    after_signal_missing = ~completed[list(SIGNAL_FIELDS)].gt(0).all(axis=1)
++    normal_before = original["trade_status"].eq(1)
++    normal_after = completed["trade_status"].eq(1)
++    suspended_null = (
++        completed_main
++        & completed["trade_status"].eq(0)
++        & (completed["volume"].isna() | completed["amount"].isna())
++    )
++    return {
++        "normal_trading_main_rows_with_incomplete_signal_before": int(
++            (original_main & normal_before & before_signal_missing).sum()
++        ),
++        "normal_trading_main_rows_with_incomplete_signal_after": int(
++            (completed_main & normal_after & after_signal_missing).sum()
++        ),
++        "normal_suspension_main_rows_with_null_liquidity_unchanged": int(
++            suspended_null.sum()
++        ),
++        "remaining_context_incomplete_rows_all_a": int(
++            (~completed.loc[
++                completed["date"].between(config.start_date, config.end_date),
++                "context_complete",
++            ]).sum()
++        ),
++        "remaining_reason_counts_not_additive": {
++            "raw_or_prev_close_not_positive": int(
++                (~completed[[*RAW_PRICE_FIELDS, "prev_close"]].gt(0).all(axis=1)).sum()
++            ),
++            "signal_ohlc_not_positive_after_completion": int(after_signal_missing.sum()),
++            "normal_trading_null_liquidity": int(
++                (
++                    normal_after
++                    & (completed["volume"].isna() | completed["amount"].isna())
++                ).sum()
++            ),
++            "negative_liquidity": int(
++                (completed["volume"].lt(0) | completed["amount"].lt(0)).sum()
++            ),
++            "unsupported_or_missing_trade_status": int(
++                (~completed["trade_status"].isin([0, 1])).sum()
++            ),
++        },
++    }
++
++
++def build_legacy_context(config: LegacyResearchConfig) -> LegacyContextResult:
++    """Amend context exclusively from frozen, hash-verified Parquet inputs."""
++    data_dir = PROJECT_ROOT / "data"
++    results_dir = PROJECT_ROOT / "results"
++    completed_path = data_dir / "legacy_full_a_panel_completed.parquet"
++    audit_path = results_dir / "legacy_context_audit.json"
++    temp_path = completed_path.with_suffix(".parquet.tmp")
++    inputs_before = _verify_frozen_inputs()
++    original_audit = json.loads(
++        FROZEN_INPUT_MANIFEST["pre_amendment_audit"]["path"].read_text(encoding="utf-8")
++    )
++    original = pd.read_parquet(FROZEN_INPUT_MANIFEST["full_a_original"]["path"])
++    original["date"] = original["date"].astype(str)
++    if original.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate original full-A key")
++    hithink = pd.read_parquet(
++        FROZEN_INPUT_MANIFEST["hithink_signal"]["path"],
++        columns=["date", "code", *SIGNAL_FIELDS],
++    )
++    completed, completion_audit = complete_hfq_signals(original, hithink)
++    completed = refresh_context_flags(completed)
++
++    main_dates = pd.read_parquet(
++        FROZEN_INPUT_MANIFEST["main"]["path"], columns=["date"]
++    )["date"].astype(str)
++    expected_dates = set(
++        main_dates.loc[main_dates.between(config.start_date, config.end_date)]
++    )
++    performance = completed["date"].between(config.start_date, config.end_date)
++    actual_dates = set(completed.loc[performance, "date"])
++    assert_expected_trading_dates(actual_dates, expected_dates)
++
++    active = completed.loc[performance, ["date", "code"]]
++    complete_rows = completed.loc[performance & completed["context_complete"]]
++    after_daily = daily_coverage(active, complete_rows, ("close",)).sort_values("date")
++    before_daily = pd.DataFrame(original_audit["coverage"]["full_a"]["daily"])
++    assert_expected_trading_dates(set(before_daily["date"]), expected_dates)
++    denominator_check = before_daily[["date", "denominator"]].merge(
++        after_daily[["date", "denominator"]],
++        on="date",
++        suffixes=("_before", "_after"),
++        validate="one_to_one",
++    )
++    if not denominator_check["denominator_before"].equals(
++        denominator_check["denominator_after"]
++    ):
++        raise ValueError("Amendment changed the active-universe denominator")
++
++    before_summary = _coverage_summary(before_daily, config.point_in_time_coverage_min)
++    after_summary = _coverage_summary(after_daily, config.point_in_time_coverage_min)
++    industry_daily = after_daily[["date", "denominator"]].copy()
++    industry_daily["numerator"] = 0
++    industry_daily["coverage"] = 0.0
++    gates = {
++        "full_a_point_in_time": after_summary["passes"],
++        "a_entry_fields": False,
++        "industry_point_in_time": False,
++        "b_entry_fields": False,
++    }
++    statuses = evaluate_candidate_statuses(config, gates)
++
++    completed.to_parquet(temp_path, index=False)
++    inputs_after = _verify_frozen_inputs()
++    if inputs_after != inputs_before:
++        raise ValueError("Frozen input changed during amendment")
++    temp_path.replace(completed_path)
++
++    main_performance = performance & completed["is_main_board"]
++    strict_valid_diagnostic = candidate_entry_valid(completed.loc[main_performance])
++    industry = pd.read_parquet(FROZEN_INPUT_MANIFEST["industry"]["path"])
++    audit = {
++        "config": asdict(config),
++        "amendment": {
++            "round": 1,
++            "approved_on": "2026-11-04",
++            "source_level_rebuild_reproducible": False,
++            "frozen_input_reproducible": True,
++            "source_databases_connected": False,
++            "current_source_hashes_computed": False,
++            "original_failure_evidence_preserved": True,
++            "pre_amendment_audit": str(FROZEN_INPUT_MANIFEST["pre_amendment_audit"]["path"]),
++        },
++        "source_level_rebuild_reproducible": False,
++        "frozen_input_reproducible": True,
++        "construction": {
++            "input_mode": "frozen hash-verified Parquet only; no source database connection",
++            "performance_start_date": config.start_date,
++            "end_date": config.end_date,
++            "expected_trading_dates": "distinct dates from frozen main_panel.parquet, never self-derived from full-A rows",
++            "active_denominator": "unchanged original ipo_date <= date < out_date grid",
++            "suspension_rule": "trade_status=0 may have NULL volume/amount; all other context remains valid; rank_eligible=false",
++            "normal_trading_rule": "trade_status=1 requires complete nonnegative volume/amount and valid raw/hfq context",
++            "entry_gate": "deferred to Task 3 actual triggered and proposed entries before any account returns",
++            "entry_valid_predicate": "complete fields, positive raw/hfq prices, trade_status=1, positive volume/amount, execution_conflict=false",
++            "price_threshold": PRICE_THRESHOLD,
++            "signals_implemented": False,
++            "returns_run": False,
++        },
++        "input_panels": inputs_before,
++        "sql": {
++            "path": str(SQL_PATH),
++            "sha256": _sha256(SQL_PATH),
++            "executed_in_fix_round": False,
++        },
++        "panels": {
++            "full_a_original": {
++                "path": str(FROZEN_INPUT_MANIFEST["full_a_original"]["path"]),
++                "rows": len(original),
++                "sha256": inputs_before["full_a_original"]["sha256"],
++                "preserved": True,
++            },
++            "full_a_completed": {
++                "path": str(completed_path),
++                "rows": len(completed),
++                "codes": int(completed["code"].nunique()),
++                "first_date": str(completed["date"].min()),
++                "last_date": str(completed["date"].max()),
++                "primary_key": ["date", "code"],
++                "performance_dates": len(actual_dates),
++                "sha256": _sha256(completed_path),
++            },
++            "industry": {
++                "path": str(FROZEN_INPUT_MANIFEST["industry"]["path"]),
++                "rows": len(industry),
++                "sha256": inputs_before["industry"]["sha256"],
++            },
++        },
++        "hfq_completion": {
++            "rule": "exact date/code; same-direction hfq; normal trading; fill original NULL only; no overwrite or time-series fill",
++            "completed_rows": len(completion_audit),
++            "completed_field_counts": {
++                field: int(
++                    completion_audit["completed_fields"].str.contains(field, regex=False).sum()
++                )
++                for field in SIGNAL_FIELDS
++            },
++            "keys": completion_audit.to_dict("records"),
++            "before_after_remaining": _completion_reason_counts(original, completed, config),
++        },
++        "coverage": {
++            "full_a": {
++                "threshold": config.point_in_time_coverage_min,
++                "before": before_summary,
++                "after": after_summary,
++                "passes": after_summary["passes"],
++                "daily": after_summary["daily"],
++            },
++            "candidate_a_entry": {
++                "deferred_to_task3": True,
++                "threshold": config.required_entry_coverage,
++                "denominator": None,
++                "coverage": None,
++                "passes": None,
++                "predicate": "trend_system.legacy_data.candidate_entry_valid",
++                "all_active_stock_day_diagnostic_not_a_gate": {
++                    "denominator": int(main_performance.sum()),
++                    "strict_valid_numerator_after": int(strict_valid_diagnostic.sum()),
++                    "strict_valid_coverage_after": float(strict_valid_diagnostic.mean()),
++                },
++            },
++            "industry": {
++                "source": original_audit["coverage"]["industry"]["source"],
++                "threshold": config.industry_coverage_min,
++                "passes": False,
++                "entry_coverage": 0.0,
++                "daily": _daily_records(industry_daily),
++            },
++        },
++        "candidate_statuses": statuses,
++        "candidate_b_rule_freeze": {
++            "evaluation_status": config.candidates[1].evaluation_status,
++            "not_evaluable_fields": list(config.candidates[1].not_evaluable_fields),
++            "restored": False,
++        },
++        "signals_implemented": False,
++        "returns_run": False,
++    }
++    audit_path.write_text(
++        json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
++    )
++    return LegacyContextResult(
++        full_a_panel_path=completed_path,
++        source_full_a_panel_path=FROZEN_INPUT_MANIFEST["full_a_original"]["path"],
++        industry_panel_path=FROZEN_INPUT_MANIFEST["industry"]["path"],
++        audit_path=audit_path,
++        full_a_rows=len(completed),
++        industry_rows=len(industry),
++        candidate_a_status=statuses["three_of_two_low_vol"],
++        candidate_b_status=statuses["early_trend_breadth"],
++    )
+--- /dev/null
++++ b/scripts/build_legacy_context.py
+@@ -0,0 +1,34 @@
++import argparse
++import json
++
++from trend_system.legacy_config import load_legacy_config
++from trend_system.legacy_data import build_legacy_context
++
++
++def main() -> None:
++    parser = argparse.ArgumentParser(
++        description="Build read-only full-A point-in-time context and data-gate audit"
++    )
++    parser.add_argument("--config", required=True)
++    args = parser.parse_args()
++    result = build_legacy_context(load_legacy_config(args.config))
++    print(
++        json.dumps(
++            {
++                "full_a_panel": str(result.full_a_panel_path),
++                "source_full_a_panel": str(result.source_full_a_panel_path),
++                "industry_panel": str(result.industry_panel_path),
++                "audit": str(result.audit_path),
++                "full_a_rows": result.full_a_rows,
++                "industry_rows": result.industry_rows,
++                "candidate_a_status": result.candidate_a_status,
++                "candidate_b_status": result.candidate_b_status,
++            },
++            ensure_ascii=False,
++            indent=2,
++        )
++    )
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null
++++ b/sql/legacy_context.sql
+@@ -0,0 +1,31 @@
++SELECT
++    substr(b.code, 4, 6) || '.' || upper(substr(b.code, 1, 2)) AS code,
++    d.calendar_date AS date,
++    r.open,
++    r.high,
++    r.low,
++    r.close,
++    r.preclose AS prev_close,
++    h.open AS signal_open,
++    h.high AS signal_high,
++    h.low AS signal_low,
++    h.close AS signal_close,
++    r.volume,
++    r.amount,
++    r.trade_status,
++    r.is_st,
++    b.ipo_date,
++    b.out_date
++FROM stock_basic AS b
++JOIN trade_dates AS d
++    ON d.is_trading_day = 1
++   AND d.calendar_date >= b.ipo_date
++   AND (b.out_date IS NULL OR b.out_date = '' OR d.calendar_date < b.out_date)
++LEFT JOIN stock_kline_d AS r
++    ON r.code = b.code AND r.date = d.calendar_date AND r.adjustflag = 3
++LEFT JOIN stock_kline_d AS h
++    ON h.code = b.code AND h.date = d.calendar_date AND h.adjustflag = 1
++WHERE b.type = 1
++  AND (b.code LIKE 'sh.%' OR b.code LIKE 'sz.%')
++  AND d.calendar_date >= ?
++  AND d.calendar_date <= ?
+--- /dev/null
++++ b/tests/test_legacy_data.py
+@@ -0,0 +1,264 @@
++import unittest
++from pathlib import Path
++
++import pandas as pd
++
++from trend_system.legacy_config import load_legacy_config
++from trend_system.legacy_data import (
++    assert_expected_trading_dates,
++    candidate_entry_valid,
++    complete_hfq_signals,
++    coverage_gate_passes,
++    daily_coverage,
++    evaluate_candidate_statuses,
++    point_in_time_industry,
++    refresh_context_flags,
++    required_field_coverage,
++)
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[1]
++CONFIG_PATH = PROJECT_ROOT / "config" / "legacy_candidates.json"
++
++
++class PointInTimeIndustryTest(unittest.TestCase):
++    def test_future_industry_record_is_not_visible_before_valid_from(self):
++        records = pd.DataFrame(
++            {
++                "code": ["600000.SH", "600000.SH"],
++                "industry": ["银行", "未来行业"],
++                "valid_from": ["2020-01-01", "2024-01-03"],
++                "valid_to": [None, None],
++            }
++        )
++
++        actual = point_in_time_industry(records, "2024-01-02")
++
++        self.assertEqual(actual["industry"].tolist(), ["银行"])
++
++    def test_current_snapshot_without_valid_from_cannot_backfill_history(self):
++        records = pd.DataFrame(
++            {
++                "code": ["600000.SH"],
++                "industry": ["当前行业快照"],
++                "valid_from": [pd.NA],
++                "valid_to": [pd.NA],
++            }
++        )
++
++        actual = point_in_time_industry(records, "2020-01-02")
++
++        self.assertTrue(actual.empty)
++
++
++class CoverageTest(unittest.TestCase):
++    def test_daily_denominator_is_fixed_by_point_in_time_active_universe(self):
++        active = pd.DataFrame(
++            {
++                "date": ["2024-01-02"] * 2 + ["2024-01-03"] * 2,
++                "code": ["600000.SH", "000001.SZ"] * 2,
++            }
++        )
++        panel = pd.DataFrame(
++            {
++                "date": ["2024-01-02", "2024-01-03", "2024-01-03", "2024-01-03"],
++                "code": ["600000.SH", "600000.SH", "000001.SZ", "300001.SZ"],
++                "close": [10.0, 10.0, 20.0, 30.0],
++                "volume": [100.0, 100.0, 200.0, 300.0],
++            }
++        )
++
++        actual = daily_coverage(active, panel, ("close", "volume"))
++
++        self.assertEqual(actual["denominator"].tolist(), [2, 2])
++        self.assertEqual(actual["numerator"].tolist(), [1, 2])
++        self.assertEqual(actual["coverage"].tolist(), [0.5, 1.0])
++
++    def test_98_99_percent_fails_and_exact_99_percent_passes(self):
++        below = pd.DataFrame(
++            {"date": ["2024-01-02"], "denominator": [10000], "coverage": [0.9899]}
++        )
++        exact = pd.DataFrame(
++            {"date": ["2024-01-02"], "denominator": [100], "coverage": [0.99]}
++        )
++
++        self.assertFalse(coverage_gate_passes(below, 0.99))
++        self.assertTrue(coverage_gate_passes(exact, 0.99))
++
++    def test_missing_required_entry_field_has_zero_coverage(self):
++        panel = pd.DataFrame({"close": [10.0, 11.0]})
++
++        self.assertEqual(required_field_coverage(panel, ("close", "amount")), 0.0)
++
++    def test_partially_missing_required_entry_field_is_not_complete(self):
++        panel = pd.DataFrame({"close": [10.0, None], "amount": [100.0, 200.0]})
++
++        self.assertEqual(required_field_coverage(panel, ("close", "amount")), 0.5)
++
++    def test_whole_missing_trading_day_fails_against_independent_calendar(self):
++        with self.assertRaisesRegex(ValueError, "Missing expected trading dates"):
++            assert_expected_trading_dates(
++                {"2024-01-02"}, {"2024-01-02", "2024-01-03"}
++            )
++
++    def test_exact_expected_trading_date_set_passes(self):
++        assert_expected_trading_dates(
++            {"2024-01-03", "2024-01-02"}, {"2024-01-02", "2024-01-03"}
++        )
++
++
++class ContextSemanticsTest(unittest.TestCase):
++    def test_normal_suspension_is_complete_but_not_rank_eligible(self):
++        row = self._row(trade_status=0, volume=None, amount=None)
++
++        actual = refresh_context_flags(row)
++
++        self.assertTrue(actual.loc[0, "context_complete"])
++        self.assertFalse(actual.loc[0, "rank_eligible"])
++
++    def test_normal_trading_null_amount_is_not_complete(self):
++        row = self._row(trade_status=1, amount=None)
++
++        actual = refresh_context_flags(row)
++
++        self.assertFalse(actual.loc[0, "context_complete"])
++        self.assertFalse(actual.loc[0, "rank_eligible"])
++
++    def test_exact_hfq_completion_fills_only_null_fields(self):
++        panel = pd.DataFrame(
++            {
++                "date": ["2024-01-02", "2024-01-03"],
++                "code": ["600000.SH", "600000.SH"],
++                "trade_status": [1, 1],
++                "signal_open": [None, None],
++                "signal_high": [11.0, None],
++                "signal_low": [None, None],
++                "signal_close": [None, None],
++            }
++        )
++        hithink = pd.DataFrame(
++            {
++                "date": ["2024-01-02"],
++                "code": ["600000.SH"],
++                "signal_open": [20.0],
++                "signal_high": [21.0],
++                "signal_low": [19.0],
++                "signal_close": [22.0],
++            }
++        )
++
++        actual, audit = complete_hfq_signals(panel, hithink)
++
++        self.assertEqual(
++            actual.loc[0, ["signal_open", "signal_high", "signal_low", "signal_close"]].tolist(),
++            [20.0, 11.0, 19.0, 22.0],
++        )
++        self.assertTrue(actual.loc[1, list(("signal_open", "signal_high", "signal_low", "signal_close"))].isna().all())
++        self.assertEqual(audit.loc[0, "completed_fields"], "signal_open|signal_low|signal_close")
++
++    @staticmethod
++    def _row(**overrides):
++        values = {
++            "date": "2024-01-02",
++            "code": "600000.SH",
++            "open": 10.0,
++            "high": 11.0,
++            "low": 9.0,
++            "close": 10.5,
++            "prev_close": 10.0,
++            "signal_open": 20.0,
++            "signal_high": 21.0,
++            "signal_low": 19.0,
++            "signal_close": 20.5,
++            "volume": 1000.0,
++            "amount": 10000.0,
++            "trade_status": 1,
++            "is_st": 0,
++            "ipo_date": "2020-01-01",
++            "out_date": None,
++            "is_main_board": True,
++            "execution_conflict": False,
++        }
++        values.update(overrides)
++        return pd.DataFrame([values])
++
++
++class CandidateEntryValidityTest(unittest.TestCase):
++    def test_complete_normally_trading_positive_nonconflict_row_passes(self):
++        row = ContextSemanticsTest._row()
++
++        self.assertTrue(candidate_entry_valid(row).iloc[0])
++
++    def test_suspension_fails_closed(self):
++        row = ContextSemanticsTest._row(trade_status=0)
++        self.assertFalse(candidate_entry_valid(row).iloc[0])
++
++    def test_zero_volume_fails_closed(self):
++        row = ContextSemanticsTest._row(volume=0.0)
++        self.assertFalse(candidate_entry_valid(row).iloc[0])
++
++    def test_null_amount_fails_closed(self):
++        row = ContextSemanticsTest._row(amount=None)
++        self.assertFalse(candidate_entry_valid(row).iloc[0])
++
++    def test_execution_conflict_fails_closed(self):
++        row = ContextSemanticsTest._row(execution_conflict=True)
++        self.assertFalse(candidate_entry_valid(row).iloc[0])
++
++
++class CandidateGateTest(unittest.TestCase):
++    def setUp(self):
++        self.config = load_legacy_config(CONFIG_PATH)
++
++    def test_candidate_a_full_a_pass_waits_for_task3_actual_entry_gate(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": False,
++            "industry_point_in_time": True,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["three_of_two_low_vol"], "PENDING_DATA_GATE")
++
++    def test_candidate_a_fails_when_full_a_coverage_fails(self):
++        gates = {
++            "full_a_point_in_time": False,
++            "a_entry_fields": True,
++            "industry_point_in_time": True,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["three_of_two_low_vol"], "NOT_EVALUABLE")
++
++    def test_candidate_b_fails_without_dated_industry_source(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": True,
++            "industry_point_in_time": False,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["early_trend_breadth"], "NOT_EVALUABLE")
++
++    def test_candidate_b_freeze_cannot_be_restored_by_complete_data(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": True,
++            "industry_point_in_time": True,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["early_trend_breadth"], "NOT_EVALUABLE")
++        self.assertEqual(len(self.config.candidates[1].not_evaluable_fields), 12)
++
++
++if __name__ == "__main__":
++    unittest.main()

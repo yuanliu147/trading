@@ -1,0 +1,239 @@
+{
+  "config": {
+    "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "start_date": "2016-10-13",
+    "end_date": "2026-10-29",
+    "initial_cash": 20000,
+    "slots": 3,
+    "max_weight": 0.2,
+    "max_exposure": 0.6,
+    "entry_lookback": 120,
+    "trend_window": 200,
+    "trend_slope_window": 20,
+    "exit_lookback": 20,
+    "commission_rate": 0.00025,
+    "min_commission": 5,
+    "slippage_bps": 10,
+    "random_seed": 20261101
+  },
+  "panel_construction": {
+    "start_date": "2010-01-01",
+    "performance_start_date": "2016-10-13",
+    "end_date": "2026-10-29",
+    "stress_window": [
+      "2010-01-01",
+      "2015-12-31"
+    ],
+    "price_threshold": 0.011,
+    "volume_relative_threshold": 1e-05,
+    "amount_relative_threshold": 1e-06,
+    "adjusted_comparison": "per-code first common valid hfq_close/raw_close normalization; 0.011 yuan after normalization",
+    "source_conflict": "audit-only union of raw OHLC, volume, amount and adjusted-series conflicts; not independently blocking",
+    "execution_conflict": "raw OHLC conflicts only; blocks baseline entry and holding",
+    "adjustment_source_conflict": "normalized adjusted-series conflicts only; requires independent sensitivity, not an execution-validity verdict",
+    "read_only": true
+  },
+  "databases": {
+    "baostock": {
+      "path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+      "sha256": "77a12ced7de4f21d1a9c26b60fbaca518437e2fc808ef994ca634b558b2c8a6e",
+      "source_rows": [
+        {
+          "adjustflag": 1,
+          "rows": 18604908,
+          "first_date": "1990-12-19",
+          "last_date": "2026-10-29",
+          "codes": 5564
+        },
+        {
+          "adjustflag": 2,
+          "rows": 18604908,
+          "first_date": "1990-12-19",
+          "last_date": "2026-10-29",
+          "codes": 5564
+        },
+        {
+          "adjustflag": 3,
+          "rows": 18620738,
+          "first_date": "1990-12-19",
+          "last_date": "2026-10-29",
+          "codes": 5564
+        }
+      ]
+    },
+    "hithink": {
+      "path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+      "sha256": "563cdd4b59f00ac8928ed61c8f2476aca0164b3139ae2faa92792f9ca81d7b3f",
+      "source_rows": {
+        "v_daily": {
+          "rows": 10403697,
+          "first_date": "2016-10-13 00:00:00",
+          "last_date": "2026-10-30 00:00:00",
+          "codes": 5580
+        },
+        "v_daily_hfq": {
+          "rows": 10403697,
+          "first_date": "2016-10-13 00:00:00",
+          "last_date": "2026-10-30 00:00:00",
+          "codes": 5580
+        }
+      }
+    }
+  },
+  "sql": {
+    "baostock_panel.sql": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/sql/baostock_panel.sql",
+      "sha256": "4e951c0a3aacb0a1c246b6816d2c0a1837f352cb323870217f677a8bd909a40a",
+      "text": "SELECT\n    substr(r.code, 4, 6) || '.' || upper(substr(r.code, 1, 2)) AS code,\n    r.date,\n    r.open,\n    r.high,\n    r.low,\n    r.close,\n    r.preclose AS prev_close,\n    h.open AS signal_open,\n    h.high AS signal_high,\n    h.low AS signal_low,\n    h.close AS signal_close,\n    r.volume,\n    r.amount,\n    r.trade_status,\n    r.is_st,\n    b.ipo_date,\n    b.out_date\nFROM stock_kline_d AS r\nJOIN stock_basic AS b ON b.code = r.code\nLEFT JOIN stock_kline_d AS h\n    ON h.code = r.code AND h.date = r.date AND h.adjustflag = 1\nWHERE r.adjustflag = 3\n  AND r.date >= '2010-01-01'\n  AND r.date <= ?\n  AND b.type = 1\n  AND (\n      substr(b.code, 4, 3) IN ('600', '601', '603', '605', '000', '001', '002', '003')\n  )\n  AND (\n      b.code LIKE 'sh.%' OR b.code LIKE 'sz.%'\n  )\n"
+    },
+    "hithink_overlap.sql": {
+      "path": "/Users/admin/WorkSpace/trading/trading_finally/sql/hithink_overlap.sql",
+      "sha256": "fb6ff65f4cc781bccaa2d01f23a39ce86a2911b832eadeaf80afad58bc697d5b",
+      "text": "SELECT\n    d.thscode AS code,\n    CAST(d.date AS VARCHAR) AS date,\n    d.open AS hithink_open,\n    h.open AS hithink_signal_open,\n    d.high AS hithink_high,\n    h.high AS hithink_signal_high,\n    d.low AS hithink_low,\n    h.low AS hithink_signal_low,\n    d.close AS hithink_close,\n    h.close AS hithink_signal_close,\n    d.volume AS hithink_volume,\n    d.amount AS hithink_amount\nFROM v_daily AS d\nLEFT JOIN v_daily_hfq AS h\n    ON h.thscode = d.thscode AND h.date = d.date\nWHERE d.date >= CAST(? AS DATE)\n  AND d.date <= CAST(? AS DATE)\n  AND (\n      substr(d.thscode, 1, 3) IN ('600', '601', '603', '605', '000', '001', '002', '003')\n  )\n  AND (\n      d.thscode LIKE '%.SH' OR d.thscode LIKE '%.SZ'\n  )\n"
+    }
+  },
+  "panels": {
+    "main": {
+      "rows": 10776532,
+      "codes": 3425,
+      "first_date": "2010-01-04",
+      "last_date": "2026-10-29",
+      "performance_rows": 7335154
+    },
+    "stress": {
+      "rows": 3002066,
+      "codes": 2342,
+      "first_date": "2010-01-04",
+      "last_date": "2015-12-31",
+      "source_mode": "baostock_single_source"
+    },
+    "index": {
+      "rows": 44189,
+      "codes": 9,
+      "first_date": "2006-01-04",
+      "last_date": "2026-10-29"
+    },
+    "hithink_signal": {
+      "rows": 6939274,
+      "codes": 3197,
+      "first_date": "2016-10-13",
+      "last_date": "2026-10-29"
+    },
+    "corporate_actions": {
+      "rows": 43577,
+      "codes": 3178,
+      "first_date": "1991-02-26",
+      "last_date": "2026-10-29"
+    }
+  },
+  "overlap": {
+    "start_date": "2016-10-13",
+    "end_date": "2026-10-29",
+    "baostock_rows": 7335154,
+    "hithink_rows": 6939274,
+    "matched_rows": 6939274,
+    "baostock_only_rows": 395880,
+    "hithink_only_rows": 0,
+    "conflict_rows": 1080277,
+    "execution_conflict_rows": 1,
+    "adjustment_source_conflict_rows": 1079751,
+    "volume_amount_conflict_rows": 527,
+    "conflict_codes": 1628,
+    "panel_source_conflict_rows": 1080277,
+    "panel_execution_conflict_rows": 1,
+    "panel_adjustment_source_conflict_rows": 1079751,
+    "matched_conflict_rows": 1080277,
+    "field_conflict_counts": {
+      "close": 1,
+      "amount": 527,
+      "signal_open": 1059876,
+      "signal_high": 1079750,
+      "signal_low": 1041948,
+      "signal_close": 1060602
+    }
+  },
+  "normalized_adjustment_diagnostics": {
+    "metric": "abs(normalized_baostock_close-normalized_hithink_close)/max(abs(normalized_baostock_close),abs(normalized_hithink_close))",
+    "rows": 6939262,
+    "quantiles": {
+      "min": 0.0,
+      "p25": 5.6800494450174835e-08,
+      "p50": 6.406668896080168e-05,
+      "p75": 0.00044038402667887487,
+      "p90": 0.0012423228456005923,
+      "p95": 0.002191018058220545,
+      "p99": 0.006982051607460676,
+      "p99_9": 0.1383937852621816,
+      "max": 0.4282154067195914
+    },
+    "relative_difference_bands": {
+      "eq_0": 657216,
+      "gt_0_le_0.001": 5410647,
+      "gt_0.001_le_0.01": 831357,
+      "gt_0.01": 40042
+    },
+    "absolute_factor_scale": {
+      "metric": "relative difference of same-day hfq_close/raw_close before normalization",
+      "difference_threshold": 1e-06,
+      "different_scale_rows": 6290685,
+      "different_scale_with_normalized_close_le_0.001": 5419286
+    },
+    "precision_band_upper": 0.001,
+    "material_difference_threshold": 0.01,
+    "adjustment_conflict_subset": {
+      "rows": 1079739,
+      "quantiles": {
+        "min": 5.469181428209195e-06,
+        "p25": 0.0005396302018797769,
+        "p50": 0.0012168279905122163,
+        "p75": 0.0025969765092563038,
+        "p90": 0.0053699020082328556,
+        "p95": 0.0077771942082405935,
+        "p99": 0.09114809868353738,
+        "p99_9": 0.4186374128067824,
+        "max": 0.4282154067195914
+      },
+      "relative_difference_bands": {
+        "eq_0": 0,
+        "gt_0_le_0.001": 471294,
+        "gt_0.001_le_0.01": 568403,
+        "gt_0.01": 40042
+      }
+    }
+  },
+  "adjustment_completeness": {
+    "all_source_incomplete_codes": 58,
+    "main_board_incomplete_codes": 8,
+    "panel_missing_hfq_rows": 4482,
+    "panel_missing_hfq_codes": 10,
+    "panel_invalid_rows": 4482,
+    "panel_invalid_codes": 10,
+    "treatment": "raw rows retained with data_valid=False; no future-row backfill and no whole-stock deletion"
+  },
+  "universe": {
+    "main_board_codes": 3489,
+    "delisted_main_board_codes": 295,
+    "listed_main_board_codes": 3194,
+    "panel_codes": 3425,
+    "excluded_universe_codes": 5536
+  },
+  "exclusions": {
+    "rows": 1090327,
+    "reason_counts": {
+      "adjustment_source_conflict": 1079750,
+      "data_valid_false": 4482,
+      "non_stock_security": 3461,
+      "non_main_board": 2075,
+      "source_conflict": 526,
+      "future_corporate_action": 32,
+      "execution_conflict": 1
+    }
+  },
+  "dependencies": {
+    "python": "3.13.13",
+    "pandas": "3.0.3",
+    "duckdb": "1.5.6",
+    "pyarrow": "26.0.0"
+  }
+}

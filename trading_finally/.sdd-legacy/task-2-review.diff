@@ -1,0 +1,840 @@
+--- /dev/null
++++ b/src/trend_system/legacy_data.py
+@@ -0,0 +1,614 @@
++"""Read-only point-in-time context and feasibility gates for legacy candidates."""
++
++import hashlib
++import json
++import sqlite3
++from dataclasses import asdict, dataclass
++from pathlib import Path
++
++import duckdb
++import pandas as pd
++import pyarrow as pa
++import pyarrow.parquet as pq
++
++from .data import PRICE_THRESHOLD
++from .legacy_config import LegacyResearchConfig
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[2]
++SQL_PATH = PROJECT_ROOT / "sql" / "legacy_context.sql"
++FULL_A_START_DATE = "2010-01-01"
++RAW_PRICE_FIELDS = ("open", "high", "low", "close")
++SIGNAL_FIELDS = tuple(f"signal_{field}" for field in RAW_PRICE_FIELDS)
++CONTEXT_REQUIRED_FIELDS = (
++    *RAW_PRICE_FIELDS,
++    "prev_close",
++    *SIGNAL_FIELDS,
++    "volume",
++    "amount",
++    "trade_status",
++    "is_st",
++    "ipo_date",
++)
++A_ENTRY_REQUIRED_FIELDS = (*CONTEXT_REQUIRED_FIELDS, "execution_conflict")
++MAIN_BOARD_PREFIXES = ("600", "601", "603", "605", "000", "001", "002", "003")
++DATABASE_MANIFEST = {
++    "hithink": {
++        "path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
++        "bytes": 1863593984,
++        "sha256": "67561be6368efa5653107c884a6515dc249a7992a99d9f273f6a5cfd77e42f61",
++    },
++    "baostock": {
++        "path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
++        "bytes": 10330697728,
++        "sha256": "77a12ced7de4f21d1a9c26b60fbaca518437e2fc808ef994ca634b558b2c8a6e",
++    },
++}
++INPUT_PANEL_MANIFEST = {
++    "main": {
++        "path": PROJECT_ROOT / "data" / "main_panel.parquet",
++        "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a",
++    },
++    "index": {
++        "path": PROJECT_ROOT / "data" / "index_panel.parquet",
++        "sha256": "8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a",
++    },
++}
++
++
++@dataclass(frozen=True)
++class LegacyContextResult:
++    full_a_panel_path: Path
++    industry_panel_path: Path
++    audit_path: Path
++    full_a_rows: int
++    industry_rows: int
++    candidate_a_status: str
++    candidate_b_status: str
++
++
++def _complete_mask(frame: pd.DataFrame, required_fields) -> pd.Series:
++    if any(field not in frame for field in required_fields):
++        return pd.Series(False, index=frame.index, dtype=bool)
++    return frame[list(required_fields)].notna().all(axis=1)
++
++
++def point_in_time_industry(records: pd.DataFrame, as_of_date: str) -> pd.DataFrame:
++    """Select only industry records whose explicit effective interval contains the date."""
++    required = {"code", "industry", "valid_from", "valid_to"}
++    missing = required - set(records)
++    if missing:
++        raise ValueError(f"Missing industry columns: {sorted(missing)}")
++    selected = records.loc[
++        records["valid_from"].notna()
++        & (records["valid_from"].astype(str) <= as_of_date)
++        & (
++            records["valid_to"].isna()
++            | (records["valid_to"].astype(str) >= as_of_date)
++        )
++    ].copy()
++    if selected["code"].duplicated().any():
++        raise ValueError("Overlapping point-in-time industry records")
++    return selected.reset_index(drop=True)
++
++
++def daily_coverage(
++    active_universe: pd.DataFrame,
++    panel: pd.DataFrame,
++    required_fields,
++) -> pd.DataFrame:
++    """Use the active date/code grid as the fixed denominator for every day."""
++    if active_universe.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate active-universe key")
++    if panel.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate panel key")
++    active = active_universe[["date", "code"]].copy()
++    complete = panel.loc[_complete_mask(panel, required_fields), ["date", "code"]]
++    complete = complete.merge(active, on=["date", "code"], how="inner")
++    denominator = active.groupby("date", as_index=False).size().rename(
++        columns={"size": "denominator"}
++    )
++    numerator = complete.groupby("date", as_index=False).size().rename(
++        columns={"size": "numerator"}
++    )
++    result = denominator.merge(numerator, on="date", how="left", validate="one_to_one")
++    result["numerator"] = result["numerator"].fillna(0).astype(int)
++    result["coverage"] = result["numerator"] / result["denominator"]
++    return result[["date", "denominator", "numerator", "coverage"]]
++
++
++def coverage_gate_passes(daily: pd.DataFrame, minimum: float) -> bool:
++    """Every active day must meet the threshold; pooled coverage is not a substitute."""
++    return bool(
++        len(daily)
++        and daily["denominator"].gt(0).all()
++        and daily["coverage"].notna().all()
++        and daily["coverage"].ge(minimum).all()
++    )
++
++
++def required_field_coverage(panel: pd.DataFrame, required_fields) -> float:
++    if not len(panel):
++        return 0.0
++    return float(_complete_mask(panel, required_fields).mean())
++
++
++def evaluate_candidate_statuses(
++    config: LegacyResearchConfig, gates: dict[str, bool]
++) -> dict[str, str]:
++    """Apply data gates without thawing Task 1's rule-level freeze."""
++    candidates = {candidate.name: candidate for candidate in config.candidates}
++    candidate_a = candidates["three_of_two_low_vol"]
++    candidate_b = candidates["early_trend_breadth"]
++    a_pass = (
++        candidate_a.evaluation_status == "PENDING_DATA_GATE"
++        and gates["full_a_point_in_time"]
++        and gates["a_entry_fields"]
++    )
++    b_pass = (
++        candidate_b.evaluation_status == "PENDING_DATA_GATE"
++        and not candidate_b.not_evaluable_fields
++        and gates["full_a_point_in_time"]
++        and gates["industry_point_in_time"]
++        and gates["b_entry_fields"]
++    )
++    return {
++        "three_of_two_low_vol": "EVALUABLE" if a_pass else "NOT_EVALUABLE",
++        "early_trend_breadth": "EVALUABLE" if b_pass else "NOT_EVALUABLE",
++    }
++
++
++def _sha256(path: str | Path) -> str:
++    digest = hashlib.sha256()
++    with Path(path).open("rb") as file:
++        for chunk in iter(lambda: file.read(8 * 1024 * 1024), b""):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
++def _database_fingerprint(path: str | Path) -> dict:
++    path = Path(path)
++    return {
++        "path": str(path),
++        "bytes": path.stat().st_size,
++        "sha256": _sha256(path),
++    }
++
++
++def _verify_database_manifest(config: LegacyResearchConfig) -> dict:
++    paths = {
++        "hithink": config.hithink_db_path,
++        "baostock": config.baostock_db_path,
++    }
++    fingerprints = {}
++    for name, path in paths.items():
++        expected = DATABASE_MANIFEST[name]
++        actual = _database_fingerprint(path)
++        if (
++            actual["path"] != expected["path"]
++            or actual["bytes"] != expected["bytes"]
++            or actual["sha256"] != expected["sha256"]
++        ):
++            raise ValueError(f"Database manifest mismatch: {name}")
++        fingerprints[name] = actual
++    return fingerprints
++
++
++def _verify_input_panels() -> dict:
++    result = {}
++    for name, expected in INPUT_PANEL_MANIFEST.items():
++        actual = _sha256(expected["path"])
++        if actual != expected["sha256"]:
++            raise ValueError(f"Input panel manifest mismatch: {name}")
++        result[name] = {"path": str(expected["path"]), "sha256": actual}
++    return result
++
++
++def _finalize_chunk(
++    chunk: pd.DataFrame,
++    main_conflicts: pd.DataFrame,
++    start_date: str,
++    end_date: str,
++) -> pd.DataFrame:
++    required = {
++        "date",
++        "code",
++        *RAW_PRICE_FIELDS,
++        "prev_close",
++        *SIGNAL_FIELDS,
++        "volume",
++        "amount",
++        "trade_status",
++        "is_st",
++        "ipo_date",
++        "out_date",
++    }
++    missing = required - set(chunk)
++    if missing:
++        raise ValueError(f"Missing full-A columns: {sorted(missing)}")
++    chunk = chunk.copy()
++    chunk["date"] = chunk["date"].astype(str)
++    if chunk.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate full-A (date, code) key")
++    if not chunk["date"].between(start_date, end_date).all():
++        raise ValueError("Full-A chunk exceeds requested date window")
++    if chunk["code"].str.endswith(".BJ").any():
++        raise ValueError("BJ security entered full-A context")
++    if chunk["ipo_date"].isna().any() or chunk["ipo_date"].eq("").any():
++        raise ValueError("Point-in-time active universe has missing IPO date")
++    if (chunk["ipo_date"] > chunk["date"]).any():
++        raise ValueError("Pre-IPO row entered point-in-time panel")
++    out_date = chunk["out_date"].replace("", pd.NA)
++    chunk["out_date"] = out_date
++    if (out_date.notna() & (out_date <= chunk["date"])).any():
++        raise ValueError("Delisted row entered point-in-time active panel")
++
++    chunk["is_main_board"] = chunk["code"].str[:3].isin(MAIN_BOARD_PREFIXES)
++    chunk = chunk.merge(
++        main_conflicts,
++        on=["date", "code"],
++        how="left",
++        validate="one_to_one",
++    )
++    for column in ("execution_conflict", "adjustment_source_conflict", "source_conflict"):
++        chunk[column] = chunk[column].astype("boolean")
++    for column in ("trade_status", "is_st"):
++        chunk[column] = chunk[column].astype("Int64")
++
++    valid_raw = chunk[[*RAW_PRICE_FIELDS, "prev_close"]].gt(0).all(axis=1)
++    valid_signal = chunk[list(SIGNAL_FIELDS)].gt(0).all(axis=1)
++    chunk["data_valid"] = valid_raw & valid_signal
++    chunk["context_complete"] = (
++        chunk["data_valid"]
++        & _complete_mask(chunk, CONTEXT_REQUIRED_FIELDS)
++        & chunk["volume"].ge(0)
++        & chunk["amount"].ge(0)
++    )
++    columns = [
++        "date",
++        "code",
++        *RAW_PRICE_FIELDS,
++        "prev_close",
++        *SIGNAL_FIELDS,
++        "volume",
++        "amount",
++        "trade_status",
++        "is_st",
++        "ipo_date",
++        "out_date",
++        "is_main_board",
++        "data_valid",
++        "context_complete",
++        "execution_conflict",
++        "adjustment_source_conflict",
++        "source_conflict",
++    ]
++    return chunk[columns].sort_values(["date", "code"]).reset_index(drop=True)
++
++
++def _empty_industry_panel() -> pd.DataFrame:
++    return pd.DataFrame(
++        {
++            "code": pd.Series(dtype="string"),
++            "industry": pd.Series(dtype="string"),
++            "valid_from": pd.Series(dtype="string"),
++            "valid_to": pd.Series(dtype="string"),
++            "source": pd.Series(dtype="string"),
++            "source_sha256": pd.Series(dtype="string"),
++            "current_snapshot_only": pd.Series(dtype="boolean"),
++        }
++    )
++
++
++def _industry_source_audit(duck: duckdb.DuckDBPyConnection, sqlite: sqlite3.Connection) -> dict:
++    duck_columns = duck.execute(
++        """
++        SELECT table_name, column_name
++        FROM duckdb_columns()
++        WHERE database_name = 'market'
++        ORDER BY table_name, column_index
++        """
++    ).fetchall()
++    sqlite_columns = sqlite.execute(
++        """
++        SELECT m.name, p.name
++        FROM sqlite_master AS m
++        JOIN pragma_table_info(m.name) AS p
++        WHERE m.type = 'table'
++        ORDER BY m.name, p.cid
++        """
++    ).fetchall()
++    matches = [
++        {"database": "hithink", "table": table, "column": column}
++        for table, column in duck_columns
++        if "industry" in column.lower() or "sector" in column.lower()
++    ] + [
++        {"database": "baostock", "table": table, "column": column}
++        for table, column in sqlite_columns
++        if "industry" in column.lower() or "sector" in column.lower()
++    ]
++    return {
++        "available": bool(matches),
++        "matching_columns": matches,
++        "historical_valid_dates": False,
++        "current_snapshot_only": False,
++        "hithink_columns_examined": len(duck_columns),
++        "baostock_columns_examined": len(sqlite_columns),
++        "treatment": "no current-snapshot backfill and no fabricated historical membership",
++    }
++
++
++def _daily_records(frame: pd.DataFrame) -> list[dict]:
++    return [
++        {
++            "date": str(row.date),
++            "denominator": int(row.denominator),
++            "numerator": int(row.numerator),
++            "coverage": float(row.coverage),
++        }
++        for row in frame.itertuples(index=False)
++    ]
++
++
++def build_legacy_context(config: LegacyResearchConfig) -> LegacyContextResult:
++    """Build full-A and industry panels without writing to either source database."""
++    data_dir = PROJECT_ROOT / "data"
++    results_dir = PROJECT_ROOT / "results"
++    data_dir.mkdir(parents=True, exist_ok=True)
++    results_dir.mkdir(parents=True, exist_ok=True)
++    paths = {
++        "full_a": data_dir / "legacy_full_a_panel.parquet",
++        "industry": data_dir / "legacy_industry_panel.parquet",
++        "audit": results_dir / "legacy_context_audit.json",
++    }
++    temp_path = paths["full_a"].with_suffix(".parquet.tmp")
++    if temp_path.exists():
++        temp_path.unlink()
++
++    databases_before = _verify_database_manifest(config)
++    input_panels = _verify_input_panels()
++    sql_text = SQL_PATH.read_text(encoding="utf-8")
++    main_conflicts = pd.read_parquet(
++        INPUT_PANEL_MANIFEST["main"]["path"],
++        columns=[
++            "date",
++            "code",
++            "execution_conflict",
++            "adjustment_source_conflict",
++            "source_conflict",
++        ],
++    )
++    if main_conflicts.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate main-panel conflict key")
++    main_conflicts["date"] = main_conflicts["date"].astype(str)
++
++    writer = None
++    full_a_rows = 0
++    codes = set()
++    first_date = None
++    last_date = None
++    performance_dates = set()
++    daily_frames = []
++    a_entry_rows = 0
++    a_entry_complete_rows = 0
++    a_entry_valid_rows = 0
++    conflict_counts = {
++        "execution_conflict_rows": 0,
++        "adjustment_source_conflict_rows": 0,
++        "source_conflict_rows": 0,
++    }
++
++    sqlite = sqlite3.connect(
++        f"{Path(config.baostock_db_path).resolve().as_uri()}?mode=ro", uri=True
++    )
++    duck = duckdb.connect(config.hithink_db_path, read_only=True)
++    try:
++        industry_source = _industry_source_audit(duck, sqlite)
++        for year in range(pd.Timestamp(FULL_A_START_DATE).year, pd.Timestamp(config.end_date).year + 1):
++            chunk_start = max(FULL_A_START_DATE, f"{year}-01-01")
++            chunk_end = min(config.end_date, f"{year}-12-31")
++            raw_chunk = pd.read_sql_query(
++                sql_text, sqlite, params=[chunk_start, chunk_end]
++            )
++            chunk = _finalize_chunk(
++                raw_chunk, main_conflicts, chunk_start, chunk_end
++            )
++            full_a_rows += len(chunk)
++            codes.update(chunk["code"].unique())
++            if len(chunk):
++                first_date = chunk["date"].min() if first_date is None else min(first_date, chunk["date"].min())
++                last_date = chunk["date"].max() if last_date is None else max(last_date, chunk["date"].max())
++            table = pa.Table.from_pandas(chunk, preserve_index=False)
++            if writer is None:
++                writer = pq.ParquetWriter(temp_path, table.schema, compression="snappy")
++            elif table.schema != writer.schema:
++                raise ValueError("Full-A Parquet schema changed between chunks")
++            writer.write_table(table)
++
++            performance = chunk["date"].between(config.start_date, config.end_date)
++            active = chunk.loc[performance, ["date", "code"]]
++            performance_dates.update(active["date"].unique())
++            complete_rows = chunk.loc[
++                performance & chunk["context_complete"], ["date", "code", *CONTEXT_REQUIRED_FIELDS]
++            ]
++            daily_frames.append(
++                daily_coverage(active, complete_rows, CONTEXT_REQUIRED_FIELDS)
++            )
++            entry = chunk.loc[performance & chunk["is_main_board"]]
++            complete = _complete_mask(entry, A_ENTRY_REQUIRED_FIELDS)
++            a_entry_rows += len(entry)
++            a_entry_complete_rows += int(complete.sum())
++            a_entry_valid_rows += int((complete & entry["context_complete"]).sum())
++            for column, key in (
++                ("execution_conflict", "execution_conflict_rows"),
++                ("adjustment_source_conflict", "adjustment_source_conflict_rows"),
++                ("source_conflict", "source_conflict_rows"),
++            ):
++                conflict_counts[key] += int(chunk[column].fillna(False).sum())
++    finally:
++        duck.close()
++        sqlite.close()
++        if writer is not None:
++            writer.close()
++
++    if writer is None:
++        raise ValueError("Full-A query returned no rows")
++    if last_date != config.end_date:
++        raise ValueError("Full-A panel does not reach configured end date")
++
++    full_a_daily = pd.concat(daily_frames, ignore_index=True).sort_values("date")
++    expected_dates = pd.DataFrame({"date": sorted(performance_dates)})
++    index = pd.read_parquet(
++        INPUT_PANEL_MANIFEST["index"]["path"], columns=["date", "code", "close"]
++    )
++    index["date"] = index["date"].astype(str)
++    index = index.loc[
++        (index["code"] == "000001.SH")
++        & index["date"].between(config.start_date, config.end_date)
++    ]
++    if index.duplicated(["date"]).any():
++        raise ValueError("Duplicate Shanghai Composite index date")
++    market = expected_dates.merge(index[["date", "close"]], on="date", how="left")
++    market_coverage = required_field_coverage(market, ("close",))
++    market_valid = bool(len(market) and market["close"].gt(0).all())
++
++    industry = _empty_industry_panel()
++    industry_daily = full_a_daily[["date", "denominator"]].copy()
++    industry_daily["numerator"] = 0
++    industry_daily["coverage"] = 0.0
++    industry_entry_coverage = 0.0
++    a_entry_coverage = (
++        a_entry_complete_rows / a_entry_rows if a_entry_rows else 0.0
++    )
++    a_entry_valid_coverage = (
++        a_entry_valid_rows / a_entry_rows if a_entry_rows else 0.0
++    )
++    gates = {
++        "full_a_point_in_time": coverage_gate_passes(
++            full_a_daily, config.point_in_time_coverage_min
++        ),
++        "a_entry_fields": bool(
++            a_entry_coverage == config.required_entry_coverage
++            and a_entry_valid_coverage == config.required_entry_coverage
++            and market_coverage == config.required_entry_coverage
++            and market_valid
++        ),
++        "industry_point_in_time": bool(
++            industry_source["available"]
++            and industry_source["historical_valid_dates"]
++            and coverage_gate_passes(industry_daily, config.industry_coverage_min)
++        ),
++        "b_entry_fields": bool(
++            industry_entry_coverage == config.required_entry_coverage
++            and not config.candidates[1].not_evaluable_fields
++        ),
++    }
++    statuses = evaluate_candidate_statuses(config, gates)
++
++    databases_after = _verify_database_manifest(config)
++    if databases_after != databases_before:
++        raise ValueError("Source database bytes changed during read-only build")
++    temp_path.replace(paths["full_a"])
++    industry.to_parquet(paths["industry"], index=False)
++
++    audit = {
++        "config": asdict(config),
++        "construction": {
++            "read_only": True,
++            "full_a_start_date": FULL_A_START_DATE,
++            "performance_start_date": config.start_date,
++            "end_date": config.end_date,
++            "full_a_scope": "all type=1 SH/SZ A shares; BJ excluded; current listing status never filters history",
++            "execution_universe": "SH/SZ main-board prefixes only",
++            "active_rule": "ipo_date <= date < out_date; blank out_date remains active",
++            "price_threshold": PRICE_THRESHOLD,
++            "conflict_treatment": "reuse frozen main-panel flags; raw OHLC execution conflicts only; adjustment differences disclosure only",
++            "entry_coverage_denominator": "all active main-board stock-days in the performance window; no candidate signals or entries generated",
++            "sqlite_connection": "URI mode=ro",
++            "duckdb_connection": "read_only=True",
++        },
++        "databases": {
++            "before": databases_before,
++            "after": databases_after,
++            "unchanged": True,
++            "manifest_match": True,
++        },
++        "input_panels": input_panels,
++        "sql": {
++            "path": str(SQL_PATH),
++            "sha256": _sha256(SQL_PATH),
++            "text": sql_text,
++        },
++        "panels": {
++            "full_a": {
++                "path": str(paths["full_a"]),
++                "rows": full_a_rows,
++                "codes": len(codes),
++                "first_date": first_date,
++                "last_date": last_date,
++                "primary_key": ["date", "code"],
++                "performance_dates": len(performance_dates),
++                **conflict_counts,
++            },
++            "industry": {
++                "path": str(paths["industry"]),
++                "rows": len(industry),
++                "first_date": None,
++                "last_date": None,
++                "primary_key": ["code", "valid_from"],
++            },
++        },
++        "coverage": {
++            "full_a": {
++                "threshold": config.point_in_time_coverage_min,
++                "rule": "every day, not pooled",
++                "passes": gates["full_a_point_in_time"],
++                "minimum": float(full_a_daily["coverage"].min()),
++                "days_below_threshold": int(
++                    full_a_daily["coverage"].lt(config.point_in_time_coverage_min).sum()
++                ),
++                "daily": _daily_records(full_a_daily),
++            },
++            "candidate_a_entry": {
++                "required_fields": list(A_ENTRY_REQUIRED_FIELDS),
++                "threshold": config.required_entry_coverage,
++                "denominator": a_entry_rows,
++                "field_complete_numerator": a_entry_complete_rows,
++                "field_coverage": a_entry_coverage,
++                "valid_numerator": a_entry_valid_rows,
++                "valid_coverage": a_entry_valid_coverage,
++                "market_index": "000001.SH",
++                "market_denominator": len(market),
++                "market_field_coverage": market_coverage,
++                "market_valid": market_valid,
++                "passes": gates["a_entry_fields"],
++            },
++            "industry": {
++                "source": industry_source,
++                "threshold": config.industry_coverage_min,
++                "passes": gates["industry_point_in_time"],
++                "entry_coverage": industry_entry_coverage,
++                "daily": _daily_records(industry_daily),
++            },
++        },
++        "candidate_statuses": statuses,
++        "candidate_b_rule_freeze": {
++            "evaluation_status": config.candidates[1].evaluation_status,
++            "not_evaluable_fields": list(config.candidates[1].not_evaluable_fields),
++            "restored": False,
++        },
++        "returns_run": False,
++        "signals_implemented": False,
++    }
++    paths["audit"].write_text(
++        json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
++    )
++    return LegacyContextResult(
++        full_a_panel_path=paths["full_a"],
++        industry_panel_path=paths["industry"],
++        audit_path=paths["audit"],
++        full_a_rows=full_a_rows,
++        industry_rows=len(industry),
++        candidate_a_status=statuses["three_of_two_low_vol"],
++        candidate_b_status=statuses["early_trend_breadth"],
++    )
+--- /dev/null
++++ b/scripts/build_legacy_context.py
+@@ -0,0 +1,33 @@
++import argparse
++import json
++
++from trend_system.legacy_config import load_legacy_config
++from trend_system.legacy_data import build_legacy_context
++
++
++def main() -> None:
++    parser = argparse.ArgumentParser(
++        description="Build read-only full-A point-in-time context and data-gate audit"
++    )
++    parser.add_argument("--config", required=True)
++    args = parser.parse_args()
++    result = build_legacy_context(load_legacy_config(args.config))
++    print(
++        json.dumps(
++            {
++                "full_a_panel": str(result.full_a_panel_path),
++                "industry_panel": str(result.industry_panel_path),
++                "audit": str(result.audit_path),
++                "full_a_rows": result.full_a_rows,
++                "industry_rows": result.industry_rows,
++                "candidate_a_status": result.candidate_a_status,
++                "candidate_b_status": result.candidate_b_status,
++            },
++            ensure_ascii=False,
++            indent=2,
++        )
++    )
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null
++++ b/sql/legacy_context.sql
+@@ -0,0 +1,31 @@
++SELECT
++    substr(b.code, 4, 6) || '.' || upper(substr(b.code, 1, 2)) AS code,
++    d.calendar_date AS date,
++    r.open,
++    r.high,
++    r.low,
++    r.close,
++    r.preclose AS prev_close,
++    h.open AS signal_open,
++    h.high AS signal_high,
++    h.low AS signal_low,
++    h.close AS signal_close,
++    r.volume,
++    r.amount,
++    r.trade_status,
++    r.is_st,
++    b.ipo_date,
++    b.out_date
++FROM stock_basic AS b
++JOIN trade_dates AS d
++    ON d.is_trading_day = 1
++   AND d.calendar_date >= b.ipo_date
++   AND (b.out_date IS NULL OR b.out_date = '' OR d.calendar_date < b.out_date)
++LEFT JOIN stock_kline_d AS r
++    ON r.code = b.code AND r.date = d.calendar_date AND r.adjustflag = 3
++LEFT JOIN stock_kline_d AS h
++    ON h.code = b.code AND h.date = d.calendar_date AND h.adjustflag = 1
++WHERE b.type = 1
++  AND (b.code LIKE 'sh.%' OR b.code LIKE 'sz.%')
++  AND d.calendar_date >= ?
++  AND d.calendar_date <= ?
+--- /dev/null
++++ b/tests/test_legacy_data.py
+@@ -0,0 +1,150 @@
++import unittest
++from pathlib import Path
++
++import pandas as pd
++
++from trend_system.legacy_config import load_legacy_config
++from trend_system.legacy_data import (
++    coverage_gate_passes,
++    daily_coverage,
++    evaluate_candidate_statuses,
++    point_in_time_industry,
++    required_field_coverage,
++)
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[1]
++CONFIG_PATH = PROJECT_ROOT / "config" / "legacy_candidates.json"
++
++
++class PointInTimeIndustryTest(unittest.TestCase):
++    def test_future_industry_record_is_not_visible_before_valid_from(self):
++        records = pd.DataFrame(
++            {
++                "code": ["600000.SH", "600000.SH"],
++                "industry": ["银行", "未来行业"],
++                "valid_from": ["2020-01-01", "2024-01-03"],
++                "valid_to": [None, None],
++            }
++        )
++
++        actual = point_in_time_industry(records, "2024-01-02")
++
++        self.assertEqual(actual["industry"].tolist(), ["银行"])
++
++    def test_current_snapshot_without_valid_from_cannot_backfill_history(self):
++        records = pd.DataFrame(
++            {
++                "code": ["600000.SH"],
++                "industry": ["当前行业快照"],
++                "valid_from": [pd.NA],
++                "valid_to": [pd.NA],
++            }
++        )
++
++        actual = point_in_time_industry(records, "2020-01-02")
++
++        self.assertTrue(actual.empty)
++
++
++class CoverageTest(unittest.TestCase):
++    def test_daily_denominator_is_fixed_by_point_in_time_active_universe(self):
++        active = pd.DataFrame(
++            {
++                "date": ["2024-01-02"] * 2 + ["2024-01-03"] * 2,
++                "code": ["600000.SH", "000001.SZ"] * 2,
++            }
++        )
++        panel = pd.DataFrame(
++            {
++                "date": ["2024-01-02", "2024-01-03", "2024-01-03", "2024-01-03"],
++                "code": ["600000.SH", "600000.SH", "000001.SZ", "300001.SZ"],
++                "close": [10.0, 10.0, 20.0, 30.0],
++                "volume": [100.0, 100.0, 200.0, 300.0],
++            }
++        )
++
++        actual = daily_coverage(active, panel, ("close", "volume"))
++
++        self.assertEqual(actual["denominator"].tolist(), [2, 2])
++        self.assertEqual(actual["numerator"].tolist(), [1, 2])
++        self.assertEqual(actual["coverage"].tolist(), [0.5, 1.0])
++
++    def test_98_99_percent_fails_and_exact_99_percent_passes(self):
++        below = pd.DataFrame(
++            {"date": ["2024-01-02"], "denominator": [10000], "coverage": [0.9899]}
++        )
++        exact = pd.DataFrame(
++            {"date": ["2024-01-02"], "denominator": [100], "coverage": [0.99]}
++        )
++
++        self.assertFalse(coverage_gate_passes(below, 0.99))
++        self.assertTrue(coverage_gate_passes(exact, 0.99))
++
++    def test_missing_required_entry_field_has_zero_coverage(self):
++        panel = pd.DataFrame({"close": [10.0, 11.0]})
++
++        self.assertEqual(required_field_coverage(panel, ("close", "amount")), 0.0)
++
++    def test_partially_missing_required_entry_field_is_not_complete(self):
++        panel = pd.DataFrame({"close": [10.0, None], "amount": [100.0, 200.0]})
++
++        self.assertEqual(required_field_coverage(panel, ("close", "amount")), 0.5)
++
++
++class CandidateGateTest(unittest.TestCase):
++    def setUp(self):
++        self.config = load_legacy_config(CONFIG_PATH)
++
++    def test_candidate_a_fails_when_actual_entry_field_is_missing(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": False,
++            "industry_point_in_time": True,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["three_of_two_low_vol"], "NOT_EVALUABLE")
++
++    def test_candidate_a_passes_only_when_all_its_data_gates_pass(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": True,
++            "industry_point_in_time": False,
++            "b_entry_fields": False,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["three_of_two_low_vol"], "EVALUABLE")
++
++    def test_candidate_b_fails_without_dated_industry_source(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": True,
++            "industry_point_in_time": False,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["early_trend_breadth"], "NOT_EVALUABLE")
++
++    def test_candidate_b_freeze_cannot_be_restored_by_complete_data(self):
++        gates = {
++            "full_a_point_in_time": True,
++            "a_entry_fields": True,
++            "industry_point_in_time": True,
++            "b_entry_fields": True,
++        }
++
++        actual = evaluate_candidate_statuses(self.config, gates)
++
++        self.assertEqual(actual["early_trend_breadth"], "NOT_EVALUABLE")
++        self.assertEqual(len(self.config.candidates[1].not_evaluable_fields), 12)
++
++
++if __name__ == "__main__":
++    unittest.main()

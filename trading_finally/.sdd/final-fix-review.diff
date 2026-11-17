@@ -1,0 +1,2054 @@
+--- a/00_设计_主板趋势波段交易系统研究.md
++++ b/00_设计_主板趋势波段交易系统研究.md
+@@ -26,7 +26,7 @@
+ - 以盘后数据生成计划，下一交易日执行。
+ - 持仓天数不预设，由交易依据是否延续决定。
+ - 接受部分年份亏损和长时间空仓。
+-- 接受约 10% 的账户最大可承受回撤，但不把它理解为收益承诺或单笔盈亏比。
++- 2026-11-03 用户授权将账户最大可承受回撤上限调整为约 20%；10%—20% 属于较高风险，但不把它理解为收益承诺或单笔盈亏比。
+ - 主要研究窗口为 2016 年至今；2010—2015 年仅作冻结后的压力测试；2010 年以前不参与规则设计。
+ - 评价完整牛熊周期，不要求每年盈利，不为提高胜率或总收益分别做过拟合。
+ - 本次全部新内容放在 `trading_finally/`。
+@@ -180,7 +180,7 @@
+ - 单笔交易按入场价到初始退出位的距离估算风险，同时报告实际金额占账户比例。
+ - 披露持仓相关性、同日集中退出、跳空和连续跌停导致的额外损失。
+ - 最低佣金占单笔金额的比例必须进入报告；过小的整手仓位可能因成本被自然否决。
+-- 历史回撤目标预留缓冲：主窗口目标不高于 8%，超过 10% 不适合直接进入当前账户的实盘观察。
++- 历史回撤目标预留缓冲：主窗口不超过 10% 才可为 `UNREJECTED`；10%—20% 为较高风险 `BOUNDARY`，只允许纯模拟；超过 20% 为 `REJECTED`。
+ 
+ ## 9. 成交与费用模型
+ 
+@@ -270,6 +270,8 @@
+ - 报告需覆盖上涨、下跌、震荡、高低波动和大小盘风格变化，不用单一“牛市/熊市”标签掩盖结构差异。
+ 
+ ## 12. 验收与停止条件
++
++2026-11-03 变更记录：在键错位修复后的账户业绩尚未产生时，用户明确授权取消 8% 内部分界，将主路径状态机改为 MDD≤10% 且其他门槛通过为 `UNREJECTED`，10%<MDD≤20% 为仅可纯模拟的较高风险 `BOUNDARY`，MDD>20% 为 `REJECTED`；后续目标是在该约束内提高扣费后年化收益，并兼顾收益回撤比与跨期稳定性。本变更不修改策略参数、成本或试验定义，也不据修正后收益反向选择阈值。
+ 
+ ### 12.1 历史阶段的机械否决线
+ 
+@@ -277,7 +279,7 @@
+ 
+ - 所有数据与执行关键测试通过，没有未解释的前视或成交口径错误。
+ - 主窗口完整组合扣除成本后收益为正，多数滚动三年窗口为正；允许部分年份亏损。
+-- 主窗口最大回撤目标不高于 8%；8%—10% 只能视为需继续保守观察的边界结果；超过 10% 不进入当前账户实盘观察。
++- 主窗口最大回撤不超过 10% 且其他门槛通过时为 `UNREJECTED`；10%—20% 为较高风险 `BOUNDARY`，只允许纯模拟；超过 20% 不进入当前账户实盘观察。
+ - 双倍成本和较高滑点下仍保持正期望，且没有依赖无法成交价格。
+ - 参数邻域不存在轻微变化就整体崩塌的情况。
+ - 结果不是只在单一年份、单一随机路径或单一板块成立。
+@@ -301,7 +303,7 @@
+ - 每个交易日保存盘后信号、次日订单、当时可得行情和模型成交结果；
+ - 至少积累 **30 笔完整前瞻交易**，不设“必须在某月完成”的期限，按季度报告；低换手系统可能需要较长时间，不能为凑笔数增加信号；
+ - 独立按规则复算信号和订单，未解释的复现差异及越规则订单必须为 0。发生数据或代码错误时先暂停，修复后重新累计；
+-- 前瞻组合最大回撤超过 10%、出现无法处理的公司行动/退市事件，或盘后流程实际无法生成次日订单时，提前停止该候选，不等待 30 笔，也不靠改规则挽救；
++- 前瞻组合最大回撤超过 20%、出现无法处理的公司行动/退市事件，或盘后流程实际无法生成次日订单时，提前停止该候选，不等待 30 笔，也不靠改规则挽救；
+ - 30 笔只构成**执行一致性的初步验收**，不设置小样本盈利通过线，不据此证明盈利能力或真实成交质量。盘后模拟无法验证真实排队和实际滑点，只能记录当时价格并核对模型是否按保守规则运行；
+ - 达到 30 笔且执行一致性通过后，提交完整前瞻报告，由用户另行决定是否进入小额真实订单观察；真实订单的费用、成交和滑点需要另建记录，不能从纸面结果推断；
+ - 前瞻期间不得根据短期盈亏改规则；任何规则变更都重新开始前瞻记录；
+--- a/01_实施计划_主板趋势波段交易系统.md
++++ b/01_实施计划_主板趋势波段交易系统.md
+@@ -208,7 +208,7 @@
+ 
+ T 日收盘先冻结次日订单和买入预算；T+1 开盘先处理卖单，再处理已冻结买单，但买单不得使用当日卖出释放的槽位或预期回款。买单只尝试一次，卖单持续保留。已有持仓不重复加仓，排序只决定同日有限预算下的先后顺序。
+ 
+-持仓遇到入场后 `data_valid=False` 或 `execution_conflict=True` 时中止运行并输出诊断，不能悄悄用未来值或删除交易；`adjustment_source_conflict=True` 只记录并交给双源敏感性报告，不触发执行中止。期末不强平；退市后仍无法退出且缺少清算对价时按保守零残值处理并单列日志，绝不提前使用 `out_date` 卖出。
++持仓遇到入场后 `data_valid=False` 或 `execution_conflict=True` 时中止运行并输出诊断，不能悄悄用未来值或删除交易；唯一例外是退市当日 `trade_status=0` 且原价 OHLC/前收全部缺失的终止停牌行，该行沿用最后实际收盘并在下一账户日按既有零残值规则处理，任何执行冲突仍中止。`adjustment_source_conflict=True` 只记录并交给双源敏感性报告，不触发执行中止。期末不强平；退市后仍无法退出且缺少清算对价时按保守零残值处理并单列日志，绝不提前使用 `out_date` 卖出。
+ 
+ - [ ] **Step 4: 加入公司行动及风险测试并跑通**
+ 
+@@ -272,7 +272,7 @@
+ 
+ - [ ] **Step 1: 写变体完整性和验收命名失败测试**
+ 
+-断言邻域只能单因子改变：入场 90/150、趋势 180/220、斜率 10/30、退出 15/25，共 8 个；不得从结果中选一个替换基线。构造权益摘要用例：最大回撤大于 10% 为 `REJECTED`，8%—10% 为 `BOUNDARY`，其余条件通过且不超过 8% 也只能为 `UNREJECTED`，任何输出不得包含 `OOS_PASS`。
++断言邻域只能单因子改变：入场 90/150、趋势 180/220、斜率 10/30、退出 15/25，共 8 个；不得从结果中选一个替换基线。构造权益摘要用例：最大回撤大于 20% 为 `REJECTED`，10%—20% 为 `BOUNDARY`，其余条件通过且不超过 10% 为 `UNREJECTED`，任何输出不得包含 `OOS_PASS`。
+ 
+ - [ ] **Step 2: 运行测试并确认失败**
+ 
+@@ -292,7 +292,7 @@
+ - 年度、月末滚动三年、指数趋势/震荡/下跌和大小盘风格分组；
+ - 主结果及配置哈希冻结后，最后运行 2010—2015 单源压力测试。
+ 
+-机械门槛固定为：主窗口净收益为正；超过半数月末滚动三年收益为正；双倍成本净收益为正；8 个邻域至少 6 个净收益为正；20 个随机排序路径至少 16 个净收益为正；去掉贡献最高年份后剩余年份合计收益为正；同花顺复权信号对照的共同窗口净收益也为正且最大回撤不超过 10%，两源方向相反时不得未否决。回撤不超过 8% 才可能 `UNREJECTED`，8%—10% 为 `BOUNDARY`，超过 10% 或其他门槛失败为 `REJECTED`。
++机械门槛固定为：主窗口净收益为正；超过半数月末滚动三年收益为正；双倍成本净收益为正；8 个邻域至少 6 个净收益为正；20 个随机排序路径至少 16 个净收益为正；去掉贡献最高年份后剩余年份合计收益为正；同花顺复权信号对照的共同窗口净收益也为正且最大回撤不超过 20%，两源方向相反时不得未否决。回撤不超过 10% 且其他门槛通过才为 `UNREJECTED`，10%—20% 为较高风险 `BOUNDARY`（仅可纯模拟），超过 20% 或其他门槛失败为 `REJECTED`。
+ 
+ - [ ] **Step 4: 运行测试和完整稳健性流程**
+ 
+@@ -338,7 +338,7 @@
+ 
+ - [ ] **Step 3: 实现对应交付**
+ 
+-未否决时，手册完整记录规则、费用、无法成交、公司行动、暂停条件和 30 笔前瞻协议。`forward_ledger.csv` 预建字段，30 笔只用于执行一致性验收；未解释信号差异和越规则订单必须为 0，前瞻回撤超过 10% 提前停止，真实成交与滑点不得从纸面模拟推断。
++未否决时，手册完整记录规则、费用、无法成交、公司行动、暂停条件和 30 笔前瞻协议。`forward_ledger.csv` 预建字段，30 笔只用于执行一致性验收；未解释信号差异和越规则订单必须为 0，前瞻回撤超过 20% 提前停止，真实成交与滑点不得从纸面模拟推断。
+ 
+ 边界或否决时，只写负结果和后续研究限制，不通过新增指标、市场闸门或参数搜索继续“救系统”。
+ 
+--- a/02_预注册_极简趋势消融.md
++++ b/02_预注册_极简趋势消融.md
+@@ -81,10 +81,10 @@
+ 6. 20 个随机排序路径至少 16 个净收益为正。
+ 7. 去掉贡献最高年份后，剩余年份合计收益为正；结果不得只在单一年份、单一路径或单一板块成立。
+ 8. 规则可完全在收盘后复现，次日订单无隐藏盘中条件。
+-9. 同花顺后复权共同可计算窗口的独立敏感性在扣除成本后净收益为正，且最大回撤不超过 10%；不满足该双源门槛或方向相反时不得 `UNREJECTED`，不得以 baostock 基线结果抵消。
+-10. 上述条件均满足且主窗口最大回撤不超过 8%，结果为 `UNREJECTED`；其他条件满足但最大回撤为 8%—10%，结果为 `BOUNDARY`；最大回撤超过 10% 或任一其他门槛失败，结果为 `REJECTED`。
++9. 同花顺后复权共同可计算窗口的独立敏感性在扣除成本后净收益为正，且最大回撤不超过 20%；不满足该双源门槛或方向相反时不得 `UNREJECTED`，不得以 baostock 基线结果抵消。
++10. 上述条件均满足且主窗口最大回撤不超过 10%，结果为 `UNREJECTED`；其他条件满足但最大回撤为 10%—20%，结果为较高风险 `BOUNDARY`，只允许纯模拟；最大回撤超过 20% 或任一其他门槛失败，结果为 `REJECTED`。
+ 
+-历史未否决后仍需冻结代码、参数和数据修正流程，至少积累 30 笔完整前瞻交易并满足执行一致性；前瞻最大回撤超过 10%、出现无法处理的公司行动/退市事件或盘后流程无法生成订单时提前停止。30 笔仅验证初步执行一致性，不证明盈利能力。
++历史未否决后仍需冻结代码、参数和数据修正流程，至少积累 30 笔完整前瞻交易并满足执行一致性；前瞻最大回撤超过 20%、出现无法处理的公司行动/退市事件或盘后流程无法生成订单时提前停止。30 笔仅验证初步执行一致性，不证明盈利能力。
+ 
+ ## 6. 停止条件与交付承诺
+ 
+@@ -96,5 +96,9 @@
+ 
+ - 双源审计必须拆分 `execution_conflict` 与 `adjustment_source_conflict`：前者只表示原价 OHLC 超阈值差异，后者表示按股票归一化后的复权序列差异。`source_conflict` 保留为原价、量额和复权审计差异的并集，不得把复权模型差异单独解释为原价无法成交或同一种可交易性判断；量额差异也不计入 `execution_conflict`。
+ - 基线入场和已有持仓仅由 `execution_conflict` 阻断；`source_conflict` 仅作审计总标志，`adjustment_source_conflict` 不单独阻断，必须进入独立复权敏感性。实际成交、整手、涨跌停和费用继续使用原价。审计必须报告归一化复权相对差分布，区分绝对尺度差异、精度带和超过 1% 的实质序列差异，不得把全部复权差异统称为纯噪声。
+-- 新增保存全部共同重叠行的同花顺后复权 OHLC 面板。Task 7 必须在共同可计算窗口增加独立信号敏感性，复用冻结信号参数、执行规则和成本，单独披露两源复权序列造成的差异；不得根据收益选择来源或替换 baostock 基线。共同窗口净收益为正且最大回撤不超过 10% 是第 5 节正式机械门槛，方向相反或不满足时不得 `UNREJECTED`。
++- 新增保存全部共同重叠行的同花顺后复权 OHLC 面板。Task 7 必须在共同可计算窗口增加独立信号敏感性，复用冻结信号参数、执行规则和成本，单独披露两源复权序列造成的差异；不得根据收益选择来源或替换 baostock 基线。共同窗口净收益为正且最大回撤不超过 20% 是第 5 节正式机械门槛，方向相反或不满足时不得 `UNREJECTED`。
+ - 本修订是在任何策略运行前完成的数据审计修订，并由此新增第 5 节双源机械门槛；除该新增门槛外，不改动任何已冻结策略参数、成本、试验预算、其他机械验收线或收益否决方向。
++
++## 8. 2026-11-03 用户授权回撤阈值变更
++
++在 C1 键错位修复后的账户结果尚未产生时，用户明确将最大回撤硬上限由 10% 放宽为 20%，取消原 8% 内部分界：主路径 MDD≤10% 且其他门槛通过为 `UNREJECTED`；10%<MDD≤20% 为较高风险 `BOUNDARY`，只允许纯模拟；MDD>20% 为 `REJECTED`。双源敏感性回撤上限及前瞻停止线同步为 20%。后续目标是在约束内尽量提高扣费后年化收益，并兼顾收益回撤比与跨期稳定性。未修改任何策略参数、成本或试验定义，不得根据修正后收益反向选择阈值。
+--- a/90_研究结论.md
++++ b/90_研究结论.md
+@@ -6,88 +6,103 @@
+ 
+ - 冻结配置哈希：`869544c945bc6e39446f319f7922aefde36533112a0fa0a4a58f9c4dc6f29b3b`
+ - 主窗口：2016-10-13 至 2026-10-29
+-- 主基线净收益：-0.884910
+-- 主基线最大回撤：0.887073
+-- 主基线期末权益：2301.810000
++- 主基线净收益：-0.926505
++- 主基线最大回撤：0.926956
++- 主基线期末权益：1469.890000
+ - 裁决只使用冻结基线与机械门槛；没有从历史变体中选优替换基线。
+ 
+ ## 机械门槛
+ 
+ | 门槛 | 实际值 | 冻结要求 | 是否通过 |
+ | --- | --- | --- | --- |
+-| data_execution_integrity | 本地面板校验、权益完整性和成交时序检查 | 数据与执行关键检查通过，无未解释前视或成交口径错误 | 是 |
+-| main_window_positive | -0.884910 | > 0 | 否 |
++| data_execution_integrity | {"all_passed": true, "cash_nonnegative": true, "equity_identity": true, "key_set_and_window": true, "legal_fill_prices": true, "next_open_after_signal": true, "whole_lot_buys": true} | 数据与执行关键证据逐项通过：键/窗口、现金、整手、合法价格、权益恒等式和次日时序 | 是 |
++| main_window_positive | -0.926505 | > 0 | 否 |
+ | rolling_3y_majority_positive | {"positive_share": 0.0, "windows": 85} | > 0.5 | 否 |
+-| double_cost_positive_and_executable | -0.916818 | > 0，且所有成交保持次日合法开盘执行 | 否 |
++| double_cost_positive_and_executable | {"execution": {"all_passed": true, "cash_nonnegative": true, "equity_identity": true, "key_set_and_window": true, "legal_fill_prices": true, "next_open_after_signal": true, "whole_lot_buys": true}, "total_return": -0.937977} | > 0，且所有成交保持次日合法开盘执行 | 否 |
+ | neighborhood_at_least_6_positive | {"positive": 0, "total": 8} | >= 6 / 8 | 否 |
+ | random_order_at_least_16_positive | {"positive": 0, "total": 20} | >= 16 / 20 | 否 |
+-| remaining_years_equity_pnl_positive | {"method": "账户年度权益盈亏；首年相对初始现金，后续年份相对上一年末权益", "remaining_equity_pnl": -18649.199999999997, "top_year": "2019", "top_year_equity_pnl": 951.0100000000002, "uses_realized_annual_contribution": false} | > 0；使用账户年度权益盈亏 | 否 |
+-| fully_after_close_reproducible | True | 信号收盘后确认，订单次日执行，无隐藏盘中条件 | 是 |
+-| hithink_common_positive_mdd_and_direction | {"baostock_common_total_return": -0.8785855, "hithink_max_drawdown": 0.8825724018136238, "hithink_total_return": -0.8785855, "opposite_direction": false} | 同花顺共同窗口净收益>0且MDD<=0.10，两源方向不得相反 | 否 |
+-| drawdown_boundary | 0.887073 | MDD<=0.08才可为UNREJECTED；0.08<MDD<=0.10为BOUNDARY；MDD>0.10为REJECTED | 否 |
++| remaining_years_equity_pnl_positive | {"method": "账户年度权益盈亏；首年相对初始现金，后续年份相对上一年末权益", "remaining_equity_pnl": -19973.18, "top_year": "2019", "top_year_equity_pnl": 1443.0699999999997, "uses_realized_annual_contribution": false} | > 0；使用账户年度权益盈亏 | 否 |
++| fully_after_close_reproducible | {"all_passed": true, "cash_nonnegative": true, "equity_identity": true, "key_set_and_window": true, "legal_fill_prices": true, "next_open_after_signal": true, "whole_lot_buys": true} | 键/窗口、合法价格与收盘后次日执行证据分别通过，无隐藏盘中条件 | 是 |
++| hithink_common_positive_mdd_and_direction | {"baostock_common_total_return": -0.905885, "hithink_max_drawdown": 0.9089754650119155, "hithink_total_return": -0.905885, "opposite_direction": false} | 同花顺共同窗口净收益>0且MDD<=0.20，两源方向不得相反 | 否 |
++| drawdown_boundary | 0.926956 | MDD<=0.10且其他门槛通过为UNREJECTED；0.10<MDD<=0.20为BOUNDARY；MDD>0.20为REJECTED | 否 |
+ 
+-裁决规则：任一非回撤门槛失败或最大回撤超过10%即为REJECTED；其他门槛均通过时，最大回撤不超过8%才可为UNREJECTED，8%—10%只能为BOUNDARY。
++2026-11-03用户授权的主路径裁决规则：任一非回撤门槛失败或最大回撤超过20%即为REJECTED；其他门槛均通过时，最大回撤不超过10%为UNREJECTED，10%—20%为BOUNDARY（较高风险，仅可进入纯模拟）；原8%内部分界已取消。
+ 
++## 执行完整性独立证据
++
++以下证据分别计算，不以成交时序或单一布尔值代替键、现金、整手、价格和账户核验。
++
++| 检查 | 基线 | 双倍成本 |
++| --- | --- | --- |
++| 键集合、行数与窗口 | 是 | 是 |
++| 现金非负 | 是 | 是 |
++| 买入100股整手 | 是 | 是 |
++| 成交价格合法 | 是 | 是 |
++| 权益与持仓市值恒等式 | 是 | 是 |
++| 信号后次日成交时序 | 是 | 是 |
++
++完整证据字典同时作为data_execution_integrity和fully_after_close_reproducible门槛的actual保存于summary.json。
++
+ ## 完整真实变体矩阵
+ 
+ 每一行均复用完整账户、原价成交、整手、费用和公司行动规则；未用单笔交易均值代替账户回测。
+ 
+ | 类别 | 变体 | 状态 | 净收益 | 最大回撤 | 输出 |
+ | --- | --- | --- | ---: | ---: | --- |
+-| baseline | baseline | completed | -0.884910 | 0.887073 | results/robustness/baseline |
+-| neighborhood | entry_lookback_90 | completed | -0.924700 | 0.924700 | results/robustness/neighborhood/entry_lookback_90 |
+-| neighborhood | entry_lookback_150 | completed | -0.941091 | 0.941535 | results/robustness/neighborhood/entry_lookback_150 |
+-| neighborhood | trend_window_180 | completed | -0.800619 | 0.886361 | results/robustness/neighborhood/trend_window_180 |
+-| neighborhood | trend_window_220 | completed | -0.905018 | 0.905018 | results/robustness/neighborhood/trend_window_220 |
+-| neighborhood | trend_slope_window_10 | completed | -0.919834 | 0.921341 | results/robustness/neighborhood/trend_slope_window_10 |
+-| neighborhood | trend_slope_window_30 | completed | -0.929650 | 0.935812 | results/robustness/neighborhood/trend_slope_window_30 |
+-| neighborhood | exit_lookback_15 | completed | -0.898168 | 0.903170 | results/robustness/neighborhood/exit_lookback_15 |
+-| neighborhood | exit_lookback_25 | completed | -0.888997 | 0.891943 | results/robustness/neighborhood/exit_lookback_25 |
+-| dual_source | baostock_common | completed | -0.878586 | 0.882572 | results/robustness/dual_source/baostock_common |
+-| dual_source | hithink_common | completed | -0.878586 | 0.882572 | results/robustness/dual_source/hithink_common |
+-| double_cost | double_fees_20bp_slippage | completed | -0.916818 | 0.917916 | results/robustness/double_cost/double_fees_20bp_slippage |
+-| random_order | path_00 | completed | -0.780503 | 0.825413 | results/robustness/random_order/path_00 |
+-| random_order | path_01 | completed | -0.915191 | 0.915191 | results/robustness/random_order/path_01 |
+-| random_order | path_02 | completed | -0.803988 | 0.837292 | results/robustness/random_order/path_02 |
+-| random_order | path_03 | completed | -0.879539 | 0.883009 | results/robustness/random_order/path_03 |
+-| random_order | path_04 | completed | -0.798700 | 0.835332 | results/robustness/random_order/path_04 |
+-| random_order | path_05 | completed | -0.890263 | 0.890736 | results/robustness/random_order/path_05 |
+-| random_order | path_06 | completed | -0.845932 | 0.866484 | results/robustness/random_order/path_06 |
+-| random_order | path_07 | completed | -0.886099 | 0.890316 | results/robustness/random_order/path_07 |
+-| random_order | path_08 | completed | -0.879758 | 0.898190 | results/robustness/random_order/path_08 |
+-| random_order | path_09 | completed | -0.885839 | 0.888911 | results/robustness/random_order/path_09 |
+-| random_order | path_10 | completed | -0.878417 | 0.885123 | results/robustness/random_order/path_10 |
+-| random_order | path_11 | completed | -0.887535 | 0.908728 | results/robustness/random_order/path_11 |
+-| random_order | path_12 | completed | -0.885574 | 0.889638 | results/robustness/random_order/path_12 |
+-| random_order | path_13 | completed | -0.916394 | 0.916954 | results/robustness/random_order/path_13 |
+-| random_order | path_14 | completed | -0.778201 | 0.792751 | results/robustness/random_order/path_14 |
+-| random_order | path_15 | completed | -0.909381 | 0.910844 | results/robustness/random_order/path_15 |
+-| random_order | path_16 | completed | -0.887540 | 0.897659 | results/robustness/random_order/path_16 |
+-| random_order | path_17 | completed | -0.826419 | 0.867261 | results/robustness/random_order/path_17 |
+-| random_order | path_18 | completed | -0.884135 | 0.904216 | results/robustness/random_order/path_18 |
+-| random_order | path_19 | completed | -0.787385 | 0.816304 | results/robustness/random_order/path_19 |
+-| random_entry | path_00 | completed | -0.465580 | 0.678516 | results/robustness/random_entry/path_00 |
+-| random_entry | path_01 | completed | -0.153295 | 0.616288 | results/robustness/random_entry/path_01 |
+-| random_entry | path_02 | completed | -0.149976 | 0.573425 | results/robustness/random_entry/path_02 |
+-| random_entry | path_03 | completed | -0.132567 | 0.394218 | results/robustness/random_entry/path_03 |
+-| random_entry | path_04 | completed | -0.112642 | 0.546348 | results/robustness/random_entry/path_04 |
+-| random_entry | path_05 | completed | -0.790328 | 0.816618 | results/robustness/random_entry/path_05 |
+-| random_entry | path_06 | completed | -0.796375 | 0.808773 | results/robustness/random_entry/path_06 |
+-| random_entry | path_07 | completed | -0.082361 | 0.406776 | results/robustness/random_entry/path_07 |
+-| random_entry | path_08 | completed | 0.026433 | 0.444067 | results/robustness/random_entry/path_08 |
+-| random_entry | path_09 | completed | -0.628658 | 0.637227 | results/robustness/random_entry/path_09 |
+-| random_entry | path_10 | completed | -0.524499 | 0.647630 | results/robustness/random_entry/path_10 |
+-| random_entry | path_11 | completed | -0.814056 | 0.832762 | results/robustness/random_entry/path_11 |
+-| random_entry | path_12 | completed | -0.618682 | 0.653433 | results/robustness/random_entry/path_12 |
+-| random_entry | path_13 | completed | -0.605148 | 0.627162 | results/robustness/random_entry/path_13 |
+-| random_entry | path_14 | completed | -0.317327 | 0.595011 | results/robustness/random_entry/path_14 |
+-| random_entry | path_15 | completed | -0.477917 | 0.710152 | results/robustness/random_entry/path_15 |
+-| random_entry | path_16 | completed | -0.582925 | 0.598302 | results/robustness/random_entry/path_16 |
+-| random_entry | path_17 | completed | -0.449533 | 0.477566 | results/robustness/random_entry/path_17 |
+-| random_entry | path_18 | completed | -0.155749 | 0.560149 | results/robustness/random_entry/path_18 |
+-| random_entry | path_19 | completed | -0.467557 | 0.566319 | results/robustness/random_entry/path_19 |
+-| portfolio | 2_slots_20pct | completed | -0.840132 | 0.842298 | results/robustness/portfolio/2_slots_20pct |
+-| portfolio | 4_slots_15pct | completed | -0.909604 | 0.914807 | results/robustness/portfolio/4_slots_15pct |
++| baseline | baseline | completed | -0.926505 | 0.926956 | results/robustness/baseline |
++| neighborhood | entry_lookback_90 | completed | -0.939804 | 0.941733 | results/robustness/neighborhood/entry_lookback_90 |
++| neighborhood | entry_lookback_150 | completed | -0.921503 | 0.929946 | results/robustness/neighborhood/entry_lookback_150 |
++| neighborhood | trend_window_180 | completed | -0.880228 | 0.880968 | results/robustness/neighborhood/trend_window_180 |
++| neighborhood | trend_window_220 | completed | -0.931303 | 0.933941 | results/robustness/neighborhood/trend_window_220 |
++| neighborhood | trend_slope_window_10 | completed | -0.940305 | 0.942231 | results/robustness/neighborhood/trend_slope_window_10 |
++| neighborhood | trend_slope_window_30 | completed | -0.911058 | 0.911603 | results/robustness/neighborhood/trend_slope_window_30 |
++| neighborhood | exit_lookback_15 | completed | -0.912640 | 0.938058 | results/robustness/neighborhood/exit_lookback_15 |
++| neighborhood | exit_lookback_25 | completed | -0.924185 | 0.929924 | results/robustness/neighborhood/exit_lookback_25 |
++| dual_source | baostock_common | completed | -0.905885 | 0.908975 | results/robustness/dual_source/baostock_common |
++| dual_source | hithink_common | completed | -0.905885 | 0.908975 | results/robustness/dual_source/hithink_common |
++| double_cost | double_fees_20bp_slippage | completed | -0.937977 | 0.939435 | results/robustness/double_cost/double_fees_20bp_slippage |
++| random_order | path_00 | completed | -0.834262 | 0.861674 | results/robustness/random_order/path_00 |
++| random_order | path_01 | completed | -0.919004 | 0.919694 | results/robustness/random_order/path_01 |
++| random_order | path_02 | completed | -0.818140 | 0.835521 | results/robustness/random_order/path_02 |
++| random_order | path_03 | completed | -0.922700 | 0.924756 | results/robustness/random_order/path_03 |
++| random_order | path_04 | completed | -0.823051 | 0.851289 | results/robustness/random_order/path_04 |
++| random_order | path_05 | completed | -0.912803 | 0.921396 | results/robustness/random_order/path_05 |
++| random_order | path_06 | completed | -0.939945 | 0.942427 | results/robustness/random_order/path_06 |
++| random_order | path_07 | completed | -0.883147 | 0.887722 | results/robustness/random_order/path_07 |
++| random_order | path_08 | completed | -0.901904 | 0.906058 | results/robustness/random_order/path_08 |
++| random_order | path_09 | completed | -0.882031 | 0.883346 | results/robustness/random_order/path_09 |
++| random_order | path_10 | completed | -0.911268 | 0.916256 | results/robustness/random_order/path_10 |
++| random_order | path_11 | completed | -0.866846 | 0.873665 | results/robustness/random_order/path_11 |
++| random_order | path_12 | completed | -0.888819 | 0.894580 | results/robustness/random_order/path_12 |
++| random_order | path_13 | completed | -0.791696 | 0.856710 | results/robustness/random_order/path_13 |
++| random_order | path_14 | completed | -0.923642 | 0.926591 | results/robustness/random_order/path_14 |
++| random_order | path_15 | completed | -0.785183 | 0.827583 | results/robustness/random_order/path_15 |
++| random_order | path_16 | completed | -0.884124 | 0.886491 | results/robustness/random_order/path_16 |
++| random_order | path_17 | completed | -0.829251 | 0.830566 | results/robustness/random_order/path_17 |
++| random_order | path_18 | completed | -0.630915 | 0.680233 | results/robustness/random_order/path_18 |
++| random_order | path_19 | completed | -0.915788 | 0.919435 | results/robustness/random_order/path_19 |
++| random_entry | path_00 | completed | -0.680967 | 0.737243 | results/robustness/random_entry/path_00 |
++| random_entry | path_01 | completed | -0.811130 | 0.834921 | results/robustness/random_entry/path_01 |
++| random_entry | path_02 | completed | -0.351647 | 0.530875 | results/robustness/random_entry/path_02 |
++| random_entry | path_03 | completed | -0.467166 | 0.699220 | results/robustness/random_entry/path_03 |
++| random_entry | path_04 | completed | -0.537921 | 0.658025 | results/robustness/random_entry/path_04 |
++| random_entry | path_05 | completed | 0.313502 | 0.388759 | results/robustness/random_entry/path_05 |
++| random_entry | path_06 | completed | -0.844423 | 0.848966 | results/robustness/random_entry/path_06 |
++| random_entry | path_07 | completed | -0.614659 | 0.646799 | results/robustness/random_entry/path_07 |
++| random_entry | path_08 | completed | -0.582222 | 0.635441 | results/robustness/random_entry/path_08 |
++| random_entry | path_09 | completed | -0.524134 | 0.581053 | results/robustness/random_entry/path_09 |
++| random_entry | path_10 | completed | -0.685173 | 0.750233 | results/robustness/random_entry/path_10 |
++| random_entry | path_11 | completed | -0.752298 | 0.780616 | results/robustness/random_entry/path_11 |
++| random_entry | path_12 | completed | -0.695626 | 0.760164 | results/robustness/random_entry/path_12 |
++| random_entry | path_13 | completed | -0.666578 | 0.754577 | results/robustness/random_entry/path_13 |
++| random_entry | path_14 | completed | -0.576889 | 0.650670 | results/robustness/random_entry/path_14 |
++| random_entry | path_15 | completed | -0.661744 | 0.744700 | results/robustness/random_entry/path_15 |
++| random_entry | path_16 | completed | -0.338697 | 0.682762 | results/robustness/random_entry/path_16 |
++| random_entry | path_17 | completed | -0.702292 | 0.721575 | results/robustness/random_entry/path_17 |
++| random_entry | path_18 | completed | -0.653312 | 0.658973 | results/robustness/random_entry/path_18 |
++| random_entry | path_19 | completed | -0.405361 | 0.627464 | results/robustness/random_entry/path_19 |
++| portfolio | 2_slots_20pct | completed | -0.824940 | 0.827026 | results/robustness/portfolio/2_slots_20pct |
++| portfolio | 4_slots_15pct | completed | -0.883164 | 0.883164 | results/robustness/portfolio/4_slots_15pct |
+ 
+ ## 利润集中度：账户年度权益盈亏
+ 
+@@ -95,34 +110,34 @@
+ 
+ | 年度 | 权益盈亏（元） | 是否贡献最高年份 |
+ | --- | ---: | --- |
+-| 2016 | -644.850000 | 否 |
+-| 2017 | -1606.460000 | 否 |
+-| 2018 | -4925.460000 | 否 |
+-| 2019 | 951.010000 | 是 |
+-| 2020 | -2394.270000 | 否 |
+-| 2021 | -2056.520000 | 否 |
+-| 2022 | -4668.570000 | 否 |
+-| 2023 | -1043.330000 | 否 |
+-| 2024 | -255.460000 | 否 |
+-| 2025 | -616.140000 | 否 |
+-| 2026 | -438.140000 | 否 |
++| 2016 | -1764.590000 | 否 |
++| 2017 | -3101.070000 | 否 |
++| 2018 | -3909.380000 | 否 |
++| 2019 | 1443.070000 | 是 |
++| 2020 | -5826.300000 | 否 |
++| 2021 | -530.640000 | 否 |
++| 2022 | -2969.930000 | 否 |
++| 2023 | -805.830000 | 否 |
++| 2024 | -179.220000 | 否 |
++| 2025 | -733.820000 | 否 |
++| 2026 | -152.400000 | 否 |
+ 
+-去掉贡献最高年份 2019 后，剩余年份账户权益盈亏合计为 -18649.200000 元。
++去掉贡献最高年份 2019 后，剩余年份账户权益盈亏合计为 -19973.180000 元。
+ 
+ ## 双源复权共同窗口
+ 
+ - 同花顺面板起始日：2016-10-13；指标完整后的共同账户窗口：2017-08-31 至 2026-10-29。
+ - 两源均从现金空仓起算，使用相同原价执行、组合、费用和公司行动规则。
+ - 共同窗口不能视为完整主窗口，较短窗口结果不得冒充主基线。
+-- baostock共同窗口净收益/最大回撤：-0.878586 / 0.882572。
+-- 同花顺共同窗口净收益/最大回撤：-0.878586 / 0.882572。
+-- 入场信号差异：35；退出信号差异：105；完整差异表已落盘。
++- baostock共同窗口净收益/最大回撤：-0.905885 / 0.908975。
++- 同花顺共同窗口净收益/最大回撤：-0.905885 / 0.908975。
++- 入场信号差异：39；退出信号差异：115；完整差异表已落盘。
+ 
+ ## 成本、随机路径与自助区间
+ 
+ 双倍成本变体将全部佣金、印花税和过户费组成乘以2，并将单边滑点提高到20bp；仓位与现金路径仍由完整账户回测产生。
+ 20个随机排序路径只改变入场优先级；20个随机入场路径按原信号日数量从当日其他合格非信号股票中无放回替换，保留真实120日排序收益。
+-20交易日块、1000次自助只重采样基线日收益，属于探索性区间，不参与机械门槛。总收益分位数：2.5%=-0.970096，50%=-0.869295，97.5%=-0.450353。
++20交易日块、1000次自助只重采样基线日收益，属于探索性区间，不参与机械门槛。总收益分位数：2.5%=-0.977981，50%=-0.922714，97.5%=-0.718848。
+ 
+ ## 年度、滚动与事后描述性分组
+ 
+@@ -137,12 +152,31 @@
+ 
+ | 分组类型 | 分组 | 天数 | 组内复合收益 |
+ | --- | --- | ---: | ---: |
+-| market_regime | down | 769 | -0.776770 |
+-| market_regime | sideways | 405 | 0.090729 |
+-| market_regime | trend | 1266 | -0.527316 |
+-| size_style | large_led | 1376 | -0.727607 |
+-| size_style | small_led | 1064 | -0.577484 |
++| market_regime | down | 769 | -0.679488 |
++| market_regime | sideways | 405 | -0.285897 |
++| market_regime | trend | 1266 | -0.678893 |
++| size_style | large_led | 1376 | -0.758286 |
++| size_style | small_led | 1064 | -0.695945 |
+ 
++## 非门槛账户风险诊断
++
++这些诊断只披露风险，不生成订单、不改变策略，也不成为新门槛。
++
++- 入场价到信号日初始20日退出位：169笔；初始风险占账户比例均值/最大值为0.001851/0.064140。
++- 持仓后复权日收益相关股票对：277；相关系数均值/最大值为0.179096/1.000000。
++- 同日最多退出2笔；多笔集中退出天数11。
++- 退出隔夜跳空额外损失1937.600000元；跌停顺延额外损失121.720000元；均为描述性口径而非因果分解。
++- 最低佣金成交337笔；其佣金/成交额均值/最大值为0.007752/0.026342。
++
++停牌陈旧估值会计压力（仅将当日陈旧持仓市值额外折价，不生成交易）：
++
++| 折价 | 期末权益 | 最大回撤 |
++| --- | ---: | ---: |
++| 10% | 1469.890000 | 0.926956 |
++| 20% | 1469.890000 | 0.926956 |
++
++逐笔、股票对、集中退出、跳空、跌停顺延及逐日折价明细见results/robustness/risk/。
++
+ ## 2010—2015单源历史压力
+ 
+ 主结果和配置哈希冻结后才执行该压力试验；它不参与选参，也不能挽救或替换主基线。
+--- a/92_负结果与后续边界.md
++++ b/92_负结果与后续边界.md
+@@ -2,75 +2,90 @@
+ 
+ ## 裁决与适用范围
+ 
+-最终裁决为 **REJECTED**。冻结配置规范化哈希为 `869544c945bc6e39446f319f7922aefde36533112a0fa0a4a58f9c4dc6f29b3b`，主窗口为 2016-10-13 至 2026-10-29，初始资金 20,000 元，期末权益 2,301.81 元。当前基线不得进入实盘观察，也不以盘后模拟、前瞻台账或小额试行绕过该裁决。
++最终裁决为 **REJECTED**。冻结配置规范化哈希为 `869544c945bc6e39446f319f7922aefde36533112a0fa0a4a58f9c4dc6f29b3b`，主窗口为 2016-10-13 至 2026-10-29，初始资金 20,000 元，期末权益 1,469.89 元。当前基线不得进入实盘观察，也不以盘后模拟、前瞻台账或小额试行绕过该裁决。
+ 
+-本文只解释预注册门槛为何失败、结果允许支持的归因以及停止边界。所有数值来自 `results/baseline/`、`results/robustness/` 和 `results/stress_2010_2015/` 的既有落盘结果；历史结果不代表未来表现。
++本文只解释冻结门槛为何失败、结果允许支持的归因以及停止边界。所有数值来自修正键对齐后重跑的 `results/baseline/`、`results/robustness/` 和 `results/stress_2010_2015/`。旧主窗口结果存在信号与原面板位置掩码错位，旧数值（包括净收益 -0.884910、MDD 0.887073）已全部归入 `.sdd/invalid_alignment/`，属于无效历史记录，不能与修正后结果作有效业绩比较，也不能作为修复改善或恶化的证据。历史结果不代表未来表现。
+ 
++2026-11-03 授权的回撤政策为：其他门槛均通过时，MDD 不超过 10% 为 UNREJECTED；10% 至 20% 为 BOUNDARY，只允许纯模拟；MDD 超过 20% 为 REJECTED。任一其他门槛失败同样为 REJECTED，原 8% 内部分界已取消。该政策没有根据修正后收益反向选择，策略参数、成本和试验定义均未改变。
++
+ ## 失败门槛不是单一回撤问题
+ 
+-| 预注册要求 | 实际结果 | 结论 |
++| 预注册要求 | 修正后实际结果 | 结论 |
+ | --- | --- | --- |
+-| 主窗口净收益大于 0 | -0.884910 | 失败 |
+-| 最大回撤不超过 10% | 0.887073 | 失败；仅此项已足以否决 |
++| 主窗口净收益大于 0 | -0.926505 | 失败 |
++| 最大回撤不超过授权上限 | 0.926956 | 失败；远高于 20% 硬上限 |
+ | 滚动三年正收益窗口占比大于 50% | 85 个窗口，正收益占比 0 | 失败 |
+ | 至少 6/8 个邻域变体为正 | 0/8 | 失败 |
+ | 至少 16/20 个随机排序路径为正 | 0/20 | 失败 |
+-| 去掉最高贡献年份后的账户权益盈亏大于 0 | -18649.20 元 | 失败 |
+-| 双源共同窗口正收益且回撤受控 | 两源均为 -0.878586，MDD 均为 0.882572 | 失败 |
+-| 双倍费用与 20bp 单边滑点下正收益且可执行 | -0.916818，MDD 0.917916 | 失败 |
++| 去掉最高贡献年份后的账户权益盈亏大于 0 | -19973.18 元 | 失败 |
++| 双源共同窗口正收益且回撤受控 | 两源均为 -0.905885，MDD 均为 0.908975 | 失败 |
++| 双倍费用与 20bp 单边滑点下正收益且可执行 | -0.937977，MDD 0.939435 | 失败 |
+ 
+-数据与执行完整性、收盘后信号和次日合法开盘可复现性检查通过，只能说明回测口径通过检查，不能抵消收益、持续性和回撤门槛失败。
++10 个冻结门槛中 8 个失败。数据与执行完整性、收盘后信号和次日合法开盘可复现性检查通过，只能说明回测口径通过检查，不能抵消收益、持续性和回撤门槛失败。独立证据分别覆盖 `(date,code)` 键集合、行数和窗口，现金非负，100 股买入整手，合法成交价，权益与持仓市值恒等式，以及信号后次日开盘时序；基线与双倍成本账户均逐项通过。
+ 
+ ## 数据已支持的失效归因
+ 
+ ### 1. 显式费用加深亏损，毛盈亏口径仍含滑点
+ 
+-171 笔已闭合往返的显式费用前毛盈亏（`gross_pnl`）合计为 **-15,913.78 元**；这些往返的显式费用（佣金、印花税和过户费）合计 **1,946.28 元**，扣除显式费用后净盈亏为 **-17,860.06 元**。因此，毛亏损在显式费用前已经存在，显式费用不是亏损唯一来源。这里的毛盈亏仍含滑点：`gross_pnl` 使用含滑点成交价，只排除上述显式费用，不能据此排除滑点影响。
++169 笔已闭合往返的显式费用前毛盈亏（`gross_pnl`）合计为 **-16,893.18 元**；这些往返的显式费用（佣金、印花税和过户费）合计 **1,867.33 元**，扣除显式费用后净盈亏为 **-18,760.51 元**。因此，毛亏损在显式费用前已经存在，显式费用不是亏损唯一来源。这里的毛盈亏仍含滑点：`gross_pnl` 使用含滑点成交价，只排除上述显式费用，不能据此排除滑点影响。
+ 
+-这是已闭合往返回口径，不含未闭合持仓、未实现盈亏和分红，不能直接与全账户总亏损对账。全部成交记录的费用合计还包含未闭合部分，不能与上述往返回费用混用。双倍费用和更高滑点变体通过完整账户重跑得到 -0.916818，说明提高显式费用和滑点假设后结果进一步恶化；该变体不是零滑点或独立滑点消融，不能用来识别滑点的独立贡献。
++这是已闭合往返口径，不含未闭合持仓、未实现盈亏和分红，不能直接与全账户总亏损对账。全部 337 笔成交的费用还包含未闭合部分，不能与上述往返费用混用。双倍费用和更高滑点变体通过完整账户重跑得到 -0.937977，说明提高显式费用和滑点假设后结果进一步恶化；该变体不是零滑点或独立滑点消融，不能用来识别滑点的独立贡献。
+ 
+ ### 2. 胜率与盈亏比共同形成负期望
+ 
+-已闭合往返中 50 笔盈利、121 笔亏损，胜率 **0.292398**；平均盈利 **232.149000 元**，平均亏损 **-243.533140 元**。平均盈利/平均亏损绝对值约为 **0.953254**，小于 1，扣费后每笔期望为 **-104.444795 元**。这既不是很低胜率被大额盈利补偿的结构，也不是高胜率被少数巨亏单独拖垮的结构；现有样本同时表现为低胜率和平均亏损略大于平均盈利。
++已闭合往返中 39 笔盈利、130 笔亏损，胜率 **0.230769**；平均盈利 **294.503077 元**，平均亏损 **-232.662538 元**。扣费后每笔期望为 **-111.008935 元**。现有样本同时表现为低胜率和平均盈利不足以补偿平均亏损，不是由少数盈利交易即可解释为正期望的结构。
+ 
+ ### 3. 20 日退出通道不是亏损上限
+ 
+ 退出定义是收盘价跌破此前 20 个完整交易日最低价后产生信号，再等下一可执行时点成交；它不是固定比例止损，也不保证按通道价成交。入场价与通道之间没有固定风险距离，隔夜跳空、停牌、跌停和无法成交都可能扩大实际损失。
+ 
+-基线已闭合往返中最差净收益率为 **-39.024635%**，直接说明“20 日”是通道观察窗口，不是亏损上限。平均亏损和最大账户回撤也必须按实际成交与账户权益理解，不能从通道名称推导风险限额。
++非门槛入场诊断显示，169 笔入场中有 158 笔实际入场价不高于信号日初始 20 日退出位，按 `max(入场价-退出位,0)` 计算的正风险距离因此经常为零。这表示该通道不能充当事前固定风险预算，而不是表示没有亏损风险。初始风险金额均值/最大值为 22.877943/1,042.191938 元，占信号日账户权益比例均值/最大值为 0.001851/0.064140。
+ 
++基线已闭合往返中最差净收益率为 **-100%**，来自 `000043.SZ` 退市零残值处理，直接说明“20 日”是通道观察窗口，不是亏损上限。平均亏损和最大账户回撤必须按实际成交与账户权益理解，不能从通道名称推导风险限额。
++
+ ### 4. 年度与滚动结果不支持持续正期望
+ 
+-2016—2026 的 11 个年度片段中，只有 2019 年收益为正（0.074163，账户权益盈亏 951.01 元）；2016 和 2026 是部分年度。去掉这一最高贡献年份后，其余年份账户权益盈亏合计 **-18649.20 元**。85 个月末滚动三年窗口没有正收益窗口。
++2016—2026 的 11 个年度片段中，只有 2019 年账户权益盈亏为正，金额 1,443.07 元；2016 和 2026 是部分年度。去掉这一最高贡献年份后，其余年份账户权益盈亏合计 **-19973.18 元**。85 个月末滚动三年窗口没有正收益窗口。
+ 
+-因此，负结果不是由单个亏损年份或某个短回撤阶段独占解释。前五笔已闭合盈利交易净贡献 5,626.60 元、占已闭合盈利交易净盈利总额约 48.47%，也不足以改变全账户持续亏损的结论。
++因此，负结果不是由单个亏损年份或某个短回撤阶段独占解释。前五笔已闭合盈利交易净贡献 6,172.93 元、占已闭合盈利交易净盈利总额约 53.74%，也不足以改变全账户持续亏损的结论。
+ 
+ ### 5. 随机、双源、成本和历史压力均未提供挽救证据
+ 
+-- **随机排序**：20 条只改变同优先级入场顺序的路径全部亏损，门槛要求至少 16 条为正，实际为 0/20。结果不支持基线依赖某一条幸运排序路径。
+-- **随机入场**：20 条替换入场股票的路径中 19 条亏损；`path_08` 为 0.026433，但 MDD 为 0.444067。单条随机路径正收益不是可执行证据，也不能据此单独断定入场信号的因果效果。
+-- **双源共同窗口**：2017-08-31 至 2026-10-29，Baostock 与同花顺均为 -0.878586，MDD 均为 0.882572。两源存在 35 个入场和 105 个退出信号差异，完整差异表已落盘；共同窗口短于主窗口，不能冒充完整主窗口复验。
+-- **成本压力**：双倍费用、20bp 单边滑点下为 -0.916818，失败不是只在理想成本下才出现。
++- **随机排序**：20 条只改变同优先级入场顺序的路径全部亏损，门槛要求至少 16 条为正，实际为 0/20。逐日 `(code,date,random_rank)` 日志均已落盘；结果不支持基线依赖某一条幸运排序路径。
++- **随机入场**：20 条替换入场股票的路径中 19 条亏损；仅 `path_05` 为 0.313502，但 MDD 为 0.388759。不得据此选优或替换基线，单条随机路径正收益也不是可执行证据或入场信号因果效果的单独证明。
++- **双源共同窗口**：2017-08-31 至 2026-10-29，Baostock 与同花顺均为 -0.905885，MDD 均为 0.908975。两源存在 39 个入场和 115 个退出信号差异，共 154 行差异；共同窗口短于主窗口，不能冒充完整主窗口复验。
++- **成本压力**：双倍费用、20bp 单边滑点下为 -0.937977，失败不是只在原成本假设下出现。
+ - **邻域与组合变体**：8 个预注册邻域变体全部亏损，两个组合约束变体也均亏损；这些结果是稳健性证据，不是挑选较佳变体替换基线的依据。
+-- **2010—2015 单源历史压力**：净收益 -0.305295，MDD 0.588423。它只有 Baostock 单源，不承担双源确认，也未用于回头修改基线。
+-- **探索性自助区间**：20 交易日块、1000 次重采样总收益的 2.5%/50%/97.5% 分位数为 -0.970096/-0.869295/-0.450353。它只重采样基线日收益，不是 1000 次完整账户回测，也不参与机械门槛。
++- **2010—2015 单源历史压力**：85 笔已闭合往返，净收益 -0.305295，MDD 0.588423。它只有 Baostock 单源，在主结果冻结后最后执行，不承担双源确认，也未用于回头修改基线。
++- **探索性自助区间**：20 交易日块、1000 次重采样总收益的 2.5%/50%/97.5% 分位数为 -0.977981/-0.922714/-0.718848。它只重采样基线日收益，不是 1000 次完整账户回测，也不参与机械门槛。
+ 
++## 非门槛账户风险诊断
++
++以下项目只披露修正后基线的风险，不生成订单、不改变策略，也不成为新门槛。完整逐笔、股票对和逐日明细位于 `results/robustness/risk/`。
++
++1. **持仓收益相关性**：277 个可计算股票对的相关系数均值/中位数/最大值为 0.179096/0.180538/1.000000。相关性是同期持仓日收益的描述统计，不是因果解释。
++2. **同日集中退出**：单日最多 2 笔退出，11 个账户日有多笔退出；最差集中退出日为 2019-12-17，净盈亏 -1,906.94 元，包含退市零残值事件。
++3. **跳空与跌停顺延**：82 笔卖出出现按既定口径计算的隔夜向下跳空，额外损失合计 1,937.60 元；2 个跌停顺延订单均最终成交，最大顺延 1 日，描述性额外损失合计 121.72 元。两项都不是独立因果归因。
++4. **最低佣金与小成交额**：337 笔成交全部触发最低佣金；这些成交的佣金/成交额均值/中位数/最大值为 0.007752/0.005587/0.026342。该事实支持小额账户费用摩擦显著，但不识别其独立因果贡献。
++5. **停牌陈旧估值**：166 个账户日存在陈旧估值持仓，最大陈旧市值 7,098 元。对当日陈旧持仓市值额外折价 10% 和 20% 后，期末权益均为 1,469.89 元，点估计 MDD 均为 0.926956。该结果只说明这一纯会计折价口径未改变最终权益和既有点估计 MDD，不表示停牌风险不存在，也不进入门槛。
++
+ ## 尚属假设的解释
+ 
+ 以下解释不能被现有结果单独确认，不应写成已证明的因果结论：
+ 
+-1. **趋势定义本身是否无效。** 基线、邻域和随机对照提供了负向证据，但没有把所有趋势定义或全部市场时期穷尽，不能把本规则族失败推广成“趋势永远无效”。
+-2. **退出是否过慢或反复震荡是否主导亏损。** 15/25 日邻域同样亏损，说明失败不只在单一 20 日取值；但现有实验没有独立分解跳空、信号滞后和震荡各自的贡献。
+-3. **市场状态是否决定适用性。** 事后分组中，`down` 为 -0.776770、`trend` 为 -0.527316、`sideways` 为 0.090729；大小盘领先两组也都为负。分组定义未预冻结，只能生成待检验假设，尤其不能把 `sideways` 的历史正收益解释为已找到适用环境。
+-4. **小账户整手与最低佣金的相对作用。** 结果确认显式费用会加深亏损，但现有汇总没有把整手约束、最低佣金和滑点分别做完整因果分解，不能断言哪一项是主因。
++1. **趋势定义本身是否无效。** 基线、邻域和随机对照提供了负向证据，但没有穷尽所有趋势定义或全部市场时期，不能把本规则族失败推广成“趋势永远无效”。
++2. **退出是否过慢或反复震荡是否主导亏损。** 15/25 日邻域同样亏损，说明失败不只在单一 20 日取值；跳空、信号滞后和震荡各自的独立贡献仍未分解。
++3. **市场状态是否决定适用性。** 事后市场状态与大小盘分组均为负，且定义未预冻结，只能生成待检验假设，不能转化为实时交易闸门。
++4. **小账户整手与最低佣金的相对作用。** 全部成交触发最低佣金是数据已支持的描述事实，但整手约束、最低佣金和滑点没有做完整独立因果分解，不能断言哪一项是主因。
+ 5. **滑点是否是主要亏损来源。** 毛盈亏仍含滑点，当前没有零滑点变体或独立滑点消融，无法估计滑点的独立贡献；滑点主因可能性保留为未证实假设。
++6. **双源信号差异的来源。** 两源共同窗口账户结果相同，但逐键信号并不完全相同；现有结果没有确认数据口径、公司行动或复权处理中哪一项造成差异。
+ 
+ ## 不适合的场景与执行条件
+ 
+-- 不能承受极大权益回撤、要求账户回撤有硬上限，或把 20 日通道当作固定止损的场景。主窗口 MDD 0.887073，历史压力 MDD 0.588423。
++- 不能承受极大权益回撤、要求账户回撤有硬上限，或把 20 日通道当作固定止损的场景。主窗口 MDD 0.926956，历史压力 MDD 0.588423，且存在 -100% 的退市单笔结果。
+ - 要求多数年份或滚动三年持续盈利的场景。现有年度与 85 个滚动窗口均不支持。
+-- 将历史 `sideways` 分组当作实时市场开关的场景。该分组是事后描述，不构成经验证的执行条件。
+-- 无法处理次日合法开盘、停牌、跌停顺延、跳空和真实费用变化的执行环境。回测记录了这些约束下的历史模拟，不等于未来成交保证。
++- 将事后市场状态分组当作实时市场开关的场景。该分组只是描述，不构成经验证的执行条件。
++- 无法处理次日合法开盘、停牌陈旧估值、退市零残值、跌停顺延、跳空和真实费用变化的执行环境。回测记录这些约束下的历史模拟，不等于未来成交保证。
+ - 把结论直接外推到非沪深主板、不同资金规模、不同整手规则或其他市场的场景。本研究只覆盖冻结宇宙、2 万元初始资金和既定执行口径。
+ 
+ ## 停止边界与后续研究隔离
+--- a/src/trend_system/broker.py
++++ b/src/trend_system/broker.py
+@@ -3,9 +3,11 @@
+ from dataclasses import dataclass
+ from decimal import Decimal, ROUND_HALF_UP
+ 
++import numpy as np
+ import pandas as pd
+ 
+-from .execution import Fill, Rejection, open_fill, size_buy
++from .execution import Fill, Rejection, open_fill, price_limits, size_buy
++from .signals import assert_aligned_inputs
+ 
+ 
+ @dataclass(frozen=True)
+@@ -74,6 +76,7 @@
+ 
+ 
+ def run_backtest(panel, signals, corporate_actions, config) -> BacktestResult:
++    assert_aligned_inputs(panel, signals)
+     panel = panel.copy()
+     signals = signals.copy()
+     corporate_actions = corporate_actions.copy()
+@@ -188,7 +191,16 @@
+                 continue
+             invalid = not bool(bar.get("data_valid", True))
+             conflict = bool(bar.get("execution_conflict", False))
+-            if invalid or conflict:
++            terminal_suspension = (
++                invalid
++                and int(bar.get("trade_status", 1)) == 0
++                and _out_date(bar.get("out_date")) == day
++                and all(
++                    pd.isna(bar.get(field))
++                    for field in ("open", "high", "low", "close", "prev_close")
++                )
++            )
++            if conflict or (invalid and not terminal_suspension):
+                 raise RuntimeError(
+                     "held position execution aborted: "
+                     f"date={day} code={code} data_valid={not invalid} "
+@@ -478,3 +490,102 @@
+         daily_positions=pd.DataFrame(position_rows, columns=_POSITION_COLUMNS),
+         action_log=pd.DataFrame(action_rows, columns=_ACTION_COLUMNS),
+     )
++
++
++def execution_integrity(panel, signals, result: BacktestResult, config) -> dict:
++    """Return independent, auditable execution checks instead of one broad flag."""
++    checks = {}
++
++    try:
++        assert_aligned_inputs(panel, signals)
++        account_dates = set(result.daily_account["date"].astype(str))
++        panel_dates = set(panel["date"].astype(str))
++        checks["key_set_and_window"] = bool(
++            account_dates == panel_dates
++            and len(account_dates) == len(result.daily_account)
++            and panel["date"].astype(str).between(config.start_date, config.end_date).all()
++        )
++    except (KeyError, TypeError, ValueError):
++        checks["key_set_and_window"] = False
++
++    try:
++        cash = pd.to_numeric(result.daily_account["cash"], errors="coerce")
++        checks["cash_nonnegative"] = bool(cash.notna().all() and cash.ge(-1e-8).all())
++    except (KeyError, TypeError):
++        checks["cash_nonnegative"] = False
++
++    try:
++        buys = result.trades.loc[result.trades["side"] == "buy"]
++        quantity = pd.to_numeric(buys["quantity"], errors="coerce")
++        checks["whole_lot_buys"] = bool(
++            quantity.notna().all() and quantity.gt(0).all() and quantity.mod(100).eq(0).all()
++        )
++    except (KeyError, TypeError):
++        checks["whole_lot_buys"] = False
++
++    trades = result.trades.copy()
++    if trades.empty:
++        checks["legal_fill_prices"] = True
++    else:
++        try:
++            trades["date"] = trades["date"].astype(str)
++            bars = panel.copy()
++            bars["date"] = bars["date"].astype(str)
++            merged = trades.merge(
++                bars[["date", "code", "high", "low", "prev_close", "is_st"]],
++                on=["date", "code"],
++                how="left",
++                validate="many_to_one",
++            )
++            legal = []
++            for row in merged.itertuples(index=False):
++                upper_limit, lower_limit = price_limits(row.prev_close, bool(row.is_st))
++                lower = max(float(row.low), lower_limit)
++                upper = min(float(row.high), upper_limit)
++                price = float(row.price)
++                legal.append(lower - 1e-8 <= price <= upper + 1e-8)
++            checks["legal_fill_prices"] = bool(
++                len(merged) == len(trades) and all(legal)
++            )
++        except (KeyError, TypeError, ValueError, ArithmeticError):
++            checks["legal_fill_prices"] = False
++
++    try:
++        account = result.daily_account.copy()
++        account["date"] = account["date"].astype(str)
++        components = account[["cash", "receivables", "market_value", "equity"]].apply(
++            pd.to_numeric, errors="coerce"
++        )
++        identity = components["cash"] + components["receivables"] + components["market_value"]
++        account_ok = bool(
++            components.notna().all().all()
++            and np.isclose(identity, components["equity"], atol=1e-6).all()
++        )
++        positions = result.daily_positions.copy()
++        if positions.empty:
++            position_values = pd.DataFrame(columns=["date", "position_value"])
++        else:
++            positions["date"] = positions["date"].astype(str)
++            position_values = (
++                positions.groupby("date")["market_value"].sum().rename("position_value").reset_index()
++            )
++        valued = account[["date", "market_value"]].merge(
++            position_values, on="date", how="left", validate="one_to_one"
++        )
++        valued["position_value"] = valued["position_value"].fillna(0.0)
++        positions_ok = bool(
++            np.isclose(valued["market_value"], valued["position_value"], atol=1e-6).all()
++        )
++        checks["equity_identity"] = account_ok and positions_ok
++    except (KeyError, TypeError, ValueError):
++        checks["equity_identity"] = False
++
++    try:
++        checks["next_open_after_signal"] = bool(
++            trades.empty or trades["date"].astype(str).gt(trades["signal_date"].astype(str)).all()
++        )
++    except (KeyError, TypeError):
++        checks["next_open_after_signal"] = False
++
++    checks["all_passed"] = bool(all(checks.values()))
++    return checks
+--- a/src/trend_system/metrics.py
++++ b/src/trend_system/metrics.py
+@@ -14,7 +14,7 @@
+ from .broker import BacktestResult, run_backtest
+ from .config import ResearchConfig
+ from .data import load_panel
+-from .signals import compute_signals
++from .signals import compute_signals, select_backtest_window
+ 
+ 
+ PROJECT_ROOT = Path(__file__).resolve().parents[2]
+@@ -308,6 +308,7 @@
+ def _input_info(frame: pd.DataFrame, path: Path) -> dict:
+     return {
+         "path": str(path),
++        "sha256": _sha256(path),
+         "rows": int(len(frame)),
+         "codes": int(frame["code"].nunique()) if "code" in frame else 0,
+         "first_date": str(frame["date"].min()) if len(frame) else None,
+@@ -472,9 +473,7 @@
+     corporate_actions = pd.read_parquet(actions_path)
+ 
+     signals = compute_signals(main_panel, config)
+-    in_window = main_panel["date"].between(config.start_date, config.end_date)
+-    backtest_panel = main_panel.loc[in_window].reset_index(drop=True)
+-    backtest_signals = signals.loc[in_window].reset_index(drop=True)
++    backtest_panel, backtest_signals = select_backtest_window(main_panel, signals, config)
+     backtest = run_backtest(backtest_panel, backtest_signals, corporate_actions, config)
+     summary = performance_summary(backtest.daily_account, backtest.round_trips)
+     annual_rolling = annual_and_rolling(backtest.daily_account)
+@@ -492,6 +491,14 @@
+         config_path=config_path,
+     )
+     manifest["benchmarks"] = benchmark_metadata
++    manifest["alignment"] = {
++        "method": "signals自身日期筛选后与面板按(date,code)一对一连接；run_backtest前硬校验",
++        "panel_rows": int(len(backtest_panel)),
++        "signal_rows": int(len(backtest_signals)),
++        "key_difference_count": 0,
++        "window_start": str(backtest_panel["date"].min()),
++        "window_end": str(backtest_panel["date"].max()),
++    }
+ 
+     output_directory = root / "results" / "baseline"
+     output_directory.mkdir(parents=True, exist_ok=True)
+--- a/src/trend_system/report.py
++++ b/src/trend_system/report.py
+@@ -30,6 +30,8 @@
+     concentration = summary["profit_concentration"]
+     bootstrap = summary["bootstrap"]
+     stress = summary["stress"]
++    integrity = summary["execution_integrity"]
++    risk = summary["risk_report"]
+     lines = [
+         "# 主板极简趋势系统：稳健性、历史压力与机械裁决",
+         "",
+@@ -57,8 +59,34 @@
+     lines.extend(
+         [
+             "",
+-            "裁决规则：任一非回撤门槛失败或最大回撤超过10%即为REJECTED；其他门槛均通过时，最大回撤不超过8%才可为UNREJECTED，8%—10%只能为BOUNDARY。",
++            "2026-11-03用户授权的主路径裁决规则：任一非回撤门槛失败或最大回撤超过20%即为REJECTED；其他门槛均通过时，最大回撤不超过10%为UNREJECTED，10%—20%为BOUNDARY（较高风险，仅可进入纯模拟）；原8%内部分界已取消。",
+             "",
++            "## 执行完整性独立证据",
++            "",
++            "以下证据分别计算，不以成交时序或单一布尔值代替键、现金、整手、价格和账户核验。",
++            "",
++            "| 检查 | 基线 | 双倍成本 |",
++            "| --- | --- | --- |",
++        ]
++    )
++    check_names = (
++        ("key_set_and_window", "键集合、行数与窗口"),
++        ("cash_nonnegative", "现金非负"),
++        ("whole_lot_buys", "买入100股整手"),
++        ("legal_fill_prices", "成交价格合法"),
++        ("equity_identity", "权益与持仓市值恒等式"),
++        ("next_open_after_signal", "信号后次日成交时序"),
++    )
++    for key, label in check_names:
++        lines.append(
++            f"| {label} | {'是' if integrity['baseline'][key] else '否'} | "
++            f"{'是' if integrity['double_cost'][key] else '否'} |"
++        )
++    lines.extend(
++        [
++            "",
++            "完整证据字典同时作为data_execution_integrity和fully_after_close_reproducible门槛的actual保存于summary.json。",
++            "",
+             "## 完整真实变体矩阵",
+             "",
+             "每一行均复用完整账户、原价成交、整手、费用和公司行动规则；未用单笔交易均值代替账户回测。",
+@@ -132,6 +160,32 @@
+     lines.extend(
+         [
+             "",
++            "## 非门槛账户风险诊断",
++            "",
++            "这些诊断只披露风险，不生成订单、不改变策略，也不成为新门槛。",
++            "",
++            f"- 入场价到信号日初始20日退出位：{risk['entry_risk']['entries']}笔；初始风险占账户比例均值/最大值为{_number(risk['entry_risk']['mean_risk_account_share'])}/{_number(risk['entry_risk']['max_risk_account_share'])}。",
++            f"- 持仓后复权日收益相关股票对：{risk['holding_return_correlation']['pair_count']}；相关系数均值/最大值为{_number(risk['holding_return_correlation']['mean_correlation'])}/{_number(risk['holding_return_correlation']['max_correlation'])}。",
++            f"- 同日最多退出{risk['same_day_exits']['max_exits']}笔；多笔集中退出天数{risk['same_day_exits']['multiple_exit_days']}。",
++            f"- 退出隔夜跳空额外损失{_number(risk['exit_execution']['overnight_gap_extra_loss'])}元；跌停顺延额外损失{_number(risk['exit_execution']['limit_down_delay_extra_loss'])}元；均为描述性口径而非因果分解。",
++            f"- 最低佣金成交{risk['minimum_commission']['minimum_applied_trades']}笔；其佣金/成交额均值/最大值为{_number(risk['minimum_commission']['mean_commission_to_amount'])}/{_number(risk['minimum_commission']['max_commission_to_amount'])}。",
++            "",
++            "停牌陈旧估值会计压力（仅将当日陈旧持仓市值额外折价，不生成交易）：",
++            "",
++            "| 折价 | 期末权益 | 最大回撤 |",
++            "| --- | ---: | ---: |",
++        ]
++    )
++    for label in ("10pct", "20pct"):
++        scenario = risk["stale_valuation_stress"][label]
++        lines.append(
++            f"| {scenario['discount']:.0%} | {_number(scenario['final_equity'])} | {_number(scenario['max_drawdown'])} |"
++        )
++    lines.extend(
++        [
++            "",
++            "逐笔、股票对、集中退出、跳空、跌停顺延及逐日折价明细见results/robustness/risk/。",
++            "",
+             "## 2010—2015单源历史压力",
+             "",
+             "主结果和配置哈希冻结后才执行该压力试验；它不参与选参，也不能挽救或替换主基线。",
+--- a/src/trend_system/robustness.py
++++ b/src/trend_system/robustness.py
+@@ -20,12 +20,13 @@
+ import pyarrow
+ 
+ from . import execution
+-from .broker import BacktestResult, run_backtest
++from .broker import BacktestResult, execution_integrity, run_backtest
+ from .config import ResearchConfig
+ from .data import load_panel
+ from .metrics import annual_and_rolling, performance_summary
+ from .report import render_final_report
+-from .signals import compute_signals
++from .risk import build_risk_report
++from .signals import compute_signals, select_backtest_window
+ 
+ 
+ PROJECT_ROOT = Path(__file__).resolve().parents[2]
+@@ -44,6 +45,18 @@
+ RANDOM_PATHS = 20
+ BOOTSTRAP_ITERATIONS = 1000
+ BOOTSTRAP_BLOCK_SIZE = 20
++FROZEN_GATE_IDS = (
++    "data_execution_integrity",
++    "main_window_positive",
++    "rolling_3y_majority_positive",
++    "double_cost_positive_and_executable",
++    "neighborhood_at_least_6_positive",
++    "random_order_at_least_16_positive",
++    "remaining_years_equity_pnl_positive",
++    "fully_after_close_reproducible",
++    "hithink_common_positive_mdd_and_direction",
++    "drawdown_boundary",
++)
+ 
+ 
+ @dataclass(frozen=True)
+@@ -115,13 +128,22 @@
+     except (KeyError, TypeError, ValueError):
+         return "REJECTED"
+     gates = summary.get("gates", summary.get("mechanical_gates", []))
+-    if not np.isfinite(drawdown) or not gates:
++    if not isinstance(gates, list) or len(gates) != len(FROZEN_GATE_IDS):
+         return "REJECTED"
++    if any(not isinstance(gate, dict) for gate in gates):
++        return "REJECTED"
++    identifiers = [gate.get("id") for gate in gates]
++    if any(not isinstance(identifier, str) for identifier in identifiers):
++        return "REJECTED"
++    if len(set(identifiers)) != len(identifiers) or set(identifiers) != set(FROZEN_GATE_IDS):
++        return "REJECTED"
++    if not np.isfinite(drawdown):
++        return "REJECTED"
+     if any(not bool(gate.get("passed", False)) for gate in gates):
+         return "REJECTED"
+-    if drawdown > 0.10:
++    if drawdown > 0.20:
+         return "REJECTED"
+-    if drawdown > 0.08:
++    if drawdown > 0.10:
+         return "BOUNDARY"
+     return "UNREJECTED"
+ 
+@@ -153,9 +175,9 @@
+     entry = result["entry_signal"].astype(bool)
+     scores = _rng(config, experiment=1, path_id=path_id).random(int(entry.sum()))
+     result.loc[entry, "rank_return_120"] = scores
+-    log = pd.DataFrame(
+-        [{"path_id": path_id, "randomized_entry_signals": int(entry.sum())}]
+-    )
++    log = result.loc[entry, ["date", "code"]].copy().reset_index(drop=True)
++    log["random_rank"] = result.loc[entry, "rank_return_120"].to_numpy()
++    log.insert(0, "path_id", path_id)
+     return result, log
+ 
+ 
+@@ -448,13 +470,16 @@
+         raise ValueError("No common date has complete indicator warmup")
+     common_start = str(baostock_signals.loc[complete, "date"].min())
+     common_config = replace(config, start_date=common_start)
+-    selected = baostock_panel["date"].ge(common_start)
+-    if not selected.equals(hithink_panel["date"].ge(common_start)):
+-        raise RuntimeError("Common-source calendars diverge")
+-    baostock_panel = baostock_panel.loc[selected].reset_index(drop=True)
+-    hithink_panel = hithink_panel.loc[selected].reset_index(drop=True)
+-    baostock_signals = baostock_signals.loc[selected.to_numpy()].reset_index(drop=True)
+-    hithink_signals = hithink_signals.loc[selected.to_numpy()].reset_index(drop=True)
++    baostock_panel, baostock_signals = select_backtest_window(
++        baostock_panel, baostock_signals, common_config
++    )
++    hithink_panel, hithink_signals = select_backtest_window(
++        hithink_panel, hithink_signals, common_config
++    )
++    if not baostock_panel[["date", "code"]].equals(hithink_panel[["date", "code"]]):
++        raise RuntimeError("Common-source panels have divergent keys or calendars")
++    if not baostock_signals[["date", "code"]].equals(hithink_signals[["date", "code"]]):
++        raise RuntimeError("Common-source signals have divergent keys or calendars")
+     return (
+         baostock_panel,
+         hithink_panel,
+@@ -612,13 +637,30 @@
+     output_dir = root / "results" / "robustness"
+     stress_output_dir = root / "results" / "stress_2010_2015"
+     output_dir.mkdir(parents=True, exist_ok=True)
++    input_paths = {
++        name: data_dir / name
++        for name in (
++            "main_panel.parquet",
++            "hithink_signal_panel.parquet",
++            "index_panel.parquet",
++            "corporate_actions.parquet",
++            "stress_panel.parquet",
++        )
++    }
++    input_manifest = {
++        "inputs": {
++            path.name: {"path": _relative(path), "sha256": _sha256(path)}
++            for path in input_paths.values()
++        }
++    }
++    _write_json(output_dir / "input_manifest.json", input_manifest)
+ 
+     main_panel = load_panel(data_dir / "main_panel.parquet")
+     corporate_actions = pd.read_parquet(data_dir / "corporate_actions.parquet")
+-    in_window = main_panel["date"].between(config.start_date, config.end_date)
+-    main_window = main_panel.loc[in_window].reset_index(drop=True)
+     baseline_signals_full = _with_previous_ma(compute_signals(main_panel, config), config)
+-    baseline_signals = baseline_signals_full.loc[in_window.to_numpy()].reset_index(drop=True)
++    main_window, baseline_signals = select_backtest_window(
++        main_panel, baseline_signals_full, config
++    )
+     del baseline_signals_full
+ 
+     baseline_record, baseline_summary, baseline_backtest = _run_and_save(
+@@ -634,7 +676,7 @@
+ 
+     for name, variant_config in neighborhood_configs(config):
+         signals_full = compute_signals(main_panel, variant_config)
+-        signals = signals_full.loc[in_window.to_numpy()].reset_index(drop=True)
++        _, signals = select_backtest_window(main_panel, signals_full, variant_config)
+         del signals_full
+         baseline_values = asdict(config)
+         variant_values = asdict(variant_config)
+@@ -716,7 +758,6 @@
+         baostock_common_signals,
+         hithink_common_signals,
+         main_panel,
+-        in_window,
+     )
+     gc.collect()
+ 
+@@ -734,7 +775,10 @@
+     variant_records.append(double_record)
+ 
+     for path_id in range(RANDOM_PATHS):
+-        signals, _ = random_order_signals(baseline_signals, config, path_id)
++        signals, order_log = random_order_signals(baseline_signals, config, path_id)
++        path_dir = output_dir / "random_order" / f"path_{path_id:02d}"
++        path_dir.mkdir(parents=True, exist_ok=True)
++        order_log.to_csv(path_dir / "random_order_log.csv", index=False)
+         record, _, _ = _run_and_save(
+             family="random_order",
+             name=f"path_{path_id:02d}",
+@@ -742,7 +786,7 @@
+             signals=signals,
+             corporate_actions=corporate_actions,
+             config=config,
+-            output_dir=output_dir / "random_order" / f"path_{path_id:02d}",
++            output_dir=path_dir,
+             changed_fields={"path_id": path_id, "seed": config.random_seed},
+         )
+         variant_records.append(record)
+@@ -844,21 +888,26 @@
+     opposite_direction = (hithink_return > 0 > baostock_return) or (
+         baostock_return > 0 > hithink_return
+     )
+-    chronology = bool(
+-        baseline_backtest.trades.empty
+-        or baseline_backtest.trades["date"].gt(baseline_backtest.trades["signal_date"]).all()
++    baseline_integrity = execution_integrity(
++        main_window, baseline_signals, baseline_backtest, config
+     )
+-    double_chronology = bool(
+-        double_backtest.trades.empty
+-        or double_backtest.trades["date"].gt(double_backtest.trades["signal_date"]).all()
++    double_integrity = execution_integrity(
++        main_window, baseline_signals, double_backtest, config
+     )
++    risk_summary = build_risk_report(
++        main_window,
++        baseline_signals,
++        baseline_backtest,
++        config,
++        output_dir / "risk",
++    )
+     drawdown = float(baseline_summary["max_drawdown"])
+     gates = [
+         _gate(
+             "data_execution_integrity",
+-            chronology and baseline_backtest.daily_account["equity"].notna().all(),
+-            "本地面板校验、权益完整性和成交时序检查",
+-            "数据与执行关键检查通过，无未解释前视或成交口径错误",
++            baseline_integrity["all_passed"],
++            baseline_integrity,
++            "数据与执行关键证据逐项通过：键/窗口、现金、整手、合法价格、权益恒等式和次日时序",
+         ),
+         _gate(
+             "main_window_positive",
+@@ -878,8 +927,8 @@
+         ),
+         _gate(
+             "double_cost_positive_and_executable",
+-            double_summary["total_return"] > 0 and double_chronology,
+-            double_summary["total_return"],
++            double_summary["total_return"] > 0 and double_integrity["all_passed"],
++            {"total_return": double_summary["total_return"], "execution": double_integrity},
+             "> 0，且所有成交保持次日合法开盘执行",
+         ),
+         _gate(
+@@ -902,14 +951,16 @@
+         ),
+         _gate(
+             "fully_after_close_reproducible",
+-            chronology,
+-            chronology,
+-            "信号收盘后确认，订单次日执行，无隐藏盘中条件",
++            baseline_integrity["key_set_and_window"]
++            and baseline_integrity["next_open_after_signal"]
++            and baseline_integrity["legal_fill_prices"],
++            baseline_integrity,
++            "键/窗口、合法价格与收盘后次日执行证据分别通过，无隐藏盘中条件",
+         ),
+         _gate(
+             "hithink_common_positive_mdd_and_direction",
+             hithink_return > 0
+-            and hithink_common_summary["max_drawdown"] <= 0.10
++            and hithink_common_summary["max_drawdown"] <= 0.20
+             and not opposite_direction,
+             {
+                 "hithink_total_return": hithink_return,
+@@ -917,13 +968,13 @@
+                 "baostock_common_total_return": baostock_return,
+                 "opposite_direction": opposite_direction,
+             },
+-            "同花顺共同窗口净收益>0且MDD<=0.10，两源方向不得相反",
++            "同花顺共同窗口净收益>0且MDD<=0.20，两源方向不得相反",
+         ),
+         _gate(
+             "drawdown_boundary",
+-            drawdown <= 0.10,
++            drawdown <= 0.20,
+             drawdown,
+-            "MDD<=0.08才可为UNREJECTED；0.08<MDD<=0.10为BOUNDARY；MDD>0.10为REJECTED",
++            "MDD<=0.10且其他门槛通过为UNREJECTED；0.10<MDD<=0.20为BOUNDARY；MDD>0.20为REJECTED",
+         ),
+     ]
+     summary = {
+@@ -939,6 +990,19 @@
+         "common_window": common_window,
+         "bootstrap": bootstrap_summary,
+         "descriptive": descriptive,
++        "execution_integrity": {
++            "baseline": baseline_integrity,
++            "double_cost": double_integrity,
++        },
++        "alignment": {
++            "method": "所有窗口按signals自身date筛选，并以(date,code)一对一连接；执行前硬断言",
++            "baseline_panel_rows": int(len(main_window)),
++            "baseline_signal_rows": int(len(baseline_signals)),
++            "baseline_key_difference_count": 0,
++            "dual_source_key_difference_count": 0,
++        },
++        "risk_report": risk_summary,
++        "input_manifest": input_manifest,
+         "gates": gates,
+         "outputs": {
+             "robustness": _relative(output_dir),
+@@ -958,6 +1022,9 @@
+     stress_config = replace(config, start_date="2010-01-01", end_date="2015-12-31")
+     stress_panel = load_panel(data_dir / "stress_panel.parquet")
+     stress_signals = compute_signals(stress_panel, stress_config)
++    stress_panel, stress_signals = select_backtest_window(
++        stress_panel, stress_signals, stress_config
++    )
+     _, stress_performance, _ = _run_and_save(
+         family="historical_stress",
+         name="stress_2010_2015",
+--- a/src/trend_system/signals.py
++++ b/src/trend_system/signals.py
+@@ -5,6 +5,72 @@
+ from .config import ResearchConfig
+ 
+ 
++KEY_COLUMNS = ["date", "code"]
++
++
++def _keys(frame: pd.DataFrame) -> pd.DataFrame:
++    missing = set(KEY_COLUMNS) - set(frame)
++    if missing:
++        raise ValueError(f"Missing alignment columns: {sorted(missing)}")
++    keys = frame[KEY_COLUMNS].copy()
++    keys["date"] = keys["date"].astype(str)
++    return keys
++
++
++def assert_aligned_inputs(panel: pd.DataFrame, signals: pd.DataFrame) -> None:
++    """Fail before execution unless panel and signals have identical daily keys."""
++    panel_keys = _keys(panel)
++    signal_keys = _keys(signals)
++    if panel_keys.empty or signal_keys.empty:
++        raise ValueError("Backtest panel and signals must not be empty")
++    if panel_keys.duplicated().any() or signal_keys.duplicated().any():
++        raise ValueError("Backtest panel and signals require unique (date, code) keys")
++    if len(panel_keys) != len(signal_keys):
++        raise ValueError(
++            f"Backtest row-count mismatch: panel={len(panel_keys)} signals={len(signal_keys)}"
++        )
++    joined = panel_keys.merge(
++        signal_keys,
++        on=KEY_COLUMNS,
++        how="outer",
++        validate="one_to_one",
++        indicator=True,
++    )
++    mismatched = joined["_merge"].ne("both")
++    if mismatched.any():
++        counts = joined.loc[mismatched, "_merge"].value_counts().to_dict()
++        raise ValueError(f"Backtest (date, code) key mismatch: {counts}")
++    panel_dates = set(panel_keys["date"])
++    signal_dates = set(signal_keys["date"])
++    if panel_dates != signal_dates:
++        raise ValueError("Backtest panel and signal date windows differ")
++
++
++def select_backtest_window(
++    panel: pd.DataFrame, signals: pd.DataFrame, config: ResearchConfig
++) -> tuple[pd.DataFrame, pd.DataFrame]:
++    """Select by each frame's own dates, then join signals one-to-one by key."""
++    panel = panel.copy()
++    signals = signals.copy()
++    panel["date"] = panel["date"].astype(str)
++    signals["date"] = signals["date"].astype(str)
++    panel_window = panel.loc[
++        panel["date"].between(config.start_date, config.end_date)
++    ].reset_index(drop=True)
++    signal_window = signals.loc[
++        signals["date"].between(config.start_date, config.end_date)
++    ].reset_index(drop=True)
++    aligned_signals = panel_window[KEY_COLUMNS].merge(
++        signal_window,
++        on=KEY_COLUMNS,
++        how="inner",
++        validate="one_to_one",
++        sort=False,
++    )
++    assert_aligned_inputs(panel_window, aligned_signals)
++    return panel_window, aligned_signals
++
++
+ def compute_signals(panel: pd.DataFrame, config: ResearchConfig) -> pd.DataFrame:
+     result = panel.copy().sort_values(["code", "date"], kind="stable").reset_index(drop=True)
+     grouped = result.groupby("code", sort=False)
+--- a/tests/test_baseline_integration.py
++++ b/tests/test_baseline_integration.py
+@@ -8,8 +8,10 @@
+ 
+ import pandas as pd
+ 
++from trend_system.broker import run_backtest as actual_run_backtest
+ from trend_system.config import ResearchConfig
+ from trend_system.metrics import run_baseline
++from trend_system.signals import compute_signals
+ 
+ 
+ DESIGN_DOCUMENTS = [
+@@ -60,6 +62,15 @@
+             self.assertFalse(first.benchmark_metadata["沪深300"]["dividends_included"])
+             self.assertIn("不可由2万元账户直接复制", first.benchmark_metadata["主板等权"]["note"])
+             self.assertEqual(first.manifest["inputs"]["main_panel"]["rows"], len(panel))
++            self.assertEqual(
++                first.manifest["inputs"]["main_panel"]["sha256"],
++                hashlib.sha256((root / "data" / "main_panel.parquet").read_bytes()).hexdigest(),
++            )
++            self.assertEqual(first.manifest["alignment"]["key_difference_count"], 0)
++            self.assertEqual(
++                first.manifest["alignment"]["panel_rows"],
++                first.manifest["alignment"]["signal_rows"],
++            )
+             self.assertGreater(first.manifest["inputs"]["backtest_panel"]["rows"], 0)
+             self.assertEqual(first.manifest["config"]["values"], asdict(config))
+             self.assertEqual(first.manifest["config"]["source"], "file")
+@@ -92,6 +103,62 @@
+             }
+             self.assertEqual(set(first_hashes), expected_outputs)
+ 
++    def test_date_major_multi_stock_warmup_selects_signals_by_key_not_position(self):
++        with tempfile.TemporaryDirectory() as temporary_directory:
++            root = Path(temporary_directory)
++            first, config = self._write_inputs(root)
++            second = first.copy()
++            second["code"] = "000001.SZ"
++            for column in (
++                "open",
++                "high",
++                "low",
++                "close",
++                "prev_close",
++                "signal_open",
++                "signal_high",
++                "signal_low",
++                "signal_close",
++            ):
++                second[column] = second[column] * 2
++            panel = (
++                pd.concat([first, second], ignore_index=True)
++                .sort_values(["date", "code"], kind="stable")
++                .reset_index(drop=True)
++            )
++            panel.to_parquet(root / "data" / "main_panel.parquet", index=False)
++            captured = {}
++
++            def capture(backtest_panel, backtest_signals, actions, run_config):
++                captured["panel"] = backtest_panel.copy()
++                captured["signals"] = backtest_signals.copy()
++                return actual_run_backtest(backtest_panel, backtest_signals, actions, run_config)
++
++            with patch("trend_system.metrics.PROJECT_ROOT", root), patch(
++                "trend_system.metrics.run_backtest", side_effect=capture
++            ):
++                run_baseline(config, config_path=root / "config" / "baseline.json")
++
++            expected_panel = panel.loc[
++                panel["date"].between(config.start_date, config.end_date)
++            ]
++            expected_signals = compute_signals(panel, config)
++            expected_signals = expected_signals.loc[
++                expected_signals["date"].between(config.start_date, config.end_date)
++            ]
++            key_columns = ["date", "code"]
++            self.assertEqual(len(captured["panel"]), len(expected_panel))
++            self.assertEqual(len(captured["signals"]), len(expected_signals))
++            self.assertEqual(
++                set(captured["panel"][key_columns].itertuples(index=False, name=None)),
++                set(expected_panel[key_columns].itertuples(index=False, name=None)),
++            )
++            self.assertEqual(
++                set(captured["signals"][key_columns].itertuples(index=False, name=None)),
++                set(expected_signals[key_columns].itertuples(index=False, name=None)),
++                "主窗口信号必须按自身日期和(date, code)键选择，不能继承原面板位置",
++            )
++
+     def test_direct_run_without_config_path_hashes_canonical_values_not_default_file(self):
+         with tempfile.TemporaryDirectory() as temporary_directory:
+             root = Path(temporary_directory)
+--- a/tests/test_broker.py
++++ b/tests/test_broker.py
+@@ -2,9 +2,10 @@
+ from dataclasses import replace
+ from unittest.mock import patch
+ 
++import numpy as np
+ import pandas as pd
+ 
+-from trend_system.broker import run_backtest
++from trend_system.broker import BacktestResult, run_backtest
+ from trend_system.config import ResearchConfig
+ 
+ 
+@@ -153,6 +154,70 @@
+         self.assertEqual(result.trades.loc[result.trades["side"] == "sell"].iloc[0]["date"], DATES[2])
+         self.assertFalse((result.trades["code"] == CODE_B).any())
+ 
++    def test_execution_integrity_has_independent_key_cash_lot_price_and_equity_evidence(self):
++        from trend_system.broker import execution_integrity
++
++        panel = self._panel(DATES[:3], [CODE_A])
++        signals = self._signals(panel)
++        self._signal(signals, DATES[0], CODE_A, entry=True)
++        self._signal(signals, DATES[1], CODE_A, exit=True)
++        result = run_backtest(panel, signals, self._actions(), self.config)
++
++        evidence = execution_integrity(panel, signals, result, self.config)
++        expected_checks = {
++            "key_set_and_window",
++            "cash_nonnegative",
++            "whole_lot_buys",
++            "legal_fill_prices",
++            "equity_identity",
++            "next_open_after_signal",
++        }
++        self.assertTrue(expected_checks.issubset(evidence))
++        self.assertTrue(all(evidence[name] for name in expected_checks))
++        self.assertTrue(evidence["all_passed"])
++
++        account = result.daily_account.copy()
++        account.loc[1, "cash"] = -0.01
++        negative_cash = execution_integrity(
++            panel,
++            signals,
++            BacktestResult(
++                trades=result.trades,
++                orders=result.orders,
++                round_trips=result.round_trips,
++                daily_account=account,
++                daily_positions=result.daily_positions,
++                action_log=result.action_log,
++            ),
++            self.config,
++        )
++        self.assertFalse(negative_cash["cash_nonnegative"])
++        self.assertFalse(negative_cash["equity_identity"])
++        self.assertTrue(negative_cash["next_open_after_signal"])
++        self.assertFalse(negative_cash["all_passed"])
++
++        missing_key = execution_integrity(panel, signals.iloc[:-1], result, self.config)
++        self.assertFalse(missing_key["key_set_and_window"])
++        self.assertTrue(missing_key["next_open_after_signal"])
++
++        trades = result.trades.copy()
++        trades.loc[trades["side"] == "buy", "quantity"] = 50
++        bad_lot = execution_integrity(
++            panel,
++            signals,
++            BacktestResult(
++                trades=trades,
++                orders=result.orders,
++                round_trips=result.round_trips,
++                daily_account=result.daily_account,
++                daily_positions=result.daily_positions,
++                action_log=result.action_log,
++            ),
++            self.config,
++        )
++        self.assertFalse(bad_lot["whole_lot_buys"])
++        self.assertTrue(bad_lot["legal_fill_prices"])
++
+     def test_account_identities_hold_on_every_day(self):
+         panel = self._panel(DATES[:3], [CODE_A])
+         signals = self._signals(panel)
+@@ -305,6 +370,34 @@
+         self.assertEqual(result.trades["date"].tolist(), DATES[1:3])
+         self.assertEqual(result.round_trips.iloc[0]["exit_reason"], "st_exit")
+ 
++    def test_terminal_delisting_suspension_is_stale_then_written_off_next_day(self):
++        panel = pd.concat(
++            [
++                self._panel(DATES[:3], [CODE_A]),
++                self._panel([DATES[3]], [CODE_B]),
++            ],
++            ignore_index=True,
++        )
++        panel.loc[panel["code"] == CODE_A, "out_date"] = DATES[2]
++        terminal = (panel["code"] == CODE_A) & (panel["date"] == DATES[2])
++        panel.loc[terminal, ["open", "high", "low", "close", "prev_close"]] = np.nan
++        panel.loc[terminal, "trade_status"] = 0
++        panel.loc[terminal, "data_valid"] = False
++        signals = self._signals(panel)
++        self._signal(signals, DATES[0], CODE_A, entry=True)
++
++        result = run_backtest(panel, signals, self._actions(), self.config)
++
++        terminal_account = result.daily_account.set_index("date").loc[DATES[2]]
++        terminal_position = result.daily_positions.loc[
++            result.daily_positions["date"] == DATES[2]
++        ].iloc[0]
++        self.assertTrue(terminal_account["stale_valuation"])
++        self.assertTrue(terminal_position["stale_valuation"])
++        self.assertEqual(terminal_account["market_value"], terminal_position["market_value"])
++        self.assertEqual(result.round_trips.iloc[0]["exit_reason"], "delisting_zero_residual")
++        self.assertEqual(result.daily_account.iloc[-1]["market_value"], 0.0)
++
+     def test_held_invalid_data_or_execution_conflict_aborts_with_diagnostic(self):
+         for column, reason in (
+             ("data_valid", "data_valid=False"),
+--- a/tests/test_delivery.py
++++ b/tests/test_delivery.py
+@@ -1,3 +1,4 @@
++import json
+ import unittest
+ from pathlib import Path
+ 
+@@ -14,26 +15,39 @@
+ 
+     def test_negative_result_explains_real_failure_evidence(self) -> None:
+         text = self.read_delivery(NEGATIVE_RESULT)
++        summary = json.loads(
++            (ROOT / "results" / "robustness" / "summary.json").read_text(encoding="utf-8")
++        )
++        baseline = summary["baseline"]
++        common = summary["common_window"]
++        stress = summary["stress"]
++        variants = summary["variants"]
++        neighborhood = [row for row in variants if row["family"] == "neighborhood"]
++        random_order = [row for row in variants if row["family"] == "random_order"]
++        double = next(row for row in variants if row["family"] == "double_cost")
+         required_evidence = (
+-            "REJECTED",
+-            "-0.884910",
+-            "0.887073",
++            summary["verdict"],
++            f"{baseline['total_return']:.6f}",
++            f"{baseline['max_drawdown']:.6f}",
+             "毛亏损",
+             "费用",
+-            "0.292398",
+-            "232.149000",
+-            "-243.533140",
++            f"{baseline['win_rate']:.6f}",
++            f"{baseline['average_win']:.6f}",
++            f"{baseline['average_loss']:.6f}",
+             "不是亏损上限",
+-            "2019",
+-            "-18649.20",
+-            "85",
+-            "0/20",
+-            "-0.916818",
+-            "-0.878586",
+-            "-0.305295",
+-            "0.588423",
++            summary["profit_concentration"]["top_year"],
++            f"{summary['profit_concentration']['remaining_equity_pnl']:.2f}",
++            str(len(baseline["rolling_3y_returns"])),
++            f"{sum(row['total_return'] > 0 for row in neighborhood)}/{len(neighborhood)}",
++            f"{sum(row['total_return'] > 0 for row in random_order)}/{len(random_order)}",
++            f"{double['total_return']:.6f}",
++            f"{common['hithink_total_return']:.6f}",
++            f"{stress['total_return']:.6f}",
++            f"{stress['max_drawdown']:.6f}",
+             "数据已支持",
+             "尚属假设",
++            "非门槛",
++            "停牌陈旧估值",
+         )
+         for evidence in required_evidence:
+             with self.subTest(evidence=evidence):
+--- a/tests/test_execution.py
++++ b/tests/test_execution.py
+@@ -1,4 +1,6 @@
+ import unittest
++from dataclasses import replace
++from unittest.mock import patch
+ 
+ from trend_system.config import ResearchConfig
+ from trend_system.execution import (
+@@ -58,6 +60,39 @@
+         self.assertEqual(costs["transfer_fee"], 0.08)
+         self.assertEqual(costs["total"], 10.08)
+ 
++    def test_double_cost_sizing_and_fill_include_doubled_minimum_and_20bp_slippage(self):
++        run_config = replace(
++            self.config,
++            commission_rate=self.config.commission_rate * 2,
++            min_commission=self.config.min_commission * 2,
++            slippage_bps=20,
++        )
++        original_costs = transaction_costs
++
++        def doubled_costs(date, amount, side, multiplier=1.0):
++            return original_costs(date, amount, side, multiplier=2.0 * multiplier)
++
++        bar = self._bar()
++        order = {
++            key: bar[key]
++            for key in ("date", "open", "high", "low", "prev_close", "is_st")
++        }
++        with patch("trend_system.execution.transaction_costs", doubled_costs):
++            quantity = size_buy(order, 20000.0, 4018.07, 0.0, run_config)
++            fill = open_fill(
++                {"side": "buy", "quantity": quantity}, bar, run_config
++            )
++
++        self.assertEqual(quantity, 300)
++        self.assertIsInstance(fill, Fill)
++        self.assertEqual(fill.price, 10.02)
++        self.assertEqual(fill.amount, 3006.0)
++        self.assertEqual(fill.costs["commission"], 10.0)
++        self.assertEqual(fill.costs["transfer_fee"], 0.06)
++        self.assertEqual(fill.costs["total"], 10.06)
++        self.assertEqual(fill.cash_delta, -3016.06)
++        self.assertLessEqual(-fill.cash_delta, 4018.07)
++
+     def test_size_buy_uses_unslipped_open_for_single_stock_cap(self):
+         order = {"date": "2024-01-02", "open": 10.0}
+ 
+--- a/tests/test_report.py
++++ b/tests/test_report.py
+@@ -17,7 +17,35 @@
+                 "max_drawdown": 0.6,
+                 "final_equity": 10000.0,
+             },
+-            "max_drawdown": 0.6,
++            "execution_integrity": {
++                "baseline": {
++                    "key_set_and_window": True,
++                    "cash_nonnegative": True,
++                    "whole_lot_buys": True,
++                    "legal_fill_prices": True,
++                    "equity_identity": True,
++                    "next_open_after_signal": True,
++                },
++                "double_cost": {
++                    "key_set_and_window": True,
++                    "cash_nonnegative": True,
++                    "whole_lot_buys": True,
++                    "legal_fill_prices": True,
++                    "equity_identity": True,
++                    "next_open_after_signal": True,
++                },
++            },
++            "risk_report": {
++                "entry_risk": {"entries": 2, "mean_risk_account_share": 0.01, "max_risk_account_share": 0.02},
++                "holding_return_correlation": {"pair_count": 1, "mean_correlation": 0.3, "max_correlation": 0.3},
++                "same_day_exits": {"max_exits": 2, "multiple_exit_days": 1},
++                "exit_execution": {"overnight_gap_extra_loss": 10.0, "limit_down_delay_extra_loss": 20.0},
++                "minimum_commission": {"minimum_applied_trades": 2, "mean_commission_to_amount": 0.005, "max_commission_to_amount": 0.006},
++                "stale_valuation_stress": {
++                    "10pct": {"discount": 0.1, "final_equity": 9000.0, "max_drawdown": 0.61},
++                    "20pct": {"discount": 0.2, "final_equity": 8000.0, "max_drawdown": 0.62},
++                },
++            },
+             "gates": [
+                 {
+                     "id": "main_window_positive",
+@@ -29,7 +57,7 @@
+                     "id": "drawdown_boundary",
+                     "passed": False,
+                     "actual": 0.6,
+-                    "requirement": "<= 0.10; <= 0.08 required for the strongest label",
++                    "requirement": "<= 0.20; <= 0.10 required for UNREJECTED",
+                 },
+             ],
+             "verdict": "REJECTED",
+@@ -96,6 +124,9 @@
+         self.assertIn("不参与门槛", text)
+         self.assertIn("单源", text)
+         self.assertIn("entry_lookback_90", text)
++        self.assertIn("键集合、行数与窗口", text)
++        self.assertIn("10%—20%", text)
++        self.assertIn("停牌陈旧估值会计压力", text)
+ 
+ 
+ if __name__ == "__main__":
+--- a/tests/test_robustness.py
++++ b/tests/test_robustness.py
+@@ -9,6 +9,7 @@
+ 
+ from trend_system.config import ResearchConfig
+ from trend_system.robustness import (
++    _common_source_inputs,
+     annual_equity_contributions,
+     block_bootstrap,
+     evaluate_gates,
+@@ -30,12 +31,26 @@
+     return ResearchConfig(**values)
+ 
+ 
++FROZEN_GATE_IDS = (
++    "data_execution_integrity",
++    "main_window_positive",
++    "rolling_3y_majority_positive",
++    "double_cost_positive_and_executable",
++    "neighborhood_at_least_6_positive",
++    "random_order_at_least_16_positive",
++    "remaining_years_equity_pnl_positive",
++    "fully_after_close_reproducible",
++    "hithink_common_positive_mdd_and_direction",
++    "drawdown_boundary",
++)
++
++
+ def _passing_summary(max_drawdown):
+     return {
+         "max_drawdown": max_drawdown,
+         "gates": [
+-            {"id": f"gate_{index}", "passed": True}
+-            for index in range(1, 11)
++            {"id": identifier, "passed": True}
++            for identifier in FROZEN_GATE_IDS
+         ],
+     }
+ 
+@@ -72,17 +87,32 @@
+ 
+     def test_mechanical_verdict_boundaries_and_other_gate_failure(self):
+         self.assertEqual(evaluate_gates(_passing_summary(0.08)), "UNREJECTED")
+-        self.assertEqual(evaluate_gates(_passing_summary(0.080001)), "BOUNDARY")
+-        self.assertEqual(evaluate_gates(_passing_summary(0.10)), "BOUNDARY")
+-        self.assertEqual(evaluate_gates(_passing_summary(0.100001)), "REJECTED")
++        self.assertEqual(evaluate_gates(_passing_summary(0.10)), "UNREJECTED")
++        self.assertEqual(evaluate_gates(_passing_summary(0.100001)), "BOUNDARY")
++        self.assertEqual(evaluate_gates(_passing_summary(0.20)), "BOUNDARY")
++        self.assertEqual(evaluate_gates(_passing_summary(0.200001)), "REJECTED")
+         failed = _passing_summary(0.02)
+         failed["gates"][5]["passed"] = False
+         self.assertEqual(evaluate_gates(failed), "REJECTED")
+         self.assertEqual(
+-            {evaluate_gates(_passing_summary(value)) for value in (0.01, 0.09, 0.20)},
++            {evaluate_gates(_passing_summary(value)) for value in (0.01, 0.15, 0.21)},
+             {"UNREJECTED", "BOUNDARY", "REJECTED"},
+         )
+ 
++    def test_gate_ids_must_be_exactly_the_ten_frozen_ids(self):
++        unrelated_only = {"max_drawdown": 0.01, "gates": [{"id": "unrelated", "passed": True}]}
++        self.assertEqual(evaluate_gates(unrelated_only), "REJECTED")
++        for mutation in ("missing", "duplicate", "unknown"):
++            with self.subTest(mutation=mutation):
++                summary = _passing_summary(0.01)
++                if mutation == "missing":
++                    summary["gates"] = summary["gates"][:-1]
++                elif mutation == "duplicate":
++                    summary["gates"][-1] = summary["gates"][0].copy()
++                else:
++                    summary["gates"][-1]["id"] = "unrelated"
++                self.assertEqual(evaluate_gates(summary), "REJECTED")
++
+     def test_profit_concentration_uses_annual_account_equity_pnl(self):
+         account = pd.DataFrame(
+             {
+@@ -104,9 +134,21 @@
+ 
+     def test_random_order_is_reproducible_and_preserves_signals(self):
+         signals = self._random_signal_fixture()
+-        first, _ = random_order_signals(signals, _config(), path_id=3)
+-        second, _ = random_order_signals(signals, _config(), path_id=3)
++        first, first_log = random_order_signals(signals, _config(), path_id=3)
++        second, second_log = random_order_signals(signals, _config(), path_id=3)
+         pd.testing.assert_frame_equal(first, second)
++        pd.testing.assert_frame_equal(first_log, second_log)
++        self.assertEqual(
++            first_log.columns.tolist(),
++            ["path_id", "date", "code", "random_rank"],
++        )
++        self.assertEqual(len(first_log), int(signals["entry_signal"].sum()))
++        expected_log = first.loc[first["entry_signal"], ["date", "code", "rank_return_120"]].reset_index(drop=True)
++        expected_log.columns = ["date", "code", "random_rank"]
++        pd.testing.assert_frame_equal(
++            first_log[["date", "code", "random_rank"]].reset_index(drop=True),
++            expected_log,
++        )
+         self.assertTrue(first["entry_signal"].equals(signals["entry_signal"]))
+         self.assertTrue(first["exit_signal"].equals(signals["exit_signal"]))
+         entry = signals["entry_signal"]
+@@ -147,6 +189,48 @@
+         self.assertEqual(len(first), 10)
+         self.assertEqual(first["replicate"].tolist(), list(range(10)))
+ 
++    def test_dual_source_common_window_aligns_date_major_multi_stock_keys(self):
++        with tempfile.TemporaryDirectory() as temporary_directory:
++            root = Path(temporary_directory)
++            self._write_project_inputs(root)
++            first = pd.read_parquet(root / "data" / "main_panel.parquet")
++            second = first.copy()
++            second["code"] = "000001.SZ"
++            panel = (
++                pd.concat([first, second], ignore_index=True)
++                .sort_values(["date", "code"], kind="stable")
++                .reset_index(drop=True)
++            )
++            hithink = panel[["date", "code", "signal_open", "signal_high", "signal_low", "signal_close"]].copy()
++            config = _config(start_date=panel["date"].min(), end_date=panel["date"].max())
++
++            (
++                baostock_panel,
++                hithink_panel,
++                baostock_signals,
++                hithink_signals,
++                _,
++                common_start,
++            ) = _common_source_inputs(panel, hithink, config)
++
++            keys = ["date", "code"]
++            expected = panel.loc[panel["date"].ge(common_start), keys]
++            expected_keys = set(expected.itertuples(index=False, name=None))
++            for name, frame in (
++                ("baostock_panel", baostock_panel),
++                ("hithink_panel", hithink_panel),
++                ("baostock_signals", baostock_signals),
++                ("hithink_signals", hithink_signals),
++            ):
++                with self.subTest(frame=name):
++                    self.assertEqual(len(frame), len(expected))
++                    self.assertEqual(
++                        set(frame[keys].itertuples(index=False, name=None)),
++                        expected_keys,
++                    )
++                    self.assertEqual(frame["date"].min(), common_start)
++                    self.assertEqual(frame["date"].max(), config.end_date)
++
+     def test_synthetic_full_matrix_executes_all_variants_and_persists_results(self):
+         with tempfile.TemporaryDirectory() as temporary_directory:
+             root = Path(temporary_directory)
+@@ -178,6 +262,20 @@
+             saved = json.loads((root / "results" / "robustness" / "summary.json").read_text(encoding="utf-8"))
+             self.assertEqual(saved["verdict"], result.verdict)
+             self.assertEqual(len(saved["gates"]), 10)
++            self.assertIsInstance(saved["execution_integrity"]["baseline"], dict)
++            self.assertIn("cash_nonnegative", saved["execution_integrity"]["baseline"])
++            fully = next(gate for gate in saved["gates"] if gate["id"] == "fully_after_close_reproducible")
++            self.assertIsInstance(fully["actual"], dict)
++            self.assertIn("legal_fill_prices", fully["actual"])
++            self.assertIn("risk_report", saved)
++            self.assertEqual(len(saved["input_manifest"]["inputs"]), 5)
++            for path_id in range(20):
++                log_path = root / "results" / "robustness" / "random_order" / f"path_{path_id:02d}" / "random_order_log.csv"
++                self.assertTrue(log_path.is_file())
++                log = pd.read_csv(log_path)
++                self.assertEqual(
++                    log.columns.tolist(), ["path_id", "date", "code", "random_rank"]
++                )
+             self.assertIn("post_hoc_only", saved["descriptive"]["formulas"])
+             freeze = json.loads((root / "results" / "robustness" / "main_freeze.json").read_text(encoding="utf-8"))
+             self.assertNotIn("stress_2010_2015", freeze["files"])
+--- a/tests/test_signals.py
++++ b/tests/test_signals.py
+@@ -106,6 +106,46 @@
+         self.assertTrue(result.loc[row, "entry_signal"])
+         self.assertTrue(result.loc[row, "adjustment_source_conflict"])
+ 
++    def test_price_ma_slope_and_channel_each_have_independent_negative_cases(self):
++        config = self._config(self._panel().loc[0, "date"], self._panel().loc[239, "date"])
++        row = 230
++
++        price = self._panel()
++        price.loc[:109, ["signal_open", "signal_high", "signal_low", "signal_close"]] = 1000.0
++        price_result = compute_signals(price, config)
++        self.assertLessEqual(price_result.loc[row, "signal_close"], price_result.loc[row, "ma200"])
++        self.assertGreater(price_result.loc[row, "signal_close"], price_result.loc[row, "channel_high_120"])
++        self.assertFalse(price_result.loc[row, "entry_signal"])
++
++        slope = self._panel()
++        slope.loc[191:210, ["signal_open", "signal_high", "signal_low", "signal_close"]] = 100.0
++        slope.loc[211:229, ["signal_open", "signal_high", "signal_low", "signal_close"]] = 1.0
++        slope.loc[row, ["signal_open", "signal_high", "signal_low", "signal_close"]] = 102.0
++        slope_result = compute_signals(slope, config)
++        self.assertGreater(slope_result.loc[row, "signal_close"], slope_result.loc[row, "ma200"])
++        self.assertLessEqual(slope_result.loc[row, "ma200"], slope_result.loc[row - 20, "ma200"])
++        self.assertGreater(slope_result.loc[row, "signal_close"], slope_result.loc[row, "channel_high_120"])
++        self.assertFalse(slope_result.loc[row, "entry_signal"])
++
++        channel = self._panel()
++        channel.loc[row - 1, "signal_high"] = 1000.0
++        channel_result = compute_signals(channel, config)
++        self.assertGreater(channel_result.loc[row, "signal_close"], channel_result.loc[row, "ma200"])
++        self.assertGreater(channel_result.loc[row, "ma200"], channel_result.loc[row - 20, "ma200"])
++        self.assertLessEqual(channel_result.loc[row, "signal_close"], channel_result.loc[row, "channel_high_120"])
++        self.assertFalse(channel_result.loc[row, "entry_signal"])
++
++    def test_missing_entry_state_fields_fail_closed(self):
++        panel = self._panel()
++        config = self._config(panel.loc[0, "date"], panel.loc[239, "date"])
++        for column in ("is_st", "trade_status", "data_valid", "execution_conflict"):
++            with self.subTest(column=column):
++                changed = panel.copy()
++                changed[column] = changed[column].astype(object)
++                changed.loc[230, column] = np.nan
++                result = compute_signals(changed, config)
++                self.assertFalse(result.loc[230, "entry_signal"])
++
+     def test_entry_is_limited_to_main_window_and_exit_is_separate(self):
+         panel = self._panel()
+         config = self._config(panel.loc[230, "date"], panel.loc[235, "date"])
+--- /dev/null
++++ b/src/trend_system/risk.py
+@@ -0,0 +1,329 @@
++"""Non-gate account risk diagnostics for the corrected frozen baseline."""
++
++import json
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++
++def _number(series, statistic="max"):
++    values = pd.to_numeric(series, errors="coerce").dropna()
++    if values.empty:
++        return 0.0
++    return float(getattr(values, statistic)())
++
++
++def _records(frame):
++    clean = frame.astype(object).where(pd.notna(frame), None)
++    return clean.to_dict("records")
++
++
++def _json_default(value):
++    if isinstance(value, np.generic):
++        return value.item()
++    raise TypeError(f"Not JSON serializable: {type(value).__name__}")
++
++
++def _empty(columns):
++    return pd.DataFrame(columns=columns)
++
++
++def _entry_risk(trades, signals, account):
++    columns = [
++        "order_id", "signal_date", "entry_date", "code", "quantity", "entry_price",
++        "initial_exit_20d", "signed_risk_per_share", "initial_risk_amount",
++        "account_equity_at_signal", "risk_account_share",
++    ]
++    if trades.empty:
++        return _empty(columns)
++    entries = trades.loc[trades["side"] == "buy"].copy()
++    if entries.empty:
++        return _empty(columns)
++    levels = signals[["date", "code", "channel_low_120"]].rename(
++        columns={"date": "signal_date", "channel_low_120": "initial_exit_20d"}
++    )
++    entries = entries.merge(
++        levels, on=["signal_date", "code"], how="left", validate="many_to_one"
++    )
++    equity = account[["date", "equity"]].rename(
++        columns={"date": "signal_date", "equity": "account_equity_at_signal"}
++    )
++    entries = entries.merge(
++        equity, on="signal_date", how="left", validate="many_to_one"
++    )
++    if entries[["initial_exit_20d", "account_equity_at_signal"]].isna().any().any():
++        raise ValueError("Every entry requires its signal-date 20-day exit level and account equity")
++    entries["signed_risk_per_share"] = entries["price"] - entries["initial_exit_20d"]
++    entries["initial_risk_amount"] = (
++        entries["signed_risk_per_share"].clip(lower=0) * entries["quantity"]
++    )
++    entries["risk_account_share"] = (
++        entries["initial_risk_amount"] / entries["account_equity_at_signal"]
++    )
++    result = entries.rename(columns={"date": "entry_date", "price": "entry_price"})[
++        columns
++    ].sort_values(["entry_date", "code"], kind="stable").reset_index(drop=True)
++    return result
++
++
++def _commission_diagnostics(trades, minimum_commission):
++    columns = ["order_id", "date", "code", "side", "amount", "commission", "commission_to_amount", "minimum_applied"]
++    if trades.empty:
++        return _empty(columns), {
++            "minimum_applied_trades": 0,
++            "minimum_applied_share": 0.0,
++            "mean_commission_to_amount": 0.0,
++            "max_commission_to_amount": 0.0,
++        }
++    result = trades.copy()
++    result["commission_to_amount"] = result["commission"] / result["amount"]
++    result["minimum_applied"] = np.isclose(
++        result["commission"], minimum_commission, atol=0.005
++    )
++    result = result[columns]
++    minimum = result.loc[result["minimum_applied"]]
++    return result, {
++        "minimum_applied_trades": int(len(minimum)),
++        "minimum_applied_share": float(len(minimum) / len(result)),
++        "mean_commission_to_amount": _number(minimum["commission_to_amount"], "mean"),
++        "median_commission_to_amount": _number(minimum["commission_to_amount"], "median"),
++        "max_commission_to_amount": _number(minimum["commission_to_amount"]),
++    }
++
++
++def _holding_correlations(positions, panel):
++    columns = ["code_a", "code_b", "overlapping_days", "return_correlation"]
++    if positions.empty:
++        return _empty(columns), {"pair_count": 0, "mean_correlation": 0.0, "max_correlation": 0.0}
++    held = positions[["date", "code"]].drop_duplicates().merge(
++        panel[["date", "code", "signal_close"]],
++        on=["date", "code"],
++        how="left",
++        validate="one_to_one",
++    )
++    held = held.sort_values(["code", "date"], kind="stable")
++    held["stock_return"] = held.groupby("code")["signal_close"].pct_change(fill_method=None)
++    pivot = held.pivot(index="date", columns="code", values="stock_return")
++    correlations = pivot.corr(min_periods=2)
++    rows = []
++    codes = list(correlations.columns)
++    for index, code_a in enumerate(codes):
++        for code_b in codes[index + 1:]:
++            value = correlations.loc[code_a, code_b]
++            overlap = int(pivot[[code_a, code_b]].dropna().shape[0])
++            if pd.notna(value):
++                rows.append({
++                    "code_a": str(code_a),
++                    "code_b": str(code_b),
++                    "overlapping_days": overlap,
++                    "return_correlation": float(value),
++                })
++    result = pd.DataFrame(rows, columns=columns)
++    summary = {
++        "pair_count": int(len(result)),
++        "mean_correlation": _number(result.get("return_correlation", pd.Series(dtype=float)), "mean"),
++        "median_correlation": _number(result.get("return_correlation", pd.Series(dtype=float)), "median"),
++        "max_correlation": _number(result.get("return_correlation", pd.Series(dtype=float))),
++        "method": "同期持仓股票的后复权signal_close日收益，按股票对重叠交易日计算Pearson相关，至少2个重叠收益",
++    }
++    return result, summary
++
++
++def _same_day_exits(round_trips):
++    columns = ["exit_date", "exit_count", "losing_count", "exit_amount", "net_pnl"]
++    if round_trips.empty:
++        return _empty(columns), {"max_exits": 0, "multiple_exit_days": 0, "worst_day": None, "worst_net_pnl": 0.0}
++    grouped = round_trips.groupby("exit_date", sort=True)
++    result = grouped.agg(
++        exit_count=("code", "size"),
++        losing_count=("net_pnl", lambda values: int(values.lt(0).sum())),
++        exit_amount=("exit_amount", "sum"),
++        net_pnl=("net_pnl", "sum"),
++    ).reset_index()
++    worst = result.loc[result["net_pnl"].idxmin()]
++    return result, {
++        "max_exits": int(result["exit_count"].max()),
++        "multiple_exit_days": int(result["exit_count"].gt(1).sum()),
++        "worst_day": str(worst["exit_date"]),
++        "worst_net_pnl": float(worst["net_pnl"]),
++    }
++
++
++def _exit_execution(trades, orders, panel):
++    gap_columns = ["order_id", "date", "code", "quantity", "previous_close", "execution_open", "overnight_gap_extra_loss"]
++    delay_columns = ["order_id", "code", "first_limit_down_date", "filled_quantity", "limit_down_delay_days", "delay_extra_loss"]
++    bars = panel[["date", "code", "open", "prev_close"]].rename(
++        columns={"prev_close": "previous_close"}
++    )
++    sells = trades.loc[trades["side"] == "sell"].copy() if not trades.empty else trades.copy()
++    if sells.empty:
++        gaps = _empty(gap_columns)
++    else:
++        gaps = sells.merge(
++            bars[["date", "code", "open", "previous_close"]],
++            on=["date", "code"],
++            how="left",
++            validate="many_to_one",
++        ).rename(columns={"open": "execution_open"})
++        gaps["overnight_gap_extra_loss"] = (
++            (gaps["previous_close"] - gaps["execution_open"]).clip(lower=0) * gaps["quantity"]
++        )
++        gaps = gaps[gap_columns]
++
++    delay_rows = []
++    if not orders.empty:
++        limit_down = orders.loc[
++            orders["side"].eq("sell") & orders["reason"].eq("sell_limit_down")
++        ]
++        for order_id, group in limit_down.groupby("order_id", sort=False):
++            first = group.sort_values("date", kind="stable").iloc[0]
++            fills = trades.loc[trades["order_id"].eq(order_id)] if not trades.empty else trades
++            quantity = float(fills["quantity"].sum()) if not fills.empty else 0.0
++            first_bar = bars.loc[
++                bars["date"].eq(first["date"]) & bars["code"].eq(first["code"])
++            ]
++            loss = None
++            if not fills.empty and not first_bar.empty:
++                reference = float(first_bar.iloc[0]["open"]) * quantity
++                loss = float(max(reference - fills["amount"].sum(), 0.0))
++            delay_rows.append({
++                "order_id": order_id,
++                "code": first["code"],
++                "first_limit_down_date": first["date"],
++                "filled_quantity": quantity,
++                "limit_down_delay_days": int(group["date"].nunique()),
++                "delay_extra_loss": loss,
++            })
++    delays = pd.DataFrame(delay_rows, columns=delay_columns)
++    resolved_losses = pd.to_numeric(delays.get("delay_extra_loss", pd.Series(dtype=float)), errors="coerce").dropna()
++    summary = {
++        "overnight_gap_extra_loss": _number(gaps.get("overnight_gap_extra_loss", pd.Series(dtype=float)), "sum"),
++        "overnight_gap_affected_sells": int(gaps.get("overnight_gap_extra_loss", pd.Series(dtype=float)).gt(0).sum()),
++        "limit_down_orders": int(len(delays)),
++        "resolved_limit_down_orders": int(resolved_losses.count()),
++        "unresolved_limit_down_orders": int(delays["delay_extra_loss"].isna().sum()) if not delays.empty else 0,
++        "max_limit_down_delay_days": int(delays["limit_down_delay_days"].max()) if not delays.empty else 0,
++        "limit_down_delay_extra_loss": float(resolved_losses.sum()),
++        "definitions": "跳空损失=max(前一实际收盘-实际退出日开盘,0)×卖出数量；跌停顺延损失=max(首次跌停开盘×最终卖出数量-实际卖出成交额,0)，含其后价格变化与滑点，不作因果分解",
++    }
++    return gaps, delays, summary
++
++
++def _stale_stress(account, positions):
++    daily = account[["date", "equity"]].copy().sort_values("date", kind="stable")
++    if positions.empty:
++        stale = pd.DataFrame(columns=["date", "stale_market_value"])
++    else:
++        stale = positions.loc[positions["stale_valuation"].astype(bool)].groupby("date")["market_value"].sum().rename("stale_market_value").reset_index()
++    daily = daily.merge(stale, on="date", how="left", validate="one_to_one")
++    daily["stale_market_value"] = daily["stale_market_value"].fillna(0.0)
++    result = {}
++    for label, discount in (("10pct", 0.10), ("20pct", 0.20)):
++        column = f"stressed_equity_{label}"
++        daily[column] = daily["equity"] - discount * daily["stale_market_value"]
++        drawdown = daily[column] / daily[column].cummax() - 1
++        result[label] = {
++            "discount": discount,
++            "final_equity": float(daily[column].iloc[-1]),
++            "max_drawdown": float(-drawdown.min()),
++        }
++    result["stale_position_days"] = int(daily["stale_market_value"].gt(0).sum())
++    result["max_stale_market_value"] = float(daily["stale_market_value"].max())
++    result["accounting_only"] = True
++    return daily, result
++
++
++def _markdown(risk):
++    lines = [
++        "# 修正后基线非门槛风险诊断",
++        "",
++        "仅披露账户风险，不生成订单、不改变策略、不参与机械门槛。停牌压力只对陈旧估值持仓市值作额外会计折价。",
++        "",
++        "## 单笔初始风险与执行额外损失",
++        "",
++        f"- 入场笔数：{risk['entry_risk']['entries']}；初始风险金额均值/最大值：{risk['entry_risk']['mean_initial_risk_amount']:.6f}/{risk['entry_risk']['max_initial_risk_amount']:.6f} 元。",
++        f"- 单笔初始风险占信号日账户权益均值/最大值：{risk['entry_risk']['mean_risk_account_share']:.6f}/{risk['entry_risk']['max_risk_account_share']:.6f}。",
++        f"- 退出隔夜跳空额外损失合计：{risk['exit_execution']['overnight_gap_extra_loss']:.6f} 元；跌停顺延额外损失合计：{risk['exit_execution']['limit_down_delay_extra_loss']:.6f} 元。",
++        "",
++        "## 持仓相关性、集中退出与最低佣金",
++        "",
++        f"- 可计算持仓收益相关股票对：{risk['holding_return_correlation']['pair_count']}；均值/最大值：{risk['holding_return_correlation']['mean_correlation']:.6f}/{risk['holding_return_correlation']['max_correlation']:.6f}。",
++        f"- 单日最多退出：{risk['same_day_exits']['max_exits']} 笔；同日多笔退出天数：{risk['same_day_exits']['multiple_exit_days']}。",
++        f"- 触发最低佣金成交：{risk['minimum_commission']['minimum_applied_trades']} 笔；其佣金/成交额均值/最大值：{risk['minimum_commission']['mean_commission_to_amount']:.6f}/{risk['minimum_commission']['max_commission_to_amount']:.6f}。",
++        "",
++        "## 停牌陈旧估值会计压力",
++        "",
++        "| 额外折价 | 期末权益 | 最大回撤 |",
++        "| --- | ---: | ---: |",
++    ]
++    for label in ("10pct", "20pct"):
++        scenario = risk["stale_valuation_stress"][label]
++        lines.append(f"| {scenario['discount']:.0%} | {scenario['final_equity']:.6f} | {scenario['max_drawdown']:.6f} |")
++    lines.extend(["", "逐笔和逐日明细见同目录CSV及risk_report.json；跳空和跌停顺延指标是描述性口径，不是独立因果归因。", ""])
++    return "\n".join(lines)
++
++
++def build_risk_report(panel, signals, backtest, config, output_dir):
++    """Calculate and persist diagnostics without creating orders or gate inputs."""
++    output_dir = Path(output_dir)
++    output_dir.mkdir(parents=True, exist_ok=True)
++    panel = panel.copy()
++    signals = signals.copy()
++    panel["date"] = panel["date"].astype(str)
++    signals["date"] = signals["date"].astype(str)
++    account = backtest.daily_account.copy()
++    account["date"] = account["date"].astype(str)
++    trades = backtest.trades.copy()
++    orders = backtest.orders.copy()
++    positions = backtest.daily_positions.copy()
++    round_trips = backtest.round_trips.copy()
++    for frame in (trades, orders, positions, round_trips):
++        if "date" in frame:
++            frame["date"] = frame["date"].astype(str)
++        if "signal_date" in frame:
++            frame["signal_date"] = frame["signal_date"].astype(str)
++
++    entry_risk = _entry_risk(trades, signals, account)
++    commissions, commission_summary = _commission_diagnostics(trades, config.min_commission)
++    correlations, correlation_summary = _holding_correlations(positions, panel)
++    same_day, same_day_summary = _same_day_exits(round_trips)
++    gaps, delays, execution_summary = _exit_execution(trades, orders, panel)
++    stale_daily, stale_summary = _stale_stress(account, positions)
++    tables = {
++        "entry_risk": entry_risk,
++        "minimum_commission": commissions,
++        "holding_return_correlations": correlations,
++        "same_day_exits": same_day,
++        "exit_overnight_gaps": gaps,
++        "limit_down_delays": delays,
++        "stale_valuation_stress_daily": stale_daily,
++    }
++    risk = {
++        "diagnostic_only": True,
++        "orders_generated": False,
++        "included_in_mechanical_gates": False,
++        "entry_risk": {
++            "entries": int(len(entry_risk)),
++            "nonpositive_signed_risk_entries": int(entry_risk.get("signed_risk_per_share", pd.Series(dtype=float)).le(0).sum()),
++            "mean_initial_risk_amount": _number(entry_risk.get("initial_risk_amount", pd.Series(dtype=float)), "mean"),
++            "max_initial_risk_amount": _number(entry_risk.get("initial_risk_amount", pd.Series(dtype=float))),
++            "mean_risk_account_share": _number(entry_risk.get("risk_account_share", pd.Series(dtype=float)), "mean"),
++            "max_risk_account_share": _number(entry_risk.get("risk_account_share", pd.Series(dtype=float))),
++            "definition": "max(实际入场价-信号日此前20日通道退出位,0)×买入数量；分母为信号日收盘账户权益",
++        },
++        "holding_return_correlation": correlation_summary,
++        "same_day_exits": same_day_summary,
++        "exit_execution": execution_summary,
++        "minimum_commission": commission_summary,
++        "stale_valuation_stress": stale_summary,
++        "tables": {name: _records(frame) for name, frame in tables.items()},
++    }
++    for name, frame in tables.items():
++        frame.to_csv(output_dir / f"{name}.csv", index=False)
++    (output_dir / "risk_report.json").write_text(
++        json.dumps(risk, ensure_ascii=False, indent=2, allow_nan=False, default=_json_default) + "\n",
++        encoding="utf-8",
++    )
++    (output_dir / "risk_report.md").write_text(_markdown(risk), encoding="utf-8")
++    return risk

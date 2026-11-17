@@ -1,0 +1,75 @@
+{
+  "signals": {
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_b_signals.parquet",
+    "sha256": "831e8460837c046b054e715cbdb1ccfc87bfc7aa28a76a2f70a6149a8ff33833"
+  },
+  "config": {
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/config/legacy_b_recovery.json",
+    "sha256": "d77b88c7303b1567406e0f396b242a7b991d8998186ee704ba0f45f766552c1e"
+  },
+  "recovery_audit": {
+    "path": "/Users/admin/WorkSpace/trading/trading_finally/results/legacy_b_recovery_audit.json",
+    "sha256": "9f0a3a287d68360d6ea0bc668de0ee22029e936b0c72d866c2c1b651aa198573"
+  },
+  "code": {
+    "src/trend_system/legacy_b_runner.py": {
+      "sha256": "e16c0339a7e270e68d21090e5279b1b2d67308eaf74f8a9f6c888e6d639a726c"
+    },
+    "src/trend_system/legacy_b_policy.py": {
+      "sha256": "22a26be18b6cb5a9f41d83dda45f45dec1d1f2b974f7bc552ba8cfc4cbb71103"
+    },
+    "src/trend_system/legacy_b.py": {
+      "sha256": "0ab18ab66053d6bd2556f225e57807dc4ae79c8224e10c6e8e9930b9e7b20f08"
+    },
+    "src/trend_system/legacy_b_config.py": {
+      "sha256": "70088d3023384d1e2dea1dbef3fac048bc24155657dc6374c4cd0c517de9d7ed"
+    },
+    "src/trend_system/broker.py": {
+      "sha256": "57cf7e3276a768c567417756d6c123efcf225fb5eb62bceaf71a59845c53d1dd"
+    },
+    "src/trend_system/execution.py": {
+      "sha256": "5461e2d28f2460f4392c00148645c3b4cf3f064d7b9bb52d946ccd3ce8f864df"
+    }
+  },
+  "b_main_freeze": {
+    "candidate_id": "early_trend_breadth",
+    "files": {
+      "action_log.parquet": {
+        "bytes": 11266,
+        "sha256": "87c5db3317fd3afba4ba37067c91ca75cff4681cdc8937715238c7caad416036"
+      },
+      "annual_and_rolling.csv": {
+        "bytes": 6493,
+        "sha256": "97f52b5ccc714e58652ecafdd852a0c9e7bde9a2bd68e1ea2fc29a65d9ab7cd1"
+      },
+      "daily_account.parquet": {
+        "bytes": 68499,
+        "sha256": "dbb58904b456d5d8be5bdcd54f6cf4e7140e4e208bec02019a452d626af2e780"
+      },
+      "daily_positions.parquet": {
+        "bytes": 64276,
+        "sha256": "d069f5d965adfd290c67808a9a97a1b6312748c1486fec0bd2bfe5dd76e627f2"
+      },
+      "orders.parquet": {
+        "bytes": 893100,
+        "sha256": "84d6e8e4aa983b5eedd65d72e7118f415e5143d335da727ad8b4c62c2da37232"
+      },
+      "performance_summary.json": {
+        "bytes": 17626,
+        "sha256": "5baa7e1ffb451a280c7f3deb1321c67392ef0bae691fd39eaa318884301746bc"
+      },
+      "round_trips.parquet": {
+        "bytes": 30986,
+        "sha256": "7d6ee88c938450e470387bb660fa97049c05334333f563c5463686c08678ad36"
+      },
+      "run_manifest.json": {
+        "bytes": 21736,
+        "sha256": "add6520e4d7f3aa69e7f384fe75030ab71207b2290a2f7d03f8d6d59507c1331"
+      },
+      "trades.parquet": {
+        "bytes": 38989,
+        "sha256": "0806acc9b180b9b62ea57ea6a24ed3f157a52b674686ddcf61ecaccfd02e3dca"
+      }
+    }
+  }
+}

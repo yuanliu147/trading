@@ -1,0 +1,16 @@
+{
+  "mother_keys":156370,
+  "mother_mainboard":112654,
+  "mother_non_mainboard":43716,
+  "our_keys":114424,
+  "common":109090,
+  "mainboard_common":109090,
+  "mainboard_reproduce_share":0.9683633071,
+  "mother_only":47280,
+  "our_only":5334,
+  "jaccard":0.6746277148,
+  "mother_window":[
+    "2016-10-13",
+    "2026-10-13"
+  ]
+}

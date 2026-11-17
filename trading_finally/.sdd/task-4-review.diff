@@ -1,0 +1,443 @@
+# Base git HEAD: bb3fe53c1f925b560c0044854849f8984d86c0a1
+# No commits authorized; directory snapshot diff after fix round 1.
+# Changed files: src/trend_system/execution.py, tests/test_execution.py
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task4-base/src/trend_system/execution.py /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/execution.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task4-base/src/trend_system/execution.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/execution.py	2026-11-02 02:23:20
+@@ -0,0 +1,202 @@
++"""A-share execution primitives using raw, unadjusted prices."""
++
++from dataclasses import dataclass
++from datetime import date as date_type
++from datetime import datetime
++from decimal import Decimal, ROUND_HALF_UP
++from numbers import Integral
++
++from .config import ResearchConfig
++
++
++_CENT = Decimal("0.01")
++_LOT_SIZE = 100
++
++
++@dataclass(frozen=True)
++class Fill:
++    price: float
++    quantity: int
++    amount: float
++    costs: dict[str, float]
++    cash_delta: float
++
++
++@dataclass(frozen=True)
++class Rejection:
++    reason: str
++    disposition: str
++
++
++def _decimal(value) -> Decimal:
++    return value if isinstance(value, Decimal) else Decimal(str(value))
++
++
++def _money(value) -> Decimal:
++    return _decimal(value).quantize(_CENT, rounding=ROUND_HALF_UP)
++
++
++def _as_date(value) -> date_type:
++    if isinstance(value, datetime):
++        return value.date()
++    if isinstance(value, date_type):
++        return value
++    if isinstance(value, str):
++        return date_type.fromisoformat(value[:10])
++    return value.date()
++
++
++def price_limits(prev_close: float, is_st: bool) -> tuple[float, float]:
++    close = _decimal(prev_close)
++    if not close.is_finite() or close <= 0:
++        raise ValueError("prev_close must be positive and finite")
++    rate = Decimal("0.05") if is_st else Decimal("0.10")
++    upper = _money(close * (Decimal("1") + rate))
++    lower = _money(close * (Decimal("1") - rate))
++    return float(upper), float(lower)
++
++
++def transaction_costs(date, amount, side, multiplier=1.0) -> dict:
++    if side not in ("buy", "sell"):
++        raise ValueError("side must be 'buy' or 'sell'")
++    value = _decimal(amount)
++    scale = _decimal(multiplier)
++    if not value.is_finite() or value <= 0:
++        raise ValueError("amount must be positive and finite")
++    if not scale.is_finite() or scale <= 0:
++        raise ValueError("multiplier must be positive and finite")
++
++    trade_date = _as_date(date)
++    commission = max(value * Decimal("0.00025"), Decimal("5"))
++    stamp_duty = Decimal("0")
++    if side == "sell":
++        stamp_rate = (
++            Decimal("0.0005")
++            if trade_date >= date_type(2023, 8, 28)
++            else Decimal("0.001")
++        )
++        stamp_duty = value * stamp_rate
++    transfer_rate = (
++        Decimal("0.00001")
++        if trade_date >= date_type(2022, 4, 29)
++        else Decimal("0.00002")
++    )
++    components = {
++        "commission": commission,
++        "stamp_duty": stamp_duty,
++        "transfer_fee": value * transfer_rate,
++    }
++    costs = {
++        name: float(_money(component * scale)) for name, component in components.items()
++    }
++    costs["total"] = float(sum((_decimal(cost) for cost in costs.values()), Decimal("0")))
++    return costs
++
++
++def _slipped_price(open_price: Decimal, side: str, config: ResearchConfig) -> Decimal:
++    slippage = _decimal(config.slippage_bps) / Decimal("10000")
++    direction = Decimal("1") if side == "buy" else Decimal("-1")
++    return open_price * (Decimal("1") + direction * slippage)
++
++
++def _final_fill_price(record, side: str, config: ResearchConfig) -> Decimal:
++    slipped = _slipped_price(_decimal(record["open"]), side, config)
++    high = _decimal(record.get("high", slipped))
++    low = _decimal(record.get("low", slipped))
++    prev_close = record.get("prev_close")
++    if prev_close is None:
++        upper = lower = slipped
++    else:
++        upper, lower = (
++            _decimal(value)
++            for value in price_limits(prev_close, record.get("is_st", False))
++        )
++    return min(max(slipped, max(low, lower)), min(high, upper))
++
++
++def _rejection(reason: str, side: str) -> Rejection:
++    return Rejection(reason, "keep" if side == "sell" else "cancel")
++
++
++def open_fill(order, bar, config) -> Fill | Rejection:
++    side = order.get("side")
++    quantity = order.get("quantity")
++    if side not in ("buy", "sell"):
++        return Rejection("invalid_order", "cancel")
++    if (
++        isinstance(quantity, bool)
++        or not isinstance(quantity, Integral)
++        or quantity <= 0
++        or (side == "buy" and quantity % _LOT_SIZE != 0)
++    ):
++        return _rejection("invalid_order", side)
++    quantity = int(quantity)
++
++    if not bar.get("data_valid", True):
++        return _rejection("invalid_bar", side)
++    if bar.get("trade_status", 1) != 1:
++        return _rejection("suspended", side)
++    if bar.get("execution_conflict", False):
++        return _rejection("execution_conflict", side)
++
++    try:
++        open_price = _decimal(bar["open"])
++        high = _decimal(bar["high"])
++        low = _decimal(bar["low"])
++        upper, lower = (_decimal(value) for value in price_limits(bar["prev_close"], bar["is_st"]))
++        trade_date = bar["date"]
++        _as_date(trade_date)
++    except (KeyError, TypeError, ValueError, ArithmeticError):
++        return _rejection("invalid_bar", side)
++
++    prices = (open_price, high, low, upper, lower)
++    if any(not price.is_finite() or price <= 0 for price in prices) or high < low:
++        return _rejection("invalid_bar", side)
++    if not (low <= open_price <= high and lower <= open_price <= upper):
++        return _rejection("price_out_of_bounds", side)
++    if side == "buy" and open_price == upper:
++        return _rejection("buy_limit_up", side)
++    if side == "sell" and open_price == lower:
++        return _rejection("sell_limit_down", side)
++
++    fill_price = _final_fill_price(bar, side, config)
++    amount = _money(fill_price * quantity)
++    costs = transaction_costs(trade_date, float(amount), side)
++    total_cost = _decimal(costs["total"])
++    cash_delta = -(amount + total_cost) if side == "buy" else amount - total_cost
++    return Fill(
++        price=float(fill_price),
++        quantity=quantity,
++        amount=float(amount),
++        costs=costs,
++        cash_delta=float(_money(cash_delta)),
++    )
++
++
++def size_buy(order, equity, cash, invested_value, config) -> int:
++    open_price = _decimal(order["open"])
++    equity_value = _decimal(equity)
++    cash_value = _decimal(cash)
++    invested = _decimal(invested_value)
++    values = (open_price, equity_value, cash_value, invested)
++    if any(not value.is_finite() for value in values):
++        return 0
++    if open_price <= 0 or equity_value <= 0 or cash_value <= 0:
++        return 0
++
++    single_stock_cap = equity_value * _decimal(config.max_weight)
++    remaining_exposure = equity_value * _decimal(config.max_exposure) - invested
++    target_value = min(single_stock_cap, remaining_exposure)
++    if target_value <= 0:
++        return 0
++
++    quantity = int(target_value / open_price) // _LOT_SIZE * _LOT_SIZE
++    fill_price = _final_fill_price(order, "buy", config)
++    while quantity > 0:
++        amount = _money(fill_price * quantity)
++        costs = transaction_costs(order["date"], float(amount), "buy")
++        debit = amount + _decimal(costs["total"])
++        if debit <= cash_value:
++            return quantity
++        quantity -= _LOT_SIZE
++    return 0
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task4-base/tests/test_execution.py /Users/admin/WorkSpace/trading/trading_finally/tests/test_execution.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task4-base/tests/test_execution.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/tests/test_execution.py	2026-11-02 02:22:15
+@@ -0,0 +1,230 @@
++import unittest
++
++from trend_system.config import ResearchConfig
++from trend_system.execution import (
++    Fill,
++    Rejection,
++    open_fill,
++    price_limits,
++    size_buy,
++    transaction_costs,
++)
++
++
++class ExecutionTest(unittest.TestCase):
++    def setUp(self):
++        self.config = ResearchConfig(
++            hithink_db_path="unused",
++            baostock_db_path="unused",
++        )
++
++    def test_price_limits_use_main_board_and_st_rates(self):
++        self.assertEqual(price_limits(10.0, False), (11.0, 9.0))
++        self.assertEqual(price_limits(10.0, True), (10.5, 9.5))
++
++    def test_price_limits_round_half_up_to_cent(self):
++        self.assertEqual(price_limits(9.99, False), (10.99, 8.99))
++
++    def test_buy_commission_has_five_yuan_minimum(self):
++        costs = transaction_costs("2024-01-02", 4000.0, "buy")
++
++        self.assertEqual(costs["commission"], 5.0)
++        self.assertEqual(costs["stamp_duty"], 0.0)
++        self.assertEqual(costs["transfer_fee"], 0.04)
++        self.assertEqual(costs["total"], 5.04)
++
++    def test_sell_stamp_duty_changes_on_2023_08_28(self):
++        before = transaction_costs("2023-08-27", 4000.0, "sell")
++        on_change = transaction_costs("2023-08-28", 4000.0, "sell")
++
++        self.assertEqual(before["stamp_duty"], 4.0)
++        self.assertEqual(before["total"], 9.04)
++        self.assertEqual(on_change["stamp_duty"], 2.0)
++        self.assertEqual(on_change["total"], 7.04)
++
++    def test_transfer_fee_changes_on_2022_04_29(self):
++        before = transaction_costs("2022-04-28", 100000.0, "buy")
++        on_change = transaction_costs("2022-04-29", 100000.0, "buy")
++
++        self.assertEqual(before["transfer_fee"], 2.0)
++        self.assertEqual(before["total"], 27.0)
++        self.assertEqual(on_change["transfer_fee"], 1.0)
++        self.assertEqual(on_change["total"], 26.0)
++
++    def test_cost_multiplier_doubles_minimum_commission_and_fees(self):
++        costs = transaction_costs("2024-01-02", 4000.0, "buy", multiplier=2.0)
++
++        self.assertEqual(costs["commission"], 10.0)
++        self.assertEqual(costs["transfer_fee"], 0.08)
++        self.assertEqual(costs["total"], 10.08)
++
++    def test_size_buy_uses_unslipped_open_for_single_stock_cap(self):
++        order = {"date": "2024-01-02", "open": 10.0}
++
++        quantity = size_buy(order, 20000.0, 20000.0, 0.0, self.config)
++        fill = open_fill(
++            {"side": "buy", "quantity": quantity}, self._bar(), self.config
++        )
++
++        self.assertEqual(quantity, 400)
++        self.assertEqual(quantity % 100, 0)
++        self.assertEqual(quantity * order["open"], 4000.0)
++        self.assertLessEqual(quantity * order["open"], 20000.0 * self.config.max_weight)
++        self.assertIsInstance(fill, Fill)
++        self.assertEqual(fill.price, 10.01)
++        self.assertEqual(fill.amount, 4004.0)
++        self.assertEqual(fill.costs["total"], 5.04)
++        self.assertEqual(fill.cash_delta, -4009.04)
++        self.assertGreaterEqual(20000.0 + fill.cash_delta, 0.0)
++
++    def test_size_buy_reduces_one_lot_when_rounded_cash_debit_exceeds_cash(self):
++        order = {"date": "2024-01-02", "open": 10.0}
++
++        quantity = size_buy(order, 20000.0, 4005.0, 0.0, self.config)
++
++        self.assertEqual(quantity, 300)
++        fill = open_fill(
++            {"side": "buy", "quantity": quantity}, self._bar(), self.config
++        )
++        self.assertIsInstance(fill, Fill)
++        self.assertLessEqual(-fill.cash_delta, 4005.0)
++
++    def test_size_buy_uses_same_clamped_fill_price_and_cash_delta_as_open_fill(self):
++        bar = self._bar(high=10.0)
++        order = {
++            key: bar[key]
++            for key in ("date", "open", "high", "low", "prev_close", "is_st")
++        }
++
++        quantity = size_buy(order, 20000.0, 4006.0, 0.0, self.config)
++        fill = open_fill(
++            {"side": "buy", "quantity": quantity}, bar, self.config
++        )
++
++        self.assertEqual(quantity, 400)
++        self.assertIsInstance(fill, Fill)
++        self.assertEqual(fill.price, 10.0)
++        self.assertEqual(fill.cash_delta, -4005.04)
++        self.assertLessEqual(-fill.cash_delta, 4006.0)
++        self.assertEqual(size_buy(order, 20000.0, 4005.03, 0.0, self.config), 300)
++
++    def test_size_buy_respects_remaining_total_exposure(self):
++        order = {"date": "2024-01-02", "open": 10.0}
++
++        quantity = size_buy(order, 20000.0, 10000.0, 10000.0, self.config)
++
++        self.assertEqual(quantity, 200)
++        self.assertEqual(10000.0 + quantity * order["open"], 12000.0)
++
++    def test_open_sell_fill_uses_adverse_slippage_and_exact_cash_credit(self):
++        fill = open_fill(
++            {"side": "sell", "quantity": 400}, self._bar(), self.config
++        )
++
++        self.assertIsInstance(fill, Fill)
++        self.assertEqual(fill.price, 9.99)
++        self.assertEqual(fill.quantity, 400)
++        self.assertEqual(fill.amount, 3996.0)
++        self.assertEqual(fill.costs["total"], 7.04)
++        self.assertEqual(fill.cash_delta, 3988.96)
++
++    def test_slipped_fill_is_clamped_to_daily_price_range(self):
++        buy_bar = self._bar(high=10.0)
++        sell_bar = self._bar(low=10.0)
++
++        buy = open_fill({"side": "buy", "quantity": 100}, buy_bar, self.config)
++        sell = open_fill({"side": "sell", "quantity": 100}, sell_bar, self.config)
++
++        self.assertIsInstance(buy, Fill)
++        self.assertIsInstance(sell, Fill)
++        self.assertEqual(buy.price, 10.0)
++        self.assertEqual(sell.price, 10.0)
++
++    def test_buy_at_open_limit_up_is_cancelled(self):
++        bar = self._bar(open=11.0, high=11.0, low=10.5)
++
++        result = open_fill({"side": "buy", "quantity": 100}, bar, self.config)
++
++        self.assertIsInstance(result, Rejection)
++        self.assertEqual(result.reason, "buy_limit_up")
++        self.assertEqual(result.disposition, "cancel")
++
++    def test_sell_at_open_limit_down_is_kept(self):
++        bar = self._bar(open=9.0, high=9.5, low=9.0)
++
++        result = open_fill({"side": "sell", "quantity": 100}, bar, self.config)
++
++        self.assertIsInstance(result, Rejection)
++        self.assertEqual(result.reason, "sell_limit_down")
++        self.assertEqual(result.disposition, "keep")
++
++    def test_suspension_has_side_specific_disposition(self):
++        bar = self._bar(trade_status=0)
++
++        buy = open_fill({"side": "buy", "quantity": 100}, bar, self.config)
++        sell = open_fill({"side": "sell", "quantity": 100}, bar, self.config)
++
++        self.assertEqual((buy.reason, buy.disposition), ("suspended", "cancel"))
++        self.assertEqual((sell.reason, sell.disposition), ("suspended", "keep"))
++
++    def test_invalid_data_is_rejected_explicitly(self):
++        bar = self._bar(data_valid=False)
++
++        result = open_fill({"side": "buy", "quantity": 100}, bar, self.config)
++
++        self.assertIsInstance(result, Rejection)
++        self.assertEqual(result.reason, "invalid_bar")
++        self.assertEqual(result.disposition, "cancel")
++
++    def test_execution_conflict_is_rejected_explicitly(self):
++        bar = self._bar(execution_conflict=True)
++
++        result = open_fill({"side": "sell", "quantity": 100}, bar, self.config)
++
++        self.assertIsInstance(result, Rejection)
++        self.assertEqual(result.reason, "execution_conflict")
++        self.assertEqual(result.disposition, "keep")
++
++    def test_open_outside_legal_or_daily_range_is_rejected(self):
++        for bar in (
++            self._bar(open=11.01, high=11.01),
++            self._bar(open=10.1, high=10.0),
++        ):
++            with self.subTest(bar=bar):
++                result = open_fill(
++                    {"side": "buy", "quantity": 100}, bar, self.config
++                )
++                self.assertIsInstance(result, Rejection)
++                self.assertEqual(result.reason, "price_out_of_bounds")
++                self.assertEqual(result.disposition, "cancel")
++
++    def test_invalid_order_is_rejected_before_pricing(self):
++        for order in (
++            {"side": "buy", "quantity": 0},
++            {"side": "buy", "quantity": 50},
++            {"side": "hold", "quantity": 100},
++        ):
++            with self.subTest(order=order):
++                result = open_fill(order, self._bar(), self.config)
++                self.assertIsInstance(result, Rejection)
++                self.assertEqual(result.reason, "invalid_order")
++
++    @staticmethod
++    def _bar(**changes):
++        bar = {
++            "date": "2024-01-02",
++            "open": 10.0,
++            "high": 10.5,
++            "low": 9.5,
++            "prev_close": 10.0,
++            "trade_status": 1,
++            "is_st": False,
++            "data_valid": True,
++            "execution_conflict": False,
++        }
++        bar.update(changes)
++        return bar
++
++
++if __name__ == "__main__":
++    unittest.main()

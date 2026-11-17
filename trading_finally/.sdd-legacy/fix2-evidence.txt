@@ -1,0 +1,58 @@
+== B main freeze ==
+action_log.parquet MATCH
+annual_and_rolling.csv MATCH
+daily_account.parquet MATCH
+daily_positions.parquet MATCH
+orders.parquet MATCH
+performance_summary.json MATCH
+round_trips.parquet MATCH
+run_manifest.json MATCH
+trades.parquet MATCH
+== B manifest binding ==
+config True
+audit True
+src/trend_system/legacy_b_runner.py MATCH
+src/trend_system/legacy_b_policy.py MATCH
+src/trend_system/legacy_b.py MATCH
+src/trend_system/legacy_b_config.py MATCH
+src/trend_system/broker.py MATCH
+src/trend_system/execution.py MATCH
+== B robustness ==
+verdict REJECTED
+main {'total_return': -0.12114799999999992, 'cagr': -0.012776978618361023, 'final_equity': 17577.04, 'rolling_3y_positive_share': 0.4117647058823529, 'closed_round_trips': 408, 'win_rate': 0.43137254901960786}
+double {'total_return': -0.39144650000000003, 'max_drawdown': 0.39144650000000003}
+random {'positive_paths': 1, 'paths_completed': 6, 'early_stop_reason': '6 completed paths include 5 negatives; maximum possible positives 15 < 16', 'paths': [{'path_id': 0, 'total_return': -0.25838800000000006, 'max_drawdown': 0.263953, 'positive': False}, {'path_id': 1, 'total_return': 7.850000000009238e-05, 'max_drawdown': 0.1307002097084079, 'positive': True}, {'path_id': 2, 'total_return': -0.15215650000000003, 'max_drawdown': 0.259679, 'positive': False}, {'path_id': 3, 'total_return': -0.16055750000000002, 'max_drawdown': 0.19446750000000002, 'positive': False}, {'path_id': 4, 'total_return': -0.06471349999999998, 'max_drawdown': 0.1154630000000001, 'positive': False}, {'path_id': 5, 'total_return': -0.030000499999999874, 'max_drawdown': 0.15816066951694252, 'positive': False}]}
+input keys ['b_main_freeze', 'code', 'config', 'recovery_audit', 'signals']
+input config/audit match True True
+input code match True
+== A robustness ==
+verdict REJECTED
+random 0 12 12 completed paths include 12 negatives; maximum possible positives 8 < 16
+== B signal comparison ==
+{
+  "mother_keys":156370,
+  "mother_mainboard":112654,
+  "mother_non_mainboard":43716,
+  "our_keys":114424,
+  "common":109090,
+  "mainboard_common":109090,
+  "mainboard_reproduce_share":0.9683633071,
+  "mother_only":47280,
+  "our_only":5334,
+  "jaccard":0.6746277148,
+  "mother_window":[
+    "2016-10-13",
+    "2026-10-13"
+  ]
+}
+== scenario groups A ==
+{'group': 'high', 'trades': 126, 'net_pnl': 10481.14, 'gross_pnl': 11961.779999999999, 'win_rate': 0.42063492063492064}
+{'group': 'low', 'trades': 127, 'net_pnl': -11090.600000000002, 'gross_pnl': -9601.720000000001, 'win_rate': 0.11023622047244094}
+{'group': 'mid', 'trades': 126, 'net_pnl': -7530.380000000003, 'gross_pnl': -6043.790000000002, 'win_rate': 0.2777777777777778}
+{'group': 'short_hold_lt3', 'trades': 38, 'net_pnl': -8129.690000000001, 'gross_pnl': -7691.42, 'win_rate': 0.0}
+A totals 417 -16269.53 -11375.15
+== key hashes ==
+config/legacy_b_recovery.json d77b88c7303b1567406e0f396b242a7b991d8998186ee704ba0f45f766552c1e
+results/legacy_b_recovery_audit.json 9f0a3a287d68360d6ea0bc668de0ee22029e936b0c72d866c2c1b651aa198573
+results/legacy_b_signals.parquet 831e8460837c046b054e715cbdb1ccfc87bfc7aa28a76a2f70a6149a8ff33833
+results/legacy_b_summary.json aba454ca9d65abaefd8be29ce234917f549f63e4a40256fd495f4afbeb014acc

@@ -1,0 +1,458 @@
+--- a/README.md
++++ b/README.md
+@@ -47,7 +47,7 @@
+ 在已批准的两个旧研究盈利假设上，按同一 2 万元、仅主板、完全盘后账户复核：
+ 
+ - 候选 A `three_of_two_low_vol`：主窗口 -79.20%，MDD 81.32%，REJECTED；
+-- 候选 B `early_trend_breadth`：主窗口 -13.87%，MDD 16.67%，REJECTED；其母版缺失公式由同一研究链路的 `10b_构建全A面板_含退市.py` 和带有效日期的历史行业表补全，未从后续优化版择优。
++- 候选 B `early_trend_breadth`：主窗口 -12.115%，MDD 16.990%，REJECTED；其母版缺失公式由同一研究链路的 `10b_构建全A面板_含退市.py` 和带有效日期的历史行业表补全，未从后续优化版择优。
+ 
+ 结论与归因见 `93_旧候选复核结论.md`、`94_旧候选失败与场景.md`、`95_候选B复核结论.md`、`96_候选B失败与场景.md`、`97_停止边界与后续.md`。两个候选均未进入纯模拟，不生成日报、持仓台账或真实交易建议。
+ 
+--- a/94_旧候选失败与场景.md
++++ b/94_旧候选失败与场景.md
+@@ -47,13 +47,17 @@
+ | 低 | 127 | -11090.60 | -9601.72 | 0.1102 |
+ | 中 | 126 | -7530.38 | -6043.79 | 0.2778 |
+ | 高 | 126 | 10481.14 | 11961.78 | 0.4206 |
++| 持有不足 3 日（无法计算波动） | 38 | -8129.69 | -7691.42 | 0.0000 |
++| 合计 | 417 | -16269.53 | -11375.15 | — |
+ 
++持有不足 3 日的 38 笔为 16 笔 1 日、22 笔 2 日交易，全部亏损；它们单列后，四个分组合计与 `round_trips` 的 417 笔、净 -16,269.53 元、毛 -11,375.15 元闭合。
++
+ ## 滚动三年
+ 
+ 85 个实际月末滚动窗口：正收益 0 个，最低 -47.91%，中位 -29.51%，最高 -2.81%。
+ 
+ ## 共同失败原因
+ 
+-- A 的毛收益本身为负，115 笔止损相关退出贡献约 -24,291 元毛亏损；低波动组亏损最重，说明固定止损在低波动/弱势结构中反复被触发。
+-- B 的毛收益仅 +853 元，显式费用 4,994 元；旧母版 28% 信号来自非主板，按权限不可买入。
++- A 的毛收益本身为负，115 笔止损相关退出贡献约 -24,291 元毛亏损。在三组可计算持有期波动的交易中，低波动组亏损最重（净 -11,090.60 元）；另有 38 笔持有不足 3 日、无法计算波动分组的交易全部亏损（净 -8,129.69 元）。这是退出原因与分组会计，不是反事实因果。
++- B 的毛收益仅 +715.78 元，显式费用 4,526.32 元；旧母版 28% 信号来自非主板，按权限不可买入。
+ - 两者的共同点是：在 2 万元、仅主板、盘后执行、真实费用和 2016—2026 全周期下，没有任何候选达到正收益门槛。
+--- a/95_候选B复核结论.md
++++ b/95_候选B复核结论.md
+@@ -6,7 +6,7 @@
+ - 主窗口最大回撤：0.169905
+ - 主窗口闭合往返：408；胜率：0.4314
+ - 双倍费用+20bp：总收益 -0.391447，MDD 0.391447
+-- 随机排序正收益路径：1/6 条已完成（5 条为负；即使剩余路径全正，最多 15 条为正，低于门槛 16，随机门槛已不可通过）
++- 随机排序正收益路径：1/6 条已完成；提前停止：6 completed paths include 5 negatives; maximum possible positives 15 < 16
+ - 2010—2015 压力：原规则资格日期为 2017-10-13，结构性无入场，不伪造空账户结果。
+ 
+ ## 机械门槛
+--- a/96_候选B失败与场景.md
++++ b/96_候选B失败与场景.md
+@@ -45,5 +45,5 @@
+ ## 共同失败原因
+ 
+ - B 的毛收益仅 +715.78 元，显式费用 4,526.32 元；`time_exit` 404 笔毛 +1,654.17，但费用 4,482.91，净 -2,828.74。
+-- 旧母版 28% 信号来自非主板，按权限不可买入；B 的低波动组亏损最重，高波动组为正，说明 20 日固定持有和成本结构对低波动标的尤其不利。
++- 旧母版 28% 信号来自非主板，按权限不可买入；B 的低波动组记录了最大亏损，高波动组为正。这是分组会计，不是反事实因果。
+ - 与 A 的共同点是：在 2 万元、仅主板、盘后执行、真实费用和 2016—2026 全周期下，没有任何候选达到正收益门槛。
+--- a/97_停止边界与后续.md
++++ b/97_停止边界与后续.md
+@@ -40,7 +40,7 @@
+ - 双倍费用+20bp 压力：B 总收益 **-39.14%**、MDD 39.14%；B 对成本仍然极度敏感。
+ - 随机排序：已完成 6 条中 5 条为负；剩余路径即使全为正也最多 15 条为正，低于门槛 16，随机门槛已不可通过。
+ - 2010—2015 压力：B 原规则资格日期为 2017-10-13，该窗口结构性无入场，不伪造空账户结果。
+-- 与旧母版信号对照：旧母版 156,370 个信号中 43,716 个（28.0%）来自非主板；恢复实现复现了旧母版主板信号的 97.9%。非主板信号按用户“仅主板”约束不可买入，旧报告的全 A 收益不能直接移植。
++- 与旧母版信号对照：旧母版 156,370 个信号中 43,716 个（28.0%）来自非主板；在旧母版 112,654 个主板信号中，当前实现（114,424 个入场，已排除入场时已 ST 的候选）复现 109,090 个（96.8%）。当前实现另有 5,334 个旧母版没有的信号，双向 Jaccard 0.675；差异包括 ST 排除和实现细节。非主板信号按用户“仅主板”约束不可买入，旧报告的全 A 收益不能直接移植。
+ 
+ ## 旧报告差异
+ 
+--- a/src/trend_system/legacy_b_config.py
++++ b/src/trend_system/legacy_b_config.py
+@@ -1,6 +1,7 @@
+ """Strict loader for the recovered candidate-B research configuration."""
+ 
+ from dataclasses import dataclass, fields
++import hashlib
+ import json
+ import math
+ from pathlib import Path
+@@ -28,6 +29,17 @@
+     candidates: tuple[EarlyTrendBreadthConfig, ...]
+ 
+ 
++OFFICIAL_CONFIG_SHA256 = "d77b88c7303b1567406e0f396b242a7b991d8998186ee704ba0f45f766552c1e"
++EXPECTED_SOURCES = {
++    "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/30b_组合回测_含退市.py":
++        "8406120aedd2ad21cbbca35e87fb784262434730b3399697b7afbe822b4686e8",
++    "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/10b_构建全A面板_含退市.py":
++        "d45892c97a2995d1c3fc7349c2dd9162be6b1d11825a330673136c88300f3d37",
++}
++EXPECTED_INDUSTRY = {
++    "/Users/admin/WorkSpace/trading/2026-10-18_成交量融合_2010-2025/01_数据/申万行业分类_时点.csv":
++        "3ebc1a6c22c1b17f137470bb0c040c31b055b5d805fe29f4b55ce53d8ee62872",
++}
+ _TOP_FIELDS = frozenset(field.name for field in fields(LegacyBRecoveryConfig))
+ _CANDIDATE_FIELDS = frozenset(field.name for field in fields(EarlyTrendBreadthConfig))
+ _SOURCE_FIELDS = frozenset(("path", "sha256"))
+@@ -76,7 +88,17 @@
+     return LegacySource(path=value["path"], sha256=value["sha256"])
+ 
+ 
++def _sha256(path: str | Path) -> str:
++    digest = hashlib.sha256()
++    with Path(path).open("rb") as file:
++        for chunk in iter(lambda: file.read(8 * 1024 * 1024), b""):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
+ def load_legacy_b_config(path: str | Path) -> LegacyBRecoveryConfig:
++    if _sha256(path) != OFFICIAL_CONFIG_SHA256:
++        raise ValueError("B recovery config hash does not match the frozen official config")
+     raw = json.loads(
+         Path(path).read_text(encoding="utf-8"),
+         object_pairs_hook=_reject_duplicates,
+@@ -91,10 +113,19 @@
+     _require_exact(candidate_raw, _CANDIDATE_FIELDS, "candidate")
+     if candidate_raw["name"] != "early_trend_breadth":
+         raise ValueError("B recovery candidate must be early_trend_breadth")
++    if candidate_raw["evaluation_status"] not in ("PENDING_DATA_GATE", "EVALUABLE"):
++        raise ValueError("B candidate evaluation_status invalid")
++    if candidate_raw["not_evaluable_fields"]:
++        raise ValueError("B recovery requires no not_evaluable_fields")
+     sources = tuple(
+         _source(source, f"candidate.sources[{index}]")
+         for index, source in enumerate(candidate_raw["sources"])
+     )
++    if {source.path: source.sha256 for source in sources} != EXPECTED_SOURCES:
++        raise ValueError("B recovery candidate source set/hashes do not match the frozen lineage")
++    industry = _source(raw["industry_source"], "industry_source")
++    if {industry.path: industry.sha256} != EXPECTED_INDUSTRY:
++        raise ValueError("B recovery industry source does not match the frozen lineage")
+     not_evaluable = candidate_raw["not_evaluable_fields"]
+     if not isinstance(not_evaluable, list) or not all(isinstance(x, str) for x in not_evaluable):
+         raise ValueError("not_evaluable_fields must be a string list")
+@@ -152,6 +183,6 @@
+         industry_coverage_min=_number(raw["industry_coverage_min"], "industry_coverage_min"),
+         required_entry_coverage=_number(raw["required_entry_coverage"], "required_entry_coverage"),
+         status=raw["status"],
+-        industry_source=_source(raw["industry_source"], "industry_source"),
++        industry_source=industry,
+         candidates=(candidate,),
+     )
+--- a/src/trend_system/legacy_b_runner.py
++++ b/src/trend_system/legacy_b_runner.py
+@@ -44,7 +44,7 @@
+     }
+ 
+ 
+-def run_legacy_b(config, root: Path | None = None) -> LegacyBRunResult:
++def run_legacy_b(config, config_path=None, root: Path | None = None) -> LegacyBRunResult:
+     root = PROJECT_ROOT if root is None else Path(root)
+     summary_path = root / "results" / "legacy_b_summary.json"
+     audit_path = root / "results" / "legacy_b_recovery_audit.json"
+@@ -53,9 +53,11 @@
+     recovery = json.loads(audit_path.read_text(encoding="utf-8"))
+     if recovery.get("restored") is not True or recovery.get("status") != "EVALUABLE":
+         raise ValueError("Candidate B recovery audit is not restored/EVALUABLE")
+-    config_path = root / "config" / "legacy_b_recovery.json"
+-    if recovery["config"]["sha256"] != _sha256(config_path):
+-        raise ValueError("Candidate B recovery config hash mismatch")
++    official_config = root / "config" / "legacy_b_recovery.json"
++    if recovery["config"]["sha256"] != _sha256(official_config):
++        raise ValueError("Candidate B recovery audit does not match the official config")
++    if config_path is None or _sha256(Path(config_path)) != recovery["config"]["sha256"]:
++        raise ValueError("Candidate B actual --config does not match the recovery audit")
+     frozen = json.loads(summary_path.read_text(encoding="utf-8"))
+     if frozen.get("status") != "EVALUABLE":
+         raise ValueError("Candidate B data gate is not EVALUABLE")
+--- a/src/trend_system/legacy_b_robustness.py
++++ b/src/trend_system/legacy_b_robustness.py
+@@ -64,7 +64,7 @@
+         return codes
+ 
+ 
+-def run_legacy_b_robustness(config, root: Path | None = None) -> LegacyBRobustnessResult:
++def run_legacy_b_robustness(config, config_path=None, root: Path | None = None) -> LegacyBRobustnessResult:
+     root = PROJECT_ROOT if root is None else Path(root)
+     main_dir = root / "results" / "legacy_candidates" / CANDIDATE_B
+     freeze = json.loads((root / ".sdd-legacy" / "b_main_freeze.json").read_text(encoding="utf-8"))
+@@ -77,6 +77,21 @@
+     frozen = json.loads((root / "results" / "legacy_b_summary.json").read_text(encoding="utf-8"))
+     if frozen.get("status") != "EVALUABLE":
+         raise ValueError("Candidate B is not evaluable")
++    audit_path = root / "results" / "legacy_b_recovery_audit.json"
++    if not audit_path.exists():
++        raise ValueError("Candidate B recovery audit is missing")
++    recovery = json.loads(audit_path.read_text(encoding="utf-8"))
++    if recovery.get("restored") is not True or recovery.get("status") != "EVALUABLE":
++        raise ValueError("Candidate B recovery audit is not restored/EVALUABLE")
++    if config_path is None or _sha256(Path(config_path)) != recovery["config"]["sha256"]:
++        raise ValueError("Candidate B robustness --config does not match the recovery audit")
++    if main_manifest["config"]["sha256"] != recovery["config"]["sha256"]:
++        raise ValueError("Candidate B main manifest config differs from recovery audit")
++    if main_manifest["recovery_audit"]["sha256"] != _sha256(audit_path):
++        raise ValueError("Candidate B recovery audit changed after the main run")
++    for name, registered in main_manifest["code"].items():
++        if _sha256(root / name) != registered["sha256"]:
++            raise ValueError(f"Candidate B code changed after the main run: {name}")
+ 
+     panel_all = load_panel(root / "data" / "main_panel.parquet")
+     signals_all = pd.read_parquet(
+@@ -94,6 +109,11 @@
+         {
+             "signals": {"path": frozen["outputs"]["signals"]["path"],
+                         "sha256": frozen["outputs"]["signals"]["sha256"]},
++            "config": {"path": str(root / "config" / "legacy_b_recovery.json"),
++                       "sha256": _sha256(root / "config" / "legacy_b_recovery.json")},
++            "recovery_audit": {"path": str(root / "results" / "legacy_b_recovery_audit.json"),
++                               "sha256": _sha256(root / "results" / "legacy_b_recovery_audit.json")},
++            "code": {name: {"sha256": _sha256(root / name)} for name in main_manifest["code"]},
+             "b_main_freeze": freeze,
+         },
+     )
+--- a/scripts/legacy_scenario_groups.py
++++ b/scripts/legacy_scenario_groups.py
+@@ -27,12 +27,23 @@
+         ].sort_values("date")
+         volatility.append(held["close"].pct_change().std() if len(held) >= 3 else np.nan)
+     trips["holding_volatility"] = volatility
++    trips["holding_group"] = np.where(
++        trips["holding_volatility"].notna(), "volatility", "short_hold_lt3"
++    )
+ 
+     groups = {}
+     for column, name in (("entry_amount", "entry_amount_groups"),
+                          ("holding_volatility", "holding_volatility_groups")):
+-        frame = trips[trips[column].notna()].copy()
+-        frame["group"] = pd.qcut(frame[column], 3, labels=["low", "mid", "high"], duplicates="drop")
++        frame = trips.copy()
++        if column == "holding_volatility":
++            frame["group"] = frame["holding_group"]
++            frame.loc[frame["holding_volatility"].notna(), "group"] = pd.qcut(
++                frame.loc[frame["holding_volatility"].notna(), "holding_volatility"],
++                3, labels=["low", "mid", "high"], duplicates="drop",
++            ).astype(str)
++        else:
++            frame = frame[frame[column].notna()].copy()
++            frame["group"] = pd.qcut(frame[column], 3, labels=["low", "mid", "high"], duplicates="drop").astype(str)
+         table = frame.groupby("group", observed=True).agg(
+             trades=("net_pnl", "size"),
+             net_pnl=("net_pnl", "sum"),
+--- a/scripts/run_legacy_b.py
++++ b/scripts/run_legacy_b.py
+@@ -9,7 +9,7 @@
+     parser = argparse.ArgumentParser(description="Run the recovered legacy candidate B account")
+     parser.add_argument("--config", required=True)
+     args = parser.parse_args()
+-    result = run_legacy_b(load_legacy_b_config(args.config))
++    result = run_legacy_b(load_legacy_b_config(args.config), config_path=args.config)
+     summary = result.summary
+     print(
+         json.dumps(
+--- a/scripts/run_legacy_b_robustness.py
++++ b/scripts/run_legacy_b_robustness.py
+@@ -9,7 +9,7 @@
+     parser = argparse.ArgumentParser(description="Run recovered candidate-B robustness")
+     parser.add_argument("--config", required=True)
+     args = parser.parse_args()
+-    result = run_legacy_b_robustness(load_legacy_b_config(args.config))
++    result = run_legacy_b_robustness(load_legacy_b_config(args.config), config_path=args.config)
+     print(
+         json.dumps(
+             {
+--- a/tests/test_legacy_b_config.py
++++ b/tests/test_legacy_b_config.py
+@@ -0,0 +1,196 @@
++import hashlib
++import json
++from pathlib import Path
++import shutil
++import tempfile
++import unittest
++from unittest.mock import patch
++
++from trend_system.legacy_b_config import load_legacy_b_config
++from trend_system.legacy_b_robustness import run_legacy_b_robustness
++from trend_system.legacy_b_runner import run_legacy_b
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[1]
++CONFIG_PATH = PROJECT_ROOT / "config" / "legacy_b_recovery.json"
++
++
++def _sha256(path):
++    digest = hashlib.sha256()
++    with Path(path).open("rb") as file:
++        for chunk in iter(lambda: file.read(8 * 1024 * 1024), b""):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
++def _write_modified(tmp: str, mutate) -> Path:
++    raw = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
++    mutate(raw)
++    path = Path(tmp) / "modified.json"
++    path.write_text(json.dumps(raw, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
++    return path
++
++
++class LegacyBConfigLoaderTest(unittest.TestCase):
++    def test_official_config_loads_frozen_values(self):
++        config = load_legacy_b_config(CONFIG_PATH)
++
++        self.assertEqual(config.initial_cash, 20000)
++        self.assertEqual(config.max_main_drawdown, 0.20)
++        self.assertEqual(config.random_paths, 20)
++        self.assertEqual(config.random_positive_min, 16)
++        self.assertEqual(config.status, "PENDING_DATA_GATE")
++        self.assertEqual(len(config.candidates), 1)
++        candidate = config.candidates[0]
++        self.assertEqual(candidate.name, "early_trend_breadth")
++        self.assertEqual(candidate.evaluation_status, "PENDING_DATA_GATE")
++        self.assertEqual(candidate.not_evaluable_fields, ())
++        self.assertEqual(candidate.max_slots, 6)
++        self.assertEqual(candidate.risk_per_trade, 0.005)
++        self.assertEqual(candidate.max_hold, 20)
++        self.assertEqual(candidate.catastrophe_stop_pct, 0.20)
++        self.assertTrue(candidate.gap_filter)
++        self.assertEqual(
++            {source.path: source.sha256 for source in candidate.sources},
++            {
++                "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/30b_组合回测_含退市.py":
++                    "8406120aedd2ad21cbbca35e87fb784262434730b3399697b7afbe822b4686e8",
++                "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/10b_构建全A面板_含退市.py":
++                    "d45892c97a2995d1c3fc7349c2dd9162be6b1d11825a330673136c88300f3d37",
++            },
++        )
++
++    def test_modified_copy_is_rejected_by_official_hash(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            path = _write_modified(
++                tmp, lambda raw: raw["candidates"][0].__setitem__("risk_per_trade", 0.05)
++            )
++            with self.assertRaisesRegex(ValueError, "official config"):
++                load_legacy_b_config(path)
++
++    def test_nonempty_not_evaluable_fields_is_rejected(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            path = _write_modified(
++                tmp,
++                lambda raw: raw["candidates"][0].__setitem__(
++                    "not_evaluable_fields", ["risk_per_trade"]
++                ),
++            )
++            with patch("trend_system.legacy_b_config.OFFICIAL_CONFIG_SHA256", _sha256(path)):
++                with self.assertRaisesRegex(ValueError, "no not_evaluable_fields"):
++                    load_legacy_b_config(path)
++
++    def test_wrong_source_hash_is_rejected(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            path = _write_modified(
++                tmp,
++                lambda raw: raw["candidates"][0]["sources"][0].__setitem__("sha256", "0" * 64),
++            )
++            with patch("trend_system.legacy_b_config.OFFICIAL_CONFIG_SHA256", _sha256(path)):
++                with self.assertRaisesRegex(ValueError, "source set/hashes"):
++                    load_legacy_b_config(path)
++
++    def test_invalid_candidate_status_is_rejected(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            path = _write_modified(
++                tmp,
++                lambda raw: raw["candidates"][0].__setitem__(
++                    "evaluation_status", "NOT_EVALUABLE"
++                ),
++            )
++            with patch("trend_system.legacy_b_config.OFFICIAL_CONFIG_SHA256", _sha256(path)):
++                with self.assertRaisesRegex(ValueError, "evaluation_status invalid"):
++                    load_legacy_b_config(path)
++
++
++class LegacyBRunnerGateTest(unittest.TestCase):
++    def _root(self, tmp: str) -> Path:
++        root = Path(tmp)
++        (root / "config").mkdir()
++        (root / "results").mkdir()
++        shutil.copy(CONFIG_PATH, root / "config" / "legacy_b_recovery.json")
++        return root
++
++    def _audit(self, root: Path, config_sha: str | None = None) -> None:
++        payload = {
++            "restored": True,
++            "status": "EVALUABLE",
++            "config": {"sha256": config_sha or _sha256(root / "config" / "legacy_b_recovery.json")},
++        }
++        (root / "results" / "legacy_b_recovery_audit.json").write_text(
++            json.dumps(payload), encoding="utf-8"
++        )
++
++    def test_main_run_requires_explicit_config_path(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = self._root(tmp)
++            self._audit(root)
++            with self.assertRaisesRegex(ValueError, "actual --config"):
++                run_legacy_b(None, config_path=None, root=root)
++
++    def test_main_run_rejects_alternative_config(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = self._root(tmp)
++            self._audit(root)
++            other = _write_modified(
++                tmp, lambda raw: raw["candidates"][0].__setitem__("risk_per_trade", 0.05)
++            )
++            with self.assertRaisesRegex(ValueError, "actual --config"):
++                run_legacy_b(None, config_path=other, root=root)
++
++    def test_main_run_rejects_missing_recovery_audit(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = self._root(tmp)
++            with self.assertRaisesRegex(ValueError, "audit is missing"):
++                run_legacy_b(None, config_path=root / "config" / "legacy_b_recovery.json", root=root)
++
++    def test_main_run_rejects_audit_with_other_config_hash(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = self._root(tmp)
++            self._audit(root, config_sha="0" * 64)
++            with self.assertRaisesRegex(ValueError, "does not match the official config"):
++                run_legacy_b(None, config_path=root / "config" / "legacy_b_recovery.json", root=root)
++
++    def _robustness_root(self, tmp: str) -> Path:
++        root = self._root(tmp)
++        self._audit(root)
++        config_sha = _sha256(root / "config" / "legacy_b_recovery.json")
++        audit_path = root / "results" / "legacy_b_recovery_audit.json"
++        (root / "results" / "legacy_b_summary.json").write_text(
++            json.dumps({"status": "EVALUABLE"}), encoding="utf-8"
++        )
++        main_dir = root / "results" / "legacy_candidates" / "early_trend_breadth"
++        main_dir.mkdir(parents=True)
++        (main_dir / "performance_summary.json").write_text("{}", encoding="utf-8")
++        (main_dir / "run_manifest.json").write_text(
++            json.dumps({
++                "config": {"sha256": config_sha},
++                "recovery_audit": {"sha256": _sha256(audit_path)},
++                "code": {},
++            }),
++            encoding="utf-8",
++        )
++        (root / ".sdd-legacy").mkdir()
++        (root / ".sdd-legacy" / "b_main_freeze.json").write_text(
++            json.dumps({"files": {}}), encoding="utf-8"
++        )
++        return root
++
++    def test_robustness_requires_explicit_config_path(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = self._robustness_root(tmp)
++            with self.assertRaisesRegex(ValueError, "robustness --config"):
++                run_legacy_b_robustness(None, config_path=None, root=root)
++
++    def test_robustness_rejects_alternative_config(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            root = self._robustness_root(tmp)
++            other = _write_modified(
++                tmp, lambda raw: raw["candidates"][0].__setitem__("risk_per_trade", 0.05)
++            )
++            with self.assertRaisesRegex(ValueError, "robustness --config"):
++                run_legacy_b_robustness(None, config_path=other, root=root)
++
++
++if __name__ == "__main__":
++    unittest.main()

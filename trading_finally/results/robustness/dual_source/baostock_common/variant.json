@@ -1,0 +1,29 @@
+{
+  "family": "dual_source",
+  "name": "baostock_common",
+  "status": "completed",
+  "config": {
+    "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "start_date": "2017-08-31",
+    "end_date": "2026-10-29",
+    "initial_cash": 20000,
+    "slots": 3,
+    "max_weight": 0.2,
+    "max_exposure": 0.6,
+    "entry_lookback": 120,
+    "trend_window": 200,
+    "trend_slope_window": 20,
+    "exit_lookback": 20,
+    "commission_rate": 0.00025,
+    "min_commission": 5,
+    "slippage_bps": 10,
+    "random_seed": 20261101
+  },
+  "config_sha256": "2dee31be145ff04230b0904b381954685a2c64f4bef95a22c2a78f73e2df27cf",
+  "changed_fields": {
+    "start_date": "2017-08-31",
+    "window": "common_only"
+  },
+  "double_all_fee_components": false
+}

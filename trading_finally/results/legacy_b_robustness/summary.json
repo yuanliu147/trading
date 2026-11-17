@@ -1,0 +1,157 @@
+{
+  "candidate_status": "EVALUABLE",
+  "main_max_drawdown": 0.1699045,
+  "gates": {
+    "data_execution_integrity": {
+      "passed": true
+    },
+    "main_window_positive": {
+      "passed": false
+    },
+    "rolling_3y_majority_positive": {
+      "passed": false
+    },
+    "double_cost_positive_and_executable": {
+      "passed": false
+    },
+    "random_order_at_least_16_positive": {
+      "passed": false
+    },
+    "remaining_years_equity_pnl_positive": {
+      "passed": false
+    },
+    "fully_after_close_reproducible": {
+      "passed": true
+    },
+    "drawdown_within_limit": {
+      "passed": true
+    }
+  },
+  "main": {
+    "total_return": -0.12114799999999992,
+    "cagr": -0.012776978618361023,
+    "final_equity": 17577.04,
+    "rolling_3y_positive_share": 0.4117647058823529,
+    "closed_round_trips": 408,
+    "win_rate": 0.43137254901960786
+  },
+  "double_cost": {
+    "total_return": -0.39144650000000003,
+    "max_drawdown": 0.39144650000000003
+  },
+  "random_order": {
+    "positive_paths": 1,
+    "paths_completed": 6,
+    "early_stop_reason": "6 completed paths include 5 negatives; maximum possible positives 15 < 16",
+    "paths": [
+      {
+        "path_id": 0,
+        "total_return": -0.25838800000000006,
+        "max_drawdown": 0.263953,
+        "positive": false
+      },
+      {
+        "path_id": 1,
+        "total_return": 7.850000000009238e-05,
+        "max_drawdown": 0.1307002097084079,
+        "positive": true
+      },
+      {
+        "path_id": 2,
+        "total_return": -0.15215650000000003,
+        "max_drawdown": 0.259679,
+        "positive": false
+      },
+      {
+        "path_id": 3,
+        "total_return": -0.16055750000000002,
+        "max_drawdown": 0.19446750000000002,
+        "positive": false
+      },
+      {
+        "path_id": 4,
+        "total_return": -0.06471349999999998,
+        "max_drawdown": 0.1154630000000001,
+        "positive": false
+      },
+      {
+        "path_id": 5,
+        "total_return": -0.030000499999999874,
+        "max_drawdown": 0.15816066951694252,
+        "positive": false
+      }
+    ]
+  },
+  "remaining_years": {
+    "best_year": "2024",
+    "remaining_pnl": -3242.0
+  },
+  "annual_equity_pnl": {
+    "2016": 0.0,
+    "2017": -816.0400000000009,
+    "2018": -2032.1100000000006,
+    "2019": 737.7700000000041,
+    "2020": -299.57000000000335,
+    "2021": 804.1100000000006,
+    "2022": 52.95999999999913,
+    "2023": -1024.5699999999997,
+    "2024": 819.0400000000009,
+    "2025": -216.97999999999956,
+    "2026": -447.5699999999997
+  },
+  "stress_2010_2015": {
+    "status": "NOT_APPLICABLE",
+    "reason": "原规则资格日期为 2017-10-13，2010-2015 结构性无入场"
+  },
+  "scenario": {
+    "annual_equity_pnl": {
+      "2016": 0.0,
+      "2017": -816.0400000000009,
+      "2018": -2032.1100000000006,
+      "2019": 737.7700000000041,
+      "2020": -299.57000000000335,
+      "2021": 804.1100000000006,
+      "2022": 52.95999999999913,
+      "2023": -1024.5699999999997,
+      "2024": 819.0400000000009,
+      "2025": -216.97999999999956,
+      "2026": -447.5699999999997
+    },
+    "market_state": [
+      {
+        "state": "above_ma20",
+        "days": 1295,
+        "avg_daily_return": 0.00045042151149784246,
+        "avg_exposure": 0.280613066094592
+      },
+      {
+        "state": "below_ma20",
+        "days": 1145,
+        "avg_daily_return": -0.0005957921435665865,
+        "avg_exposure": 0.18964888731587629
+      }
+    ],
+    "exit_reasons": [
+      {
+        "exit_reason": "catastrophe_stop",
+        "count": 4,
+        "net_pnl": -981.8000000000001,
+        "gross_pnl": -938.3899999999999,
+        "costs": 43.41,
+        "avg_return": -0.23441221222884698
+      },
+      {
+        "exit_reason": "time_exit",
+        "count": 404,
+        "net_pnl": -2828.7399999999984,
+        "gross_pnl": 1654.1699999999996,
+        "costs": 4482.91,
+        "avg_return": -0.0013571302619565016
+      }
+    ],
+    "total_trade_costs": 4526.32,
+    "closed_net_pnl": -3810.539999999998,
+    "closed_gross_pnl": 715.7800000000001
+  },
+  "verdict": "REJECTED"
+}

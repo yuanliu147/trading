@@ -1,0 +1,147 @@
+# Task 2 fix round 1 re-review package
+
+Base snapshot: .sdd/snapshots/task2-review1-base
+Head: working files (no commits authorized)
+
+## Changed files
+Files /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/02_预注册_极简趋势消融.md and /Users/admin/WorkSpace/trading/trading_finally/02_预注册_极简趋势消融.md differ
+Files /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/src/trend_system/data.py and /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/data.py differ
+Files /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/tests/test_data.py and /Users/admin/WorkSpace/trading/trading_finally/tests/test_data.py differ
+
+## Diff
+diff -ruN -x .sdd -x data -x results -x __pycache__ /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/02_预注册_极简趋势消融.md /Users/admin/WorkSpace/trading/trading_finally/02_预注册_极简趋势消融.md
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/02_预注册_极简趋势消融.md	2026-11-02 01:18:06
++++ /Users/admin/WorkSpace/trading/trading_finally/02_预注册_极简趋势消融.md	2026-11-02 01:39:03
+@@ -29,7 +29,7 @@
+ - 主业绩窗口固定为 2016-10-13 至 2026-10-29；指标可使用此前历史热身，热身日期不产生主窗口业绩。
+ - 同花顺 DuckDB 与 baostock SQLite 的路径只从唯一配置读取；两个数据库严格只读。
+ - 仅沪深主板普通 A 股，按当日代码、上市日期和退市日期构造历史宇宙；不使用当前名单、名称或 ST 状态回填历史。
+-- 入场日排除历史 ST、停牌、无法合理成交、数据无效、存在未解决源冲突及上市时间不足以计算全部指标的股票。
++- 入场日排除历史 ST、停牌、无法合理成交、数据无效、`execution_conflict` 及上市时间不足以计算全部指标的股票。基线入场和已有持仓仅由 `execution_conflict` 触发双源冲突阻断；`source_conflict` 是审计总标志，不单独阻断，`adjustment_source_conflict` 走第 5、7 节的独立敏感性。
+ - 实际未复权价格用于成交、整手、涨跌停和费用；点时一致的复权序列只用于信号与收益计算。公司行动不得提前影响历史信号。
+ 
+ ### 3.2 入场、排序与退出
+@@ -81,7 +81,8 @@
+ 6. 20 个随机排序路径至少 16 个净收益为正。
+ 7. 去掉贡献最高年份后，剩余年份合计收益为正；结果不得只在单一年份、单一路径或单一板块成立。
+ 8. 规则可完全在收盘后复现，次日订单无隐藏盘中条件。
+-9. 上述条件均满足且主窗口最大回撤不超过 8%，结果为 `UNREJECTED`；其他条件满足但最大回撤为 8%—10%，结果为 `BOUNDARY`；最大回撤超过 10% 或任一其他门槛失败，结果为 `REJECTED`。
++9. 同花顺后复权共同可计算窗口的独立敏感性在扣除成本后净收益为正，且最大回撤不超过 10%；不满足该双源门槛或方向相反时不得 `UNREJECTED`，不得以 baostock 基线结果抵消。
++10. 上述条件均满足且主窗口最大回撤不超过 8%，结果为 `UNREJECTED`；其他条件满足但最大回撤为 8%—10%，结果为 `BOUNDARY`；最大回撤超过 10% 或任一其他门槛失败，结果为 `REJECTED`。
+ 
+ 历史未否决后仍需冻结代码、参数和数据修正流程，至少积累 30 笔完整前瞻交易并满足执行一致性；前瞻最大回撤超过 10%、出现无法处理的公司行动/退市事件或盘后流程无法生成订单时提前停止。30 笔仅验证初步执行一致性，不证明盈利能力。
+ 
+@@ -94,6 +95,6 @@
+ ## 7. 任何策略运行前的数据审计修订
+ 
+ - 双源审计必须拆分 `execution_conflict` 与 `adjustment_source_conflict`：前者只表示原价 OHLC 超阈值差异，后者表示按股票归一化后的复权序列差异。`source_conflict` 保留为原价、量额和复权审计差异的并集，不得把复权模型差异单独解释为原价无法成交或同一种可交易性判断；量额差异也不计入 `execution_conflict`。
+-- 基线仍按第 3.1 节处理未解决源冲突，不借字段拆分放宽既定入场约束；实际成交、整手、涨跌停和费用继续使用原价。审计必须报告归一化复权相对差分布，区分绝对尺度差异、精度带和超过 1% 的实质序列差异，不得把全部复权差异统称为纯噪声。
+-- 新增保存全部共同重叠行的同花顺后复权 OHLC 面板。Task 7 必须在共同可计算窗口增加独立信号敏感性，复用冻结信号参数、执行规则和成本，单独披露两源复权序列造成的差异；不得根据收益选择来源、替换 baostock 基线或改写机械验收门槛和收益方向。
+-- 本修订只细化数据审计和敏感性证据，不改动任何已冻结策略参数、成本、试验预算、机械验收线或否决方向。
++- 基线入场和已有持仓仅由 `execution_conflict` 阻断；`source_conflict` 仅作审计总标志，`adjustment_source_conflict` 不单独阻断，必须进入独立复权敏感性。实际成交、整手、涨跌停和费用继续使用原价。审计必须报告归一化复权相对差分布，区分绝对尺度差异、精度带和超过 1% 的实质序列差异，不得把全部复权差异统称为纯噪声。
++- 新增保存全部共同重叠行的同花顺后复权 OHLC 面板。Task 7 必须在共同可计算窗口增加独立信号敏感性，复用冻结信号参数、执行规则和成本，单独披露两源复权序列造成的差异；不得根据收益选择来源或替换 baostock 基线。共同窗口净收益为正且最大回撤不超过 10% 是第 5 节正式机械门槛，方向相反或不满足时不得 `UNREJECTED`。
++- 本修订是在任何策略运行前完成的数据审计修订，并由此新增第 5 节双源机械门槛；除该新增门槛外，不改动任何已冻结策略参数、成本、试验预算、其他机械验收线或收益否决方向。
+diff -ruN -x .sdd -x data -x results -x __pycache__ /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/src/trend_system/data.py /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/data.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/src/trend_system/data.py	2026-11-02 01:22:33
++++ /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/data.py	2026-11-02 01:39:25
+@@ -414,6 +414,24 @@
+     return result
+ 
+ 
++def _conflict_exclusions(panel: pd.DataFrame) -> pd.DataFrame:
++    frames = []
++    execution = panel["execution_conflict"]
++    adjustment = panel["adjustment_source_conflict"] & ~execution
++    audit_only = panel["source_conflict"] & ~execution & ~panel["adjustment_source_conflict"]
++    for mask, reason, detail in (
++        (execution, "execution_conflict", "retained; ineligible for baseline entry and holding"),
++        (adjustment, "adjustment_source_conflict", "retained; independent sensitivity required"),
++        (audit_only, "source_conflict", "retained; audit only; no independent blocking decision"),
++    ):
++        excluded = panel.loc[mask, ["date", "code"]].copy()
++        excluded["reason"] = reason
++        excluded["rows"] = 1
++        excluded["detail"] = detail
++        frames.append(excluded)
++    return pd.concat(frames, ignore_index=True)
++
++
+ def effective_corporate_actions(events: pd.DataFrame, as_of_date: str) -> pd.DataFrame:
+     effective = events.loc[events["date"].astype(str) <= as_of_date].copy()
+     return effective.sort_values(["date", "code"]).reset_index(drop=True)
+@@ -621,15 +639,12 @@
+         exclusion_frames.append(
+             hithink_only[["date", "code", "reason", "rows", "detail"]]
+         )
+-    for mask, reason, detail in (
+-        (~panel["data_valid"], "data_valid_false", "retained; ineligible for signals"),
+-        (panel["source_conflict"], "source_conflict", "retained; ineligible for signals"),
+-    ):
+-        excluded = panel.loc[mask, ["date", "code"]].copy()
+-        excluded["reason"] = reason
+-        excluded["rows"] = 1
+-        excluded["detail"] = detail
+-        exclusion_frames.append(excluded)
++    excluded = panel.loc[~panel["data_valid"], ["date", "code"]].copy()
++    excluded["reason"] = "data_valid_false"
++    excluded["rows"] = 1
++    excluded["detail"] = "retained; ineligible for signals"
++    exclusion_frames.append(excluded)
++    exclusion_frames.append(_conflict_exclusions(panel))
+     exclusions = pd.concat(exclusion_frames, ignore_index=True)
+ 
+     paths = {
+@@ -667,9 +682,9 @@
+             "volume_relative_threshold": VOLUME_REL_THRESHOLD,
+             "amount_relative_threshold": AMOUNT_REL_THRESHOLD,
+             "adjusted_comparison": "per-code first common valid hfq_close/raw_close normalization; 0.011 yuan after normalization",
+-            "source_conflict": "union of raw OHLC, volume, amount and adjusted-series audit conflicts",
+-            "execution_conflict": "raw OHLC conflicts only; not set by adjusted-model differences",
+-            "adjustment_source_conflict": "normalized adjusted-series conflicts only; not an execution-validity verdict",
++            "source_conflict": "audit-only union of raw OHLC, volume, amount and adjusted-series conflicts; not independently blocking",
++            "execution_conflict": "raw OHLC conflicts only; blocks baseline entry and holding",
++            "adjustment_source_conflict": "normalized adjusted-series conflicts only; requires independent sensitivity, not an execution-validity verdict",
+             "read_only": True,
+         },
+         "databases": {
+diff -ruN -x .sdd -x data -x results -x __pycache__ /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/tests/test_data.py /Users/admin/WorkSpace/trading/trading_finally/tests/test_data.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task2-review1-base/tests/test_data.py	2026-11-02 01:21:53
++++ /Users/admin/WorkSpace/trading/trading_finally/tests/test_data.py	2026-11-02 01:37:21
+@@ -7,6 +7,7 @@
+ from trend_system.data import (
+     _assemble_panel,
+     _compare_overlap,
++    _conflict_exclusions,
+     _hithink_signal_panel,
+     _summarize_adjustment_diagnostics,
+     effective_corporate_actions,
+@@ -175,6 +176,29 @@
+             result["absolute_factor_scale"]["different_scale_with_normalized_close_le_0.001"],
+             1,
+         )
++
++    def test_exclusions_separate_execution_blocking_from_audit_flags(self):
++        panel = pd.DataFrame(
++            {
++                "date": ["2024-01-02", "2024-01-03", "2024-01-04"],
++                "code": ["600000.SH"] * 3,
++                "execution_conflict": [True, False, False],
++                "adjustment_source_conflict": [True, True, False],
++                "source_conflict": [True, True, True],
++            }
++        )
++
++        result = _conflict_exclusions(panel)
++
++        self.assertEqual(
++            result["reason"].tolist(),
++            ["execution_conflict", "adjustment_source_conflict", "source_conflict"],
++        )
++        self.assertIn("ineligible", result.loc[0, "detail"])
++        self.assertIn("sensitivity", result.loc[1, "detail"])
++        self.assertIn("audit only", result.loc[2, "detail"])
++        self.assertNotIn("ineligible", result.loc[1, "detail"])
++        self.assertNotIn("ineligible", result.loc[2, "detail"])
+ 
+     def test_corporate_actions_include_ex_date_but_not_future_events(self):
+         events = pd.DataFrame(

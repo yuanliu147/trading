@@ -1,0 +1,820 @@
+--- /dev/null
++++ b/13_预注册_旧候选统一复核.md
+@@ -0,0 +1,182 @@
++# 旧候选统一复核预注册
++
++- 冻结日期：2026-11-03
++- 状态：在查看或运行任何候选真实收益前冻结；不是已验证交易系统
++- 唯一配置：`config/legacy_candidates.json`
++- 配置对象：`trend_system.legacy_config.LegacyResearchConfig`
++- 候选集合固定且仅为 `three_of_two_low_vol`、`early_trend_breadth`；禁止网格、参数邻域、后续版本择优及删除不通过的过滤器。
++- 最终目标：在硬约束内尽量提高扣费后年化收益，同时关注收益回撤比和跨期稳定性；该目标不授权按结果调参。
++
++## 1. 权威输入与版本
++
++### 1.1 旧规则唯一来源
++
++以下哈希按 2026-11-03 只读文件字节计算。规则只从这些文件及已批准的 `11_设计_旧候选统一复核.md` 提取，不用同名后续版本补缺。
++
++| 候选 | 精确路径 | SHA256 |
++| --- | --- | --- |
++| A | `/Users/admin/WorkSpace/trading/2026-10-18_最优策略_原版三法取二_低波活跃/04_复现与代码/backtest.py` | `73b5eb05cba0f7090386f2d07de471bbff75b37c68c6151bc7f201635253c8a3` |
++| A | `/Users/admin/WorkSpace/trading/2026-10-18_最优策略_原版三法取二_低波活跃/04_复现与代码/股性分类.py` | `52400a17160771a7846cf8f58a9e4899cdc2be5c3f541769dcbf32ace7ad2406` |
++| B | `/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/30b_组合回测_含退市.py` | `8406120aedd2ad21cbbca35e87fb784262434730b3399697b7afbe822b4686e8` |
++
++### 1.2 统一账户与现有面板快照
++
++| 输入 | 精确路径 | SHA256 |
++| --- | --- | --- |
++| 基础配置 | `/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/config.py` | `50718c68857dc33413b5fd671d19af51ee3580f65f93037bc07a62dd975c00e8` |
++| 面板构建与冲突定义 | `/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/data.py` | `10cc71a5255eba743524961eaff28dfa15e3914bba18bd19664cad768914656c` |
++| 执行与费用 | `/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/execution.py` | `5461e2d28f2460f4392c00148645c3b4cf3f064d7b9bb52d946ccd3ce8f864df` |
++| 账户引擎 | `/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/broker.py` | `15765c844d9459d219017849a97861b9e237fe135e763434274e981acc03949f` |
++| 主板面板 | `/Users/admin/WorkSpace/trading/trading_finally/data/main_panel.parquet` | `6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a` |
++| 同花顺信号面板 | `/Users/admin/WorkSpace/trading/trading_finally/data/hithink_signal_panel.parquet` | `6c7c8c070eca05e273fa67463787d085bbc8c8fbe38ed8ffc00d1b7245ccc53d` |
++| 指数面板 | `/Users/admin/WorkSpace/trading/trading_finally/data/index_panel.parquet` | `8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a` |
++| 公司行动 | `/Users/admin/WorkSpace/trading/trading_finally/data/corporate_actions.parquet` | `f7a924a63091af282b8d37ed2120ae9bae0598846d5d414edc7191a9769bb575` |
++| 2010—2015 压力面板 | `/Users/admin/WorkSpace/trading/trading_finally/data/stress_panel.parquet` | `cd9e482306476ca61dcfb54f373764cc675f6e081089a3165aa44895829d4d28` |
++
++两个数据库的输入 manifest 如下。字节数由 `stat` 只读获取，SHA256 由 `shasum -a 256` 对文件字节流只读计算；版本信息仅来自只读文件头及 `file` 识别，不使用 mtime 冒充内容版本，未通过 DuckDB/SQLite 驱动连接或查询数据库。
++
++| 数据库精确路径 | 文件字节数 | 只读文件版本信息 | SHA256 |
++| --- | ---: | --- | --- |
++| `/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb` | 1,863,593,984 | DuckDB 文件头版本字符串 `v1.5.4`；头部标识 `08e34c447b` | `67561be6368efa5653107c884a6515dc249a7992a99d9f273f6a5cfd77e42f61` |
++| `/Users/admin/WorkSpace/baostock_data/data/baostock.db` | 10,330,697,728 | SQLite 3.x；文件头 last-writer version number `3050004`（3.50.4），`version-valid-for=6` | `77a12ced7de4f21d1a9c26b60fbaca518437e2fc808ef994ca634b558b2c8a6e` |
++
++该登记仅冻结输入文件字节及可获取的文件头版本，不构成数据库内容审计或许可运行候选收益。若后续重建面板，必须使用与此 manifest 一致的只读输入；文件字节或哈希变化时不得沿用本冻结版本。
++
++候选 B 的母版只引用旧 pickle 面板，未给出历史行业辅助数据的来源、有效日期、版本或哈希。历史行业输入因此为 `NOT_EVALUABLE`；不得用当前行业回填，也不得从后续优化版选择来源。
++
++## 2. 共同账户与执行口径
++
++- 主业绩窗口固定为 2016-10-13 至 2026-10-29；指标可使用此前历史热身，热身期不进入主窗口业绩。
++- 初始资金 20,000 元；仅沪深主板普通 A 股可成交，排除 ETF、创业板、科创板、BJ、融资融券。全 A 上下文只用于原规则要求的横截面股性、市场宽度和行业共振。
++- T 日收盘后确认信号，后续交易日执行；买入委托不顺延，卖出委托在停牌或跌停不可执行时顺延。买入信号本身不顺延。
++- 实际未复权价用于成交、100 股整手、真实绝对价格过滤、涨跌停和费用；点时复权序列只用于信号与收益。公司行动后零股可卖出。
++- 佣金为成交金额万 2.5，单笔最低 5 元；2023-08-28 起卖出印花税 0.05%，此前 0.1%；过户费 2022-04-29 起 0.001%，此前 0.002%；买卖单边不利滑点 10bp。费用按既有账户引擎的历史日期规则执行，不另建费用口径。
++- 买入价止损锚经公司行动保持经济尺度：`P_entry × F_current/F_entry`，再与当前实际未复权收盘比较；不得除权后直接比较原始买入价与当前原价。结构止损也须转换到同一实际价格尺度。
++- 持仓变为 ST 是两个候选统一新增的风险退出，不冒充旧策略原组成，不得按结果删除。与旧退出同日发生时记录全部原因、只生成一笔卖单；不为新增 ST 虚构旧源码中的单原因优先级，其影响单独披露。
++- 信号缺失、指标历史不足和不可交易分别记录；三者不得混为同一种无信号。
++
++## 3. 候选 A：`three_of_two_low_vol`
++
++状态：`PENDING_DATA_GATE`。以下规则已能由两份权威源码唯一提取，仍须通过第 6 节数据闸门后才能评价真实账户结果。
++
++### 3.1 指标、入场与排序
++
++| 项目 | 冻结规则 | 旧源码依据 |
++| --- | --- | --- |
++| 市场闸门 | 上证综指 T 日收盘 > MA20，且 MA20 > 前一交易日 MA20；MA 为含 T 日的 20 日简单均值 | `backtest.py` 195—211、319—330 |
++| 个股趋势 | T 日收盘 > MA20，且 MA20 > 前一交易日 MA20 | 同上 |
++| 流动性 | 含 T 日的 20 日平均成交额 >= 30,000,000 元 | `backtest.py` 74、327 |
++| M1 | MA5 > MA20 且前一日 MA5 <= 前一日 MA20 | `backtest.py` 319 |
++| M2 | `wdif=EMA34(close)-EMA200(close)`；`wdea=EMA13(wdif)`；`whist=2*(wdif-wdea)`；要求 `whist>0` 且 `wdea>wdea.shift(1)`；EMA 使用 `adjust=False` | `backtest.py` 53—55、109—114、320 |
++| M3 | 收盘 > 此前 20 个完整交易日最高价（不含 T），且成交量 >= 含 T 日 20 日均量的 1.3 倍 | `backtest.py` 72、77、321 |
++| 三法取二 | M1/M2/M3 命中数 >= 2；缺失布尔值不得当作命中 | `backtest.py` 322—328 |
++| 信号冷却 | 每只股票相邻已接受信号的原始行索引差须 >= 5；不是离场后的 5 日冷却 | `backtest.py` 229—257、330 |
++| 股性过滤 | `s_vol < 0.5` 且 `s_heat >= 0.5`；无有效横截面不得生成信号 | `股性分类.py` 85—105；设计 4.2 |
++| 排序 | `命中数*2 + 成交量/20日均量*0.2` 降序，代码为最终确定性次序 | `backtest.py` 329、531；设计 4.2 |
++| 组合 | 最多 4 只，每只目标市值 <= 当时权益 20%，单日最多新开 2 只；已持有不加仓 | `backtest.py` 37—39、587—631 |
++
++### 3.2 股性横截面精确口径
++
++- 每个快照日对每只股票仅使用 `date<=snap` 的最后 300 行；至少 260 行且最后一行日期必须等于 snap。60 日均成交额 >= 20,000,000 元后才进入横截面排名。
++- `r=close.pct_change()`；`vol120=np.nanstd(r[-120:])*sqrt(252)`，即旧源码的默认总体标准差口径；`range250=max(high[-250:])/min(low[-250:])-1`。
++- `act=mean(amount[-20:])/mean(amount[-120:])-1`，分母须大于 0。
++- `limfrac=mean(abs(r[-250:])>=threshold)`；代码前缀为 300、301、688 时 threshold=0.195，其余为 0.095。
++- `gapfrac=mean(abs(open[-250:]/close[-251:-1]-1)>0.02)`。
++- `s_vol` 为 `vol120`、`range250` 各自 `rank(pct=True)` 的均值；`s_heat` 为 `act`、`limfrac`、`gapfrac` 各自 `rank(pct=True)` 的均值。沿用旧源码默认平均秩及缺失处理，最后剔除 `s_vol` 或 `s_heat` 缺失的股票。
++- 排名宇宙为旧源码 `v_daily_qfq` 中沪深 A 股并排除 BJ 的快照合格横截面；不是当前名单，也不是仅主板买入宇宙。
++
++### 3.3 退出、持有计数与优先级
++
++| 项目 | 冻结规则 | 旧源码依据 |
++| --- | --- | --- |
++| `low10` | 信号日的 `low.rolling(10).min()`，**包含信号当日**，不 shift | `backtest.py` 82、330 |
++| 止损锚 | 入场时固定为 `max(信号日low10, 实际买入价*0.92)`；不是每日重算 low10；公司行动按共同口径调整 | `backtest.py` 616；设计 4.3 |
++| 止损确认 | T 日收盘 <= 止损锚，后续首个可执行开盘卖出 | `backtest.py` 460—468；统一盘后执行 |
++| 时间退出 | `held>=40` 时 T 日收盘确认，后续首个可执行开盘卖出 | `backtest.py` 467—468、654—664 |
++| 持有计数 | 入场日照旧计数为第 1 日；有个股行情且成交量 >0 的日期才 `held+=1`；停牌/零成交日不计数 | `backtest.py` 633—655 |
++| 结构退出 | 依次检查 MA5<MA20、`whist<0`、收盘<MA20 | `backtest.py` 491—497 |
++| 原退出原因优先级 | 止损 > 到期 > MA5<MA20 > 魏氏柱<0 > 破MA20；候选 A 无止盈 | `backtest.py` 460—520 |
++| ST 叠加 | 按第 2 节新增；同日多原因全部披露，卖单不重复 | 设计 4.3；非旧原规则 |
++
++## 4. 候选 B：`early_trend_breadth`
++
++**规则状态：`NOT_EVALUABLE`。** 母版 `30b_组合回测_含退市.py` 读取多个预计算矩阵但未定义其公式。下列可还原项被冻结，不可还原项不得猜测、不得从 F2、45、70/15、进攻版或其他后续版本补齐，也不得删过滤器运行收益。
++
++### 4.1 可唯一还原的入场、排序和仓位
++
++| 项目 | 冻结规则 | 旧源码依据 |
++| --- | --- | --- |
++| 原硬日期闸门 | `date>=2017-10-13` 是 `valid` 的组成部分；主业绩窗口仍为 2016-10-13 起，不静默删除该旧过滤器 | 15—25 行 |
++| 市场宽度 | 主方案 `gate='breadth'`，要求 `MB>0.50`，不是 >= | 20—29、149—150 行 |
++| 趋势结构/年龄 | `U` 必须为真且 `5<=AGE<=30`；设计含义为收盘>MA60、MA20>MA60、MA60 上行及趋势年龄 5—30 日 | 9、22—25 行；设计 5.2 |
++| 真实价格过滤 | 母版存在 `C>=2`；统一复核固定为实际未复权收盘 >=2 元，不使用后复权绝对价 | 22 行；设计 5.2 |
++| 波动/回撤 | `ATR<=0.044` 且 `DD60>-0.08` | 24—25 行 |
++| 20 日无涨停 | 主方案 `lu_filter=True`，要求 `LU==0` | 21、26 行 |
++| 行业共振 | `SBR>=0.60` 且 `SR20>0.05` | 21、25 行 |
++| 成交额 | `AMT>=30,000,000`，主方案按 AMT 升序 | 20—22、59—65、149 行 |
++| 原开盘跳空过滤 | 主方案 `gap_filter=True`，`NG[t-1]>0.05` 时跳过买入；不得静默省略 | 20、69 行 |
++| 槽位与排序 | 最多 6 只，已持有股票不重复买入，无单日新开数量上限；不加仓 | 56—67、93—94、149 行 |
++| 单笔风险 | `risk_amt=equity*0.005` | 85—86、149 行 |
++| 风险距离 | 主方案 `stop_mode='cat20'` 时，仓位 sizing 距离仍为 `clip(2*ATR,0.04,0.12)`；不是 20% | 72—84、149—150 行 |
++| 风险股数 | 原始连续股数为 `min(risk_amt/(entry*sd_size), equity*0.20/entry, cash/(entry*(1+cost)))`；统一账户再按 100 股向下取整并预留真实费用 | 82—94 行；共同账户约束 |
++| heat | `heat=sum(shares*risk_ps)/equity`，其中 `risk_ps=entry*sd_size`；若 `heat+0.005>0.0301` 则跳过。0.0301 是旧源码实际拒绝线，不改写为其他值 | 84—89 行 |
++| 最小仓位 | 原始目标 `sh*entry<equity*0.01` 时跳过 | 90 行 |
++
++### 4.2 退出与持有计数
++
++- 母版主方案是 `cat20`：灾难止损距离 20%，而 ATR 风险距离只用于股数与 heat。
++- 原盘中止损统一修正为：T 日实际收盘相对公司行动调整后的实际买入锚达到或跌破 -20%，收盘后确认，后续首个可执行开盘卖出；不以最低价或原止损价假设成交。
++- 原 20 日到期收盘卖统一修正为：到期日收盘确认，后续首个可执行开盘卖出。
++- `exit_i=entry_i+20-1`，入场日为第 1 日，到期为全局交易日索引第 20 日。个股停牌期间全局索引仍前进，故停牌日计入 20 日；原到期处理遇无收盘且有未来行情会顺延，统一卖单也在首个可执行开盘成交。
++- 原退出检查顺序为灾难止损后到期，冻结原因为 `catastrophe_stop`、`time_exit`；新增 ST 按第 2 节并列披露，不伪装成旧优先级。
++- 不顺延买入信号，不加入盘中卖半、保本、移动止盈、价格带或后续版本过滤。
++
++### 4.3 不可唯一还原项（全部为 `NOT_EVALUABLE`）
++
++| 配置键 | 缺失内容 |
++| --- | --- |
++| `up_struct_formula` | `up_struct` 的 MA 窗口计算、含当日方式及上行精确定义未在母版给出 |
++| `trend_age_formula` | 趋势年龄起点、重置、中断和含当日计数未给出 |
++| `atr_pct_formula` | TR、ATR14 平滑/滚动及除以收盘的精确定义未给出 |
++| `dd60_formula` | DD60 的窗口、基准和含当日方式未给出 |
++| `lu_count20_formula` | 20 日涨停判定和窗口计数未给出 |
++| `market_breadth20_formula` | 市场宽度分子、分母、20 日含义和点时宇宙未给出 |
++| `sector_breadth20_formula` | 行业宽度分子、分母及历史行业映射未给出 |
++| `sector_ret20_formula` | 行业 20 日收益聚合及含当日方式未给出 |
++| `amt20_formula` | `amt20` 的精确均值窗口和含当日方式未在母版定义 |
++| `historical_industry_membership` | 历史行业来源、有效日期、版本和哈希缺失；不得以当前行业替代 |
++| `next_gap_formula_and_timestamp` | `next_gap` 的公式及其相对信号/执行日的时点未定义，无法证明完全盘后可用 |
++| `amount_ranking_tie_break` | AMT 并列时旧源码没有明确的最终确定性代码次序 |
++
++因此候选 B 当前不得运行真实候选收益或进入机械门槛判定。只有既有授权数据能补齐**同一必需字段**并完成点时审计后，才可按本冻结规则复核；不得换策略或借补数据调参。
++
++## 5. 唯一机器配置与严格加载
++
++`config/legacy_candidates.json` 是上述数值、候选状态、源文件路径和哈希的唯一机器表示。`load_legacy_config(path)` 返回冻结的 `LegacyResearchConfig`，候选与来源也为冻结对象，序列字段加载为元组。
++
++- 顶层固定：主窗口、20,000 元、佣金率 0.00025、最低佣金 5 元、滑点 10bp、种子 20261101、MDD 边界 10%/20%、20 个随机路径且至少 16 个为正、联合成本压力双倍费用及 20bp 滑点、滚动三年正收益比例阈值 0.5，以及第 6 节覆盖率。
++- A 配置逐项对应第 3 节：冷却 5、4 仓、20%、单日 2 只、三法窗口、low10 含当日、8% 买入价止损、40 日计数、股性窗口/阈值、排序权重和旧退出顺序。
++- B 配置逐项对应第 4 节：旧硬日期、6 仓、20%、0.5%、0.0301、20 日计数、各入场阈值、gap 过滤、20% 灾难退出、ATR sizing 上下限、最小 1% 仓位、原退出顺序及 12 个 `not_evaluable_fields`。
++- 拒绝未知或缺失字段、额外策略参数、重复 JSON 键、`NaN`/`Infinity`/`-Infinity`、错误标量类型和非对象根节点。环境变量和命令行不得覆盖任何字段；不存在第二套配置或隐藏默认值。
++
++## 6. 数据可行性闸门（任何候选收益之前）
++
++1. **全 A 点时覆盖**：上下文沿用旧源码沪深 A 股范围并排除 BJ。逐日分母为当日已上市且未退市的点时活跃全 A 宇宙；所需上下文字段完整的证券数为分子。每个交易日覆盖率均须 >=99%，不得用全期 pooled 比率掩盖单日不足；不足则对应候选 `NOT_EVALUABLE`。
++2. **实际候选入场字段**：所有用于实际候选入场决策的必需字段覆盖率必须为 100%；缺一即对应候选 `NOT_EVALUABLE`。不得把不可交易当成字段完整。
++3. **历史行业**：行业记录须有有效起止日期并点时适用；逐日覆盖 >=99%，实际候选入场行业字段覆盖 100%。任何不足、当前行业回填或未来成分重建均使候选 B `NOT_EVALUABLE`。
++4. **执行冲突**：沿用 `data.py` 既有定义。双源实际未复权 OHLC 任一侧缺失，或绝对差 >0.011 元（含既有数值容差），属于 `execution_conflict`；入场及已有持仓执行按既有引擎阻断。成交量/金额差异属于审计总冲突，不单独构成执行冲突。
++5. **复权差异**：`adjustment_source_conflict` 及归一化复权差异只作披露和既定敏感性，不冒充实际成交冲突；`source_conflict` 是审计并集，不单独阻断成交。不得因辅助复权差异改写实际成交价。
++6. **通过前置测试**：合成数据须证明 T 日信号不改写历史、后续交易日开盘执行、现金和持股非负及账户恒等式成立。Task 1 不执行这些后续数据构建或收益步骤。
++
++## 7. 冻结试验与机械裁决
++
++每个候选仅一个主版本；候选 B 在解除 `NOT_EVALUABLE` 前不得进入以下收益试验。
++
++- 主窗口账户结果、年度权益盈亏、月末滚动三年、暴露、费用、换手、胜率与盈亏比。
++- 一个联合成本压力路径：全部费用双倍且单边滑点 20bp；该路径不另设 MDD 门槛。
++- 固定种子 20261101 的 20 个同信号随机排序路径，至少 16 个扣费后为正。
++- 剔除账户权益贡献最高年份后，剩余年份合计必须为正。
++- 主结果冻结后才可做 2010—2015 单源压力，只作场景分析，不反向调参。
++- 其他门槛全部通过时：主路径 MDD<=10% 为 `UNREJECTED`；10%<MDD<=20% 为较高风险 `BOUNDARY`；MDD>20% 为 `REJECTED`。任一其他门槛失败也为 `REJECTED`。
++- 主窗口扣费后净收益须为正，超过半数月末滚动三年收益须为正，联合成本压力扣费后净收益须为正，且规则须完全盘后可复现。
++- `UNREJECTED` 和符合上述条件的 `BOUNDARY` 才可进入至少 30 笔完整前瞻纯模拟；`REJECTED`/`NOT_EVALUABLE` 不进入。任何状态都不是实盘授权或收益保证。
+--- /dev/null
++++ b/config/legacy_candidates.json
+@@ -0,0 +1,125 @@
++{
++  "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
++  "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
++  "start_date": "2016-10-13",
++  "end_date": "2026-10-29",
++  "initial_cash": 20000,
++  "commission_rate": 0.00025,
++  "min_commission": 5,
++  "slippage_bps": 10,
++  "random_seed": 20261101,
++  "max_main_drawdown": 0.2,
++  "unrejected_max_drawdown": 0.1,
++  "random_paths": 20,
++  "random_positive_min": 16,
++  "stress_cost_multiplier": 2,
++  "stress_slippage_bps": 20,
++  "rolling_three_year_positive_threshold": 0.5,
++  "point_in_time_coverage_min": 0.99,
++  "industry_coverage_min": 0.99,
++  "required_entry_coverage": 1.0,
++  "candidates": [
++    {
++      "name": "three_of_two_low_vol",
++      "evaluation_status": "PENDING_DATA_GATE",
++      "sources": [
++        {
++          "path": "/Users/admin/WorkSpace/trading/2026-10-18_最优策略_原版三法取二_低波活跃/04_复现与代码/backtest.py",
++          "sha256": "73b5eb05cba0f7090386f2d07de471bbff75b37c68c6151bc7f201635253c8a3"
++        },
++        {
++          "path": "/Users/admin/WorkSpace/trading/2026-10-18_最优策略_原版三法取二_低波活跃/04_复现与代码/股性分类.py",
++          "sha256": "52400a17160771a7846cf8f58a9e4899cdc2be5c3f541769dcbf32ace7ad2406"
++        }
++      ],
++      "cooldown": 5,
++      "max_slots": 4,
++      "max_weight": 0.2,
++      "max_new_per_day": 2,
++      "market_ma_window": 20,
++      "stock_ma_fast": 5,
++      "stock_ma_slow": 20,
++      "amount_ma20_min": 30000000,
++      "m2_ema_fast": 34,
++      "m2_ema_slow": 200,
++      "m2_signal_ema": 13,
++      "m3_breakout_window": 20,
++      "m3_volume_window": 20,
++      "m3_volume_ratio_min": 1.3,
++      "low10_window": 10,
++      "low10_includes_signal_day": true,
++      "entry_stop_pct": 0.08,
++      "max_hold": 40,
++      "entry_day_counts_toward_hold": true,
++      "suspension_counts_toward_hold": false,
++      "exit_priority": ["stop", "time_exit", "ma5_below_ma20", "whist_negative", "close_below_ma20"],
++      "stock_history_tail": 300,
++      "stock_history_min": 260,
++      "stock_amount_ma60_min": 20000000,
++      "stock_vol_window": 120,
++      "stock_range_window": 250,
++      "stock_activity_short_window": 20,
++      "stock_activity_long_window": 120,
++      "stock_limit_window": 250,
++      "stock_gap_window": 250,
++      "stock_gap_threshold": 0.02,
++      "stock_main_limit_threshold": 0.095,
++      "stock_growth_limit_threshold": 0.195,
++      "s_vol_max": 0.5,
++      "s_heat_min": 0.5,
++      "score_hit_weight": 2,
++      "score_volume_weight": 0.2
++    },
++    {
++      "name": "early_trend_breadth",
++      "evaluation_status": "NOT_EVALUABLE",
++      "sources": [
++        {
++          "path": "/Users/admin/WorkSpace/trading/2026-10-20_涨幅趋势_全维度定制/02_代码/30b_组合回测_含退市.py",
++          "sha256": "8406120aedd2ad21cbbca35e87fb784262434730b3399697b7afbe822b4686e8"
++        }
++      ],
++      "not_evaluable_fields": [
++        "up_struct_formula",
++        "trend_age_formula",
++        "atr_pct_formula",
++        "dd60_formula",
++        "lu_count20_formula",
++        "market_breadth20_formula",
++        "sector_breadth20_formula",
++        "sector_ret20_formula",
++        "amt20_formula",
++        "historical_industry_membership",
++        "next_gap_formula_and_timestamp",
++        "amount_ranking_tie_break"
++      ],
++      "eligibility_start": "2017-10-13",
++      "max_slots": 6,
++      "max_weight": 0.2,
++      "risk_per_trade": 0.005,
++      "heat_reject_threshold": 0.0301,
++      "max_hold": 20,
++      "entry_day_counts_toward_hold": true,
++      "suspension_counts_toward_hold": true,
++      "exit_priority": ["catastrophe_stop", "time_exit"],
++      "market_breadth_threshold": 0.5,
++      "trend_age_min": 5,
++      "trend_age_max": 30,
++      "actual_close_min": 2,
++      "atr_pct_max": 0.044,
++      "dd60_threshold": -0.08,
++      "sector_breadth_min": 0.6,
++      "sector_ret20_threshold": 0.05,
++      "amount_ma20_min": 30000000,
++      "ranking": "amount_ascending",
++      "lu_filter": true,
++      "gap_filter": true,
++      "gap_max": 0.05,
++      "catastrophe_stop_pct": 0.2,
++      "risk_atr_multiple": 2,
++      "risk_size_min": 0.04,
++      "risk_size_max": 0.12,
++      "min_position_weight": 0.01
++    }
++  ]
++}
+--- /dev/null
++++ b/src/trend_system/legacy_config.py
+@@ -0,0 +1,261 @@
++"""Strict loader for the frozen legacy-candidate research configuration."""
++
++import json
++import math
++from dataclasses import dataclass, fields
++from pathlib import Path
++
++
++@dataclass(frozen=True)
++class LegacySource:
++    path: str
++    sha256: str
++
++
++@dataclass(frozen=True)
++class ThreeOfTwoLowVolConfig:
++    name: str
++    evaluation_status: str
++    sources: tuple[LegacySource, ...]
++    cooldown: int
++    max_slots: int
++    max_weight: float
++    max_new_per_day: int
++    market_ma_window: int
++    stock_ma_fast: int
++    stock_ma_slow: int
++    amount_ma20_min: int
++    m2_ema_fast: int
++    m2_ema_slow: int
++    m2_signal_ema: int
++    m3_breakout_window: int
++    m3_volume_window: int
++    m3_volume_ratio_min: float
++    low10_window: int
++    low10_includes_signal_day: bool
++    entry_stop_pct: float
++    max_hold: int
++    entry_day_counts_toward_hold: bool
++    suspension_counts_toward_hold: bool
++    exit_priority: tuple[str, ...]
++    stock_history_tail: int
++    stock_history_min: int
++    stock_amount_ma60_min: int
++    stock_vol_window: int
++    stock_range_window: int
++    stock_activity_short_window: int
++    stock_activity_long_window: int
++    stock_limit_window: int
++    stock_gap_window: int
++    stock_gap_threshold: float
++    stock_main_limit_threshold: float
++    stock_growth_limit_threshold: float
++    s_vol_max: float
++    s_heat_min: float
++    score_hit_weight: int
++    score_volume_weight: float
++
++
++@dataclass(frozen=True)
++class EarlyTrendBreadthConfig:
++    name: str
++    evaluation_status: str
++    sources: tuple[LegacySource, ...]
++    not_evaluable_fields: tuple[str, ...]
++    eligibility_start: str
++    max_slots: int
++    max_weight: float
++    risk_per_trade: float
++    heat_reject_threshold: float
++    max_hold: int
++    entry_day_counts_toward_hold: bool
++    suspension_counts_toward_hold: bool
++    exit_priority: tuple[str, ...]
++    market_breadth_threshold: float
++    trend_age_min: int
++    trend_age_max: int
++    actual_close_min: int
++    atr_pct_max: float
++    dd60_threshold: float
++    sector_breadth_min: float
++    sector_ret20_threshold: float
++    amount_ma20_min: int
++    ranking: str
++    lu_filter: bool
++    gap_filter: bool
++    gap_max: float
++    catastrophe_stop_pct: float
++    risk_atr_multiple: int
++    risk_size_min: float
++    risk_size_max: float
++    min_position_weight: float
++
++
++@dataclass(frozen=True)
++class LegacyResearchConfig:
++    hithink_db_path: str
++    baostock_db_path: str
++    start_date: str
++    end_date: str
++    initial_cash: int
++    commission_rate: float
++    min_commission: int
++    slippage_bps: int
++    random_seed: int
++    max_main_drawdown: float
++    unrejected_max_drawdown: float
++    random_paths: int
++    random_positive_min: int
++    stress_cost_multiplier: int
++    stress_slippage_bps: int
++    rolling_three_year_positive_threshold: float
++    point_in_time_coverage_min: float
++    industry_coverage_min: float
++    required_entry_coverage: float
++    candidates: tuple[ThreeOfTwoLowVolConfig | EarlyTrendBreadthConfig, ...]
++
++
++_CONFIG_FIELDS = frozenset(field.name for field in fields(LegacyResearchConfig))
++_CANDIDATE_CLASSES = {
++    "three_of_two_low_vol": ThreeOfTwoLowVolConfig,
++    "early_trend_breadth": EarlyTrendBreadthConfig,
++}
++_CANDIDATE_ORDER = tuple(_CANDIDATE_CLASSES)
++_DATABASE_PATH_FIELDS = ("hithink_db_path", "baostock_db_path")
++
++
++def _reject_non_json_constant(value: str) -> None:
++    raise ValueError(f"Invalid JSON constant: {value}")
++
++
++def _reject_duplicate_fields(pairs: list[tuple[str, object]]) -> dict:
++    result = {}
++    for key, value in pairs:
++        if key in result:
++            raise ValueError(f"Duplicate JSON field: {key}")
++        result[key] = value
++    return result
++
++
++def _field_names(config_class) -> frozenset[str]:
++    return frozenset(field.name for field in fields(config_class))
++
++
++def _check_fields(data, config_class, kind: str) -> None:
++    if not isinstance(data, dict):
++        raise ValueError(f"{kind.capitalize()} must be a JSON object")
++    expected = _field_names(config_class)
++    unknown = set(data) - expected
++    if unknown:
++        raise ValueError(f"Unknown {kind} fields: {sorted(unknown)}")
++    missing = expected - set(data)
++    if missing:
++        raise ValueError(f"Missing {kind} fields: {sorted(missing)}")
++
++
++def _scalar_value(name: str, value, expected_type):
++    if expected_type is str:
++        if type(value) is not str:
++            raise ValueError(f"Invalid field type: {name}")
++        return value
++    if expected_type is bool:
++        if type(value) is not bool:
++            raise ValueError(f"Invalid field type: {name}")
++        return value
++    if expected_type is int:
++        if type(value) is not int:
++            raise ValueError(f"Invalid field type: {name}")
++        return value
++    if expected_type is float:
++        if type(value) not in (int, float) or not math.isfinite(value):
++            raise ValueError(f"Invalid field type: {name}")
++        return float(value)
++    raise TypeError(f"Unsupported config field type: {name}")
++
++
++def _string_tuple(name: str, value) -> tuple[str, ...]:
++    if not isinstance(value, list) or any(type(item) is not str for item in value):
++        raise ValueError(f"Invalid field type: {name}")
++    return tuple(value)
++
++
++def _load_source(data) -> LegacySource:
++    _check_fields(data, LegacySource, "source")
++    source = LegacySource(
++        path=_scalar_value("path", data["path"], str),
++        sha256=_scalar_value("sha256", data["sha256"], str),
++    )
++    if not source.path or not source.sha256:
++        raise ValueError("Source path and SHA256 must be non-empty")
++    return source
++
++
++def _load_candidate(data, expected_name: str):
++    candidate_class = _CANDIDATE_CLASSES[expected_name]
++    _check_fields(data, candidate_class, "candidate")
++    values = {}
++    for field in fields(candidate_class):
++        value = data[field.name]
++        if field.name == "sources":
++            if not isinstance(value, list):
++                raise ValueError("Invalid field type: sources")
++            values[field.name] = tuple(_load_source(source) for source in value)
++        elif field.type == tuple[str, ...]:
++            values[field.name] = _string_tuple(field.name, value)
++        else:
++            values[field.name] = _scalar_value(field.name, value, field.type)
++    return candidate_class(**values)
++
++
++def _candidate_names(data) -> dict[str, dict]:
++    if not isinstance(data, list) or len(data) != 2:
++        raise ValueError("Legacy config must contain exactly two candidates")
++    by_name = {}
++    for candidate in data:
++        if not isinstance(candidate, dict) or type(candidate.get("name")) is not str:
++            raise ValueError("Each candidate must be an object with a string name")
++        name = candidate["name"]
++        if name not in _CANDIDATE_CLASSES or name in by_name:
++            raise ValueError(f"Invalid or duplicate candidate: {name}")
++        by_name[name] = candidate
++    if set(by_name) != set(_CANDIDATE_ORDER):
++        raise ValueError("Legacy config candidate set does not match the frozen pair")
++    return by_name
++
++
++def load_legacy_config(path: str | Path) -> LegacyResearchConfig:
++    try:
++        with Path(path).open(encoding="utf-8") as file:
++            data = json.load(
++                file,
++                parse_constant=_reject_non_json_constant,
++                object_pairs_hook=_reject_duplicate_fields,
++            )
++    except (OSError, json.JSONDecodeError) as error:
++        raise ValueError(f"Unable to load legacy config: {path}") from error
++
++    if not isinstance(data, dict):
++        raise ValueError("Config root must be a JSON object")
++
++    unknown = set(data) - _CONFIG_FIELDS
++    if unknown:
++        raise ValueError(f"Unknown config fields: {sorted(unknown)}")
++    missing = _CONFIG_FIELDS - set(data)
++    if missing:
++        raise ValueError(f"Missing config fields: {sorted(missing)}")
++
++    values = {}
++    for field in fields(LegacyResearchConfig):
++        if field.name == "candidates":
++            continue
++        values[field.name] = _scalar_value(field.name, data[field.name], field.type)
++
++    for field in _DATABASE_PATH_FIELDS:
++        if not values[field]:
++            raise ValueError(f"Missing database path: {field}")
++
++    candidates_by_name = _candidate_names(data["candidates"])
++    values["candidates"] = tuple(
++        _load_candidate(candidates_by_name[name], name) for name in _CANDIDATE_ORDER
++    )
++    return LegacyResearchConfig(**values)
+--- /dev/null
++++ b/tests/test_legacy_config.py
+@@ -0,0 +1,240 @@
++import json
++import os
++import sys
++import tempfile
++import unittest
++from dataclasses import FrozenInstanceError
++from pathlib import Path
++from unittest.mock import patch
++
++from trend_system.legacy_config import LegacyResearchConfig, load_legacy_config
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[1]
++CONFIG_PATH = PROJECT_ROOT / "config" / "legacy_candidates.json"
++
++
++class LegacyResearchConfigTest(unittest.TestCase):
++    def test_config_loads_frozen_research_values(self):
++        config = load_legacy_config(CONFIG_PATH)
++
++        self.assertIsInstance(config, LegacyResearchConfig)
++        self.assertEqual(config.start_date, "2016-10-13")
++        self.assertEqual(config.end_date, "2026-10-29")
++        self.assertEqual(config.initial_cash, 20000)
++        self.assertEqual(config.random_seed, 20261101)
++        self.assertEqual(config.commission_rate, 0.00025)
++        self.assertEqual(config.min_commission, 5)
++        self.assertEqual(config.slippage_bps, 10)
++        self.assertEqual(config.point_in_time_coverage_min, 0.99)
++        self.assertEqual(config.industry_coverage_min, 0.99)
++        self.assertEqual(config.required_entry_coverage, 1.0)
++        self.assertEqual(config.max_main_drawdown, 0.20)
++        self.assertEqual(config.unrejected_max_drawdown, 0.10)
++        self.assertEqual(config.random_paths, 20)
++        self.assertEqual(config.random_positive_min, 16)
++        self.assertEqual(config.stress_cost_multiplier, 2)
++        self.assertEqual(config.stress_slippage_bps, 20)
++        self.assertEqual(config.rolling_three_year_positive_threshold, 0.5)
++
++    def test_config_contains_exactly_two_frozen_candidates(self):
++        config = load_legacy_config(CONFIG_PATH)
++
++        self.assertEqual(
++            tuple(candidate.name for candidate in config.candidates),
++            ("three_of_two_low_vol", "early_trend_breadth"),
++        )
++        self.assertEqual(len(config.candidates), 2)
++        self.assertEqual(len({candidate.name for candidate in config.candidates}), 2)
++
++    def test_candidate_a_rule_and_source_freeze(self):
++        candidate = load_legacy_config(CONFIG_PATH).candidates[0]
++
++        self.assertEqual(candidate.evaluation_status, "PENDING_DATA_GATE")
++        self.assertTrue(candidate.low10_includes_signal_day)
++        self.assertTrue(candidate.entry_day_counts_toward_hold)
++        self.assertFalse(candidate.suspension_counts_toward_hold)
++        self.assertEqual(candidate.max_slots, 4)
++        self.assertEqual(candidate.max_new_per_day, 2)
++        self.assertEqual(candidate.max_weight, 0.20)
++        self.assertEqual(candidate.max_hold, 40)
++        self.assertEqual(candidate.entry_stop_pct, 0.08)
++        self.assertEqual(candidate.amount_ma20_min, 30000000)
++        self.assertEqual(candidate.s_vol_max, 0.5)
++        self.assertEqual(candidate.s_heat_min, 0.5)
++        self.assertEqual(candidate.stock_history_min, 260)
++        self.assertEqual(candidate.stock_amount_ma60_min, 20000000)
++        self.assertEqual(
++            candidate.exit_priority,
++            ("stop", "time_exit", "ma5_below_ma20", "whist_negative", "close_below_ma20"),
++        )
++        self.assertEqual(
++            tuple(source.sha256 for source in candidate.sources),
++            (
++                "73b5eb05cba0f7090386f2d07de471bbff75b37c68c6151bc7f201635253c8a3",
++                "52400a17160771a7846cf8f58a9e4899cdc2be5c3f541769dcbf32ace7ad2406",
++            ),
++        )
++
++    def test_candidate_b_rule_freeze_and_not_evaluable_fields(self):
++        candidate = load_legacy_config(CONFIG_PATH).candidates[1]
++
++        self.assertEqual(candidate.evaluation_status, "NOT_EVALUABLE")
++        self.assertEqual(candidate.eligibility_start, "2017-10-13")
++        self.assertEqual(candidate.max_slots, 6)
++        self.assertEqual(candidate.max_weight, 0.20)
++        self.assertEqual(candidate.risk_per_trade, 0.005)
++        self.assertEqual(candidate.heat_reject_threshold, 0.0301)
++        self.assertEqual(candidate.max_hold, 20)
++        self.assertTrue(candidate.entry_day_counts_toward_hold)
++        self.assertTrue(candidate.suspension_counts_toward_hold)
++        self.assertEqual(candidate.market_breadth_threshold, 0.50)
++        self.assertEqual(candidate.trend_age_min, 5)
++        self.assertEqual(candidate.trend_age_max, 30)
++        self.assertEqual(candidate.actual_close_min, 2)
++        self.assertEqual(candidate.atr_pct_max, 0.044)
++        self.assertEqual(candidate.dd60_threshold, -0.08)
++        self.assertEqual(candidate.sector_breadth_min, 0.60)
++        self.assertEqual(candidate.sector_ret20_threshold, 0.05)
++        self.assertEqual(candidate.catastrophe_stop_pct, 0.20)
++        self.assertEqual(candidate.risk_atr_multiple, 2)
++        self.assertEqual(candidate.risk_size_min, 0.04)
++        self.assertEqual(candidate.risk_size_max, 0.12)
++        self.assertEqual(candidate.min_position_weight, 0.01)
++        self.assertEqual(candidate.exit_priority, ("catastrophe_stop", "time_exit"))
++        self.assertEqual(
++            candidate.sources[0].sha256,
++            "8406120aedd2ad21cbbca35e87fb784262434730b3399697b7afbe822b4686e8",
++        )
++        self.assertIn("trend_age_formula", candidate.not_evaluable_fields)
++        self.assertIn("market_breadth20_formula", candidate.not_evaluable_fields)
++        self.assertIn("historical_industry_membership", candidate.not_evaluable_fields)
++        self.assertIn("next_gap_formula_and_timestamp", candidate.not_evaluable_fields)
++
++    def test_config_and_candidates_are_immutable(self):
++        config = load_legacy_config(CONFIG_PATH)
++
++        with self.assertRaises(FrozenInstanceError):
++            config.initial_cash = 30000
++        with self.assertRaises(FrozenInstanceError):
++            config.candidates[0].name = "changed"
++        with self.assertRaises(FrozenInstanceError):
++            config.candidates[0].sources[0].path = "changed"
++
++    def test_unknown_top_level_field_is_rejected(self):
++        data = self._config_data()
++        data["unknown_field"] = 1
++
++        with self.assertRaisesRegex(ValueError, "Unknown config fields"):
++            self._load(data)
++
++    def test_additional_candidate_parameter_is_rejected(self):
++        data = self._config_data()
++        data["candidates"][0]["stop_loss"] = 0.08
++
++        with self.assertRaisesRegex(ValueError, "Unknown candidate fields"):
++            self._load(data)
++
++    def test_nonstandard_json_constants_are_rejected(self):
++        for constant in ("NaN", "Infinity", "-Infinity"):
++            with self.subTest(constant=constant):
++                with tempfile.TemporaryDirectory() as directory:
++                    path = Path(directory) / "config.json"
++                    path.write_text(
++                        '{"start_date":"2016-10-13","initial_cash":' + constant + "}",
++                        encoding="utf-8",
++                    )
++                    with self.assertRaisesRegex(ValueError, "Invalid JSON constant"):
++                        load_legacy_config(path)
++
++    def test_environment_override_is_rejected(self):
++        data = self._config_data()
++        with patch.dict(os.environ, {"LEGACY_INITIAL_CASH": "30000"}):
++            config = self._load(data)
++
++        self.assertEqual(config.initial_cash, 20000)
++
++    def test_cli_style_override_field_is_rejected(self):
++        data = self._config_data()
++        data["initial_cash_override"] = 30000
++
++        with self.assertRaisesRegex(ValueError, "Unknown config fields"):
++            self._load(data)
++
++    def test_missing_file_and_malformed_json_are_rejected(self):
++        with self.assertRaisesRegex(ValueError, "Unable to load legacy config"):
++            load_legacy_config(CONFIG_PATH.with_name("does-not-exist.json"))
++
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "config.json"
++            path.write_text("{not json", encoding="utf-8")
++            with self.assertRaisesRegex(ValueError, "Unable to load legacy config"):
++                load_legacy_config(path)
++
++    def test_actual_cli_arguments_cannot_override_config(self):
++        data = self._config_data()
++        with patch.object(sys, "argv", ["prog", "--initial-cash=30000"]):
++            config = self._load(data)
++
++        self.assertEqual(config.initial_cash, 20000)
++
++    def test_candidate_set_is_exact(self):
++        for mutation in ("missing", "duplicate", "extra", "unknown"):
++            with self.subTest(mutation=mutation):
++                data = self._config_data()
++                if mutation == "missing":
++                    data["candidates"] = data["candidates"][:1]
++                elif mutation == "duplicate":
++                    data["candidates"][1] = data["candidates"][0]
++                elif mutation == "extra":
++                    data["candidates"].append(data["candidates"][0])
++                else:
++                    data["candidates"][1]["name"] = "unknown"
++                with self.assertRaises(ValueError):
++                    self._load(data)
++
++    def test_duplicate_json_fields_are_rejected(self):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "config.json"
++            path.write_text('{"initial_cash":20000,"initial_cash":30000}', encoding="utf-8")
++            with self.assertRaisesRegex(ValueError, "Duplicate JSON field"):
++                load_legacy_config(path)
++
++    def test_non_object_root_and_invalid_scalar_types_are_rejected(self):
++        for value in ([], "config", 1):
++            with self.subTest(value=value):
++                with self.assertRaisesRegex(ValueError, "root must be a JSON object"):
++                    self._load(value)
++
++        data = self._config_data()
++        data["initial_cash"] = True
++        with self.assertRaisesRegex(ValueError, "Invalid field type"):
++            self._load(data)
++
++    def test_unknown_source_field_is_rejected(self):
++        data = self._config_data()
++        data["candidates"][0]["sources"][0]["version"] = "other"
++
++        with self.assertRaisesRegex(ValueError, "Unknown source fields"):
++            self._load(data)
++
++    def test_missing_required_field_is_rejected(self):
++        data = self._config_data()
++        del data["random_seed"]
++
++        with self.assertRaisesRegex(ValueError, "Missing config fields"):
++            self._load(data)
++
++    def _load(self, data):
++        with tempfile.TemporaryDirectory() as directory:
++            path = Path(directory) / "config.json"
++            path.write_text(json.dumps(data), encoding="utf-8")
++            return load_legacy_config(path)
++
++    @staticmethod
++    def _config_data():
++        return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
++
++
++if __name__ == "__main__":
++    unittest.main()

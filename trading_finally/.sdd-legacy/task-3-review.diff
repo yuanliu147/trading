@@ -1,0 +1,975 @@
+--- a/12_实施计划_旧候选统一复核.md
++++ b/12_实施计划_旧候选统一复核.md
+@@ -88,22 +88,21 @@
+ - [ ] **Step 4: 真实面板检查**
+   仅在全 A 上下文数据闸门允许时计算，保存信号摘要与行数；断言非主板、ST、执行冲突和窗口外入场为 0。按 2026-11-04 用户确认，对实际触发且拟入场的候选逐键检查必需字段覆盖 100%，不足则候选 `NOT_EVALUABLE` 且不得运行账户；通过后才允许 Task 6 收益运行。本步骤自身不运行账户收益。
+ 
+-### Task 4: 实现候选 B 点时信号与风险元数据
++### Task 4: 记录候选 B 不可评价并禁止猜测实现
+ 
+ **Files:**
+-- Create: `src/trend_system/legacy_b.py`
+-- Test: `tests/test_legacy_b.py`
++- Create: `.sdd-legacy/task-4-report.md`
+ 
+ **Interfaces:**
+-- Produces: `compute_legacy_b_signals(context_panel, industry_panel, main_panel, config) -> pd.DataFrame`，输出入场、成交额升序分数以及 Task 5 所需 ATR、风险与 heat 字段。
++- Consumes: Task 1 的 12 项 `NOT_EVALUABLE` 与 Task 2 历史行业空覆盖证据。
++- Produces: 候选 B 的不可评价诊断；不创建 `legacy_b.py`，不输出信号或风险元数据。
+ 
+-- [ ] **Step 1: 写母版公式和不可评价反例**
+-  验证市场宽度>50%、趋势年龄 5—30、MA20/60、ATR14≤4.4%、20 日无涨停、DD60>−8%、行业宽度≥60%、行业 20 日收益>5%、实际价 C>=2（若 Task 1 源码确认）及成交额升序；历史行业缺失必须中止，不得删行业条件。
+-- [ ] **Step 2: 运行测试确认 RED。**
+-- [ ] **Step 3: 实现固定信号**
+-  精确使用 Task 1 预注册公式，输出风险 sizing 所需字段；实际入场覆盖不足时抛出带日期/代码的诊断。
+-- [ ] **Step 4: 合成 GREEN 与真实可行性检查**
+-  即使真实 B 不可评价也保留合成测试；真实环境不可评价时只写诊断，不运行收益。
++- [ ] **Step 1: 核对母版公式和不可评价反例**
++  确认 `up_struct`、趋势年龄、ATR、DD60、LU20、市场/行业宽度、行业收益、amt20、next_gap、并列次序和历史行业溯源均不能由授权母版唯一还原；缺少这些公式时，任何合成实现都会违反设计的禁止猜测原则。
++- [ ] **Step 2: 记录停止诊断**
++  写明候选 B 保持 `NOT_EVALUABLE`，不得运行真实收益；不删除行业、LU、gap 或其他过滤器，不从后续版本补公式。
++- [ ] **Step 3: 验证禁止实现与状态传播**
++  运行既有严格配置测试，确认 12 项完整冻结；检查不存在 `legacy_b.py`、候选 B 信号或账户结果。后续 Task 5 只实现候选 A 所需策略钩子。
+ 
+ ### Task 5: 为账户账本增加可选候选策略对象
+ 
+--- /dev/null
++++ b/src/trend_system/legacy_a.py
+@@ -0,0 +1,370 @@
++"""Point-in-time signals for frozen legacy candidate A only."""
++
++import numpy as np
++import pandas as pd
++
++from .legacy_data import A_ENTRY_REQUIRED_FIELDS, SIGNAL_FIELDS, candidate_entry_valid
++
++
++KEYS = ["date", "code"]
++MARKET_CODE = "000001.SH"
++INDICATOR_COLUMNS = [
++    "source_row_index",
++    "ma5",
++    "ma20",
++    "ma20_previous",
++    "amount_ma20",
++    "volume_ma20",
++    "high20_prev",
++    "low10",
++    "wdif",
++    "wdea",
++    "whist",
++    "m1",
++    "m2",
++    "m3",
++    "hit_count",
++    "history_count",
++    "amt60",
++    "vol120",
++    "range250",
++    "act",
++    "limfrac",
++    "gapfrac",
++]
++FEATURE_COLUMNS = ["amt60", "vol120", "range250", "act", "limfrac", "gapfrac"]
++
++
++def _candidate_config(config):
++    return next(
++        candidate for candidate in config.candidates if candidate.name == "three_of_two_low_vol"
++    )
++
++
++def _method_hits(m1, m2, m3):
++    """Count only explicit true values; nullable and missing booleans fail closed."""
++    flags = pd.concat([m1, m2, m3], axis=1).apply(lambda column: column.fillna(False))
++    flags = flags.astype(bool)
++    hits = flags.sum(axis=1).astype(int)
++    return hits, hits.ge(2)
++
++
++def _history_indicators(block, candidate):
++    close = block["signal_close"].astype(float).reset_index(drop=True)
++    open_ = block["signal_open"].astype(float).reset_index(drop=True)
++    high = block["signal_high"].astype(float).reset_index(drop=True)
++    low = block["signal_low"].astype(float).reset_index(drop=True)
++    volume = block["volume"].astype(float).reset_index(drop=True)
++    amount = block["amount"].astype(float).reset_index(drop=True)
++
++    ma5 = close.rolling(candidate.stock_ma_fast).mean()
++    ma20 = close.rolling(candidate.stock_ma_slow).mean()
++    volume_ma20 = volume.rolling(candidate.m3_volume_window).mean()
++    amount_ma20 = amount.rolling(candidate.stock_ma_slow).mean()
++    wdif = close.ewm(span=candidate.m2_ema_fast, adjust=False).mean() - close.ewm(
++        span=candidate.m2_ema_slow, adjust=False
++    ).mean()
++    wdea = wdif.ewm(span=candidate.m2_signal_ema, adjust=False).mean()
++    whist = 2 * (wdif - wdea)
++    m1 = (ma5.gt(ma20) & ma5.shift(1).le(ma20.shift(1))).fillna(False)
++    m2 = (whist.gt(0) & wdea.gt(wdea.shift(1))).fillna(False)
++    m3 = (
++        close.gt(high.rolling(candidate.m3_breakout_window).max().shift(1))
++        & volume.ge(candidate.m3_volume_ratio_min * volume_ma20)
++    ).fillna(False)
++    hits, _ = _method_hits(m1, m2, m3)
++
++    returns = close.pct_change()
++    prefix = str(block["code"].iloc[0]).split(".")[0][:3]
++    limit_threshold = (
++        candidate.stock_growth_limit_threshold
++        if prefix in ("300", "301", "688")
++        else candidate.stock_main_limit_threshold
++    )
++    amount_long = amount.rolling(candidate.stock_activity_long_window).mean()
++    activity = amount.rolling(candidate.stock_activity_short_window).mean() / amount_long - 1
++    activity = activity.where(amount_long.gt(0))
++    range_high = high.rolling(candidate.stock_range_window).max()
++    range_low = low.rolling(candidate.stock_range_window).min()
++
++    return pd.DataFrame(
++        {
++            "source_row_index": np.arange(len(block), dtype=np.int64),
++            "ma5": ma5,
++            "ma20": ma20,
++            "ma20_previous": ma20.shift(1),
++            "amount_ma20": amount_ma20,
++            "volume_ma20": volume_ma20,
++            "high20_prev": high.rolling(candidate.m3_breakout_window).max().shift(1),
++            "low10": low.rolling(candidate.low10_window).min(),
++            "wdif": wdif,
++            "wdea": wdea,
++            "whist": whist,
++            "m1": m1.astype(float),
++            "m2": m2.astype(float),
++            "m3": m3.astype(float),
++            "hit_count": hits.astype(float),
++            "history_count": np.arange(1, len(block) + 1, dtype=np.int64),
++            "amt60": amount.rolling(60).mean(),
++            "vol120": returns.rolling(candidate.stock_vol_window, min_periods=1).std(ddof=0)
++            * np.sqrt(252),
++            "range250": range_high / range_low - 1,
++            "act": activity,
++            "limfrac": returns.abs()
++            .ge(limit_threshold)
++            .astype(float)
++            .rolling(candidate.stock_limit_window)
++            .mean(),
++            "gapfrac": open_.div(close.shift(1))
++            .sub(1)
++            .abs()
++            .gt(candidate.stock_gap_threshold)
++            .astype(float)
++            .rolling(candidate.stock_gap_window)
++            .mean(),
++        }
++    )
++
++
++def _add_stock_indicators(context, candidate):
++    result = context.sort_values(KEYS[::-1], kind="stable").reset_index(drop=True)
++    outputs = {
++        column: np.full(len(result), np.nan, dtype=float) for column in INDICATOR_COLUMNS
++    }
++    for positions in result.groupby("code", sort=False).indices.values():
++        indicators = _history_indicators(result.iloc[positions], candidate)
++        for column in INDICATOR_COLUMNS:
++            outputs[column][positions] = indicators[column].to_numpy()
++    for column in INDICATOR_COLUMNS:
++        result[column] = outputs[column]
++    result["source_row_index"] = result["source_row_index"].astype(np.int64)
++    result["history_count"] = result["history_count"].astype(np.int64)
++    return result
++
++
++def _cross_section(context, candidate):
++    eligible = context.loc[
++        context["rank_eligible"].eq(True).fillna(False)
++        & context["history_count"].ge(candidate.stock_history_min)
++        & context["amt60"].ge(candidate.stock_amount_ma60_min),
++        [*KEYS, *FEATURE_COLUMNS],
++    ].copy()
++    if eligible.empty:
++        eligible["s_vol"] = pd.Series(dtype=float)
++        eligible["s_heat"] = pd.Series(dtype=float)
++        eligible["stock_filter_ok"] = pd.Series(dtype=bool)
++        return eligible[[*KEYS, "s_vol", "s_heat", "stock_filter_ok"]]
++
++    grouped = eligible.groupby("date", sort=False)
++    eligible["vol120_rank"] = grouped["vol120"].rank(pct=True)
++    eligible["range250_rank"] = grouped["range250"].rank(pct=True)
++    eligible["act_rank"] = grouped["act"].rank(pct=True)
++    eligible["limfrac_rank"] = grouped["limfrac"].rank(pct=True)
++    eligible["gapfrac_rank"] = grouped["gapfrac"].rank(pct=True)
++    eligible["s_vol"] = eligible[["vol120_rank", "range250_rank"]].mean(axis=1)
++    eligible["s_heat"] = eligible[["act_rank", "limfrac_rank", "gapfrac_rank"]].mean(
++        axis=1
++    )
++    eligible["stock_filter_ok"] = (
++        eligible["s_vol"].lt(candidate.s_vol_max)
++        & eligible["s_heat"].ge(candidate.s_heat_min)
++    ).fillna(False)
++    return eligible[[*KEYS, "s_vol", "s_heat", "stock_filter_ok"]]
++
++
++def _market_panel(index_panel, candidate):
++    market = index_panel.loc[
++        index_panel["code"].eq(MARKET_CODE), ["date", "code", "close"]
++    ].copy()
++    market["date"] = market["date"].astype(str)
++    market = market.sort_values(["code", "date"], kind="stable").reset_index(drop=True)
++    if market.duplicated(["date", "code"]).any():
++        raise ValueError("Duplicate market-index key")
++    market = market.rename(columns={"code": "market_code", "close": "market_close"})
++    market["market_ma20"] = market["market_close"].rolling(
++        candidate.market_ma_window
++    ).mean()
++    market["market_ma20_previous"] = market["market_ma20"].shift(1)
++    market["market_ok"] = (
++        market["market_close"].gt(market["market_ma20"])
++        & market["market_ma20"].gt(market["market_ma20_previous"])
++    ).fillna(False)
++    return market
++
++
++def _apply_cooldown(result, cooldown):
++    accepted = np.zeros(len(result), dtype=bool)
++    rejected = np.zeros(len(result), dtype=bool)
++    previous = np.full(len(result), np.nan)
++    raw = result["raw_signal"].to_numpy(dtype=bool)
++    source_rows = result["source_row_index"].to_numpy(dtype=float, na_value=np.nan)
++    for positions in result.groupby("code", sort=False).indices.values():
++        last_accepted = None
++        for position in positions[raw[positions]]:
++            if not np.isfinite(source_rows[position]):
++                rejected[position] = True
++                continue
++            source_row = int(source_rows[position])
++            if last_accepted is not None:
++                previous[position] = last_accepted
++            if last_accepted is None or source_row - last_accepted >= cooldown:
++                accepted[position] = True
++                last_accepted = source_row
++            else:
++                rejected[position] = True
++    result["accepted_signal"] = accepted
++    result["cooldown_rejected"] = rejected
++    result["previous_accepted_row_index"] = previous
++
++
++def compute_legacy_a_signals(
++    context_panel, main_panel, index_panel, config
++) -> pd.DataFrame:
++    """Compute A's fixed close signals without exits, sizing, or account returns."""
++    candidate = _candidate_config(config)
++    required_context = {
++        *KEYS,
++        "signal_open",
++        "signal_high",
++        "signal_low",
++        "signal_close",
++        "volume",
++        "amount",
++        "is_main_board",
++        "rank_eligible",
++    }
++    missing = required_context - set(context_panel)
++    if missing:
++        raise ValueError(f"Missing candidate-A context columns: {sorted(missing)}")
++    if not set(KEYS).issubset(main_panel) or not set(KEYS).issubset(index_panel):
++        raise ValueError("Candidate-A inputs require date/code keys")
++
++    context = context_panel.copy()
++    context["date"] = context["date"].astype(str)
++    if context.duplicated(KEYS).any():
++        raise ValueError("Duplicate candidate-A context key")
++    context = _add_stock_indicators(context, candidate)
++    cross_section = _cross_section(context, candidate)
++
++    main = main_panel.copy()
++    main["date"] = main["date"].astype(str)
++    if main.duplicated(KEYS).any():
++        raise ValueError("Duplicate candidate-A main-panel key")
++    main = main.drop(columns=["is_main_board", *SIGNAL_FIELDS], errors="ignore")
++    source = context[[*KEYS, "is_main_board", *SIGNAL_FIELDS, *INDICATOR_COLUMNS]]
++    result = main.merge(
++        source,
++        on=KEYS,
++        how="left",
++        validate="one_to_one",
++        sort=False,
++        indicator=True,
++    )
++    result["context_key_present"] = result["_merge"].eq("both")
++    result = result.drop(columns="_merge").merge(
++        cross_section,
++        on=KEYS,
++        how="left",
++        validate="one_to_one",
++        sort=False,
++    )
++    result = result.sort_values(["code", "date"], kind="stable").reset_index(drop=True)
++    for column in ("m1", "m2", "m3"):
++        result[column] = result[column].eq(1).fillna(False)
++    result["hit_count"] = result["hit_count"].fillna(0).astype(int)
++    result["source_row_index"] = result["source_row_index"].astype("Int64")
++
++    market = _market_panel(index_panel, candidate)
++    result["market_code"] = MARKET_CODE
++    result = result.merge(
++        market,
++        on=["date", "market_code"],
++        how="left",
++        validate="many_to_one",
++        sort=False,
++    ).drop(columns="market_code")
++    result["market_ok"] = result["market_ok"].eq(True).fillna(False)
++    result["stock_filter_ok"] = result["stock_filter_ok"].eq(True).fillna(False)
++
++    _, enough_methods = _method_hits(result["m1"], result["m2"], result["m3"])
++    stock_trend = result["signal_close"].gt(result["ma20"]) & result["ma20"].gt(
++        result["ma20_previous"]
++    )
++    liquidity = result["amount_ma20"].ge(candidate.amount_ma20_min)
++    result["raw_signal"] = (
++        stock_trend.fillna(False)
++        & liquidity.fillna(False)
++        & enough_methods
++        & result["market_ok"]
++        & result["stock_filter_ok"]
++    ).astype(bool)
++    volume_ratio = result["volume"].div(result["volume_ma20"])
++    result["rank_return_120"] = (
++        result["hit_count"] * candidate.score_hit_weight
++        + volume_ratio.fillna(0) * candidate.score_volume_weight
++    )
++
++    _apply_cooldown(result, candidate.cooldown)
++    in_window = result["date"].between(config.start_date, config.end_date)
++    main_board = result["is_main_board"].eq(True).fillna(False)
++    result["proposed_entry"] = result["accepted_signal"] & in_window & main_board
++    valid_entry = candidate_entry_valid(result)
++    result["entry_signal"] = (
++        result["proposed_entry"] & valid_entry & result["is_st"].eq(0).fillna(False)
++    ).astype(bool)
++    result["stop_ref"] = result["low10"]
++    result["stop_pct"] = candidate.entry_stop_pct
++    return result.sort_values(["code", "date"], kind="stable").reset_index(drop=True)
++
++
++def audit_legacy_a_entries(signals, context_panel, config):
++    """Audit only actually accepted/proposed entries, one explicit key per row."""
++    proposed = signals.loc[signals["proposed_entry"].eq(True), KEYS].copy()
++    proposed["date"] = proposed["date"].astype(str)
++    if proposed.duplicated(KEYS).any():
++        raise ValueError("Duplicate proposed-entry key")
++    right = context_panel.reindex(columns=[*KEYS, *A_ENTRY_REQUIRED_FIELDS]).copy()
++    right["date"] = right["date"].astype(str)
++    if right.duplicated(KEYS).any():
++        raise ValueError("Duplicate entry-audit context key")
++    audit = proposed.merge(
++        right,
++        on=KEYS,
++        how="left",
++        validate="one_to_one",
++        sort=True,
++        indicator=True,
++    )
++    complete = audit[list(A_ENTRY_REQUIRED_FIELDS)].notna().all(axis=1) & audit[
++        "_merge"
++    ].eq("both")
++    audit["required_fields_complete"] = complete
++    valid = candidate_entry_valid(audit) & audit["_merge"].eq("both")
++    audit["candidate_entry_valid"] = valid.astype(bool)
++    if len(audit):
++        audit["missing_fields"] = audit.apply(
++            lambda row: "|".join(
++                field for field in A_ENTRY_REQUIRED_FIELDS if pd.isna(row[field])
++            ),
++            axis=1,
++        )
++    else:
++        audit["missing_fields"] = pd.Series(dtype="string")
++    denominator = len(audit)
++    numerator = int(valid.sum())
++    coverage = numerator / denominator if denominator else 0.0
++    threshold = config.required_entry_coverage
++    passes = bool(
++        denominator > 0
++        and coverage >= threshold
++        and audit["_merge"].eq("both").all()
++    )
++    summary = {
++        "denominator": denominator,
++        "valid_numerator": numerator,
++        "coverage": coverage,
++        "threshold": threshold,
++        "passes": passes,
++        "candidate_a_status": "EVALUABLE" if passes else "NOT_EVALUABLE",
++    }
++    return audit.drop(columns="_merge"), summary
+--- /dev/null
++++ b/scripts/run_legacy_a.py
+@@ -0,0 +1,200 @@
++"""Compute and audit candidate A exclusively from hash-verified frozen Parquet."""
++
++import argparse
++import hashlib
++import json
++from dataclasses import asdict
++from pathlib import Path
++
++import pandas as pd
++
++from trend_system.legacy_a import audit_legacy_a_entries, compute_legacy_a_signals
++from trend_system.legacy_config import load_legacy_config
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[1]
++FROZEN_INPUTS = {
++    "full_a_completed": {
++        "path": PROJECT_ROOT / "data" / "legacy_full_a_panel_completed.parquet",
++        "sha256": "12e92da7600f59c72851da194ac13fca237d593d1cb8c2a0c329e4c28c23d9fb",
++    },
++    "main": {
++        "path": PROJECT_ROOT / "data" / "main_panel.parquet",
++        "sha256": "6a51ed0e7958aa1549dcf156e4387badcfced0236fd812d2bc1fd894aa3acc1a",
++    },
++    "index": {
++        "path": PROJECT_ROOT / "data" / "index_panel.parquet",
++        "sha256": "8b8763e0a552894eee84407f1b0c5e6efa4ff7eb8640ddb149b637539bef387a",
++    },
++    "context_audit": {
++        "path": PROJECT_ROOT / "results" / "legacy_context_audit.json",
++        "sha256": "d2e375ae169f078522d8b979dbea13f457b678d5325d3c77f2a8877d37d56c98",
++    },
++}
++
++
++def _sha256(path):
++    digest = hashlib.sha256()
++    with Path(path).open("rb") as file:
++        for chunk in iter(lambda: file.read(8 * 1024 * 1024), b""):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
++def _verify_inputs():
++    result = {}
++    for name, item in FROZEN_INPUTS.items():
++        path = item["path"]
++        actual = _sha256(path)
++        if actual != item["sha256"]:
++            raise ValueError(f"Frozen input hash mismatch: {name}")
++        result[name] = {"path": str(path), "bytes": path.stat().st_size, "sha256": actual}
++    return result
++
++
++def _write_parquet(frame, path):
++    temporary = path.with_suffix(path.suffix + ".tmp")
++    frame.to_parquet(temporary, index=False)
++    temporary.replace(path)
++    return {"path": str(path), "rows": len(frame), "bytes": path.stat().st_size, "sha256": _sha256(path)}
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument("--config", type=Path, required=True)
++    args = parser.parse_args()
++    config = load_legacy_config(args.config)
++    candidate = next(
++        item for item in config.candidates if item.name == "three_of_two_low_vol"
++    )
++    inputs_before = _verify_inputs()
++    context_audit = json.loads(
++        FROZEN_INPUTS["context_audit"]["path"].read_text(encoding="utf-8")
++    )
++    full_a_gate = bool(context_audit["coverage"]["full_a"]["passes"])
++    task2_status = context_audit["candidate_statuses"]["three_of_two_low_vol"]
++    if not full_a_gate or task2_status != "PENDING_DATA_GATE":
++        raise ValueError("Task 2 full-A gate does not permit candidate-A signal computation")
++
++    context = pd.read_parquet(FROZEN_INPUTS["full_a_completed"]["path"])
++    main_panel = pd.read_parquet(FROZEN_INPUTS["main"]["path"])
++    index = pd.read_parquet(
++        FROZEN_INPUTS["index"]["path"], columns=["date", "code", "close"]
++    )
++    signals = compute_legacy_a_signals(context, main_panel, index, config)
++    del main_panel, index
++    entry_audit, coverage = audit_legacy_a_entries(signals, context, config)
++
++    entry = signals["entry_signal"].eq(True)
++    in_window = signals["date"].between(config.start_date, config.end_date)
++    checks = {
++        "non_main_board_entries": int((entry & ~signals["is_main_board"].eq(True)).sum()),
++        "st_entries": int((entry & ~signals["is_st"].eq(0)).sum()),
++        "execution_conflict_entries": int(
++            (entry & ~signals["execution_conflict"].eq(False)).sum()
++        ),
++        "outside_window_entries": int((entry & ~in_window).sum()),
++        "suspended_or_zero_liquidity_entries": int(
++            (
++                entry
++                & (
++                    ~signals["trade_status"].eq(1)
++                    | ~signals["volume"].gt(0)
++                    | ~signals["amount"].gt(0)
++                )
++            ).sum()
++        ),
++    }
++    if any(checks.values()):
++        raise AssertionError(f"Candidate-A entry permission assertion failed: {checks}")
++    if signals.duplicated(["date", "code"]).any():
++        raise AssertionError("Candidate-A signals have duplicate date/code keys")
++    if len(signals) != 10_776_532:
++        raise AssertionError("Candidate-A signals do not align to frozen main-panel row count")
++    accepted = signals["accepted_signal"].eq(True)
++    accepted_rows = signals.loc[accepted, ["code", "source_row_index"]]
++    cooldown_ok = accepted_rows.groupby("code")["source_row_index"].diff().dropna().ge(
++        candidate.cooldown
++    )
++    if not cooldown_ok.all():
++        raise AssertionError("Candidate-A accepted signals violate original-row cooldown")
++
++    inputs_after = _verify_inputs()
++    if inputs_after != inputs_before:
++        raise ValueError("Frozen input changed during candidate-A computation")
++
++    results_dir = PROJECT_ROOT / "results"
++    coverage_path = results_dir / "legacy_a_entry_coverage.parquet"
++    coverage_output = _write_parquet(entry_audit, coverage_path)
++    signal_name = (
++        "legacy_a_signals.parquet"
++        if coverage["passes"]
++        else "legacy_a_signals_not_evaluable.parquet"
++    )
++    signal_output = _write_parquet(signals, results_dir / signal_name)
++    entry_rows = signals.loc[entry]
++    proposed = signals["proposed_entry"].eq(True)
++    summary = {
++        "candidate": "three_of_two_low_vol",
++        "candidate_a_status": coverage["candidate_a_status"],
++        "task2_status": task2_status,
++        "full_a_context_gate": full_a_gate,
++        "account_backtest_allowed": coverage["passes"],
++        "config": {
++            "path": str(args.config),
++            "sha256": _sha256(args.config),
++            "candidate": asdict(candidate),
++        },
++        "input_mode": "frozen hash-verified Parquet only; no source database connection",
++        "source_databases_connected": False,
++        "inputs_before": inputs_before,
++        "inputs_after": inputs_after,
++        "window": {"start_date": config.start_date, "end_date": config.end_date},
++        "rows": {
++            "context": len(context),
++            "signals": len(signals),
++            "unique_signal_keys": int(signals[["date", "code"]].drop_duplicates().shape[0]),
++            "main_keys_without_point_in_time_context": int(
++                (~signals["context_key_present"]).sum()
++            ),
++            "raw_signals": int(signals["raw_signal"].sum()),
++            "accepted_signals_full_history": int(accepted.sum()),
++            "proposed_entries": int(proposed.sum()),
++            "entry_signals": int(entry.sum()),
++            "entry_codes": int(entry_rows["code"].nunique()),
++            "entry_first_date": str(entry_rows["date"].min()) if len(entry_rows) else None,
++            "entry_last_date": str(entry_rows["date"].max()) if len(entry_rows) else None,
++        },
++        "permission_assertions": checks,
++        "cooldown_assertion": {
++            "minimum_original_row_gap": candidate.cooldown,
++            "violations": int((~cooldown_ok).sum()),
++            "passes": bool(cooldown_ok.all()),
++        },
++        "required_entry_coverage": coverage,
++        "outputs": {"signals": signal_output, "entry_coverage": coverage_output},
++        "returns_run": False,
++        "account_returns_run": False,
++    }
++    summary_path = results_dir / "legacy_a_summary.json"
++    summary_path.write_text(
++        json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
++    )
++    print(
++        json.dumps(
++            {
++                "candidate_a_status": summary["candidate_a_status"],
++                "rows": summary["rows"],
++                "required_entry_coverage": coverage,
++                "permission_assertions": checks,
++                "signals_path": signal_output["path"],
++                "summary_path": str(summary_path),
++                "returns_run": False,
++            },
++            ensure_ascii=False,
++        )
++    )
++
++
++if __name__ == "__main__":
++    main()
+--- /dev/null
++++ b/tests/test_legacy_a.py
+@@ -0,0 +1,361 @@
++import unittest
++from dataclasses import replace
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++from trend_system.legacy_a import (
++    _method_hits,
++    audit_legacy_a_entries,
++    compute_legacy_a_signals,
++)
++from trend_system.legacy_config import load_legacy_config
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[1]
++KEYS = ["date", "code"]
++DIAGNOSTICS = [
++    "ma5",
++    "ma20",
++    "amount_ma20",
++    "volume_ma20",
++    "high20_prev",
++    "low10",
++    "wdif",
++    "wdea",
++    "whist",
++    "m1",
++    "m2",
++    "m3",
++    "hit_count",
++    "market_ok",
++    "vol120",
++    "range250",
++    "act",
++    "limfrac",
++    "gapfrac",
++    "s_vol",
++    "s_heat",
++    "raw_signal",
++    "accepted_signal",
++    "entry_signal",
++    "rank_return_120",
++]
++
++
++class LegacyATest(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.config = load_legacy_config(PROJECT_ROOT / "config" / "legacy_candidates.json")
++        cls.dates = pd.bdate_range("2015-09-01", periods=330).strftime("%Y-%m-%d")
++        cls.target_row = 300
++        cls.target_date = cls.dates[cls.target_row]
++        cls.target_code = "600000.SH"
++
++    def _panels(self):
++        rows = []
++        codes = [self.target_code, "000001.SZ", "300001.SZ"]
++        for t, date in enumerate(self.dates):
++            base = 10.0 * 1.001**t
++            for code in codes:
++                if code == self.target_code:
++                    close = base * (1.10 if t == 100 else 1.0)
++                    previous_close = base / 1.001 * (1.10 if t == 101 else 1.0)
++                    amount = 40_000_000.0 if t < 270 else 100_000_000.0
++                elif code == "000001.SZ":
++                    close = base * (1.03 if t % 2 else 0.97)
++                    previous_close = base / 1.001 * (1.03 if (t - 1) % 2 else 0.97)
++                    amount = 50_000_000.0
++                else:
++                    close = base * (1.0 + 0.03 * np.sin(t / 5.0))
++                    previous_close = base / 1.001 * (
++                        1.0 + 0.03 * np.sin((t - 1) / 5.0)
++                    )
++                    amount = 80_000_000.0 if t < 270 else 40_000_000.0
++                open_ = previous_close
++                if code == self.target_code and t % 10 == 0 and t < 270:
++                    open_ = previous_close * 1.03
++                high = max(open_, close) + 0.001
++                low = min(open_, close) - 0.001
++                rows.append(
++                    {
++                        "date": date,
++                        "code": code,
++                        "open": open_,
++                        "high": high,
++                        "low": low,
++                        "close": close,
++                        "prev_close": previous_close,
++                        "signal_open": open_,
++                        "signal_high": high,
++                        "signal_low": low,
++                        "signal_close": close,
++                        "volume": 1_000_000.0,
++                        "amount": amount,
++                        "trade_status": 1,
++                        "is_st": 0,
++                        "ipo_date": "2010-01-01",
++                        "out_date": None,
++                        "is_main_board": code != "300001.SZ",
++                        "data_valid": True,
++                        "context_complete": True,
++                        "execution_conflict": False,
++                        "adjustment_source_conflict": False,
++                        "source_conflict": False,
++                        "rank_eligible": True,
++                    }
++                )
++        context = pd.DataFrame(rows)
++        context["volume"] = np.where(
++            context["code"].eq(self.target_code)
++            & context["date"].eq(self.target_date),
++            2_000_000.0,
++            context["volume"],
++        )
++        main = context.loc[context["is_main_board"]].copy().reset_index(drop=True)
++        index = pd.DataFrame(
++            {
++                "code": "000001.SH",
++                "date": self.dates,
++                "close": 100.0 + np.arange(len(self.dates), dtype=float),
++            }
++        )
++        return context, main, index
++
++    def _compute(self, context=None, main=None, index=None, config=None):
++        default_context, default_main, default_index = self._panels()
++        return compute_legacy_a_signals(
++            default_context if context is None else context,
++            default_main if main is None else main,
++            default_index if index is None else index,
++            self.config if config is None else config,
++        )
++
++    def _row(self, result, date=None, code=None):
++        selected = result.loc[
++            result["date"].eq(date or self.target_date)
++            & result["code"].eq(code or self.target_code)
++        ]
++        self.assertEqual(len(selected), 1)
++        return selected.iloc[0]
++
++    def test_formulas_and_two_of_three_methods_match_preregistration(self):
++        context, _, _ = self._panels()
++        result = self._compute(context=context)
++        row = self._row(result)
++        stock = context.loc[context["code"].eq(self.target_code)].sort_values("date")
++        close = stock["signal_close"].reset_index(drop=True)
++        high = stock["signal_high"].reset_index(drop=True)
++        low = stock["signal_low"].reset_index(drop=True)
++        volume = stock["volume"].reset_index(drop=True)
++        amount = stock["amount"].reset_index(drop=True)
++        t = self.target_row
++        wdif = close.ewm(span=34, adjust=False).mean() - close.ewm(
++            span=200, adjust=False
++        ).mean()
++        wdea = wdif.ewm(span=13, adjust=False).mean()
++
++        self.assertAlmostEqual(row["ma5"], close.iloc[t - 4 : t + 1].mean())
++        self.assertAlmostEqual(row["ma20"], close.iloc[t - 19 : t + 1].mean())
++        self.assertAlmostEqual(row["amount_ma20"], amount.iloc[t - 19 : t + 1].mean())
++        self.assertAlmostEqual(row["volume_ma20"], volume.iloc[t - 19 : t + 1].mean())
++        self.assertEqual(row["high20_prev"], high.iloc[t - 20 : t].max())
++        self.assertEqual(row["low10"], low.iloc[t - 9 : t + 1].min())
++        self.assertAlmostEqual(row["wdif"], wdif.iloc[t])
++        self.assertAlmostEqual(row["wdea"], wdea.iloc[t])
++        self.assertAlmostEqual(row["whist"], 2 * (wdif.iloc[t] - wdea.iloc[t]))
++        self.assertFalse(row["m1"])
++        self.assertTrue(row["m2"])
++        self.assertTrue(row["m3"])
++        self.assertEqual(row["hit_count"], 2)
++        self.assertTrue(row["market_ok"])
++        self.assertTrue(row["raw_signal"])
++        expected_score = 4 + 0.2 * volume.iloc[t] / volume.iloc[t - 19 : t + 1].mean()
++        self.assertAlmostEqual(row["rank_return_120"], expected_score)
++        self.assertEqual(row["source_row_index"], t)
++
++    def test_any_two_methods_are_required_and_missing_boolean_fails_closed(self):
++        m1 = pd.Series([True, True, False, True, pd.NA], dtype="boolean")
++        m2 = pd.Series([True, False, True, True, pd.NA], dtype="boolean")
++        m3 = pd.Series([False, True, True, False, pd.NA], dtype="boolean")
++        hits, enough = _method_hits(m1, m2, m3)
++        self.assertEqual(hits.tolist(), [2, 2, 2, 2, 0])
++        self.assertEqual(enough.tolist(), [True, True, True, True, False])
++
++    def test_cross_section_uses_all_a_percentiles_and_strict_boundaries(self):
++        context, main, index = self._panels()
++        result = self._compute(context=context, main=main, index=index)
++        row = self._row(result)
++        self.assertAlmostEqual(row["s_vol"], 1 / 3)
++        self.assertAlmostEqual(row["s_heat"], 1.0)
++        self.assertTrue(row["accepted_signal"])
++        self.assertTrue(row["entry_signal"])
++
++        without_non_main = context.loc[context["is_main_board"]].copy()
++        reduced = self._compute(context=without_non_main, main=main, index=index)
++        reduced_row = self._row(reduced)
++        self.assertAlmostEqual(reduced_row["s_vol"], 0.5)
++        self.assertFalse(reduced_row["raw_signal"])
++
++        no_cross_section = context.copy()
++        no_cross_section["rank_eligible"] = False
++        empty = self._compute(context=no_cross_section, main=main, index=index)
++        self.assertFalse(empty["raw_signal"].any())
++
++    def test_future_industry_and_ex_right_rows_do_not_change_history(self):
++        context, main, index = self._panels()
++        future = context["date"].gt(self.target_date)
++        context["industry"] = "historical"
++        context.loc[future, "industry"] = "future-industry"
++        context.loc[
++            future, ["signal_open", "signal_high", "signal_low", "signal_close"]
++        ] *= 0.5
++        context.loc[future, ["volume", "amount"]] = 0.0
++        full = self._compute(context=context, main=main, index=index)
++
++        truncated = self._compute(
++            context=context.loc[context["date"].le(self.target_date)].copy(),
++            main=main.loc[main["date"].le(self.target_date)].copy(),
++            index=index.loc[index["date"].le(self.target_date)].copy(),
++        )
++        historical = full.loc[full["date"].le(self.target_date)]
++        compared = historical[KEYS + DIAGNOSTICS].merge(
++            truncated[KEYS + DIAGNOSTICS],
++            on=KEYS,
++            how="outer",
++            validate="one_to_one",
++            suffixes=("_full", "_truncated"),
++        )
++        self.assertEqual(len(compared), len(truncated))
++        for column in DIAGNOSTICS:
++            pd.testing.assert_series_equal(
++                compared[f"{column}_full"],
++                compared[f"{column}_truncated"],
++                check_names=False,
++                check_exact=True,
++            )
++
++    def test_cooldown_uses_accepted_original_row_indices(self):
++        context, main, index = self._panels()
++        spike_dates = self.dates[self.target_row : self.target_row + 6]
++        spike = context["code"].eq(self.target_code) & context["date"].isin(spike_dates)
++        context.loc[spike, "volume"] = 100_000_000.0
++        main_spike = main["code"].eq(self.target_code) & main["date"].isin(spike_dates)
++        main.loc[main_spike, "volume"] = 100_000_000.0
++        result = self._compute(context=context, main=main, index=index)
++        stock = result.loc[
++            result["code"].eq(self.target_code) & result["date"].isin(spike_dates)
++        ]
++
++        self.assertEqual(stock.loc[stock["raw_signal"], "source_row_index"].tolist(), list(range(300, 306)))
++        self.assertEqual(stock.loc[stock["accepted_signal"], "source_row_index"].tolist(), [300, 305])
++        self.assertEqual(stock["cooldown_rejected"].tolist(), [False, True, True, True, True, False])
++        accepted = stock.loc[stock["accepted_signal"]]
++        self.assertTrue(accepted["source_row_index"].diff().dropna().ge(5).all())
++        self.assertEqual(self._row(stock, spike_dates[-1])["previous_accepted_row_index"], 300)
++
++    def test_low10_includes_signal_day_and_retains_stop_metadata(self):
++        context, main, index = self._panels()
++        target = context["code"].eq(self.target_code) & context["date"].eq(self.target_date)
++        stock = context.loc[context["code"].eq(self.target_code)].sort_values("date")
++        previous_low = stock["signal_low"].iloc[
++            self.target_row - 9 : self.target_row
++        ].min()
++        changed_low = previous_low - 0.001
++        context.loc[target, "signal_low"] = changed_low
++        main_target = main["code"].eq(self.target_code) & main["date"].eq(self.target_date)
++        main.loc[main_target, "signal_low"] = changed_low
++        row = self._row(self._compute(context=context, main=main, index=index))
++        self.assertEqual(row["low10"], changed_low)
++        self.assertEqual(row["stop_ref"], changed_low)
++        self.assertEqual(row["stop_pct"], 0.08)
++        self.assertTrue(row["entry_signal"])
++
++    def test_st_conflict_non_main_and_out_of_window_permissions_fail_closed(self):
++        for field, value in (("is_st", 1), ("execution_conflict", True)):
++            with self.subTest(field=field):
++                context, main, index = self._panels()
++                for frame in (context, main):
++                    target = frame["code"].eq(self.target_code) & frame["date"].eq(self.target_date)
++                    frame.loc[target, field] = value
++                row = self._row(self._compute(context=context, main=main, index=index))
++                self.assertTrue(row["accepted_signal"])
++                self.assertTrue(row["proposed_entry"])
++                self.assertFalse(row["entry_signal"])
++
++        context, main, index = self._panels()
++        context["is_main_board"] = False
++        non_main = main.copy()
++        non_main["is_main_board"] = False
++        result = self._compute(context=context, main=non_main, index=index)
++        self.assertFalse(result["entry_signal"].any())
++
++        window_config = replace(self.config, start_date="2016-12-01")
++        row = self._row(
++            self._compute(context=context, main=main, index=index, config=window_config)
++        )
++        self.assertTrue(row["accepted_signal"])
++        self.assertFalse(row["proposed_entry"])
++        self.assertFalse(row["entry_signal"])
++
++    def test_suspension_and_zero_volume_cannot_enter(self):
++        for field, value in (("trade_status", 0), ("volume", 0.0)):
++            with self.subTest(field=field):
++                context, main, index = self._panels()
++                for frame in (context, main):
++                    target = frame["code"].eq(self.target_code) & frame["date"].eq(self.target_date)
++                    frame.loc[target, field] = value
++                    if field == "trade_status":
++                        frame.loc[target, "rank_eligible"] = False
++                row = self._row(self._compute(context=context, main=main, index=index))
++                self.assertFalse(row["entry_signal"])
++
++    def test_main_key_outside_point_in_time_context_is_retained_without_signal(self):
++        context, main, index = self._panels()
++        target = context["code"].eq(self.target_code) & context["date"].eq(self.target_date)
++        context = context.loc[~target].copy()
++        result = self._compute(context=context, main=main, index=index)
++        row = self._row(result)
++        self.assertFalse(row["context_key_present"])
++        self.assertFalse(row["raw_signal"])
++        self.assertFalse(row["entry_signal"])
++        self.assertEqual(len(result), len(main))
++
++    def test_completed_context_hfq_is_aligned_by_key_for_entry(self):
++        context, main, index = self._panels()
++        target = main["code"].eq(self.target_code) & main["date"].eq(self.target_date)
++        main.loc[target, "signal_open"] = np.nan
++        result = self._compute(context=context, main=main, index=index)
++        row = self._row(result)
++        self.assertTrue(row["proposed_entry"])
++        self.assertTrue(np.isfinite(row["signal_open"]))
++        self.assertTrue(row["entry_signal"])
++
++    def test_entry_audit_covers_only_proposed_keys_and_fails_on_one_invalid(self):
++        context, main, index = self._panels()
++        signals = self._compute(context=context, main=main, index=index)
++        audit, summary = audit_legacy_a_entries(signals, context, self.config)
++        self.assertEqual(len(audit), int(signals["proposed_entry"].sum()))
++        self.assertEqual(summary["valid_numerator"], len(audit))
++        self.assertEqual(summary["coverage"], 1.0)
++        self.assertTrue(summary["passes"])
++
++        for frame in (context, main):
++            target = frame["code"].eq(self.target_code) & frame["date"].eq(self.target_date)
++            frame.loc[target, "signal_open"] = np.nan
++        invalid_signals = self._compute(context=context, main=main, index=index)
++        invalid_audit, invalid_summary = audit_legacy_a_entries(
++            invalid_signals, context, self.config
++        )
++        self.assertTrue(self._row(invalid_signals)["proposed_entry"])
++        self.assertFalse(self._row(invalid_signals)["entry_signal"])
++        self.assertEqual(invalid_summary["coverage"], 0.0)
++        self.assertFalse(invalid_summary["passes"])
++        self.assertEqual(invalid_summary["candidate_a_status"], "NOT_EVALUABLE")
++        self.assertIn("signal_open", invalid_audit.iloc[0]["missing_fields"])
++        self.assertFalse(invalid_audit.iloc[0]["candidate_entry_valid"])
++
++
++if __name__ == "__main__":
++    unittest.main()

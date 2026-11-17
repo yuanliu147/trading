@@ -1,0 +1,28 @@
+{
+  "family": "neighborhood",
+  "name": "entry_lookback_150",
+  "status": "completed",
+  "config": {
+    "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "start_date": "2016-10-13",
+    "end_date": "2026-10-29",
+    "initial_cash": 20000,
+    "slots": 3,
+    "max_weight": 0.2,
+    "max_exposure": 0.6,
+    "entry_lookback": 150,
+    "trend_window": 200,
+    "trend_slope_window": 20,
+    "exit_lookback": 20,
+    "commission_rate": 0.00025,
+    "min_commission": 5,
+    "slippage_bps": 10,
+    "random_seed": 20261101
+  },
+  "config_sha256": "a026d41aff1d7bf64fea23e94393b5ee210ad11729601097ec930e3166bf45ce",
+  "changed_fields": {
+    "entry_lookback": 150
+  },
+  "double_all_fee_components": false
+}

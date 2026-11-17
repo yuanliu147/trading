@@ -1,0 +1,1740 @@
+# Base git HEAD: bb3fe53c1f925b560c0044854849f8984d86c0a1
+# No commits authorized; directory snapshot diff.
+# Changed files: src/trend_system/robustness.py, src/trend_system/report.py, scripts/run_robustness.py, tests/test_robustness.py, tests/test_report.py, 90_研究结论.md
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/90_研究结论.md /Users/admin/WorkSpace/trading/trading_finally/90_研究结论.md
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/90_研究结论.md	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/90_研究结论.md	2026-11-02 20:55:13
+@@ -0,0 +1,159 @@
++# 主板极简趋势系统：稳健性、历史压力与机械裁决
++
++本报告只交付预注册研究结果，不构成收益承诺或投资建议。历史区间与规则族已有研究覆盖，任何历史正收益都不构成新的确认性样本外证据。
++
++## 最终裁决：REJECTED
++
++- 冻结配置哈希：`869544c945bc6e39446f319f7922aefde36533112a0fa0a4a58f9c4dc6f29b3b`
++- 主窗口：2016-10-13 至 2026-10-29
++- 主基线净收益：-0.884910
++- 主基线最大回撤：0.887073
++- 主基线期末权益：2301.810000
++- 裁决只使用冻结基线与机械门槛；没有从历史变体中选优替换基线。
++
++## 机械门槛
++
++| 门槛 | 实际值 | 冻结要求 | 是否通过 |
++| --- | --- | --- | --- |
++| data_execution_integrity | 本地面板校验、权益完整性和成交时序检查 | 数据与执行关键检查通过，无未解释前视或成交口径错误 | 是 |
++| main_window_positive | -0.884910 | > 0 | 否 |
++| rolling_3y_majority_positive | {"positive_share": 0.0, "windows": 85} | > 0.5 | 否 |
++| double_cost_positive_and_executable | -0.916818 | > 0，且所有成交保持次日合法开盘执行 | 否 |
++| neighborhood_at_least_6_positive | {"positive": 0, "total": 8} | >= 6 / 8 | 否 |
++| random_order_at_least_16_positive | {"positive": 0, "total": 20} | >= 16 / 20 | 否 |
++| remaining_years_equity_pnl_positive | {"method": "账户年度权益盈亏；首年相对初始现金，后续年份相对上一年末权益", "remaining_equity_pnl": -18649.199999999997, "top_year": "2019", "top_year_equity_pnl": 951.0100000000002, "uses_realized_annual_contribution": false} | > 0；使用账户年度权益盈亏 | 否 |
++| fully_after_close_reproducible | True | 信号收盘后确认，订单次日执行，无隐藏盘中条件 | 是 |
++| hithink_common_positive_mdd_and_direction | {"baostock_common_total_return": -0.8785855, "hithink_max_drawdown": 0.8825724018136238, "hithink_total_return": -0.8785855, "opposite_direction": false} | 同花顺共同窗口净收益>0且MDD<=0.10，两源方向不得相反 | 否 |
++| drawdown_boundary | 0.887073 | MDD<=0.08才可为UNREJECTED；0.08<MDD<=0.10为BOUNDARY；MDD>0.10为REJECTED | 否 |
++
++裁决规则：任一非回撤门槛失败或最大回撤超过10%即为REJECTED；其他门槛均通过时，最大回撤不超过8%才可为UNREJECTED，8%—10%只能为BOUNDARY。
++
++## 完整真实变体矩阵
++
++每一行均复用完整账户、原价成交、整手、费用和公司行动规则；未用单笔交易均值代替账户回测。
++
++| 类别 | 变体 | 状态 | 净收益 | 最大回撤 | 输出 |
++| --- | --- | --- | ---: | ---: | --- |
++| baseline | baseline | completed | -0.884910 | 0.887073 | results/robustness/baseline |
++| neighborhood | entry_lookback_90 | completed | -0.924700 | 0.924700 | results/robustness/neighborhood/entry_lookback_90 |
++| neighborhood | entry_lookback_150 | completed | -0.941091 | 0.941535 | results/robustness/neighborhood/entry_lookback_150 |
++| neighborhood | trend_window_180 | completed | -0.800619 | 0.886361 | results/robustness/neighborhood/trend_window_180 |
++| neighborhood | trend_window_220 | completed | -0.905018 | 0.905018 | results/robustness/neighborhood/trend_window_220 |
++| neighborhood | trend_slope_window_10 | completed | -0.919834 | 0.921341 | results/robustness/neighborhood/trend_slope_window_10 |
++| neighborhood | trend_slope_window_30 | completed | -0.929650 | 0.935812 | results/robustness/neighborhood/trend_slope_window_30 |
++| neighborhood | exit_lookback_15 | completed | -0.898168 | 0.903170 | results/robustness/neighborhood/exit_lookback_15 |
++| neighborhood | exit_lookback_25 | completed | -0.888997 | 0.891943 | results/robustness/neighborhood/exit_lookback_25 |
++| dual_source | baostock_common | completed | -0.878586 | 0.882572 | results/robustness/dual_source/baostock_common |
++| dual_source | hithink_common | completed | -0.878586 | 0.882572 | results/robustness/dual_source/hithink_common |
++| double_cost | double_fees_20bp_slippage | completed | -0.916818 | 0.917916 | results/robustness/double_cost/double_fees_20bp_slippage |
++| random_order | path_00 | completed | -0.780503 | 0.825413 | results/robustness/random_order/path_00 |
++| random_order | path_01 | completed | -0.915191 | 0.915191 | results/robustness/random_order/path_01 |
++| random_order | path_02 | completed | -0.803988 | 0.837292 | results/robustness/random_order/path_02 |
++| random_order | path_03 | completed | -0.879539 | 0.883009 | results/robustness/random_order/path_03 |
++| random_order | path_04 | completed | -0.798700 | 0.835332 | results/robustness/random_order/path_04 |
++| random_order | path_05 | completed | -0.890263 | 0.890736 | results/robustness/random_order/path_05 |
++| random_order | path_06 | completed | -0.845932 | 0.866484 | results/robustness/random_order/path_06 |
++| random_order | path_07 | completed | -0.886099 | 0.890316 | results/robustness/random_order/path_07 |
++| random_order | path_08 | completed | -0.879758 | 0.898190 | results/robustness/random_order/path_08 |
++| random_order | path_09 | completed | -0.885839 | 0.888911 | results/robustness/random_order/path_09 |
++| random_order | path_10 | completed | -0.878417 | 0.885123 | results/robustness/random_order/path_10 |
++| random_order | path_11 | completed | -0.887535 | 0.908728 | results/robustness/random_order/path_11 |
++| random_order | path_12 | completed | -0.885574 | 0.889638 | results/robustness/random_order/path_12 |
++| random_order | path_13 | completed | -0.916394 | 0.916954 | results/robustness/random_order/path_13 |
++| random_order | path_14 | completed | -0.778201 | 0.792751 | results/robustness/random_order/path_14 |
++| random_order | path_15 | completed | -0.909381 | 0.910844 | results/robustness/random_order/path_15 |
++| random_order | path_16 | completed | -0.887540 | 0.897659 | results/robustness/random_order/path_16 |
++| random_order | path_17 | completed | -0.826419 | 0.867261 | results/robustness/random_order/path_17 |
++| random_order | path_18 | completed | -0.884135 | 0.904216 | results/robustness/random_order/path_18 |
++| random_order | path_19 | completed | -0.787385 | 0.816304 | results/robustness/random_order/path_19 |
++| random_entry | path_00 | completed | -0.465580 | 0.678516 | results/robustness/random_entry/path_00 |
++| random_entry | path_01 | completed | -0.153295 | 0.616288 | results/robustness/random_entry/path_01 |
++| random_entry | path_02 | completed | -0.149976 | 0.573425 | results/robustness/random_entry/path_02 |
++| random_entry | path_03 | completed | -0.132567 | 0.394218 | results/robustness/random_entry/path_03 |
++| random_entry | path_04 | completed | -0.112642 | 0.546348 | results/robustness/random_entry/path_04 |
++| random_entry | path_05 | completed | -0.790328 | 0.816618 | results/robustness/random_entry/path_05 |
++| random_entry | path_06 | completed | -0.796375 | 0.808773 | results/robustness/random_entry/path_06 |
++| random_entry | path_07 | completed | -0.082361 | 0.406776 | results/robustness/random_entry/path_07 |
++| random_entry | path_08 | completed | 0.026433 | 0.444067 | results/robustness/random_entry/path_08 |
++| random_entry | path_09 | completed | -0.628658 | 0.637227 | results/robustness/random_entry/path_09 |
++| random_entry | path_10 | completed | -0.524499 | 0.647630 | results/robustness/random_entry/path_10 |
++| random_entry | path_11 | completed | -0.814056 | 0.832762 | results/robustness/random_entry/path_11 |
++| random_entry | path_12 | completed | -0.618682 | 0.653433 | results/robustness/random_entry/path_12 |
++| random_entry | path_13 | completed | -0.605148 | 0.627162 | results/robustness/random_entry/path_13 |
++| random_entry | path_14 | completed | -0.317327 | 0.595011 | results/robustness/random_entry/path_14 |
++| random_entry | path_15 | completed | -0.477917 | 0.710152 | results/robustness/random_entry/path_15 |
++| random_entry | path_16 | completed | -0.582925 | 0.598302 | results/robustness/random_entry/path_16 |
++| random_entry | path_17 | completed | -0.449533 | 0.477566 | results/robustness/random_entry/path_17 |
++| random_entry | path_18 | completed | -0.155749 | 0.560149 | results/robustness/random_entry/path_18 |
++| random_entry | path_19 | completed | -0.467557 | 0.566319 | results/robustness/random_entry/path_19 |
++| portfolio | 2_slots_20pct | completed | -0.840132 | 0.842298 | results/robustness/portfolio/2_slots_20pct |
++| portfolio | 4_slots_15pct | completed | -0.909604 | 0.914807 | results/robustness/portfolio/4_slots_15pct |
++
++## 利润集中度：账户年度权益盈亏
++
++首年盈亏相对初始现金，后续年份盈亏相对上一年末权益；不使用仅闭合交易的已实现年度贡献。
++
++| 年度 | 权益盈亏（元） | 是否贡献最高年份 |
++| --- | ---: | --- |
++| 2016 | -644.850000 | 否 |
++| 2017 | -1606.460000 | 否 |
++| 2018 | -4925.460000 | 否 |
++| 2019 | 951.010000 | 是 |
++| 2020 | -2394.270000 | 否 |
++| 2021 | -2056.520000 | 否 |
++| 2022 | -4668.570000 | 否 |
++| 2023 | -1043.330000 | 否 |
++| 2024 | -255.460000 | 否 |
++| 2025 | -616.140000 | 否 |
++| 2026 | -438.140000 | 否 |
++
++去掉贡献最高年份 2019 后，剩余年份账户权益盈亏合计为 -18649.200000 元。
++
++## 双源复权共同窗口
++
++- 同花顺面板起始日：2016-10-13；指标完整后的共同账户窗口：2017-08-31 至 2026-10-29。
++- 两源均从现金空仓起算，使用相同原价执行、组合、费用和公司行动规则。
++- 共同窗口不能视为完整主窗口，较短窗口结果不得冒充主基线。
++- baostock共同窗口净收益/最大回撤：-0.878586 / 0.882572。
++- 同花顺共同窗口净收益/最大回撤：-0.878586 / 0.882572。
++- 入场信号差异：35；退出信号差异：105；完整差异表已落盘。
++
++## 成本、随机路径与自助区间
++
++双倍成本变体将全部佣金、印花税和过户费组成乘以2，并将单边滑点提高到20bp；仓位与现金路径仍由完整账户回测产生。
++20个随机排序路径只改变入场优先级；20个随机入场路径按原信号日数量从当日其他合格非信号股票中无放回替换，保留真实120日排序收益。
++20交易日块、1000次自助只重采样基线日收益，属于探索性区间，不参与机械门槛。总收益分位数：2.5%=-0.970096，50%=-0.869295，97.5%=-0.450353。
++
++## 年度、滚动与事后描述性分组
++
++主基线年度收益和月末滚动三年结果保存在各账户输出的annual_and_rolling.csv；年度权益盈亏见上表。
++
++- post_hoc_only：这些规则与参数未预冻结，只作事后描述，不参与门槛，不形成交易闸门。
++- market_regime：沪深300：close>MA200且MA200>MA200.shift(20)为trend；close<MA200且MA200<MA200.shift(20)为down；其余为sideways；历史不足为unclassified。
++- size_style：中证1000(000852.SH)60日收益减沪深300(000300.SH)60日收益；差值>0为small_led，<0为large_led，=0为balanced，历史不足为unclassified。
++- group_return：组内账户日收益r按product(1+r)-1复合；同时披露日收益均值、正收益日占比与天数。
++
++市场状态与大小盘参数未预冻结，以下分组不参与门槛，也不变成交易闸门。
++
++| 分组类型 | 分组 | 天数 | 组内复合收益 |
++| --- | --- | ---: | ---: |
++| market_regime | down | 769 | -0.776770 |
++| market_regime | sideways | 405 | 0.090729 |
++| market_regime | trend | 1266 | -0.527316 |
++| size_style | large_led | 1376 | -0.727607 |
++| size_style | small_led | 1064 | -0.577484 |
++
++## 2010—2015单源历史压力
++
++主结果和配置哈希冻结后才执行该压力试验；它不参与选参，也不能挽救或替换主基线。
++
++- 状态：completed；窗口：2010-01-04 至 2015-12-31。
++- 净收益：-0.305295；最大回撤：0.588423。
++- 数据模式：baostock_single_source。2010—2015仅单源历史压力，不承担双源确认，不用于回头调参或替换基线。
++
++## 输出与复现边界
++
++- 主稳健性结果：`results/robustness`；配置和主输出哈希：`main_freeze.json`。
++- 历史压力结果：`results/stress_2010_2015`。
++- 大表使用Parquet或CSV落盘；summary.json保存门槛、变体和运行状态。
++- 历史压力仅单源，共同窗口短于主窗口，描述性分组为事后口径；这些限制均不能被历史收益抵消。
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/scripts/run_robustness.py /Users/admin/WorkSpace/trading/trading_finally/scripts/run_robustness.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/scripts/run_robustness.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/scripts/run_robustness.py	2026-11-02 19:22:15
+@@ -0,0 +1,32 @@
++import argparse
++import json
++
++from trend_system.config import load_config
++from trend_system.robustness import run_robustness
++
++
++def main() -> None:
++    parser = argparse.ArgumentParser(description="Run the frozen robustness and stress matrix")
++    parser.add_argument("--config", required=True)
++    args = parser.parse_args()
++    result = run_robustness(load_config(args.config))
++    print(
++        json.dumps(
++            {
++                "status": result.summary["run_status"]["status"],
++                "verdict": result.verdict,
++                "output_dir": str(result.output_dir),
++                "stress_output_dir": str(result.stress_output_dir),
++                "report_path": str(result.report_path),
++                "completed_real_variants": len(result.variants),
++                "bootstrap_rows": len(result.bootstrap),
++                "elapsed_seconds": result.summary["run_status"]["elapsed_seconds"],
++            },
++            ensure_ascii=False,
++            indent=2,
++        )
++    )
++
++
++if __name__ == "__main__":
++    main()
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/src/trend_system/report.py /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/report.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/src/trend_system/report.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/report.py	2026-11-02 19:23:45
+@@ -0,0 +1,154 @@
++"""Final research report rendering for the frozen robustness run."""
++
++import json
++from pathlib import Path
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[2]
++
++
++def _number(value) -> str:
++    try:
++        return f"{float(value):.6f}"
++    except (TypeError, ValueError):
++        return str(value)
++
++
++def _actual(value) -> str:
++    if isinstance(value, (dict, list)):
++        return json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
++    if isinstance(value, float):
++        return _number(value)
++    return str(value)
++
++
++def render_final_report(summary: dict, output_path: str | Path | None = None) -> Path:
++    """Render every gate and every real variant, including negative outcomes."""
++    path = Path(output_path) if output_path is not None else PROJECT_ROOT / "90_研究结论.md"
++    baseline = summary["baseline"]
++    common = summary["common_window"]
++    concentration = summary["profit_concentration"]
++    bootstrap = summary["bootstrap"]
++    stress = summary["stress"]
++    lines = [
++        "# 主板极简趋势系统：稳健性、历史压力与机械裁决",
++        "",
++        "本报告只交付预注册研究结果，不构成收益承诺或投资建议。历史区间与规则族已有研究覆盖，任何历史正收益都不构成新的确认性样本外证据。",
++        "",
++        f"## 最终裁决：{summary['verdict']}",
++        "",
++        f"- 冻结配置哈希：`{summary['config_sha256']}`",
++        f"- 主窗口：{baseline['start_date']} 至 {baseline['end_date']}",
++        f"- 主基线净收益：{_number(baseline['total_return'])}",
++        f"- 主基线最大回撤：{_number(baseline['max_drawdown'])}",
++        f"- 主基线期末权益：{_number(baseline['final_equity'])}",
++        "- 裁决只使用冻结基线与机械门槛；没有从历史变体中选优替换基线。",
++        "",
++        "## 机械门槛",
++        "",
++        "| 门槛 | 实际值 | 冻结要求 | 是否通过 |",
++        "| --- | --- | --- | --- |",
++    ]
++    for gate in summary["gates"]:
++        lines.append(
++            f"| {gate['id']} | {_actual(gate['actual'])} | {gate['requirement']} | "
++            f"{'是' if gate['passed'] else '否'} |"
++        )
++    lines.extend(
++        [
++            "",
++            "裁决规则：任一非回撤门槛失败或最大回撤超过10%即为REJECTED；其他门槛均通过时，最大回撤不超过8%才可为UNREJECTED，8%—10%只能为BOUNDARY。",
++            "",
++            "## 完整真实变体矩阵",
++            "",
++            "每一行均复用完整账户、原价成交、整手、费用和公司行动规则；未用单笔交易均值代替账户回测。",
++            "",
++            "| 类别 | 变体 | 状态 | 净收益 | 最大回撤 | 输出 |",
++            "| --- | --- | --- | ---: | ---: | --- |",
++            f"| baseline | baseline | completed | {_number(baseline['total_return'])} | {_number(baseline['max_drawdown'])} | {summary['outputs']['robustness']}/baseline |",
++        ]
++    )
++    for variant in summary["variants"]:
++        lines.append(
++            f"| {variant['family']} | {variant['name']} | {variant['status']} | "
++            f"{_number(variant['total_return'])} | {_number(variant['max_drawdown'])} | {variant['output_dir']} |"
++        )
++    lines.extend(
++        [
++            "",
++            "## 利润集中度：账户年度权益盈亏",
++            "",
++            "首年盈亏相对初始现金，后续年份盈亏相对上一年末权益；不使用仅闭合交易的已实现年度贡献。",
++            "",
++            "| 年度 | 权益盈亏（元） | 是否贡献最高年份 |",
++            "| --- | ---: | --- |",
++        ]
++    )
++    for row in summary["annual_equity"]:
++        lines.append(
++            f"| {row['year']} | {_number(row['equity_pnl'])} | {'是' if row['is_top_contributor'] else '否'} |"
++        )
++    lines.extend(
++        [
++            "",
++            f"去掉贡献最高年份 {concentration['top_year']} 后，剩余年份账户权益盈亏合计为 {_number(concentration['remaining_equity_pnl'])} 元。",
++            "",
++            "## 双源复权共同窗口",
++            "",
++            f"- 同花顺面板起始日：{common['warmup_source_start']}；指标完整后的共同账户窗口：{common['start_date']} 至 {common['end_date']}。",
++            "- 两源均从现金空仓起算，使用相同原价执行、组合、费用和公司行动规则。",
++            "- 共同窗口不能视为完整主窗口，较短窗口结果不得冒充主基线。",
++            f"- baostock共同窗口净收益/最大回撤：{_number(common['baostock_total_return'])} / {_number(common['baostock_max_drawdown'])}。",
++            f"- 同花顺共同窗口净收益/最大回撤：{_number(common['hithink_total_return'])} / {_number(common['hithink_max_drawdown'])}。",
++            f"- 入场信号差异：{common['entry_signal_differences']}；退出信号差异：{common['exit_signal_differences']}；完整差异表已落盘。",
++            "",
++            "## 成本、随机路径与自助区间",
++            "",
++            "双倍成本变体将全部佣金、印花税和过户费组成乘以2，并将单边滑点提高到20bp；仓位与现金路径仍由完整账户回测产生。",
++            "20个随机排序路径只改变入场优先级；20个随机入场路径按原信号日数量从当日其他合格非信号股票中无放回替换，保留真实120日排序收益。",
++            f"20交易日块、{bootstrap['iterations']}次自助只重采样基线日收益，属于探索性区间，不参与机械门槛。总收益分位数：2.5%={_number(bootstrap['total_return_quantiles']['p02_5'])}，50%={_number(bootstrap['total_return_quantiles']['p50'])}，97.5%={_number(bootstrap['total_return_quantiles']['p97_5'])}。",
++            "",
++            "## 年度、滚动与事后描述性分组",
++            "",
++            "主基线年度收益和月末滚动三年结果保存在各账户输出的annual_and_rolling.csv；年度权益盈亏见上表。",
++            "",
++        ]
++    )
++    for name, formula in summary["descriptive"]["formulas"].items():
++        lines.append(f"- {name}：{formula}")
++    lines.extend(
++        [
++            "",
++            "市场状态与大小盘参数未预冻结，以下分组不参与门槛，也不变成交易闸门。",
++            "",
++            "| 分组类型 | 分组 | 天数 | 组内复合收益 |",
++            "| --- | --- | ---: | ---: |",
++        ]
++    )
++    for row in summary["descriptive"]["groups"]:
++        lines.append(
++            f"| {row['group_type']} | {row['group']} | {row['days']} | {_number(row['compound_return'])} |"
++        )
++    lines.extend(
++        [
++            "",
++            "## 2010—2015单源历史压力",
++            "",
++            "主结果和配置哈希冻结后才执行该压力试验；它不参与选参，也不能挽救或替换主基线。",
++            "",
++            f"- 状态：{stress['status']}；窗口：{stress['start_date']} 至 {stress['end_date']}。",
++            f"- 净收益：{_number(stress['total_return'])}；最大回撤：{_number(stress['max_drawdown'])}。",
++            f"- 数据模式：{stress['source_mode']}。{stress.get('limitation', '仅作单源历史压力，不用于回头调参或替换基线')}。",
++            "",
++            "## 输出与复现边界",
++            "",
++            f"- 主稳健性结果：`{summary['outputs']['robustness']}`；配置和主输出哈希：`main_freeze.json`。",
++            f"- 历史压力结果：`{summary['outputs']['stress']}`。",
++            "- 大表使用Parquet或CSV落盘；summary.json保存门槛、变体和运行状态。",
++            "- 历史压力仅单源，共同窗口短于主窗口，描述性分组为事后口径；这些限制均不能被历史收益抵消。",
++            "",
++        ]
++    )
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text("\n".join(lines), encoding="utf-8")
++    return path
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/src/trend_system/robustness.py /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/robustness.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/src/trend_system/robustness.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/robustness.py	2026-11-02 19:25:03
+@@ -0,0 +1,1005 @@
++"""Frozen robustness matrix and mechanical research gates.
++
++All strategy variants use the upstream signal, account, and metric functions.  The
++only exception to signal generation is the frozen randomization of entry priority
++or entry membership; both transformations are explicit and auditable.
++"""
++
++import gc
++import hashlib
++import json
++import platform
++import time
++from dataclasses import asdict, dataclass, replace
++from datetime import datetime, timezone
++from pathlib import Path
++from unittest.mock import patch
++
++import numpy as np
++import pandas as pd
++import pyarrow
++
++from . import execution
++from .broker import BacktestResult, run_backtest
++from .config import ResearchConfig
++from .data import load_panel
++from .metrics import annual_and_rolling, performance_summary
++from .report import render_final_report
++from .signals import compute_signals
++
++
++PROJECT_ROOT = Path(__file__).resolve().parents[2]
++SIGNAL_FIELDS = ("signal_open", "signal_high", "signal_low", "signal_close")
++RAW_PRICE_FIELDS = ("open", "high", "low", "close", "prev_close")
++NEIGHBORHOOD_VALUES = (
++    ("entry_lookback", 90),
++    ("entry_lookback", 150),
++    ("trend_window", 180),
++    ("trend_window", 220),
++    ("trend_slope_window", 10),
++    ("trend_slope_window", 30),
++    ("exit_lookback", 15),
++    ("exit_lookback", 25),
++)
++RANDOM_PATHS = 20
++BOOTSTRAP_ITERATIONS = 1000
++BOOTSTRAP_BLOCK_SIZE = 20
++
++
++@dataclass(frozen=True)
++class RobustnessResult:
++    summary: dict
++    variants: pd.DataFrame
++    bootstrap: pd.DataFrame
++    descriptive: pd.DataFrame
++    verdict: str
++    output_dir: Path
++    stress_output_dir: Path
++    report_path: Path
++
++
++def _utc_now() -> str:
++    return datetime.now(timezone.utc).isoformat()
++
++
++def _canonical_config(config: ResearchConfig) -> bytes:
++    return json.dumps(
++        asdict(config), ensure_ascii=False, sort_keys=True, separators=(",", ":")
++    ).encode("utf-8")
++
++
++def _config_hash(config: ResearchConfig) -> str:
++    return hashlib.sha256(_canonical_config(config)).hexdigest()
++
++
++def _sha256(path: Path) -> str:
++    digest = hashlib.sha256()
++    with path.open("rb") as file:
++        for chunk in iter(lambda: file.read(8 * 1024 * 1024), b""):
++            digest.update(chunk)
++    return digest.hexdigest()
++
++
++def _write_json(path: Path, value: dict) -> None:
++    path.parent.mkdir(parents=True, exist_ok=True)
++    path.write_text(
++        json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False, default=str) + "\n",
++        encoding="utf-8",
++    )
++
++
++def _relative(path: Path) -> str:
++    try:
++        return str(path.relative_to(PROJECT_ROOT))
++    except ValueError:
++        return str(path)
++
++
++def neighborhood_configs(config: ResearchConfig) -> list[tuple[str, ResearchConfig]]:
++    """Return exactly the eight preregistered one-factor configurations."""
++    return [
++        (f"{field}_{value}", replace(config, **{field: value}))
++        for field, value in NEIGHBORHOOD_VALUES
++    ]
++
++
++def evaluate_gates(summary: dict) -> str:
++    """Apply the frozen mechanical veto without selecting a historical variant."""
++    try:
++        raw_drawdown = (
++            summary["max_drawdown"]
++            if "max_drawdown" in summary
++            else summary["baseline"]["max_drawdown"]
++        )
++        drawdown = float(raw_drawdown)
++    except (KeyError, TypeError, ValueError):
++        return "REJECTED"
++    gates = summary.get("gates", summary.get("mechanical_gates", []))
++    if not np.isfinite(drawdown) or not gates:
++        return "REJECTED"
++    if any(not bool(gate.get("passed", False)) for gate in gates):
++        return "REJECTED"
++    if drawdown > 0.10:
++        return "REJECTED"
++    if drawdown > 0.08:
++        return "BOUNDARY"
++    return "UNREJECTED"
++
++
++def _with_previous_ma(signals: pd.DataFrame, config: ResearchConfig) -> pd.DataFrame:
++    result = signals.copy()
++    ordered = result.sort_values(["code", "date"], kind="stable")
++    previous = ordered.groupby("code", sort=False)["ma200"].shift(
++        config.trend_slope_window
++    )
++    result["previous_ma"] = previous.reindex(result.index)
++    return result
++
++
++def _rng(config: ResearchConfig, experiment: int, path_id: int | None = None):
++    entropy = [config.random_seed, experiment]
++    if path_id is not None:
++        entropy.append(path_id)
++    return np.random.default_rng(np.random.SeedSequence(entropy))
++
++
++def random_order_signals(
++    signals: pd.DataFrame, config: ResearchConfig, path_id: int
++) -> tuple[pd.DataFrame, pd.DataFrame]:
++    """Randomize entry priority while preserving every entry and exit signal."""
++    if not 0 <= path_id < RANDOM_PATHS:
++        raise ValueError("path_id must identify one of the 20 frozen paths")
++    result = signals.copy()
++    entry = result["entry_signal"].astype(bool)
++    scores = _rng(config, experiment=1, path_id=path_id).random(int(entry.sum()))
++    result.loc[entry, "rank_return_120"] = scores
++    log = pd.DataFrame(
++        [{"path_id": path_id, "randomized_entry_signals": int(entry.sum())}]
++    )
++    return result, log
++
++
++def _history_complete(signals: pd.DataFrame) -> pd.Series:
++    required = ["ma200", "channel_high_120", "channel_low_120", "rank_return_120"]
++    missing = set(required) - set(signals)
++    if missing:
++        raise ValueError(f"Missing signal history columns: {sorted(missing)}")
++    complete = signals[required].notna().all(axis=1)
++    if "previous_ma" in signals:
++        complete &= signals["previous_ma"].notna()
++    return complete
++
++
++def random_entry_signals(
++    signals: pd.DataFrame, config: ResearchConfig, path_id: int
++) -> tuple[pd.DataFrame, pd.DataFrame]:
++    """Replace each day's entries from the eligible non-entry universe.
++
++    Selection is without replacement within a date.  Real rank_return_120 values
++    are deliberately untouched so the upstream broker still ranks replacements
++    by their actual momentum.  An undersized pool is a hard failure.
++    """
++    if not 0 <= path_id < RANDOM_PATHS:
++        raise ValueError("path_id must identify one of the 20 frozen paths")
++    required_columns = {
++        "date",
++        "code",
++        "is_st",
++        "trade_status",
++        "data_valid",
++        "execution_conflict",
++        "entry_signal",
++        "rank_return_120",
++    }
++    missing = required_columns - set(signals)
++    if missing:
++        raise ValueError(f"Missing random-entry columns: {sorted(missing)}")
++
++    eligible = (
++        signals["is_st"].eq(0).fillna(False)
++        & signals["trade_status"].eq(1).fillna(False)
++        & signals["data_valid"].eq(True).fillna(False)
++        & ~signals["execution_conflict"].fillna(True).astype(bool)
++        & ~signals["entry_signal"].astype(bool)
++        & _history_complete(signals)
++    )
++    entry_counts = signals.loc[signals["entry_signal"].astype(bool)].groupby("date").size()
++    pools = {
++        day: group.index.to_numpy()
++        for day, group in signals.loc[eligible].groupby("date", sort=False)
++    }
++    for day, required in entry_counts.items():
++        available = len(pools.get(day, []))
++        if available < required:
++            raise RuntimeError(
++                "random entry pool insufficient: "
++                f"date={day} required={int(required)} available={available}"
++            )
++
++    result = signals.copy()
++    rng = _rng(config, experiment=2, path_id=path_id)
++    log_rows = []
++    for day, required_series in entry_counts.items():
++        required = int(required_series)
++        original_indices = result.index[
++            result["date"].eq(day) & result["entry_signal"].astype(bool)
++        ]
++        pool = pools[day]
++        selected_indices = rng.choice(pool, size=required, replace=False)
++        result.loc[original_indices, "entry_signal"] = False
++        result.loc[selected_indices, "entry_signal"] = True
++        log_rows.append(
++            {
++                "path_id": path_id,
++                "date": str(day),
++                "required": required,
++                "available": int(len(pool)),
++                "original_codes": "|".join(sorted(result.loc[original_indices, "code"].astype(str))),
++                "replacement_codes": "|".join(sorted(result.loc[selected_indices, "code"].astype(str))),
++            }
++        )
++    log = pd.DataFrame(
++        log_rows,
++        columns=[
++            "path_id",
++            "date",
++            "required",
++            "available",
++            "original_codes",
++            "replacement_codes",
++        ],
++    )
++    return result, log
++
++
++def annual_equity_contributions(
++    daily_account: pd.DataFrame, initial_cash: float
++) -> pd.DataFrame:
++    """Calculate calendar-year account equity PnL, not closed-trade PnL."""
++    account = daily_account.copy()
++    account["_date"] = pd.to_datetime(account["date"])
++    account = account.sort_values("_date", kind="stable")
++    rows = []
++    previous_equity = float(initial_cash)
++    previous_date = account["_date"].iloc[0]
++    for year, group in account.groupby(account["_date"].dt.year, sort=True):
++        end_equity = float(group["equity"].iloc[-1])
++        end_date = group["_date"].iloc[-1]
++        pnl = end_equity - previous_equity
++        rows.append(
++            {
++                "year": str(year),
++                "start_date": previous_date.strftime("%Y-%m-%d"),
++                "end_date": end_date.strftime("%Y-%m-%d"),
++                "start_equity": previous_equity,
++                "end_equity": end_equity,
++                "equity_pnl": pnl,
++                "return_pct": pnl / previous_equity if previous_equity else np.nan,
++                "is_top_contributor": False,
++            }
++        )
++        previous_equity = end_equity
++        previous_date = end_date
++    result = pd.DataFrame(rows)
++    if result.empty:
++        raise ValueError("daily_account must not be empty")
++    top_index = result["equity_pnl"].idxmax()
++    result.loc[top_index, "is_top_contributor"] = True
++    return result
++
++
++def block_bootstrap(
++    daily_account: pd.DataFrame,
++    seed: int,
++    iterations: int = BOOTSTRAP_ITERATIONS,
++    block_size: int = BOOTSTRAP_BLOCK_SIZE,
++) -> pd.DataFrame:
++    """Moving-block resampling of account returns, never of trade averages."""
++    account = daily_account.sort_values("date", kind="stable")
++    returns = account["equity"].astype(float).pct_change().dropna().to_numpy()
++    if len(returns) < block_size:
++        raise ValueError("At least one complete return block is required")
++    if iterations <= 0 or block_size <= 0:
++        raise ValueError("iterations and block_size must be positive")
++    rng = np.random.default_rng(np.random.SeedSequence([seed, 3]))
++    blocks_needed = int(np.ceil(len(returns) / block_size))
++    rows = []
++    for replicate in range(iterations):
++        starts = rng.integers(0, len(returns) - block_size + 1, size=blocks_needed)
++        sample = np.concatenate(
++            [returns[start : start + block_size] for start in starts]
++        )[: len(returns)]
++        nav = np.concatenate(([1.0], np.cumprod(1.0 + sample)))
++        drawdown = nav / np.maximum.accumulate(nav) - 1.0
++        rows.append(
++            {
++                "replicate": replicate,
++                "total_return": float(nav[-1] - 1.0),
++                "max_drawdown": float(-drawdown.min()),
++            }
++        )
++    return pd.DataFrame(rows)
++
++
++def _save_backtest(
++    output_dir: Path,
++    backtest: BacktestResult,
++    summary: dict,
++    annual: pd.DataFrame,
++    metadata: dict,
++) -> None:
++    output_dir.mkdir(parents=True, exist_ok=True)
++    tables = {
++        "daily_account.parquet": backtest.daily_account,
++        "daily_positions.parquet": backtest.daily_positions,
++        "trades.parquet": backtest.trades,
++        "orders.parquet": backtest.orders,
++        "round_trips.parquet": backtest.round_trips,
++        "action_log.parquet": backtest.action_log,
++    }
++    for name, frame in tables.items():
++        frame.to_parquet(output_dir / name, index=False)
++    annual.to_csv(output_dir / "annual_and_rolling.csv", index=False)
++    _write_json(output_dir / "performance_summary.json", summary)
++    _write_json(output_dir / "variant.json", metadata)
++
++
++def _run_and_save(
++    *,
++    family: str,
++    name: str,
++    panel: pd.DataFrame,
++    signals: pd.DataFrame,
++    corporate_actions: pd.DataFrame,
++    config: ResearchConfig,
++    output_dir: Path,
++    changed_fields: dict | None = None,
++    double_cost: bool = False,
++) -> tuple[dict, dict, BacktestResult]:
++    started = time.perf_counter()
++    run_config = config
++    if double_cost:
++        run_config = replace(
++            config,
++            commission_rate=config.commission_rate * 2,
++            min_commission=config.min_commission * 2,
++            slippage_bps=20,
++        )
++        original_costs = execution.transaction_costs
++
++        def doubled_costs(date, amount, side, multiplier=1.0):
++            return original_costs(date, amount, side, multiplier=2.0 * multiplier)
++
++        with patch.object(execution, "transaction_costs", doubled_costs):
++            backtest = run_backtest(panel, signals, corporate_actions, run_config)
++    else:
++        backtest = run_backtest(panel, signals, corporate_actions, run_config)
++    summary = performance_summary(backtest.daily_account, backtest.round_trips)
++    annual = annual_and_rolling(backtest.daily_account)
++    metadata = {
++        "family": family,
++        "name": name,
++        "status": "completed",
++        "config": asdict(run_config),
++        "config_sha256": _config_hash(run_config),
++        "changed_fields": changed_fields or {},
++        "double_all_fee_components": double_cost,
++    }
++    _save_backtest(output_dir, backtest, summary, annual, metadata)
++    record = {
++        "family": family,
++        "name": name,
++        "status": "completed",
++        "start_date": summary["start_date"],
++        "end_date": summary["end_date"],
++        "daily_account_rows": int(len(backtest.daily_account)),
++        "trade_rows": int(len(backtest.trades)),
++        "round_trip_rows": int(len(backtest.round_trips)),
++        "final_equity": summary["final_equity"],
++        "total_return": summary["total_return"],
++        "max_drawdown": summary["max_drawdown"],
++        "rolling_3y_positive_share": summary["rolling_3y_positive_share"],
++        "elapsed_seconds": float(time.perf_counter() - started),
++        "changed_fields": changed_fields or {},
++        "output_dir": _relative(output_dir),
++    }
++    print(
++        f"[robustness] {family}/{name}: completed; "
++        f"return={summary['total_return']:.6f}; mdd={summary['max_drawdown']:.6f}",
++        flush=True,
++    )
++    return record, summary, backtest
++
++
++def _common_source_inputs(
++    main_window: pd.DataFrame, hithink: pd.DataFrame, config: ResearchConfig
++):
++    hithink_columns = ["date", "code", *SIGNAL_FIELDS]
++    missing = set(hithink_columns) - set(hithink)
++    if missing:
++        raise ValueError(f"Missing hithink signal columns: {sorted(missing)}")
++    adjusted = hithink[hithink_columns].copy()
++    adjusted["date"] = adjusted["date"].astype(str)
++    if adjusted.duplicated(["date", "code"]).any():
++        raise ValueError("duplicate hithink (date, code) key")
++    adjusted = adjusted.rename(columns={field: f"hithink_{field}" for field in SIGNAL_FIELDS})
++    merged = main_window.merge(
++        adjusted, on=["date", "code"], how="inner", validate="one_to_one"
++    )
++    if merged.empty:
++        raise ValueError("No common source rows")
++    baostock_panel = merged.drop(columns=[f"hithink_{field}" for field in SIGNAL_FIELDS])
++    hithink_panel = baostock_panel.copy()
++    raw_valid = hithink_panel[list(RAW_PRICE_FIELDS)].gt(0).all(axis=1)
++    for field in SIGNAL_FIELDS:
++        hithink_panel[field] = merged[f"hithink_{field}"].to_numpy()
++    hithink_valid = hithink_panel[list(SIGNAL_FIELDS)].gt(0).all(axis=1)
++    hithink_panel["data_valid"] = raw_valid & hithink_valid
++
++    baostock_signals = _with_previous_ma(compute_signals(baostock_panel, config), config)
++    hithink_signals = _with_previous_ma(compute_signals(hithink_panel, config), config)
++    complete = (
++        _history_complete(baostock_signals)
++        & _history_complete(hithink_signals)
++        & baostock_signals["data_valid"].astype(bool)
++        & hithink_signals["data_valid"].astype(bool)
++    )
++    if not complete.any():
++        raise ValueError("No common date has complete indicator warmup")
++    common_start = str(baostock_signals.loc[complete, "date"].min())
++    common_config = replace(config, start_date=common_start)
++    selected = baostock_panel["date"].ge(common_start)
++    if not selected.equals(hithink_panel["date"].ge(common_start)):
++        raise RuntimeError("Common-source calendars diverge")
++    baostock_panel = baostock_panel.loc[selected].reset_index(drop=True)
++    hithink_panel = hithink_panel.loc[selected].reset_index(drop=True)
++    baostock_signals = baostock_signals.loc[selected.to_numpy()].reset_index(drop=True)
++    hithink_signals = hithink_signals.loc[selected.to_numpy()].reset_index(drop=True)
++    return (
++        baostock_panel,
++        hithink_panel,
++        baostock_signals,
++        hithink_signals,
++        common_config,
++        common_start,
++    )
++
++
++def _signal_differences(
++    baostock: pd.DataFrame, hithink: pd.DataFrame, output_dir: Path
++) -> dict:
++    keys = ["date", "code"]
++    if not baostock[keys].equals(hithink[keys]):
++        raise RuntimeError("Signal panels are not aligned")
++    columns = ["entry_signal", "exit_signal", "st_exit"]
++    different = pd.Series(False, index=baostock.index)
++    result = baostock[keys].copy()
++    for column in columns:
++        left = baostock[column].astype(bool)
++        right = hithink[column].astype(bool)
++        changed = left.ne(right)
++        result[f"baostock_{column}"] = left
++        result[f"hithink_{column}"] = right
++        different |= changed
++    differences = result.loc[different].reset_index(drop=True)
++    differences.to_parquet(output_dir / "signal_differences.parquet", index=False)
++    return {
++        "difference_rows": int(len(differences)),
++        "entry_signal_differences": int(
++            baostock["entry_signal"].astype(bool).ne(hithink["entry_signal"].astype(bool)).sum()
++        ),
++        "exit_signal_differences": int(
++            baostock["exit_signal"].astype(bool).ne(hithink["exit_signal"].astype(bool)).sum()
++        ),
++        "st_exit_differences": int(
++            baostock["st_exit"].astype(bool).ne(hithink["st_exit"].astype(bool)).sum()
++        ),
++    }
++
++
++def _descriptive_analysis(
++    daily_account: pd.DataFrame, index_panel: pd.DataFrame, output_dir: Path
++) -> tuple[pd.DataFrame, dict]:
++    account = daily_account[["date", "equity"]].copy()
++    account["date"] = pd.to_datetime(account["date"])
++    account = account.sort_values("date", kind="stable").reset_index(drop=True)
++    account["account_return"] = account["equity"].astype(float).pct_change().fillna(0.0)
++
++    def indexed(code: str) -> pd.DataFrame:
++        selected = index_panel.loc[index_panel["code"] == code, ["date", "close"]].copy()
++        if selected.empty:
++            raise ValueError(f"Descriptive index is unavailable: {code}")
++        selected["date"] = pd.to_datetime(selected["date"])
++        return selected.sort_values("date").drop_duplicates("date", keep="last").set_index("date")
++
++    market = indexed("000300.SH")
++    market["ma200"] = market["close"].rolling(200).mean()
++    market["previous_ma200"] = market["ma200"].shift(20)
++    market_aligned = market.reindex(account["date"]).ffill()
++    trending = market_aligned["close"].gt(market_aligned["ma200"]) & market_aligned[
++        "ma200"
++    ].gt(market_aligned["previous_ma200"])
++    falling = market_aligned["close"].lt(market_aligned["ma200"]) & market_aligned[
++        "ma200"
++    ].lt(market_aligned["previous_ma200"])
++    known = market_aligned[["close", "ma200", "previous_ma200"]].notna().all(axis=1)
++    account["market_regime"] = np.select(
++        [known & trending, known & falling], ["trend", "down"], default="sideways"
++    )
++    account.loc[(~known).to_numpy(), "market_regime"] = "unclassified"
++
++    large = indexed("000300.SH")["close"]
++    small = indexed("000852.SH")["close"]
++    large_return = large.pct_change(60).reindex(account["date"]).ffill()
++    small_return = small.pct_change(60).reindex(account["date"]).ffill()
++    account["large_cap_60d_return"] = large_return.to_numpy()
++    account["small_cap_60d_return"] = small_return.to_numpy()
++    spread = small_return - large_return
++    account["size_return_spread_60d"] = spread.to_numpy()
++    account["size_style"] = np.select(
++        [spread.gt(0), spread.lt(0)], ["small_led", "large_led"], default="balanced"
++    )
++    account.loc[spread.isna().to_numpy(), "size_style"] = "unclassified"
++
++    group_rows = []
++    for group_type in ("market_regime", "size_style"):
++        for group_name, group in account.groupby(group_type, sort=True):
++            returns = group["account_return"].astype(float)
++            group_rows.append(
++                {
++                    "group_type": group_type,
++                    "group": group_name,
++                    "days": int(len(group)),
++                    "compound_return": float((1.0 + returns).prod() - 1.0),
++                    "mean_daily_return": float(returns.mean()),
++                    "positive_day_share": float(returns.gt(0).mean()),
++                }
++            )
++    groups = pd.DataFrame(group_rows)
++    export = account.copy()
++    export["date"] = export["date"].dt.strftime("%Y-%m-%d")
++    export.to_csv(output_dir / "descriptive_daily.csv", index=False)
++    groups.to_csv(output_dir / "descriptive_groups.csv", index=False)
++    formulas = {
++        "post_hoc_only": "这些规则与参数未预冻结，只作事后描述，不参与门槛，不形成交易闸门。",
++        "market_regime": "沪深300：close>MA200且MA200>MA200.shift(20)为trend；close<MA200且MA200<MA200.shift(20)为down；其余为sideways；历史不足为unclassified。",
++        "size_style": "中证1000(000852.SH)60日收益减沪深300(000300.SH)60日收益；差值>0为small_led，<0为large_led，=0为balanced，历史不足为unclassified。",
++        "group_return": "组内账户日收益r按product(1+r)-1复合；同时披露日收益均值、正收益日占比与天数。",
++    }
++    return groups, {"formulas": formulas, "groups": group_rows}
++
++
++def _gate(identifier: str, passed: bool, actual, requirement: str) -> dict:
++    if isinstance(actual, (np.floating, np.integer)):
++        actual = actual.item()
++    return {
++        "id": identifier,
++        "passed": bool(passed),
++        "actual": actual,
++        "requirement": requirement,
++    }
++
++
++def _freeze_main(output_dir: Path, config: ResearchConfig) -> dict:
++    files = {}
++    for path in sorted(output_dir.rglob("*")):
++        if not path.is_file() or path.name in {"main_freeze.json", "summary.json"}:
++            continue
++        files[str(path.relative_to(output_dir))] = _sha256(path)
++    freeze = {
++        "created_at": _utc_now(),
++        "config": asdict(config),
++        "config_sha256": _config_hash(config),
++        "scope": "all main-window robustness outputs frozen before historical stress",
++        "files": files,
++        "dependencies": {
++            "python": platform.python_version(),
++            "pandas": pd.__version__,
++            "numpy": np.__version__,
++            "pyarrow": pyarrow.__version__,
++        },
++    }
++    _write_json(output_dir / "main_freeze.json", freeze)
++    return freeze
++
++
++def run_robustness(config: ResearchConfig) -> RobustnessResult:
++    """Execute every frozen experiment, then run the single-source stress last."""
++    started_at = _utc_now()
++    started = time.perf_counter()
++    root = PROJECT_ROOT
++    data_dir = root / "data"
++    output_dir = root / "results" / "robustness"
++    stress_output_dir = root / "results" / "stress_2010_2015"
++    output_dir.mkdir(parents=True, exist_ok=True)
++
++    main_panel = load_panel(data_dir / "main_panel.parquet")
++    corporate_actions = pd.read_parquet(data_dir / "corporate_actions.parquet")
++    in_window = main_panel["date"].between(config.start_date, config.end_date)
++    main_window = main_panel.loc[in_window].reset_index(drop=True)
++    baseline_signals_full = _with_previous_ma(compute_signals(main_panel, config), config)
++    baseline_signals = baseline_signals_full.loc[in_window.to_numpy()].reset_index(drop=True)
++    del baseline_signals_full
++
++    baseline_record, baseline_summary, baseline_backtest = _run_and_save(
++        family="baseline",
++        name="baseline",
++        panel=main_window,
++        signals=baseline_signals,
++        corporate_actions=corporate_actions,
++        config=config,
++        output_dir=output_dir / "baseline",
++    )
++    variant_records = []
++
++    for name, variant_config in neighborhood_configs(config):
++        signals_full = compute_signals(main_panel, variant_config)
++        signals = signals_full.loc[in_window.to_numpy()].reset_index(drop=True)
++        del signals_full
++        baseline_values = asdict(config)
++        variant_values = asdict(variant_config)
++        changed = {
++            key: variant_values[key]
++            for key in baseline_values
++            if variant_values[key] != baseline_values[key]
++        }
++        if len(changed) != 1:
++            raise RuntimeError("Neighborhood variant is not one-factor")
++        record, _, _ = _run_and_save(
++            family="neighborhood",
++            name=name,
++            panel=main_window,
++            signals=signals,
++            corporate_actions=corporate_actions,
++            config=variant_config,
++            output_dir=output_dir / "neighborhood" / name,
++            changed_fields=changed,
++        )
++        variant_records.append(record)
++        del signals
++        gc.collect()
++
++    hithink = pd.read_parquet(data_dir / "hithink_signal_panel.parquet")
++    hithink_source_start = str(hithink["date"].min())
++    (
++        baostock_common_panel,
++        hithink_common_panel,
++        baostock_common_signals,
++        hithink_common_signals,
++        common_config,
++        common_start,
++    ) = _common_source_inputs(main_window, hithink, config)
++    del hithink
++    common_dir = output_dir / "dual_source"
++    common_dir.mkdir(parents=True, exist_ok=True)
++    baostock_record, baostock_common_summary, _ = _run_and_save(
++        family="dual_source",
++        name="baostock_common",
++        panel=baostock_common_panel,
++        signals=baostock_common_signals,
++        corporate_actions=corporate_actions,
++        config=common_config,
++        output_dir=common_dir / "baostock_common",
++        changed_fields={"start_date": common_start, "window": "common_only"},
++    )
++    variant_records.append(baostock_record)
++    hithink_record, hithink_common_summary, _ = _run_and_save(
++        family="dual_source",
++        name="hithink_common",
++        panel=hithink_common_panel,
++        signals=hithink_common_signals,
++        corporate_actions=corporate_actions,
++        config=common_config,
++        output_dir=common_dir / "hithink_common",
++        changed_fields={"start_date": common_start, "signal_source": "hithink_hfq"},
++    )
++    variant_records.append(hithink_record)
++    signal_difference_summary = _signal_differences(
++        baostock_common_signals, hithink_common_signals, common_dir
++    )
++    common_window = {
++        "warmup_source_start": hithink_source_start,
++        "start_date": common_start,
++        "end_date": config.end_date,
++        "selection_rule": "首个两源指标ma200、previous_ma、双通道和rank_return_120均完整且data_valid的共同日期",
++        "both_sources_start_in_cash_without_positions": True,
++        "common_window_is_not_full_main_window": True,
++        "baostock_total_return": baostock_common_summary["total_return"],
++        "baostock_max_drawdown": baostock_common_summary["max_drawdown"],
++        "hithink_total_return": hithink_common_summary["total_return"],
++        "hithink_max_drawdown": hithink_common_summary["max_drawdown"],
++        **signal_difference_summary,
++    }
++    del (
++        baostock_common_panel,
++        hithink_common_panel,
++        baostock_common_signals,
++        hithink_common_signals,
++        main_panel,
++        in_window,
++    )
++    gc.collect()
++
++    double_record, double_summary, double_backtest = _run_and_save(
++        family="double_cost",
++        name="double_fees_20bp_slippage",
++        panel=main_window,
++        signals=baseline_signals,
++        corporate_actions=corporate_actions,
++        config=config,
++        output_dir=output_dir / "double_cost" / "double_fees_20bp_slippage",
++        changed_fields={"all_fee_multiplier": 2, "slippage_bps": 20},
++        double_cost=True,
++    )
++    variant_records.append(double_record)
++
++    for path_id in range(RANDOM_PATHS):
++        signals, _ = random_order_signals(baseline_signals, config, path_id)
++        record, _, _ = _run_and_save(
++            family="random_order",
++            name=f"path_{path_id:02d}",
++            panel=main_window,
++            signals=signals,
++            corporate_actions=corporate_actions,
++            config=config,
++            output_dir=output_dir / "random_order" / f"path_{path_id:02d}",
++            changed_fields={"path_id": path_id, "seed": config.random_seed},
++        )
++        variant_records.append(record)
++        del signals
++        gc.collect()
++
++    for path_id in range(RANDOM_PATHS):
++        signals, replacement_log = random_entry_signals(baseline_signals, config, path_id)
++        path_dir = output_dir / "random_entry" / f"path_{path_id:02d}"
++        path_dir.mkdir(parents=True, exist_ok=True)
++        replacement_log.to_csv(path_dir / "replacement_log.csv", index=False)
++        record, _, _ = _run_and_save(
++            family="random_entry",
++            name=f"path_{path_id:02d}",
++            panel=main_window,
++            signals=signals,
++            corporate_actions=corporate_actions,
++            config=config,
++            output_dir=path_dir,
++            changed_fields={"path_id": path_id, "seed": config.random_seed},
++        )
++        variant_records.append(record)
++        del signals
++        gc.collect()
++
++    portfolio_configs = (
++        ("2_slots_20pct", replace(config, slots=2, max_weight=0.20, max_exposure=0.40)),
++        ("4_slots_15pct", replace(config, slots=4, max_weight=0.15, max_exposure=0.60)),
++    )
++    for name, variant_config in portfolio_configs:
++        changed = {
++            key: asdict(variant_config)[key]
++            for key in asdict(config)
++            if asdict(variant_config)[key] != asdict(config)[key]
++        }
++        record, _, _ = _run_and_save(
++            family="portfolio",
++            name=name,
++            panel=main_window,
++            signals=baseline_signals,
++            corporate_actions=corporate_actions,
++            config=variant_config,
++            output_dir=output_dir / "portfolio" / name,
++            changed_fields=changed,
++        )
++        variant_records.append(record)
++
++    annual_equity = annual_equity_contributions(
++        baseline_backtest.daily_account, config.initial_cash
++    )
++    annual_equity.to_csv(output_dir / "annual_equity.csv", index=False)
++    top = annual_equity.loc[annual_equity["is_top_contributor"]].iloc[0]
++    remaining_equity_pnl = float(
++        annual_equity.loc[~annual_equity["is_top_contributor"], "equity_pnl"].sum()
++    )
++    profit_concentration = {
++        "method": "账户年度权益盈亏；首年相对初始现金，后续年份相对上一年末权益",
++        "top_year": str(top["year"]),
++        "top_year_equity_pnl": float(top["equity_pnl"]),
++        "remaining_equity_pnl": remaining_equity_pnl,
++        "uses_realized_annual_contribution": False,
++    }
++
++    bootstrap = block_bootstrap(
++        baseline_backtest.daily_account,
++        seed=config.random_seed,
++        iterations=BOOTSTRAP_ITERATIONS,
++        block_size=BOOTSTRAP_BLOCK_SIZE,
++    )
++    bootstrap.to_csv(output_dir / "bootstrap_20d_1000.csv", index=False)
++    quantiles = bootstrap["total_return"].quantile([0.025, 0.5, 0.975])
++    bootstrap_summary = {
++        "iterations": BOOTSTRAP_ITERATIONS,
++        "block_size": BOOTSTRAP_BLOCK_SIZE,
++        "seed": config.random_seed,
++        "method": "对基线账户日收益作有放回移动日期块抽样；不执行1000次账户回测",
++        "exploratory_only": True,
++        "total_return_quantiles": {
++            "p02_5": float(quantiles.loc[0.025]),
++            "p50": float(quantiles.loc[0.5]),
++            "p97_5": float(quantiles.loc[0.975]),
++        },
++        "positive_return_share": float(bootstrap["total_return"].gt(0).mean()),
++    }
++
++    index_panel = pd.read_parquet(data_dir / "index_panel.parquet")
++    descriptive_groups, descriptive = _descriptive_analysis(
++        baseline_backtest.daily_account, index_panel, output_dir
++    )
++    variants = pd.DataFrame(variant_records)
++    variants.to_csv(output_dir / "variant_matrix.csv", index=False)
++
++    neighborhood = variants.loc[variants["family"] == "neighborhood"]
++    random_order = variants.loc[variants["family"] == "random_order"]
++    neighborhood_positive = int(neighborhood["total_return"].gt(0).sum())
++    random_order_positive = int(random_order["total_return"].gt(0).sum())
++    hithink_return = hithink_common_summary["total_return"]
++    baostock_return = baostock_common_summary["total_return"]
++    opposite_direction = (hithink_return > 0 > baostock_return) or (
++        baostock_return > 0 > hithink_return
++    )
++    chronology = bool(
++        baseline_backtest.trades.empty
++        or baseline_backtest.trades["date"].gt(baseline_backtest.trades["signal_date"]).all()
++    )
++    double_chronology = bool(
++        double_backtest.trades.empty
++        or double_backtest.trades["date"].gt(double_backtest.trades["signal_date"]).all()
++    )
++    drawdown = float(baseline_summary["max_drawdown"])
++    gates = [
++        _gate(
++            "data_execution_integrity",
++            chronology and baseline_backtest.daily_account["equity"].notna().all(),
++            "本地面板校验、权益完整性和成交时序检查",
++            "数据与执行关键检查通过，无未解释前视或成交口径错误",
++        ),
++        _gate(
++            "main_window_positive",
++            baseline_summary["total_return"] > 0,
++            baseline_summary["total_return"],
++            "> 0",
++        ),
++        _gate(
++            "rolling_3y_majority_positive",
++            len(baseline_summary["rolling_3y_returns"]) > 0
++            and baseline_summary["rolling_3y_positive_share"] > 0.5,
++            {
++                "positive_share": baseline_summary["rolling_3y_positive_share"],
++                "windows": len(baseline_summary["rolling_3y_returns"]),
++            },
++            "> 0.5",
++        ),
++        _gate(
++            "double_cost_positive_and_executable",
++            double_summary["total_return"] > 0 and double_chronology,
++            double_summary["total_return"],
++            "> 0，且所有成交保持次日合法开盘执行",
++        ),
++        _gate(
++            "neighborhood_at_least_6_positive",
++            neighborhood_positive >= 6,
++            {"positive": neighborhood_positive, "total": len(neighborhood)},
++            ">= 6 / 8",
++        ),
++        _gate(
++            "random_order_at_least_16_positive",
++            random_order_positive >= 16,
++            {"positive": random_order_positive, "total": len(random_order)},
++            ">= 16 / 20",
++        ),
++        _gate(
++            "remaining_years_equity_pnl_positive",
++            remaining_equity_pnl > 0,
++            profit_concentration,
++            "> 0；使用账户年度权益盈亏",
++        ),
++        _gate(
++            "fully_after_close_reproducible",
++            chronology,
++            chronology,
++            "信号收盘后确认，订单次日执行，无隐藏盘中条件",
++        ),
++        _gate(
++            "hithink_common_positive_mdd_and_direction",
++            hithink_return > 0
++            and hithink_common_summary["max_drawdown"] <= 0.10
++            and not opposite_direction,
++            {
++                "hithink_total_return": hithink_return,
++                "hithink_max_drawdown": hithink_common_summary["max_drawdown"],
++                "baostock_common_total_return": baostock_return,
++                "opposite_direction": opposite_direction,
++            },
++            "同花顺共同窗口净收益>0且MDD<=0.10，两源方向不得相反",
++        ),
++        _gate(
++            "drawdown_boundary",
++            drawdown <= 0.10,
++            drawdown,
++            "MDD<=0.08才可为UNREJECTED；0.08<MDD<=0.10为BOUNDARY；MDD>0.10为REJECTED",
++        ),
++    ]
++    summary = {
++        "started_at": started_at,
++        "config": asdict(config),
++        "config_sha256": _config_hash(config),
++        "baseline_record": baseline_record,
++        "baseline": baseline_summary,
++        "max_drawdown": drawdown,
++        "variants": variant_records,
++        "annual_equity": annual_equity.to_dict("records"),
++        "profit_concentration": profit_concentration,
++        "common_window": common_window,
++        "bootstrap": bootstrap_summary,
++        "descriptive": descriptive,
++        "gates": gates,
++        "outputs": {
++            "robustness": _relative(output_dir),
++            "stress": _relative(stress_output_dir),
++        },
++    }
++    summary["verdict"] = evaluate_gates(summary)
++    summary["run_status"] = {
++        "status": "main_completed_stress_pending",
++        "completed_real_variants": len(variant_records),
++        "stress_executed": False,
++    }
++    _write_json(output_dir / "main_summary.json", summary)
++    freeze = _freeze_main(output_dir, config)
++
++    # This is deliberately the last strategy run.  It cannot alter any main result.
++    stress_config = replace(config, start_date="2010-01-01", end_date="2015-12-31")
++    stress_panel = load_panel(data_dir / "stress_panel.parquet")
++    stress_signals = compute_signals(stress_panel, stress_config)
++    _, stress_performance, _ = _run_and_save(
++        family="historical_stress",
++        name="stress_2010_2015",
++        panel=stress_panel,
++        signals=stress_signals,
++        corporate_actions=corporate_actions,
++        config=stress_config,
++        output_dir=stress_output_dir,
++        changed_fields={"start_date": "2010-01-01", "end_date": "2015-12-31"},
++    )
++    stress_summary = {
++        **stress_performance,
++        "status": "completed",
++        "source_mode": "baostock_single_source",
++        "limitation": "2010—2015仅单源历史压力，不承担双源确认，不用于回头调参或替换基线",
++        "output_dir": _relative(stress_output_dir),
++    }
++    summary["stress"] = stress_summary
++    summary["main_freeze"] = {
++        "path": _relative(output_dir / "main_freeze.json"),
++        "config_sha256": freeze["config_sha256"],
++        "frozen_file_count": len(freeze["files"]),
++        "created_at": freeze["created_at"],
++    }
++    summary["run_status"] = {
++        "status": "completed",
++        "completed_real_variants": len(variant_records),
++        "bootstrap_return_resamples": len(bootstrap),
++        "stress_executed": True,
++        "started_at": started_at,
++        "finished_at": _utc_now(),
++        "elapsed_seconds": float(time.perf_counter() - started),
++    }
++    _write_json(output_dir / "summary.json", summary)
++    report_path = render_final_report(summary, root / "90_研究结论.md")
++    return RobustnessResult(
++        summary=summary,
++        variants=variants,
++        bootstrap=bootstrap,
++        descriptive=descriptive_groups,
++        verdict=summary["verdict"],
++        output_dir=output_dir,
++        stress_output_dir=stress_output_dir,
++        report_path=report_path,
++    )
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/tests/test_report.py /Users/admin/WorkSpace/trading/trading_finally/tests/test_report.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/tests/test_report.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/tests/test_report.py	2026-11-02 19:23:23
+@@ -0,0 +1,102 @@
++import tempfile
++import unittest
++from pathlib import Path
++
++from trend_system.report import render_final_report
++
++
++class ReportTest(unittest.TestCase):
++    def test_final_report_discloses_gates_negative_results_and_descriptive_limits(self):
++        summary = {
++            "config_sha256": "abc123",
++            "config": {"start_date": "2016-10-13", "end_date": "2026-10-29"},
++            "baseline": {
++                "start_date": "2016-10-13",
++                "end_date": "2026-10-29",
++                "total_return": -0.5,
++                "max_drawdown": 0.6,
++                "final_equity": 10000.0,
++            },
++            "max_drawdown": 0.6,
++            "gates": [
++                {
++                    "id": "main_window_positive",
++                    "passed": False,
++                    "actual": -0.5,
++                    "requirement": "> 0",
++                },
++                {
++                    "id": "drawdown_boundary",
++                    "passed": False,
++                    "actual": 0.6,
++                    "requirement": "<= 0.10; <= 0.08 required for the strongest label",
++                },
++            ],
++            "verdict": "REJECTED",
++            "variants": [
++                {
++                    "family": "neighborhood",
++                    "name": "entry_lookback_90",
++                    "status": "completed",
++                    "total_return": -0.4,
++                    "max_drawdown": 0.5,
++                    "output_dir": "results/robustness/neighborhood/entry_lookback_90",
++                }
++            ],
++            "annual_equity": [
++                {"year": "2019", "equity_pnl": 100.0, "is_top_contributor": True},
++                {"year": "2020", "equity_pnl": -200.0, "is_top_contributor": False},
++            ],
++            "profit_concentration": {"top_year": "2019", "remaining_equity_pnl": -200.0},
++            "common_window": {
++                "start_date": "2017-08-01",
++                "end_date": "2026-10-29",
++                "warmup_source_start": "2016-10-13",
++                "baostock_total_return": -0.4,
++                "baostock_max_drawdown": 0.5,
++                "hithink_total_return": -0.3,
++                "hithink_max_drawdown": 0.4,
++                "entry_signal_differences": 12,
++                "exit_signal_differences": 20,
++            },
++            "bootstrap": {
++                "iterations": 1000,
++                "block_size": 20,
++                "total_return_quantiles": {"p02_5": -0.8, "p50": -0.5, "p97_5": -0.1},
++                "exploratory_only": True,
++            },
++            "descriptive": {
++                "formulas": {
++                    "post_hoc_only": "事后描述，不参与门槛，不形成交易闸门。",
++                    "market_regime": "沪深300：200日均线与20日斜率。",
++                    "size_style": "中证1000与沪深300的60日收益差。",
++                },
++                "groups": [
++                    {"group_type": "market_regime", "group": "down", "days": 10, "compound_return": -0.1}
++                ],
++            },
++            "stress": {
++                "status": "completed",
++                "source_mode": "baostock_single_source",
++                "start_date": "2010-01-04",
++                "end_date": "2015-12-31",
++                "total_return": 0.2,
++                "max_drawdown": 0.3,
++            },
++            "outputs": {"robustness": "results/robustness", "stress": "results/stress_2010_2015"},
++        }
++        with tempfile.TemporaryDirectory() as temporary_directory:
++            path = render_final_report(summary, Path(temporary_directory) / "90_研究结论.md")
++            text = path.read_text(encoding="utf-8")
++        self.assertIn("REJECTED", text)
++        self.assertIn("main_window_positive", text)
++        self.assertIn("-0.500000", text)
++        self.assertIn("账户年度权益盈亏", text)
++        self.assertIn("共同窗口不能视为完整主窗口", text)
++        self.assertIn("不参与门槛", text)
++        self.assertIn("单源", text)
++        self.assertIn("entry_lookback_90", text)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff -ruN --exclude=.sdd --exclude=data --exclude=results /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/tests/test_robustness.py /Users/admin/WorkSpace/trading/trading_finally/tests/test_robustness.py
+--- /Users/admin/WorkSpace/trading/trading_finally/.sdd/snapshots/task7-base/tests/test_robustness.py	1970-01-01 08:00:00
++++ /Users/admin/WorkSpace/trading/trading_finally/tests/test_robustness.py	2026-11-02 19:23:22
+@@ -0,0 +1,261 @@
++import json
++import tempfile
++import unittest
++from dataclasses import asdict
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++from trend_system.config import ResearchConfig
++from trend_system.robustness import (
++    annual_equity_contributions,
++    block_bootstrap,
++    evaluate_gates,
++    neighborhood_configs,
++    random_entry_signals,
++    random_order_signals,
++    run_robustness,
++)
++
++
++def _config(**changes):
++    values = {
++        "hithink_db_path": "unused",
++        "baostock_db_path": "unused",
++        "start_date": "2020-01-01",
++        "end_date": "2020-12-31",
++    }
++    values.update(changes)
++    return ResearchConfig(**values)
++
++
++def _passing_summary(max_drawdown):
++    return {
++        "max_drawdown": max_drawdown,
++        "gates": [
++            {"id": f"gate_{index}", "passed": True}
++            for index in range(1, 11)
++        ],
++    }
++
++
++class RobustnessUnitTest(unittest.TestCase):
++    def test_eight_neighborhoods_change_exactly_one_frozen_field(self):
++        config = _config()
++        variants = neighborhood_configs(config)
++        expected = {
++            ("entry_lookback", 90),
++            ("entry_lookback", 150),
++            ("trend_window", 180),
++            ("trend_window", 220),
++            ("trend_slope_window", 10),
++            ("trend_slope_window", 30),
++            ("exit_lookback", 15),
++            ("exit_lookback", 25),
++        }
++        self.assertEqual(len(variants), 8)
++        observed = set()
++        baseline = asdict(config)
++        for name, variant in variants:
++            values = asdict(variant)
++            changed = {
++                key: (baseline[key], values[key])
++                for key in baseline
++                if values[key] != baseline[key]
++            }
++            self.assertEqual(len(changed), 1, name)
++            field, (_, new_value) = next(iter(changed.items()))
++            observed.add((field, new_value))
++        self.assertEqual(observed, expected)
++        self.assertEqual(asdict(config), baseline)
++
++    def test_mechanical_verdict_boundaries_and_other_gate_failure(self):
++        self.assertEqual(evaluate_gates(_passing_summary(0.08)), "UNREJECTED")
++        self.assertEqual(evaluate_gates(_passing_summary(0.080001)), "BOUNDARY")
++        self.assertEqual(evaluate_gates(_passing_summary(0.10)), "BOUNDARY")
++        self.assertEqual(evaluate_gates(_passing_summary(0.100001)), "REJECTED")
++        failed = _passing_summary(0.02)
++        failed["gates"][5]["passed"] = False
++        self.assertEqual(evaluate_gates(failed), "REJECTED")
++        self.assertEqual(
++            {evaluate_gates(_passing_summary(value)) for value in (0.01, 0.09, 0.20)},
++            {"UNREJECTED", "BOUNDARY", "REJECTED"},
++        )
++
++    def test_profit_concentration_uses_annual_account_equity_pnl(self):
++        account = pd.DataFrame(
++            {
++                "date": [
++                    "2020-01-02",
++                    "2020-12-31",
++                    "2021-12-31",
++                    "2022-12-30",
++                ],
++                "equity": [10000.0, 16000.0, 13000.0, 14000.0],
++            }
++        )
++        annual = annual_equity_contributions(account, initial_cash=10000)
++        self.assertEqual(annual["equity_pnl"].tolist(), [6000.0, -3000.0, 1000.0])
++        top_year = annual.loc[annual["is_top_contributor"], "year"].item()
++        remaining = annual.loc[~annual["is_top_contributor"], "equity_pnl"].sum()
++        self.assertEqual(top_year, "2020")
++        self.assertEqual(remaining, -2000.0)
++
++    def test_random_order_is_reproducible_and_preserves_signals(self):
++        signals = self._random_signal_fixture()
++        first, _ = random_order_signals(signals, _config(), path_id=3)
++        second, _ = random_order_signals(signals, _config(), path_id=3)
++        pd.testing.assert_frame_equal(first, second)
++        self.assertTrue(first["entry_signal"].equals(signals["entry_signal"]))
++        self.assertTrue(first["exit_signal"].equals(signals["exit_signal"]))
++        entry = signals["entry_signal"]
++        self.assertFalse(first.loc[entry, "rank_return_120"].equals(signals.loc[entry, "rank_return_120"]))
++        self.assertTrue(first.loc[~entry, "rank_return_120"].equals(signals.loc[~entry, "rank_return_120"]))
++
++    def test_random_entry_replaces_without_replacement_and_keeps_real_rank(self):
++        signals = self._random_signal_fixture()
++        changed, log = random_entry_signals(signals, _config(), path_id=2)
++        day = signals["date"].iloc[0]
++        original = set(signals.loc[signals["entry_signal"], "code"])
++        replacement = set(changed.loc[changed["entry_signal"], "code"])
++        self.assertEqual(len(replacement), len(original))
++        self.assertTrue(original.isdisjoint(replacement))
++        self.assertEqual(log["path_id"].tolist(), [2])
++        self.assertEqual(log["date"].tolist(), [day])
++        self.assertEqual(log["required"].item(), len(original))
++        ranks = signals.set_index("code")["rank_return_120"]
++        for code in replacement:
++            self.assertEqual(changed.loc[changed["code"] == code, "rank_return_120"].item(), ranks[code])
++
++    def test_random_entry_fails_explicitly_when_pool_is_insufficient(self):
++        signals = self._random_signal_fixture()
++        signals.loc[~signals["entry_signal"], "data_valid"] = False
++        with self.assertRaisesRegex(RuntimeError, "random entry pool insufficient"):
++            random_entry_signals(signals, _config(), path_id=0)
++
++    def test_block_bootstrap_only_resamples_return_series(self):
++        account = pd.DataFrame(
++            {
++                "date": pd.bdate_range("2020-01-01", periods=50).astype(str),
++                "equity": np.linspace(10000.0, 11000.0, 50),
++            }
++        )
++        first = block_bootstrap(account, seed=20261101, iterations=10, block_size=20)
++        second = block_bootstrap(account, seed=20261101, iterations=10, block_size=20)
++        pd.testing.assert_frame_equal(first, second)
++        self.assertEqual(len(first), 10)
++        self.assertEqual(first["replicate"].tolist(), list(range(10)))
++
++    def test_synthetic_full_matrix_executes_all_variants_and_persists_results(self):
++        with tempfile.TemporaryDirectory() as temporary_directory:
++            root = Path(temporary_directory)
++            self._write_project_inputs(root)
++            from unittest.mock import patch
++
++            with patch("trend_system.robustness.PROJECT_ROOT", root):
++                result = run_robustness(_config(start_date="2010-01-04", end_date="2010-11-18"))
++
++            self.assertEqual(len(result.variants), 53)
++            counts = result.variants.groupby("family").size().to_dict()
++            self.assertEqual(
++                counts,
++                {
++                    "neighborhood": 8,
++                    "dual_source": 2,
++                    "double_cost": 1,
++                    "random_order": 20,
++                    "random_entry": 20,
++                    "portfolio": 2,
++                },
++            )
++            self.assertTrue((result.variants["status"] == "completed").all())
++            self.assertEqual(len(result.bootstrap), 1000)
++            self.assertIn(result.verdict, {"UNREJECTED", "BOUNDARY", "REJECTED"})
++            self.assertTrue((root / "results" / "robustness" / "main_freeze.json").is_file())
++            self.assertTrue((root / "results" / "stress_2010_2015" / "performance_summary.json").is_file())
++            self.assertTrue(result.report_path.is_file())
++            saved = json.loads((root / "results" / "robustness" / "summary.json").read_text(encoding="utf-8"))
++            self.assertEqual(saved["verdict"], result.verdict)
++            self.assertEqual(len(saved["gates"]), 10)
++            self.assertIn("post_hoc_only", saved["descriptive"]["formulas"])
++            freeze = json.loads((root / "results" / "robustness" / "main_freeze.json").read_text(encoding="utf-8"))
++            self.assertNotIn("stress_2010_2015", freeze["files"])
++
++    @staticmethod
++    def _random_signal_fixture():
++        return pd.DataFrame(
++            {
++                "date": ["2020-01-02"] * 4,
++                "code": ["600000.SH", "000001.SZ", "000002.SZ", "000003.SZ"],
++                "is_st": [0, 0, 0, 0],
++                "trade_status": [1, 1, 1, 1],
++                "data_valid": [True] * 4,
++                "execution_conflict": [False] * 4,
++                "entry_signal": [True, False, False, False],
++                "exit_signal": [False] * 4,
++                "st_exit": [False] * 4,
++                "ma200": [10.0] * 4,
++                "channel_high_120": [9.0] * 4,
++                "channel_low_120": [8.0] * 4,
++                "rank_return_120": [0.4, 0.3, 0.2, 0.1],
++            }
++        )
++
++    @staticmethod
++    def _write_project_inputs(root):
++        data = root / "data"
++        data.mkdir(parents=True)
++        dates = pd.bdate_range("2010-01-04", periods=225).astype(str).tolist()
++        rows = []
++        for day in dates:
++            rows.append(
++                {
++                    "date": day,
++                    "code": "600000.SH",
++                    "open": 10.0,
++                    "high": 10.5,
++                    "low": 9.5,
++                    "close": 10.0,
++                    "prev_close": 10.0,
++                    "signal_open": 10.0,
++                    "signal_high": 10.5,
++                    "signal_low": 9.5,
++                    "signal_close": 10.0,
++                    "volume": 1000000.0,
++                    "amount": 10000000.0,
++                    "trade_status": 1,
++                    "is_st": 0,
++                    "ipo_date": "2000-01-01",
++                    "out_date": pd.NA,
++                    "data_valid": True,
++                    "execution_conflict": False,
++                    "adjustment_source_conflict": False,
++                    "source_conflict": False,
++                }
++            )
++        panel = pd.DataFrame(rows)
++        panel.to_parquet(data / "main_panel.parquet", index=False)
++        panel.to_parquet(data / "stress_panel.parquet", index=False)
++        panel[["date", "code", "signal_open", "signal_high", "signal_low", "signal_close", "data_valid"]].to_parquet(
++            data / "hithink_signal_panel.parquet", index=False
++        )
++        index_rows = []
++        for day in dates:
++            for code in ("000300.SH", "000852.SH"):
++                index_rows.append({"date": day, "code": code, "close": 1000.0})
++        pd.DataFrame(index_rows).to_parquet(data / "index_panel.parquet", index=False)
++        pd.DataFrame(
++            columns=[
++                "date",
++                "code",
++                "dividend_per_share",
++                "per_share_bonus",
++                "rights_ratio",
++                "rights_price",
++            ]
++        ).to_parquet(data / "corporate_actions.parquet", index=False)
++
++
++if __name__ == "__main__":
++    unittest.main()

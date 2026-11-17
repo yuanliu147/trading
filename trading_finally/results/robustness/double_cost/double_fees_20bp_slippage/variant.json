@@ -1,0 +1,29 @@
+{
+  "family": "double_cost",
+  "name": "double_fees_20bp_slippage",
+  "status": "completed",
+  "config": {
+    "hithink_db_path": "/Users/admin/Library/Application Support/hithink-finance/data/market.duckdb",
+    "baostock_db_path": "/Users/admin/WorkSpace/baostock_data/data/baostock.db",
+    "start_date": "2016-10-13",
+    "end_date": "2026-10-29",
+    "initial_cash": 20000,
+    "slots": 3,
+    "max_weight": 0.2,
+    "max_exposure": 0.6,
+    "entry_lookback": 120,
+    "trend_window": 200,
+    "trend_slope_window": 20,
+    "exit_lookback": 20,
+    "commission_rate": 0.0005,
+    "min_commission": 10,
+    "slippage_bps": 20,
+    "random_seed": 20261101
+  },
+  "config_sha256": "73c99fce9c35612404cf537bd9d2ca2440d7b1c685e10825669f209988ecf1b4",
+  "changed_fields": {
+    "all_fee_multiplier": 2,
+    "slippage_bps": 20
+  },
+  "double_all_fee_components": true
+}

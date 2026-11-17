@@ -1,0 +1,15 @@
+{
+  "cash_nonnegative": true,
+  "whole_lot_buys": true,
+  "equity_identity": true,
+  "trades_after_signal_date": true,
+  "execution_integrity": {
+    "key_set_and_window": true,
+    "cash_nonnegative": true,
+    "whole_lot_buys": true,
+    "legal_fill_prices": true,
+    "equity_identity": true,
+    "next_open_after_signal": true,
+    "all_passed": true
+  }
+}

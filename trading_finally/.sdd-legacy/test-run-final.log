@@ -1,0 +1,267 @@
+test_date_major_multi_stock_warmup_selects_signals_by_key_not_position (test_baseline_integration.BaselineIntegrationTest.test_date_major_multi_stock_warmup_selects_signals_by_key_not_position) ... ok
+test_direct_run_without_config_path_hashes_canonical_values_not_default_file (test_baseline_integration.BaselineIntegrationTest.test_direct_run_without_config_path_hashes_canonical_values_not_default_file) ... ok
+test_synthetic_baseline_is_reproducible_and_executes_after_signal_at_open (test_baseline_integration.BaselineIntegrationTest.test_synthetic_baseline_is_reproducible_and_executes_after_signal_at_open) ... ok
+test_account_identities_hold_on_every_day (test_broker.BrokerTest.test_account_identities_hold_on_every_day) ... ok
+test_adjustment_conflict_is_logged_without_abort (test_broker.BrokerTest.test_adjustment_conflict_is_logged_without_abort) ... ok
+test_bonus_shares_become_sellable_on_next_trading_day (test_broker.BrokerTest.test_bonus_shares_become_sellable_on_next_trading_day) ... ok
+test_delisting_writeoff_is_after_out_date_and_never_an_early_sale (test_broker.BrokerTest.test_delisting_writeoff_is_after_out_date_and_never_an_early_sale) ... ok
+test_dividend_and_sale_on_same_day_use_pre_sale_quantity (test_broker.BrokerTest.test_dividend_and_sale_on_same_day_use_pre_sale_quantity) ... ok
+test_dividend_settles_at_close_but_does_not_fund_frozen_buy (test_broker.BrokerTest.test_dividend_settles_at_close_but_does_not_fund_frozen_buy) ... ok
+test_end_of_panel_does_not_force_liquidation (test_broker.BrokerTest.test_end_of_panel_does_not_force_liquidation) ... ok
+test_entries_are_ranked_and_existing_positions_are_not_added (test_broker.BrokerTest.test_entries_are_ranked_and_existing_positions_are_not_added) ... ok
+test_entry_executes_next_open_and_bought_shares_are_not_sellable_same_day (test_broker.BrokerTest.test_entry_executes_next_open_and_bought_shares_are_not_sellable_same_day) ... ok
+test_execution_integrity_accepts_real_pending_delay_evidence (test_broker.BrokerTest.test_execution_integrity_accepts_real_pending_delay_evidence) ... ok
+test_execution_integrity_has_independent_key_cash_lot_price_and_equity_evidence (test_broker.BrokerTest.test_execution_integrity_has_independent_key_cash_lot_price_and_equity_evidence) ... ok
+test_execution_integrity_rejects_delayed_buy_non_open_fill_and_unproven_delayed_sell (test_broker.BrokerTest.test_execution_integrity_rejects_delayed_buy_non_open_fill_and_unproven_delayed_sell) ... ok
+test_failed_first_candidate_does_not_block_ordered_backfill (test_broker.BrokerTest.test_failed_first_candidate_does_not_block_ordered_backfill) ... ok
+test_held_invalid_data_or_execution_conflict_aborts_with_diagnostic (test_broker.BrokerTest.test_held_invalid_data_or_execution_conflict_aborts_with_diagnostic) ... ok
+test_missing_bar_sell_rolls_forward_and_account_calendar_is_complete (test_broker.BrokerTest.test_missing_bar_sell_rolls_forward_and_account_calendar_is_complete) ... ok
+test_missing_bar_uses_stale_position_value_not_cash (test_broker.BrokerTest.test_missing_bar_uses_stale_position_value_not_cash) ... ok
+test_multi_position_abort_precedes_all_position_updates (test_broker.BrokerTest.test_multi_position_abort_precedes_all_position_updates) ... ok
+test_negative_sell_reduces_cash_available_to_frozen_buy (test_broker.BrokerTest.test_negative_sell_reduces_cash_available_to_frozen_buy) ... ok
+test_negative_small_lot_sell_is_kept_when_it_would_overdraw_cash (test_broker.BrokerTest.test_negative_small_lot_sell_is_kept_when_it_would_overdraw_cash) ... ok
+test_null_corporate_action_fields_are_treated_as_zero (test_broker.BrokerTest.test_null_corporate_action_fields_are_treated_as_zero) ... ok
+test_pending_exit_keeps_its_slot_for_next_day_buy (test_broker.BrokerTest.test_pending_exit_keeps_its_slot_for_next_day_buy) ... ok
+test_pending_exit_proceeds_do_not_fund_next_day_buy (test_broker.BrokerTest.test_pending_exit_proceeds_do_not_fund_next_day_buy) ... ok
+test_rights_issue_is_not_automatically_participated (test_broker.BrokerTest.test_rights_issue_is_not_automatically_participated) ... ok
+test_same_day_multiple_buys_deplete_frozen_cash_in_rank_order (test_broker.BrokerTest.test_same_day_multiple_buys_deplete_frozen_cash_in_rank_order) ... ok
+test_sell_order_rolls_through_limit_down_days_and_uses_current_open (test_broker.BrokerTest.test_sell_order_rolls_through_limit_down_days_and_uses_current_open) ... ok
+test_st_exit_is_frozen_for_next_day (test_broker.BrokerTest.test_st_exit_is_frozen_for_next_day) ... ok
+test_suspended_position_uses_last_actual_close_and_marks_stale (test_broker.BrokerTest.test_suspended_position_uses_last_actual_close_and_marks_stale) ... ok
+test_terminal_delisting_suspension_is_stale_then_written_off_next_day (test_broker.BrokerTest.test_terminal_delisting_suspension_is_stale_then_written_off_next_day) ... ok
+test_unfilled_buy_is_cancelled_and_requires_a_new_entry_signal (test_broker.BrokerTest.test_unfilled_buy_is_cancelled_and_requires_a_new_entry_signal) ... ok
+test_additional_strategy_parameter_is_rejected (test_config.ResearchConfigTest.test_additional_strategy_parameter_is_rejected) ... ok
+test_baseline_loads_frozen_values (test_config.ResearchConfigTest.test_baseline_loads_frozen_values) ... ok
+test_config_is_immutable (test_config.ResearchConfigTest.test_config_is_immutable) ... ok
+test_each_missing_database_path_is_rejected (test_config.ResearchConfigTest.test_each_missing_database_path_is_rejected) ... ok
+test_unknown_field_is_rejected (test_config.ResearchConfigTest.test_unknown_field_is_rejected) ... ok
+test_adjusted_series_are_compared_after_per_stock_normalization (test_data.DataPanelTest.test_adjusted_series_are_compared_after_per_stock_normalization) ... ok
+test_adjustment_diagnostics_separate_scale_precision_and_material (test_data.DataPanelTest.test_adjustment_diagnostics_separate_scale_precision_and_material) ... ok
+test_adjustment_source_conflict_is_not_execution_conflict (test_data.DataPanelTest.test_adjustment_source_conflict_is_not_execution_conflict) ... ok
+test_corporate_actions_include_ex_date_but_not_future_events (test_data.DataPanelTest.test_corporate_actions_include_ex_date_but_not_future_events) ... ok
+test_duplicate_key_is_rejected (test_data.DataPanelTest.test_duplicate_key_is_rejected) ... ok
+test_exclusions_separate_execution_blocking_from_audit_flags (test_data.DataPanelTest.test_exclusions_separate_execution_blocking_from_audit_flags) ... ok
+test_execution_conflict_is_limited_to_raw_ohlc (test_data.DataPanelTest.test_execution_conflict_is_limited_to_raw_ohlc) ... ok
+test_hithink_signal_panel_preserves_all_rows (test_data.DataPanelTest.test_hithink_signal_panel_preserves_all_rows) ... ok
+test_load_panel_round_trip (test_data.DataPanelTest.test_load_panel_round_trip) ... ok
+test_missing_hfq_keeps_raw_row_without_future_backfill (test_data.DataPanelTest.test_missing_hfq_keeps_raw_row_without_future_backfill) ... ok
+test_negative_price_is_rejected (test_data.DataPanelTest.test_negative_price_is_rejected) ... ok
+test_normalize_code (test_data.DataPanelTest.test_normalize_code) ... ok
+test_raw_price_threshold_is_strict (test_data.DataPanelTest.test_raw_price_threshold_is_strict) ... ok
+test_unconvertible_board_code_is_rejected (test_data.DataPanelTest.test_unconvertible_board_code_is_rejected) ... ok
+test_volume_and_amount_relative_thresholds (test_data.DataPanelTest.test_volume_and_amount_relative_thresholds) ... ok
+test_cost_attribution_does_not_exclude_slippage (test_delivery.RejectedDeliveryTest.test_cost_attribution_does_not_exclude_slippage) ... ok
+test_negative_result_explains_real_failure_evidence (test_delivery.RejectedDeliveryTest.test_negative_result_explains_real_failure_evidence) ... ok
+test_negative_result_has_stop_boundaries_without_rescue_guidance (test_delivery.RejectedDeliveryTest.test_negative_result_has_stop_boundaries_without_rescue_guidance) ... ok
+test_readme_contains_complete_reproduction_and_io_boundaries (test_delivery.RejectedDeliveryTest.test_readme_contains_complete_reproduction_and_io_boundaries) ... ok
+test_rejected_delivery_does_not_create_live_manual_or_daily_files (test_delivery.RejectedDeliveryTest.test_rejected_delivery_does_not_create_live_manual_or_daily_files) ... ok
+test_buy_at_open_limit_up_is_cancelled (test_execution.ExecutionTest.test_buy_at_open_limit_up_is_cancelled) ... ok
+test_buy_commission_has_five_yuan_minimum (test_execution.ExecutionTest.test_buy_commission_has_five_yuan_minimum) ... ok
+test_cost_multiplier_doubles_minimum_commission_and_fees (test_execution.ExecutionTest.test_cost_multiplier_doubles_minimum_commission_and_fees) ... ok
+test_double_cost_sizing_and_fill_include_doubled_minimum_and_20bp_slippage (test_execution.ExecutionTest.test_double_cost_sizing_and_fill_include_doubled_minimum_and_20bp_slippage) ... ok
+test_execution_conflict_is_rejected_explicitly (test_execution.ExecutionTest.test_execution_conflict_is_rejected_explicitly) ... ok
+test_invalid_data_is_rejected_explicitly (test_execution.ExecutionTest.test_invalid_data_is_rejected_explicitly) ... ok
+test_invalid_order_is_rejected_before_pricing (test_execution.ExecutionTest.test_invalid_order_is_rejected_before_pricing) ... ok
+test_open_outside_legal_or_daily_range_is_rejected (test_execution.ExecutionTest.test_open_outside_legal_or_daily_range_is_rejected) ... ok
+test_open_sell_fill_uses_adverse_slippage_and_exact_cash_credit (test_execution.ExecutionTest.test_open_sell_fill_uses_adverse_slippage_and_exact_cash_credit) ... ok
+test_price_limits_round_half_up_to_cent (test_execution.ExecutionTest.test_price_limits_round_half_up_to_cent) ... ok
+test_price_limits_use_main_board_and_st_rates (test_execution.ExecutionTest.test_price_limits_use_main_board_and_st_rates) ... ok
+test_sell_at_open_limit_down_is_kept (test_execution.ExecutionTest.test_sell_at_open_limit_down_is_kept) ... ok
+test_sell_stamp_duty_changes_on_2023_08_28 (test_execution.ExecutionTest.test_sell_stamp_duty_changes_on_2023_08_28) ... ok
+test_size_buy_reduces_one_lot_when_rounded_cash_debit_exceeds_cash (test_execution.ExecutionTest.test_size_buy_reduces_one_lot_when_rounded_cash_debit_exceeds_cash) ... ok
+test_size_buy_respects_remaining_total_exposure (test_execution.ExecutionTest.test_size_buy_respects_remaining_total_exposure) ... ok
+test_size_buy_uses_same_clamped_fill_price_and_cash_delta_as_open_fill (test_execution.ExecutionTest.test_size_buy_uses_same_clamped_fill_price_and_cash_delta_as_open_fill) ... ok
+test_size_buy_uses_unslipped_open_for_single_stock_cap (test_execution.ExecutionTest.test_size_buy_uses_unslipped_open_for_single_stock_cap) ... ok
+test_slipped_fill_is_clamped_to_daily_price_range (test_execution.ExecutionTest.test_slipped_fill_is_clamped_to_daily_price_range) ... ok
+test_suspension_has_side_specific_disposition (test_execution.ExecutionTest.test_suspension_has_side_specific_disposition) ... ok
+test_transfer_fee_changes_on_2022_04_29 (test_execution.ExecutionTest.test_transfer_fee_changes_on_2022_04_29) ... ok
+test_any_two_methods_are_required_and_missing_boolean_fails_closed (test_legacy_a.LegacyATest.test_any_two_methods_are_required_and_missing_boolean_fails_closed) ... ok
+test_completed_context_hfq_is_aligned_by_key_for_entry (test_legacy_a.LegacyATest.test_completed_context_hfq_is_aligned_by_key_for_entry) ... ok
+test_cooldown_uses_accepted_original_row_indices (test_legacy_a.LegacyATest.test_cooldown_uses_accepted_original_row_indices) ... ok
+test_cross_section_uses_all_a_percentiles_and_strict_boundaries (test_legacy_a.LegacyATest.test_cross_section_uses_all_a_percentiles_and_strict_boundaries) ... ok
+test_entry_audit_covers_only_proposed_keys_and_fails_on_one_invalid (test_legacy_a.LegacyATest.test_entry_audit_covers_only_proposed_keys_and_fails_on_one_invalid) ... ok
+test_formulas_and_two_of_three_methods_match_preregistration (test_legacy_a.LegacyATest.test_formulas_and_two_of_three_methods_match_preregistration) ... ok
+test_future_industry_and_ex_right_rows_do_not_change_history (test_legacy_a.LegacyATest.test_future_industry_and_ex_right_rows_do_not_change_history) ... ok
+test_low10_includes_signal_day_and_retains_stop_metadata (test_legacy_a.LegacyATest.test_low10_includes_signal_day_and_retains_stop_metadata) ... ok
+test_main_key_outside_point_in_time_context_is_retained_without_signal (test_legacy_a.LegacyATest.test_main_key_outside_point_in_time_context_is_retained_without_signal) ... ok
+test_original_score_orders_descending_with_code_tie_break (test_legacy_a.LegacyATest.test_original_score_orders_descending_with_code_tie_break) ... ok
+test_st_conflict_non_main_and_out_of_window_permissions_fail_closed (test_legacy_a.LegacyATest.test_st_conflict_non_main_and_out_of_window_permissions_fail_closed) ... ok
+test_suspension_and_zero_volume_cannot_enter (test_legacy_a.LegacyATest.test_suspension_and_zero_volume_cannot_enter) ... ok
+test_entry_after_warmup_and_eligibility_with_pit_industry (test_legacy_b.LegacyBSignalTest.test_entry_after_warmup_and_eligibility_with_pit_industry) ... /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/legacy_b.py:129: RuntimeWarning: Mean of empty slice
+  sector_ret[:, industry_id] = np.nanmean(np.where(mask, ret20, np.nan), axis=1)
+ok
+test_future_prices_do_not_change_past_entries (test_legacy_b.LegacyBSignalTest.test_future_prices_do_not_change_past_entries) ... /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/legacy_b.py:129: RuntimeWarning: Mean of empty slice
+  sector_ret[:, industry_id] = np.nanmean(np.where(mask, ret20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/trading_finally/src/trend_system/legacy_b.py:129: RuntimeWarning: Mean of empty slice
+  sector_ret[:, industry_id] = np.nanmean(np.where(mask, ret20, np.nan), axis=1)
+ok
+test_missing_industry_blocks_entry (test_legacy_b.LegacyBSignalTest.test_missing_industry_blocks_entry) ... ok
+test_stock_already_st_is_not_bought (test_legacy_b.LegacyBSignalTest.test_stock_already_st_is_not_bought) ... /Users/admin/WorkSpace/trading/trading_finally/src/trend_system/legacy_b.py:129: RuntimeWarning: Mean of empty slice
+  sector_ret[:, industry_id] = np.nanmean(np.where(mask, ret20, np.nan), axis=1)
+ok
+test_invalid_candidate_status_is_rejected (test_legacy_b_config.LegacyBConfigLoaderTest.test_invalid_candidate_status_is_rejected) ... ok
+test_modified_copy_is_rejected_by_official_hash (test_legacy_b_config.LegacyBConfigLoaderTest.test_modified_copy_is_rejected_by_official_hash) ... ok
+test_nonempty_not_evaluable_fields_is_rejected (test_legacy_b_config.LegacyBConfigLoaderTest.test_nonempty_not_evaluable_fields_is_rejected) ... ok
+test_official_config_loads_frozen_values (test_legacy_b_config.LegacyBConfigLoaderTest.test_official_config_loads_frozen_values) ... ok
+test_wrong_source_hash_is_rejected (test_legacy_b_config.LegacyBConfigLoaderTest.test_wrong_source_hash_is_rejected) ... ok
+test_main_run_rejects_alternative_config (test_legacy_b_config.LegacyBRunnerGateTest.test_main_run_rejects_alternative_config) ... ok
+test_main_run_rejects_audit_with_other_config_hash (test_legacy_b_config.LegacyBRunnerGateTest.test_main_run_rejects_audit_with_other_config_hash) ... ok
+test_main_run_rejects_missing_recovery_audit (test_legacy_b_config.LegacyBRunnerGateTest.test_main_run_rejects_missing_recovery_audit) ... ok
+test_main_run_requires_explicit_config_path (test_legacy_b_config.LegacyBRunnerGateTest.test_main_run_requires_explicit_config_path) ... ok
+test_robustness_rejects_alternative_config (test_legacy_b_config.LegacyBRunnerGateTest.test_robustness_rejects_alternative_config) ... ok
+test_robustness_requires_explicit_config_path (test_legacy_b_config.LegacyBRunnerGateTest.test_robustness_requires_explicit_config_path) ... ok
+test_corporate_action_anchor_direction_and_st (test_legacy_b_policy.LegacyBPolicyTest.test_corporate_action_anchor_direction_and_st) ... ok
+test_gap_filter_rejects_and_reports_reason (test_legacy_b_policy.LegacyBPolicyTest.test_gap_filter_rejects_and_reports_reason) ... ok
+test_heat_cap_rejects_new_position (test_legacy_b_policy.LegacyBPolicyTest.test_heat_cap_rejects_new_position) ... ok
+test_integration_buys_next_open_and_sells_after_twentieth_day (test_legacy_b_policy.LegacyBPolicyTest.test_integration_buys_next_open_and_sells_after_twentieth_day) ... ok
+test_risk_sizing_uses_atr_clip_heat_and_whole_lots (test_legacy_b_policy.LegacyBPolicyTest.test_risk_sizing_uses_atr_clip_heat_and_whole_lots) ... ok
+test_twenty_day_global_index_exit_and_catastrophe (test_legacy_b_policy.LegacyBPolicyTest.test_twenty_day_global_index_exit_and_catastrophe) ... ok
+test_actual_cli_arguments_cannot_override_config (test_legacy_config.LegacyResearchConfigTest.test_actual_cli_arguments_cannot_override_config) ... ok
+test_additional_candidate_parameter_is_rejected (test_legacy_config.LegacyResearchConfigTest.test_additional_candidate_parameter_is_rejected) ... ok
+test_candidate_a_entry_veto_matches_preregistration (test_legacy_config.LegacyResearchConfigTest.test_candidate_a_entry_veto_matches_preregistration) ... ok
+test_candidate_a_rule_and_source_freeze (test_legacy_config.LegacyResearchConfigTest.test_candidate_a_rule_and_source_freeze) ... ok
+test_candidate_b_rule_freeze_and_not_evaluable_fields (test_legacy_config.LegacyResearchConfigTest.test_candidate_b_rule_freeze_and_not_evaluable_fields) ... ok
+test_candidate_set_is_exact (test_legacy_config.LegacyResearchConfigTest.test_candidate_set_is_exact) ... ok
+test_cli_style_override_field_is_rejected (test_legacy_config.LegacyResearchConfigTest.test_cli_style_override_field_is_rejected) ... ok
+test_config_and_candidates_are_immutable (test_legacy_config.LegacyResearchConfigTest.test_config_and_candidates_are_immutable) ... ok
+test_config_contains_exactly_two_frozen_candidates (test_legacy_config.LegacyResearchConfigTest.test_config_contains_exactly_two_frozen_candidates) ... ok
+test_config_loads_frozen_research_values (test_legacy_config.LegacyResearchConfigTest.test_config_loads_frozen_research_values) ... ok
+test_duplicate_json_fields_are_rejected (test_legacy_config.LegacyResearchConfigTest.test_duplicate_json_fields_are_rejected) ... ok
+test_environment_override_is_rejected (test_legacy_config.LegacyResearchConfigTest.test_environment_override_is_rejected) ... ok
+test_missing_file_and_malformed_json_are_rejected (test_legacy_config.LegacyResearchConfigTest.test_missing_file_and_malformed_json_are_rejected) ... ok
+test_missing_required_field_is_rejected (test_legacy_config.LegacyResearchConfigTest.test_missing_required_field_is_rejected) ... ok
+test_non_object_root_and_invalid_scalar_types_are_rejected (test_legacy_config.LegacyResearchConfigTest.test_non_object_root_and_invalid_scalar_types_are_rejected) ... ok
+test_nonstandard_json_constants_are_rejected (test_legacy_config.LegacyResearchConfigTest.test_nonstandard_json_constants_are_rejected) ... ok
+test_unknown_source_field_is_rejected (test_legacy_config.LegacyResearchConfigTest.test_unknown_source_field_is_rejected) ... ok
+test_unknown_top_level_field_is_rejected (test_legacy_config.LegacyResearchConfigTest.test_unknown_top_level_field_is_rejected) ... ok
+test_complete_normally_trading_positive_nonconflict_row_passes (test_legacy_data.CandidateEntryValidityTest.test_complete_normally_trading_positive_nonconflict_row_passes) ... ok
+test_execution_conflict_fails_closed (test_legacy_data.CandidateEntryValidityTest.test_execution_conflict_fails_closed) ... ok
+test_null_amount_fails_closed (test_legacy_data.CandidateEntryValidityTest.test_null_amount_fails_closed) ... ok
+test_suspension_fails_closed (test_legacy_data.CandidateEntryValidityTest.test_suspension_fails_closed) ... ok
+test_zero_volume_fails_closed (test_legacy_data.CandidateEntryValidityTest.test_zero_volume_fails_closed) ... ok
+test_candidate_a_fails_when_full_a_coverage_fails (test_legacy_data.CandidateGateTest.test_candidate_a_fails_when_full_a_coverage_fails) ... ok
+test_candidate_a_full_a_pass_waits_for_task3_actual_entry_gate (test_legacy_data.CandidateGateTest.test_candidate_a_full_a_pass_waits_for_task3_actual_entry_gate) ... ok
+test_candidate_b_fails_without_dated_industry_source (test_legacy_data.CandidateGateTest.test_candidate_b_fails_without_dated_industry_source) ... ok
+test_candidate_b_freeze_cannot_be_restored_by_complete_data (test_legacy_data.CandidateGateTest.test_candidate_b_freeze_cannot_be_restored_by_complete_data) ... ok
+test_exact_hfq_completion_fills_only_null_fields (test_legacy_data.ContextSemanticsTest.test_exact_hfq_completion_fills_only_null_fields) ... ok
+test_normal_suspension_is_complete_but_not_rank_eligible (test_legacy_data.ContextSemanticsTest.test_normal_suspension_is_complete_but_not_rank_eligible) ... ok
+test_normal_trading_null_amount_is_not_complete (test_legacy_data.ContextSemanticsTest.test_normal_trading_null_amount_is_not_complete) ... ok
+test_98_99_percent_fails_and_exact_99_percent_passes (test_legacy_data.CoverageTest.test_98_99_percent_fails_and_exact_99_percent_passes) ... ok
+test_daily_denominator_is_fixed_by_point_in_time_active_universe (test_legacy_data.CoverageTest.test_daily_denominator_is_fixed_by_point_in_time_active_universe) ... ok
+test_exact_expected_trading_date_set_passes (test_legacy_data.CoverageTest.test_exact_expected_trading_date_set_passes) ... ok
+test_missing_required_entry_field_has_zero_coverage (test_legacy_data.CoverageTest.test_missing_required_entry_field_has_zero_coverage) ... ok
+test_partially_missing_required_entry_field_is_not_complete (test_legacy_data.CoverageTest.test_partially_missing_required_entry_field_is_not_complete) ... ok
+test_whole_missing_trading_day_fails_against_independent_calendar (test_legacy_data.CoverageTest.test_whole_missing_trading_day_fails_against_independent_calendar) ... ok
+test_current_snapshot_without_valid_from_cannot_backfill_history (test_legacy_data.PointInTimeIndustryTest.test_current_snapshot_without_valid_from_cannot_backfill_history) ... ok
+test_future_industry_record_is_not_visible_before_valid_from (test_legacy_data.PointInTimeIndustryTest.test_future_industry_record_is_not_visible_before_valid_from) ... ok
+test_no_candidate_exposes_orders_or_positions_for_live_use (test_legacy_delivery.NegativeDeliveryTest.test_no_candidate_exposes_orders_or_positions_for_live_use) ... ok
+test_no_simulation_or_live_delivery_files_exist (test_legacy_delivery.NegativeDeliveryTest.test_no_simulation_or_live_delivery_files_exist) ... ok
+test_stop_boundary_document_exists_and_has_both_candidates (test_legacy_delivery.NegativeDeliveryTest.test_stop_boundary_document_exists_and_has_both_candidates) ... ok
+test_not_evaluable_status_aborts_before_engine (test_legacy_integration.LegacyRunnerTest.test_not_evaluable_status_aborts_before_engine) ... ok
+test_prepare_adds_factor_selects_window_and_rejects_key_drift (test_legacy_integration.LegacyRunnerTest.test_prepare_adds_factor_selects_window_and_rejects_key_drift) ... ok
+test_repeated_runs_are_identical_and_never_trade_on_signal_day (test_legacy_integration.LegacyRunnerTest.test_repeated_runs_are_identical_and_never_trade_on_signal_day) ... ok
+test_authoritative_score_orders_ties_and_actual_daily_opens_are_two (test_legacy_policy.LegacyPolicyTest.test_authoritative_score_orders_ties_and_actual_daily_opens_are_two) ... ok
+test_corporate_action_adjusts_fixed_anchor_and_signal_factor_to_actual_scale (test_legacy_policy.LegacyPolicyTest.test_corporate_action_adjusts_fixed_anchor_and_signal_factor_to_actual_scale) ... ok
+test_entry_stop_uses_fixed_signal_low10_not_later_low10 (test_legacy_policy.LegacyPolicyTest.test_entry_stop_uses_fixed_signal_low10_not_later_low10) ... ok
+test_explicit_none_matches_omitted_policy_without_legacy_fields (test_legacy_policy.LegacyPolicyTest.test_explicit_none_matches_omitted_policy_without_legacy_fields) ... ok
+test_four_slots_twenty_percent_whole_lots_cash_and_no_adding (test_legacy_policy.LegacyPolicyTest.test_four_slots_twenty_percent_whole_lots_cash_and_no_adding) ... ok
+test_hold_40_counts_entry_day_but_not_suspension_zero_volume_or_missing_bar (test_legacy_policy.LegacyPolicyTest.test_hold_40_counts_entry_day_but_not_suspension_zero_volume_or_missing_bar) ... ok
+test_policy_stop_exit_rolls_through_limit_down_days (test_legacy_policy.LegacyPolicyTest.test_policy_stop_exit_rolls_through_limit_down_days) ... ok
+test_rejection_and_stop_at_entry_do_not_consume_daily_open_slots (test_legacy_policy.LegacyPolicyTest.test_rejection_and_stop_at_entry_do_not_consume_daily_open_slots) ... ok
+test_same_close_records_all_old_reasons_and_separate_st_with_one_sell (test_legacy_policy.LegacyPolicyTest.test_same_close_records_all_old_reasons_and_separate_st_with_one_sell) ... ok
+test_doubled_costs_double_every_fee_component_for_sizing_and_fill (test_legacy_robustness.LegacyRobustnessTest.test_doubled_costs_double_every_fee_component_for_sizing_and_fill) ... ok
+test_gate_ids_fail_closed_and_mdd_boundaries (test_legacy_robustness.LegacyRobustnessTest.test_gate_ids_fail_closed_and_mdd_boundaries) ... ok
+test_random_order_is_seeded_and_logs_a_permutation (test_legacy_robustness.LegacyRobustnessTest.test_random_order_is_seeded_and_logs_a_permutation) ... ok
+test_stress_entries_are_derived_with_the_same_frozen_validity (test_legacy_robustness.LegacyRobustnessTest.test_stress_entries_are_derived_with_the_same_frozen_validity) ... ok
+test_annual_rows_mark_partial_2016_and_use_previous_year_end (test_metrics.MetricsTest.test_annual_rows_mark_partial_2016_and_use_previous_year_end) ... ok
+test_empty_round_trips_have_neutral_trade_metrics (test_metrics.MetricsTest.test_empty_round_trips_have_neutral_trade_metrics) ... ok
+test_known_equity_path_and_two_round_trips (test_metrics.MetricsTest.test_known_equity_path_and_two_round_trips) ... ok
+test_longest_losing_streak_uses_exit_order (test_metrics.MetricsTest.test_longest_losing_streak_uses_exit_order) ... ok
+test_month_end_rolling_three_year_uses_actual_dates_not_row_counts (test_metrics.MetricsTest.test_month_end_rolling_three_year_uses_actual_dates_not_row_counts) ... ok
+test_rolling_three_year_accepts_asof_gap_of_exactly_31_days (test_metrics.MetricsTest.test_rolling_three_year_accepts_asof_gap_of_exactly_31_days) ... ok
+test_rolling_three_year_skips_asof_start_beyond_31_day_gap (test_metrics.MetricsTest.test_rolling_three_year_skips_asof_start_beyond_31_day_gap) ... ok
+test_top_five_profitable_trade_contribution (test_metrics.MetricsTest.test_top_five_profitable_trade_contribution) ... ok
+test_final_report_discloses_gates_negative_results_and_descriptive_limits (test_report.ReportTest.test_final_report_discloses_gates_negative_results_and_descriptive_limits) ... ok
+test_entry_risk_gap_minimum_commission_and_same_day_exit_are_quantified (test_risk.RiskReportTest.test_entry_risk_gap_minimum_commission_and_same_day_exit_are_quantified) ... ok
+test_holding_returns_reset_at_each_entry_episode (test_risk.RiskReportTest.test_holding_returns_reset_at_each_entry_episode) ... ok
+test_stale_valuation_discount_is_accounting_only_and_reports_equity_mdd (test_risk.RiskReportTest.test_stale_valuation_discount_is_accounting_only_and_reports_equity_mdd) ... ok
+test_block_bootstrap_only_resamples_return_series (test_robustness.RobustnessUnitTest.test_block_bootstrap_only_resamples_return_series) ... ok
+test_dual_source_common_window_aligns_date_major_multi_stock_keys (test_robustness.RobustnessUnitTest.test_dual_source_common_window_aligns_date_major_multi_stock_keys) ... ok
+test_eight_neighborhoods_change_exactly_one_frozen_field (test_robustness.RobustnessUnitTest.test_eight_neighborhoods_change_exactly_one_frozen_field) ... ok
+test_gate_ids_must_be_exactly_the_ten_frozen_ids (test_robustness.RobustnessUnitTest.test_gate_ids_must_be_exactly_the_ten_frozen_ids) ... ok
+test_gate_passed_values_must_be_actual_booleans (test_robustness.RobustnessUnitTest.test_gate_passed_values_must_be_actual_booleans) ... ok
+test_mechanical_verdict_boundaries_and_other_gate_failure (test_robustness.RobustnessUnitTest.test_mechanical_verdict_boundaries_and_other_gate_failure) ... ok
+test_profit_concentration_uses_annual_account_equity_pnl (test_robustness.RobustnessUnitTest.test_profit_concentration_uses_annual_account_equity_pnl) ... ok
+test_random_entry_fails_explicitly_when_pool_is_insufficient (test_robustness.RobustnessUnitTest.test_random_entry_fails_explicitly_when_pool_is_insufficient) ... ok
+test_random_entry_replaces_without_replacement_and_keeps_real_rank (test_robustness.RobustnessUnitTest.test_random_entry_replaces_without_replacement_and_keeps_real_rank) ... ok
+test_random_order_is_reproducible_and_preserves_signals (test_robustness.RobustnessUnitTest.test_random_order_is_reproducible_and_preserves_signals) ... ok
+test_synthetic_full_matrix_executes_all_variants_and_persists_results (test_robustness.RobustnessUnitTest.test_synthetic_full_matrix_executes_all_variants_and_persists_results) ... [robustness] baseline/baseline: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/entry_lookback_90: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/entry_lookback_150: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/trend_window_180: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/trend_window_220: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/trend_slope_window_10: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/trend_slope_window_30: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/exit_lookback_15: completed; return=0.000000; mdd=-0.000000
+[robustness] neighborhood/exit_lookback_25: completed; return=0.000000; mdd=-0.000000
+[robustness] dual_source/baostock_common: completed; return=0.000000; mdd=-0.000000
+[robustness] dual_source/hithink_common: completed; return=0.000000; mdd=-0.000000
+[robustness] double_cost/double_fees_20bp_slippage: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_00: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_01: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_02: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_03: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_04: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_05: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_06: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_07: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_08: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_09: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_10: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_11: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_12: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_13: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_14: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_15: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_16: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_17: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_18: completed; return=0.000000; mdd=-0.000000
+[robustness] random_order/path_19: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_00: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_01: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_02: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_03: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_04: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_05: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_06: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_07: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_08: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_09: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_10: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_11: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_12: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_13: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_14: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_15: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_16: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_17: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_18: completed; return=0.000000; mdd=-0.000000
+[robustness] random_entry/path_19: completed; return=0.000000; mdd=-0.000000
+[robustness] portfolio/2_slots_20pct: completed; return=0.000000; mdd=-0.000000
+[robustness] portfolio/4_slots_15pct: completed; return=0.000000; mdd=-0.000000
+[robustness] historical_stress/stress_2010_2015: completed; return=0.000000; mdd=-0.000000
+ok
+test_channels_use_only_prior_rows_and_windows_are_complete (test_signals.SignalsTest.test_channels_use_only_prior_rows_and_windows_are_complete) ... ok
+test_current_record_does_not_rewrite_yesterday (test_signals.SignalsTest.test_current_record_does_not_rewrite_yesterday) ... ok
+test_entry_gates_and_adjustment_conflict_rule (test_signals.SignalsTest.test_entry_gates_and_adjustment_conflict_rule) ... ok
+test_entry_is_limited_to_main_window_and_exit_is_separate (test_signals.SignalsTest.test_entry_is_limited_to_main_window_and_exit_is_separate) ... ok
+test_future_ex_right_rows_do_not_change_prior_signals (test_signals.SignalsTest.test_future_ex_right_rows_do_not_change_prior_signals) ... ok
+test_missing_entry_state_fields_fail_closed (test_signals.SignalsTest.test_missing_entry_state_fields_fail_closed) ... ok
+test_price_ma_slope_and_channel_each_have_independent_negative_cases (test_signals.SignalsTest.test_price_ma_slope_and_channel_each_have_independent_negative_cases) ... ok
+test_st_is_not_backfilled_to_history (test_signals.SignalsTest.test_st_is_not_backfilled_to_history) ... ok
+test_stocks_are_sorted_and_calculated_independently (test_signals.SignalsTest.test_stocks_are_sorted_and_calculated_independently) ... ok
+
+----------------------------------------------------------------------
+Ran 199 tests in 3.600s
+
+OK
