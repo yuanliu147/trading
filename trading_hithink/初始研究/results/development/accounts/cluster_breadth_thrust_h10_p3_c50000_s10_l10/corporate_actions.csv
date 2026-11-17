@@ -1,0 +1,14 @@
+date,ex_date,thscode,position_id,event_type,shares_before,available_shares_before,reference_close,previous_actual_close,cash_equivalent_per_share,dividend_per_share,per_share_bonus,rights_ratio,dividend_receivable_added,bonus_shares_added,rights_shares_added,rights_cash_paid,shares_after,available_shares_after,dividend_receivable_after,rights_action,factor_only_adjustment,adjustment_assumption
+2019-06-26,2019-06-26,601818.SH,O00003706,explicit_corporate_action,4000,4000,,,0.0,0.161,0.0,0.0,644.0,0,0,0.0,4000,4000,644.0,not_exercised,False,explicit_event_records_used
+2019-07-03,2019-07-03,601398.SH,O00003705,explicit_corporate_action,2800,2800,,,0.0,0.2506,0.0,0.0,701.68,0,0,0.0,2800,2800,701.68,not_exercised,False,explicit_event_records_used
+2019-07-09,2019-07-09,601328.SH,O00003925,explicit_corporate_action,100,100,,,0.0,0.3,0.0,0.0,30.0,0,0,0.0,100,100,30.0,not_exercised,False,explicit_event_records_used
+2019-07-10,2019-07-10,601939.SH,O00003924,explicit_corporate_action,1800,1800,,,0.0,0.306,0.0,0.0,550.8,0,0,0.0,1800,1800,550.8,not_exercised,False,explicit_event_records_used
+2020-04-30,2020-04-30,002727.SZ,O00006667,explicit_corporate_action,600,600,,,0.0,0.3,0.0,0.0,180.0,0,0,0.0,600,600,180.0,not_exercised,False,explicit_event_records_used
+2020-06-05,2020-06-05,002772.SZ,O00006913,explicit_corporate_action,1600,1600,,,0.0,0.1,0.0,0.0,160.0,0,0,0.0,1600,1600,160.0,not_exercised,False,explicit_event_records_used
+2020-06-30,2020-06-30,600056.SH,O00007064,explicit_corporate_action,1000,1000,,,0.0,0.27553,0.0,0.0,275.53,0,0,0.0,1000,1000,275.53,not_exercised,False,explicit_event_records_used
+2020-07-08,2020-07-08,603456.SH,O00007383,explicit_corporate_action,500,500,,,0.0,0.2,0.0,0.0,100.0,0,0,0.0,500,500,100.0,not_exercised,False,explicit_event_records_used
+2020-07-16,2020-07-16,600489.SH,O00007790,explicit_corporate_action,100,100,,,0.0,0.0193,0.0,0.0,1.9300000000000002,0,0,0.0,100,100,1.9300000000000002,not_exercised,False,explicit_event_records_used
+2020-07-27,2020-07-27,601186.SH,O00008254,explicit_corporate_action,1600,1600,,,0.0,0.21,0.0,0.0,336.0,0,0,0.0,1600,1600,336.0,not_exercised,False,explicit_event_records_used
+2021-07-15,2021-07-15,601918.SH,O00010429,explicit_corporate_action,2000,2000,,,0.0,0.035,0.0,0.0,70.0,0,0,0.0,2000,2000,70.0,not_exercised,False,explicit_event_records_used
+2021-07-23,2021-07-23,600188.SH,O00010430,explicit_corporate_action,600,600,,,0.0,1.0,0.0,0.0,600.0,0,0,0.0,600,600,600.0,not_exercised,False,explicit_event_records_used
+2021-07-29,2021-07-29,600456.SH,O00010611,explicit_corporate_action,200,200,,,0.0,1.05,0.0,0.0,210.0,0,0,0.0,200,200,210.0,not_exercised,False,explicit_event_records_used

@@ -1,0 +1,7 @@
+date,ex_date,thscode,position_id,event_type,shares_before,available_shares_before,reference_close,previous_actual_close,cash_equivalent_per_share,dividend_per_share,per_share_bonus,rights_ratio,dividend_receivable_added,bonus_shares_added,rights_shares_added,rights_cash_paid,shares_after,available_shares_after,dividend_receivable_after,rights_action,factor_only_adjustment,adjustment_assumption
+2018-06-13,2018-06-13,002507.SZ,O00001451,explicit_corporate_action,300,300,,,0.0,0.15,0.0,0.0,45.0,0,0,0.0,300,300,45.0,not_exercised,False,explicit_event_records_used
+2018-06-14,2018-06-14,603939.SH,O00001227,explicit_corporate_action,100,100,,,0.0,0.3,0.0,0.0,30.0,0,0,0.0,100,100,30.0,not_exercised,False,explicit_event_records_used
+2018-07-16,2018-07-16,603939.SH,O00001227,factor_only_cash_equivalent,100,100,59.72,60.02,0.3,0.0,0.0,0.0,30.0,0,0,0.0,100,100,60.0,not_applicable,True,"Cash-equivalent receivable equals held shares times previous_actual_close-reference_close; this is a scenario assumption, not a reconstruction of the actual corporate action."
+2018-07-27,2018-07-27,600027.SH,O00002887,explicit_corporate_action,700,700,,,0.0,0.018,0.0,0.0,12.6,0,0,0.0,700,700,12.6,not_exercised,False,explicit_event_records_used
+2019-07-04,2019-07-04,603222.SH,O00016275,explicit_corporate_action,100,100,,,0.0,0.021,0.0,0.0,2.1,0,0,0.0,100,100,2.1,not_exercised,False,explicit_event_records_used
+2020-07-03,2020-07-03,002683.SZ,O00029645,explicit_corporate_action,100,100,,,0.0,0.2,0.0,0.0,20.0,0,0,0.0,100,100,20.0,not_exercised,False,explicit_event_records_used

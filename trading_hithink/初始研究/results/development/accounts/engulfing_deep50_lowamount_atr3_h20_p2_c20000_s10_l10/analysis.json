@@ -1,0 +1,36 @@
+{
+  "candidate_id": "engulfing_deep50_lowamount_atr3",
+  "period": "development",
+  "initial_capital": 20000.0,
+  "worst_annual_return": -0.14719962999999991,
+  "positive_years": 3,
+  "years": 4,
+  "annual_gross_turnover_over_average_equity": 12.535023490357494,
+  "benchmark": {
+    "current_listed_equal_weight_buy_hold": {
+      "cagr": 0.07740464842555506,
+      "total_return": 0.3471832383127056,
+      "max_drawdown": 0.3782144353086203
+    },
+    "survivorship_bias": true,
+    "benchmark_costs_included": false,
+    "previous_close_ma20_gated_equal_weight": {
+      "cagr": 0.1271172066630617,
+      "total_return": 0.6133698553113476,
+      "max_drawdown": 0.1777385167058304
+    },
+    "strategy_daily_beta_to_equal_weight": 0.5207865236913103,
+    "strategy_daily_correlation_to_equal_weight": 0.4016320899101664
+  },
+  "costs": {
+    "commissions": 648.5536,
+    "stamp_duty": 879.6490000000001,
+    "transfer_fees": 34.50862000000001,
+    "slippage_cost_informational": 3955.9999999999955,
+    "dividend_tax": 0.0,
+    "gross_traded_value": 1725431.0,
+    "explicit_fees_over_initial_capital": 0.078135561,
+    "slippage_over_initial_capital": 0.19779999999999978
+  },
+  "current_listed_survivorship_bias": true
+}

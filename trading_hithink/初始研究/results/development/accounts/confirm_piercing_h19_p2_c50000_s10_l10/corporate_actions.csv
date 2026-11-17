@@ -1,0 +1,2 @@
+date,ex_date,thscode,position_id,event_type,shares_before,available_shares_before,reference_close,previous_actual_close,cash_equivalent_per_share,dividend_per_share,per_share_bonus,rights_ratio,dividend_receivable_added,bonus_shares_added,rights_shares_added,rights_cash_paid,shares_after,available_shares_after,dividend_receivable_after,rights_action,factor_only_adjustment,adjustment_assumption
+2021-05-25,2021-05-25,002970.SZ,O00000109,explicit_corporate_action,800,800,,,0.0,0.5,0.0,0.0,400.0,0,0,0.0,800,800,400.0,not_exercised,False,explicit_event_records_used
