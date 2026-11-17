@@ -1,0 +1,44 @@
+[    0.0s] 读取分析面板
+[    0.8s] 读取 9,978,760 行
+[    3.5s] 主样本 9,569,164，跌停 37,412，基准 0.3910%；训练 0.4556%；检验 0.3426%
+[    4.1s] 单特征条件概率
+[    4.5s]   ret1 完成
+[    4.9s]   ret5 完成
+[    5.3s]   ret20 完成
+[    5.7s]   ret60 完成
+[    6.1s]   dist_ma20 完成
+[    6.5s]   dist_ma60 完成
+[    6.8s]   dist_high60 完成
+[    7.2s]   dist_high250 完成
+[    7.6s]   vol20 完成
+[    7.9s]   atr_pct 完成
+[    8.3s]   rsi14 完成
+[    8.7s]   amt_ratio20 完成
+[    9.1s]   vr5_20 完成
+[    9.5s]   close_pos 完成
+[    9.8s]   upper 完成
+[   10.2s]   gap 完成
+[   10.6s]   days_since_ld 完成
+[   11.0s]   days_since_lu 完成
+[   11.3s]   consec_lu 完成
+[   11.7s]   ld_count20 完成
+[   12.1s]   lu_count20 完成
+[   12.4s]   beta60 完成
+[   12.8s]   log_amt20 完成
+[   13.1s]   age 完成
+[   13.4s]   market_breadth20 完成
+[   13.8s]   mkt_ld_share 完成
+[   14.1s]   mkt_ld_rank250 完成
+[   14.5s]   sector_breadth20 完成
+[   14.8s]   sector_ld_share 完成
+[   15.2s]   sector_ret20 完成
+[   15.7s]   sector_ret5 完成
+[   16.0s]   mkt_ret1 完成
+[   16.3s]   market_sent 完成
+[   16.7s]   sector_rs 完成
+[   22.7s] 单特征表完成
+[   22.9s] 特征级汇总与事件侧对比
+[   28.6s] 二维交叉表
+[   29.5s] 分年/分行业
+[   29.8s] 关键条件按日期 cluster bootstrap
+[   30.1s] 完成
