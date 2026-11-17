@@ -1,2 +1,22 @@
 __pycache__
 .pylibs
+tmp
+
+# 可重算的缓存与中间产物
+_cache/
+__cache/
+.cache/
+_审计缓存/
+市场状态_缓存/
+中间数据/
+工作数据/
+_事件块/
+data_cache/
+
+# 超 100MB 的原始面板与数据库（本地保留，不入库）
+*.duckdb
+*.parquet.part
+
+# 编辑器本地状态
+.obsidian/workspace.json
+.DS_Store
