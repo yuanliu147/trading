@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A 股研究结果总览</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fffdf8;--ink:#1f2328;--muted:#6b7280;--line:#e5e0d5;--paper:#166534;--risk:#1d4ed8;--research:#6b7280;--unusable:#b91c1c;--tool:#7c3aed;--warn:#b45309}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.65}
+.wrap{max-width:1180px;margin:0 auto;padding:30px 20px 64px}
+header{border-bottom:1px solid var(--line);padding-bottom:18px}
+h1{font-size:30px;line-height:1.25;margin:0 0 8px;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:14px;max-width:860px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:22px 0 8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat b{display:block;font-size:25px;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:18px 0 14px}
+button.filter{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:inherit}
+button.filter:hover{border-color:#c9c2b4}
+button.filter.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+input#q{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-size:13px;min-width:220px;font-family:inherit}
+.shown{font-size:12px;color:var(--muted);margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--research);border-radius:12px;padding:16px 18px}
+.card[data-cat=paper]{border-left-color:var(--paper)}
+.card[data-cat=risk]{border-left-color:var(--risk)}
+.card[data-cat=unusable]{border-left-color:var(--unusable)}
+.card[data-cat=tool]{border-left-color:var(--tool)}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:11px;line-height:1.6;padding:2px 8px;border-radius:999px;background:#f1eee6;color:#4b5563}
+.tag.paper{background:#e7f3e9;color:#166534}
+.tag.risk{background:#e8eefc;color:#1d4ed8}
+.tag.unusable{background:#fbe9e7;color:#b91c1c}
+.tag.tool{background:#f1eafe;color:#7c3aed}
+.tag.ev{background:#fff;border:1px solid var(--line);color:var(--muted)}
+.card h2{font-size:17px;line-height:1.45;margin:8px 0 6px}
+.summary{font-size:14px;color:#374151;margin:0}
+details{margin-top:10px}
+summary{cursor:pointer;font-size:12px;color:var(--muted);list-style:none}
+summary::-webkit-details-marker{display:none}
+summary:before{content:"▸ ";}
+details[open] summary:before{content:"▾ ";}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0 8px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500}
+.num{font-variant-numeric:tabular-nums}
+.retract .num{white-space:nowrap}
+.small{font-size:13px;color:#4b5563;margin:6px 0}
+.small a{color:#1d4ed8;text-decoration:none}
+.small a:hover{text-decoration:underline}
+h2.sec{font-size:20px;margin:38px 0 6px}
+.sec-note{font-size:13px;color:var(--muted);margin:0 0 12px;max-width:900px}
+.retract{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 16px 12px;overflow-x:auto}
+.retract table{min-width:720px}
+.retract s{color:#9ca3af}
+footer{margin-top:34px;border-top:1px solid var(--line);padding-top:14px;font-size:12px;color:var(--muted)}
+footer a{color:#1d4ed8;text-decoration:none}
+.evbar{margin-top:-6px}
+.evlabel{font-size:12px;color:var(--muted);margin-right:4px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:24px}.wrap{padding:22px 14px 50px}.shown{display:none}}
+@media print{body{background:#fff}.bar{display:none}.card{break-inside:avoid}details{display:block}details>summary{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>A 股研究结果总览</h1>
+  <p class="sub">24 个日期研究、trading_flash 的 4 个子项目、10 本书、3 套早期研究，压成 13 个主题。每个卡片只留原观点、关键数字和一个例子；详细证据在原文和底表。</p>
+</header>
+<div class="stats">
+  <div class="stat"><b>26</b><span>来源项目</span></div>
+  <div class="stat"><b>13</b><span>主题</span></div>
+  <div class="stat"><b>0</b><span>可实盘系统</span></div>
+  <div class="stat"><b>1</b><span>纸面候选</span></div>
+  <div class="stat"><b>3</b><span>仅风控结论</span></div>
+  <div class="stat"><b>22</b><span>撤回 / 口径警告</span></div>
+</div>
+<div class="bar">
+  <button class="filter active" data-filter="all">全部</button>
+  <button class="filter" data-filter="paper">纸面候选</button>
+  <button class="filter" data-filter="risk">仅风控</button>
+  <button class="filter" data-filter="research">仅研究</button>
+  <button class="filter" data-filter="unusable">不可用</button>
+  <button class="filter" data-filter="tool">工具</button>
+  <input id="q" type="search" placeholder="搜索主题、数字、结论">
+  <span class="shown" id="shown">13 / 13</span>
+</div>
+<div class="bar evbar">
+  <span class="evlabel">证据</span>
+  <button class="filter evfilter active" data-ev-filter="all">全部</button>
+  <button class="filter evfilter" data-ev-filter="A">A</button>
+  <button class="filter evfilter" data-ev-filter="B">B</button>
+  <button class="filter evfilter" data-ev-filter="C">C</button>
+  <button class="filter evfilter" data-ev-filter="D">D</button>
+</div>
+<main class="grid" id="grid">
+
+<article class="card" data-cat="research" data-ev="C" data-text="量能过滤只在 2018-2025 的低波活跃样本里好看 2018-2025 低波活跃 +54.49%，2010-2017 -62.74%；只有一格好看。 2018-2025 结合 / 不结合 +54.49% / -37.51% 2010-2017 结合 / 不结合 -62.74% / -56.12% 2010-2025 全区间 -74.91%，回撤 -86.30% tp20 样本内峰值 +190.75%，回撤 -25.20%">
+  <div class="tags"><span class="tag research">仅研究</span><span class="tag ev">证据 C</span></div>
+  <h2>量能过滤只在 2018-2025 的低波活跃样本里好看</h2>
+  <p class="summary">2018-2025 低波活跃 +54.49%，2010-2017 -62.74%；只有一格好看。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>2018-2025 结合 / 不结合</td><td class='num'>+54.49% / -37.51%</td></tr><tr><td>2010-2017 结合 / 不结合</td><td class='num'>-62.74% / -56.12%</td></tr><tr><td>2010-2025 全区间</td><td class='num'>-74.91%，回撤 -86.30%</td></tr><tr><td>TP20 样本内峰值</td><td class='num'>+190.75%，回撤 -25.20%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>成交量是趋势的油门；放量突破、量比排序应该让 4 仓系统更稳。</p>
+    <p class="small"><b>一个例子：</b>2018-2025 去掉任何一层都大幅变差；2010-2017 排序方向反了。</p>
+    <p class="small"><a href="成交量与量价.md" target="_blank">读全文 → 成交量与量价.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="research" data-ev="C" data-text="趋势突破：样本内 +84%，出了样本就没了 原版三法取二 + 低波活跃 243 笔 +84.18%；换到全 a 是 419 笔 +117.3%。 原版三法取二 + 低波活跃 243 笔，+84.18%，回撤 -37.19% 涨幅趋势 6 仓 419 笔，+117.3%，回撤 -13.9% 前 5 笔占净利 91.9% / 84% 上涨趋势中位寿命 22 日 / +1.0%">
+  <div class="tags"><span class="tag research">仅研究</span><span class="tag ev">证据 C</span></div>
+  <h2>趋势突破：样本内 +84%，出了样本就没了</h2>
+  <p class="summary">原版三法取二 + 低波活跃 243 笔 +84.18%；换到全 A 是 419 笔 +117.3%。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>原版三法取二 + 低波活跃</td><td class='num'>243 笔，+84.18%，回撤 -37.19%</td></tr><tr><td>涨幅趋势 6 仓</td><td class='num'>419 笔，+117.3%，回撤 -13.9%</td></tr><tr><td>前 5 笔占净利</td><td class='num'>91.9% / 84%</td></tr><tr><td>上涨趋势中位寿命</td><td class='num'>22 日 / +1.0%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>趋势突破加低波活跃过滤，应该能做出高收益系统。</p>
+    <p class="small"><b>一个例子：</b>2021 过滤 +43.47% vs 不分类 -31.34%；2023 过滤 -13.50%。</p>
+    <p class="small"><a href="趋势突破.md" target="_blank">读全文 → 趋势突破.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="research" data-ev="C" data-text="买点、仓位、持有天数：决定结果的是右尾，不是胜率 443 笔 +48.75%，胜率 34.3%；前 5 笔占净利 179.7%。 443 笔系统回测 +48.75%，回撤 -43.6%，胜率 34.3% 前 5 笔占净利 179.7% 2 万 2 仓 45% 150 笔，21.6%，回撤 -26.4% 20 日净收益 / 净胜率 +2.0% / 50.5%">
+  <div class="tags"><span class="tag research">仅研究</span><span class="tag ev">证据 C</span></div>
+  <h2>买点、仓位、持有天数：决定结果的是右尾，不是胜率</h2>
+  <p class="summary">443 笔 +48.75%，胜率 34.3%；前 5 笔占净利 179.7%。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>443 笔系统回测</td><td class='num'>+48.75%，回撤 -43.6%，胜率 34.3%</td></tr><tr><td>前 5 笔占净利</td><td class='num'>179.7%</td></tr><tr><td>2 万 2 仓 45%</td><td class='num'>150 笔，21.6%，回撤 -26.4%</td></tr><tr><td>20 日净收益 / 净胜率</td><td class='num'>+2.0% / 50.5%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>TB/PB 特征点、3% 单笔风险、4 个仓位，应该能把胜率做高。</p>
+    <p class="small"><b>一个例子：</b>150 笔前五笔贡献 83%；去掉后年化 8.3%，和等权 7.9% 差不多。</p>
+    <p class="small"><a href="买点与仓位.md" target="_blank">读全文 → 买点与仓位.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="research" data-ev="C" data-text="买卖时点与情绪：全信号好看，账户只有两个坑 40,279 笔全信号 +1.77%/笔；70/15 2 仓 30.3%，靠 688098 一笔。 全信号 1 万 40,279 笔，+1.77%/笔，胜率 50.3% 70/15 2 仓 30.3%，回撤 -19.6%，140 笔 2022 全信号 vs 2 仓 -2.03% vs +59.9% 当前阶段 宽度 11.82%，0 信号">
+  <div class="tags"><span class="tag research">仅研究</span><span class="tag ev">证据 C</span></div>
+  <h2>买卖时点与情绪：全信号好看，账户只有两个坑</h2>
+  <p class="summary">40,279 笔全信号 +1.77%/笔；70/15 2 仓 30.3%，靠 688098 一笔。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>全信号 1 万</td><td class='num'>40,279 笔，+1.77%/笔，胜率 50.3%</td></tr><tr><td>70/15 2 仓</td><td class='num'>30.3%，回撤 -19.6%，140 笔</td></tr><tr><td>2022 全信号 vs 2 仓</td><td class='num'>-2.03% vs +59.9%</td></tr><tr><td>当前阶段</td><td class='num'>宽度 11.82%，0 信号</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>买入月份、市场状态、情绪阶段应该能帮忙挑时点。</p>
+    <p class="small"><b>一个例子：</b>2022 年全信号 -2.03%，2 仓 +59.9%，差别是两只大牛股。</p>
+    <p class="small"><a href="时点与情绪.md" target="_blank">读全文 → 时点与情绪.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="risk" data-ev="B" data-text="跌停、龙虎榜、流动性：只有跌停评分还能当风控 跌停评分 0/3/4/5 = 0.069%/4.03%/9.19%/17.03%；龙虎榜 57.5% 是前视。 跌停评分 0/3/4/5 0.069% / 4.03% / 9.19% / 17.03% 热门行业非事件股 5 日 -0.37% / -0.31% 龙虎榜策略前视 → 实盘 +57.5% → -32.4%/-98.0% 流动性反转毛 → 净 +0.192% → -0.263%/笔">
+  <div class="tags"><span class="tag risk">仅风控</span><span class="tag ev">证据 B</span></div>
+  <h2>跌停、龙虎榜、流动性：只有跌停评分还能当风控</h2>
+  <p class="summary">跌停评分 0/3/4/5 = 0.069%/4.03%/9.19%/17.03%；龙虎榜 57.5% 是前视。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>跌停评分 0/3/4/5</td><td class='num'>0.069% / 4.03% / 9.19% / 17.03%</td></tr><tr><td>热门行业非事件股 5 日</td><td class='num'>-0.37% / -0.31%</td></tr><tr><td>龙虎榜策略前视 → 实盘</td><td class='num'>+57.5% → -32.4%/-98.0%</td></tr><tr><td>流动性反转毛 → 净</td><td class='num'>+0.192% → -0.263%/笔</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>跌停前有特征；龙虎榜对行业有扩散；流动性反转有补偿。</p>
+    <p class="small"><b>一个例子：</b>5 分也有 83% 不跌停；0 分也可能跌停。</p>
+    <p class="small"><a href="风险与资金流.md" target="_blank">读全文 → 风险与资金流.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="unusable" data-ev="C-D" data-text="结构交易与主板 40%：四成收益是杠杆和复权的错觉 40.59% 作废；实际价核心 8.93%，进攻 23.96%；40% 只在 1.9 倍下成立。 多周期结构 28 组 0 过；核心开发 -3.99%，验证 -5.59% 主板 40 初版 40.59% → 8.93% / 23.96% 40% 杠杆版 1.5 倍 35.67%；1.9 倍 42.02%，回撤 -51.59% 进攻版 2016-2026 24.53%/-36.32%；v2 21.15%/-26.75%">
+  <div class="tags"><span class="tag unusable">不可用</span><span class="tag ev">证据 C-D</span></div>
+  <h2>结构交易与主板 40%：四成收益是杠杆和复权的错觉</h2>
+  <p class="summary">40.59% 作废；实际价核心 8.93%，进攻 23.96%；40% 只在 1.9 倍下成立。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>多周期结构</td><td class='num'>28 组 0 过；核心开发 -3.99%，验证 -5.59%</td></tr><tr><td>主板 40 初版</td><td class='num'>40.59% → 8.93% / 23.96%</td></tr><tr><td>40% 杠杆版</td><td class='num'>1.5 倍 35.67%；1.9 倍 42.02%，回撤 -51.59%</td></tr><tr><td>进攻版 2016-2026</td><td class='num'>24.53%/-36.32%；V2 21.15%/-26.75%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>先分周期再谈结构；第二波驱动段就是进场点。</p>
+    <p class="small"><b>一个例子：</b>2026-02-25 后复权过滤买 605268/001322；实际价过滤买 603041/002014，结果 -2.0%/-3.8%，错过 +44.2%。</p>
+    <p class="small"><a href="结构交易.md" target="_blank">读全文 → 结构交易.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="unusable" data-ev="B" data-text="趋势适配：找不到适合趋势的股票，20 日尺度是均值回复 2,449 个条件格里，等权 95% 下界 &gt;0 的格数是 0；vr_20 中位 0.79。 条件子集 2,449 格 等权 95% 下界 &gt;0 的格数 = 0 20 日方差比中位 0.7919 母项目 733 配置 0 候选；最高 min 8.32% 唯一候选 55 日新低 +0.474%~+0.839%，下界跨 0">
+  <div class="tags"><span class="tag unusable">不可用</span><span class="tag ev">证据 B</span></div>
+  <h2>趋势适配：找不到适合趋势的股票，20 日尺度是均值回复</h2>
+  <p class="summary">2,449 个条件格里，等权 95% 下界 &gt;0 的格数是 0；VR_20 中位 0.79。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>条件子集 2,449 格</td><td class='num'>等权 95% 下界 &gt;0 的格数 = 0</td></tr><tr><td>20 日方差比中位</td><td class='num'>0.7919</td></tr><tr><td>母项目 733 配置</td><td class='num'>0 候选；最高 min 8.32%</td></tr><tr><td>唯一候选 55 日新低</td><td class='num'>+0.474%~+0.839%，下界跨 0</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>找到适合的子集或市场状态，就能把趋势框架救回来。</p>
+    <p class="small"><b>一个例子：</b>去前 1% 收益后 -0.05%~+0.23%，去前 5% 变成 -1.09%~-1.36%。</p>
+    <p class="small"><a href="趋势适配.md" target="_blank">读全文 → 趋势适配.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="research" data-ev="C" data-text="主板小账户：f2 14.96%，万元账户没有可交付系统 f2 14.96%/-21.14%，127 仓；万元低换手 8/12 中位正，仅 2/12 两段正。 主板 f2 14.96%/-21.14%，127 仓，pf 1.95 非 st 基线 12.33%/-26.84% 万元低换手估值 8/12 中位正，仅 2/12 两段正 万元 3/5/8 槽 2.13%-3.33% vs 沪深300 +5.24%">
+  <div class="tags"><span class="tag research">仅研究</span><span class="tag ev">证据 C</span></div>
+  <h2>主板小账户：F2 14.96%，万元账户没有可交付系统</h2>
+  <p class="summary">F2 14.96%/-21.14%，127 仓；万元低换手 8/12 中位正，仅 2/12 两段正。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>主板 F2</td><td class='num'>14.96%/-21.14%，127 仓，PF 1.95</td></tr><tr><td>非 ST 基线</td><td class='num'>12.33%/-26.84%</td></tr><tr><td>万元低换手估值</td><td class='num'>8/12 中位正，仅 2/12 两段正</td></tr><tr><td>万元 3/5/8 槽</td><td class='num'>2.13%-3.33% vs 沪深300 +5.24%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>2 万主板 F2 能做出 12%-16%；1 万低估值低换手能跑赢指数。</p>
+    <p class="small"><b>一个例子：</b>F2 2025 +45.33%，2026 至 10 月 +5.21%；不是每年 15%。</p>
+    <p class="small"><a href="主板与小账户.md" target="_blank">读全文 → 主板与小账户.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="unusable" data-ev="B" data-text="看长做短、裸 k、盘感：图上方法没有可复现的 edge v2 20 日超额 -0.384%，t=-7.63；裸 k 72 组 0 通过。 看长做短 v2 20 日超额 -0.384%，t=-7.63 组合 ma20 退出 -10.72%/-92.58%；固定 20 日 -1.92% 加指数闸门 +6.04%/-67.30% vs 等权 +13.27%/-62.73% 裸 k 72 组 0 通过；oos 最优 +1.06%">
+  <div class="tags"><span class="tag unusable">不可用</span><span class="tag ev">证据 B</span></div>
+  <h2>看长做短、裸 K、盘感：图上方法没有可复现的 edge</h2>
+  <p class="summary">V2 20 日超额 -0.384%，t=-7.63；裸 K 72 组 0 通过。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>看长做短 V2</td><td class='num'>20 日超额 -0.384%，t=-7.63</td></tr><tr><td>组合</td><td class='num'>MA20 退出 -10.72%/-92.58%；固定 20 日 -1.92%</td></tr><tr><td>加指数闸门</td><td class='num'>+6.04%/-67.30% vs 等权 +13.27%/-62.73%</td></tr><tr><td>裸 K 72 组</td><td class='num'>0 通过；OOS 最优 +1.06%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>图上的月周日、裸 K、盘感可以机械化。</p>
+    <p class="small"><b>一个例子：</b>V2 平均只持有 8.3 天，胜率 23.5%；破 MA20 把正常回踩当破位。</p>
+    <p class="small"><a href="图上方法.md" target="_blank">读全文 → 图上方法.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="risk" data-ev="B" data-text="macd：个股金叉是抛硬币，指数上只能降回撤 53.2 万个金叉，20 日分位 49.79%，扣费 -5.7%/年；指数只降回撤。 个股日线金叉 53.2 万个，分位 49.79%，扣费 -5.7%/年 354 组参数 49.77%-50.25% 教科书强确认 零轴双上 47.96%，周线多头 48.30% 指数 中证500 14.0% vs 10.7%，回撤 -38% vs -72%">
+  <div class="tags"><span class="tag risk">指数仅风控</span><span class="tag ev">证据 B</span></div>
+  <h2>MACD：个股金叉是抛硬币，指数上只能降回撤</h2>
+  <p class="summary">53.2 万个金叉，20 日分位 49.79%，扣费 -5.7%/年；指数只降回撤。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>个股日线金叉</td><td class='num'>53.2 万个，分位 49.79%，扣费 -5.7%/年</td></tr><tr><td>354 组参数</td><td class='num'>49.77%-50.25%</td></tr><tr><td>教科书强确认</td><td class='num'>零轴双上 47.96%，周线多头 48.30%</td></tr><tr><td>指数</td><td class='num'>中证500 14.0% vs 10.7%，回撤 -38% vs -72%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>MACD 金叉可以选股；加零轴上、周线多头、放量会更稳。</p>
+    <p class="small"><b>一个例子：</b>同日 MACD+KDJ 双金叉 -1.25%，0/17 年正。</p>
+    <p class="small"><a href="指标有效性.md" target="_blank">读全文 → 指标有效性.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="unusable" data-ev="C-D" data-text="书里的系统：十本书，八套回测，没有一套过 holm 25 条曲线 pbo 55%-80%，dsr 0.378；阶梯双 k +18.3% → -6.4%~-2.1%。 八系统时点回测 25 条曲线，pbo 55%-80%，dsr 0.378 阶梯双 k +18.3% → -6.4%~-2.1% 波段为王 2 +17.13% → +6.28% 书籍与笔记 10 本 / 14 个目录">
+  <div class="tags"><span class="tag unusable">不可用</span><span class="tag ev">证据 C-D</span></div>
+  <h2>书里的系统：十本书，八套回测，没有一套过 Holm</h2>
+  <p class="summary">25 条曲线 PBO 55%-80%，DSR 0.378；阶梯双 K +18.3% → -6.4%~-2.1%。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>八系统时点回测</td><td class='num'>25 条曲线，PBO 55%-80%，DSR 0.378</td></tr><tr><td>阶梯双 K</td><td class='num'>+18.3% → -6.4%~-2.1%</td></tr><tr><td>波段为王 2</td><td class='num'>+17.13% → +6.28%</td></tr><tr><td>书籍与笔记</td><td class='num'>10 本 / 14 个目录</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>把十本书各自整理成系统，用中证 500 时点成分回测。</p>
+    <p class="small"><b>一个例子：</b>阶梯双 K 1 万账户从 +18.3%/-71.7% 修到 -6.4%~-2.1%/-61.8%~-68.4%。</p>
+    <p class="small"><a href="书里的系统.md" target="_blank">读全文 → 书里的系统.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="paper" data-ev="B / C-D" data-text="早期系统与月度轮动：一个纸面候选，三个失败样本 恐慌反转 40% 含退市后 29.8%，真 oos 4.9%；月度轮动 oos 16.3%。 恐慌反转 2017-2026 40.0%/-16.0% → 含退市 29.8%/-54.3% 2005-2016 真 oos 4.9%/-71.5% hithink 留出 -8.4%/-11.5% 月度轮动 训练 6.2%；oos 16.3%/-32.6%">
+  <div class="tags"><span class="tag paper">1 个纸面候选</span><span class="tag ev">证据 B / C-D</span></div>
+  <h2>早期系统与月度轮动：一个纸面候选，三个失败样本</h2>
+  <p class="summary">恐慌反转 40% 含退市后 29.8%，真 OOS 4.9%；月度轮动 OOS 16.3%。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>恐慌反转 2017-2026</td><td class='num'>40.0%/-16.0% → 含退市 29.8%/-54.3%</td></tr><tr><td>2005-2016 真 OOS</td><td class='num'>4.9%/-71.5%</td></tr><tr><td>hithink 留出</td><td class='num'>-8.4%/-11.5%</td></tr><tr><td>月度轮动</td><td class='num'>训练 6.2%；OOS 16.3%/-32.6%</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>早期三套应该能找到 30%+；月度轮动应该能做一个分散系统。</p>
+    <p class="small"><b>一个例子：</b>002684 一笔 -82.9%，把 2022 年从 +50% 翻到 -35.8%。</p>
+    <p class="small"><a href="早期系统与月度轮动.md" target="_blank">读全文 → 早期系统与月度轮动.md</a></p>
+  </details>
+</article>
+<article class="card" data-cat="tool" data-ev="D" data-text="数据和代码：能用什么，缺什么，别再踩哪些坑 duckdb 5,580 只，2016-10-13 到 2026-10-28；无指数日线，市值缺失 79.46%。 duckdb 5,580 只，2016-10-13 到 2026-10-28 缺口 无指数日线；市值缺失 79.46%；退市 102 只 本地数据盘点 0 文件 quantsplaybook 58 项目/2,183 文件/83 pdf">
+  <div class="tags"><span class="tag tool">工具</span><span class="tag ev">证据 D</span></div>
+  <h2>数据和代码：能用什么，缺什么，别再踩哪些坑</h2>
+  <p class="summary">DuckDB 5,580 只，2016-10-13 到 2026-10-28；无指数日线，市值缺失 79.46%。</p>
+  <details>
+    <summary>关键数字、原观点、一个例子</summary>
+    <table><thead><tr><th>项目</th><th>数字</th></tr></thead><tbody><tr><td>DuckDB</td><td class='num'>5,580 只，2016-10-13 到 2026-10-28</td></tr><tr><td>缺口</td><td class='num'>无指数日线；市值缺失 79.46%；退市 102 只</td></tr><tr><td>本地数据盘点</td><td class='num'>0 文件</td></tr><tr><td>QuantsPlaybook</td><td class='num'>58 项目/2,183 文件/83 PDF</td></tr></tbody></table>
+    <p class="small"><b>原观点：</b>本地数据够不够做全 A、指数、行业、财务 PIT？</p>
+    <p class="small"><b>一个例子：</b>2016 年后用 DuckDB，2016 年前和退市股用 baostock；不复权 OHLC 最大绝对差 0。</p>
+    <p class="small"><a href="数据与复现.md" target="_blank">读全文 → 数据与复现.md</a></p>
+  </details>
+</article>
+</main>
+<h2 class="sec">撤回与口径警告</h2>
+<p class="sec-note">旧数字只用于对照。正文只保留当前版本；完整 22 条在 <a href="撤回清单.csv">撤回清单.csv</a>。</p>
+<div class="retract">
+<table><thead><tr><th>旧数字</th><th>旧结论</th><th>现行数字</th><th>撤回原因</th></tr></thead><tbody><tr><td class='num'><s>12.48%</s></td><td>MACD 金叉年化</td><td class='num'>-3.35%~+6.78%</td><td>2026 终点选池 + b3 同日高</td></tr><tr><td class='num'><s>40.59%</s></td><td>主板 40% 初版</td><td class='num'>8.93% / 23.96%</td><td>市值缺失 79.46%，哨兵 9 排最前</td></tr><tr><td class='num'><s>41.94%</s></td><td>主板 40% 后复权过滤</td><td class='num'>35.67% / 42.02%</td><td>后复权价做 2-15 元过滤，排除 512 只</td></tr><tr><td class='num'><s>17.71%</s></td><td>主板 70/15</td><td class='num'>12.33% / -26.84%</td><td>30 笔 ST 样态，贡献 33% 利润</td></tr><tr><td class='num'><s>25.27%</s></td><td>F2 初版</td><td class='num'>14.96% / -21.14%</td><td>市值只覆盖 21% 候选</td></tr><tr><td class='num'><s>57.5%</s></td><td>龙虎榜策略</td><td class='num'>-32.4% / -98.0%</td><td>前视：剔除 T+1 跌停的 5.24%</td></tr><tr><td class='num'><s>42.6%</s></td><td>恐慌反转</td><td class='num'>29.8% / 4.9%</td><td>送转/成本 bug；补退市后 29.8%，真 OOS 4.9%</td></tr><tr><td class='num'><s>18.3%</s></td><td>阶梯双 K</td><td class='num'>-6.4%~-2.1%</td><td>成交量时点错位 + 单一路径 + 未扣全费</td></tr><tr><td class='num'><s>-9.2%</s></td><td>上涨趋势回撤</td><td class='num'>-13.9% / -14.2%</td><td>旧口径含前视/停牌乐观</td></tr><tr><td class='num'><s>25.8%</s></td><td>2 万进攻版</td><td class='num'>21.6% / 17.3%-18.5%</td><td>前 5 笔 84%；DSR 0.415</td></tr><tr><td class='num'><s>60%</s></td><td>趋势结构年化</td><td class='num'>0 候选</td><td>733 配置 0 过；DSR 6.63e-4</td></tr><tr><td class='num'><s>21.6%</s></td><td>45% 仓位每年</td><td class='num'>17.3%-18.5%</td><td>全期连续，不是新账户预期</td></tr><tr><td class='num'><s>36.70%/37.03%</s></td><td>hithink flash 审计</td><td class='num'>不是新 OOS</td><td>幸存者偏差仍在</td></tr><tr><td class='num'><s>40% 稳定</s></td><td>主板 40%</td><td class='num'>8.93% / 23.96%</td><td>只有 1.9 倍杠杆 + 单票 50% 总资产才过 40%</td></tr></tbody></table>
+</div>
+<footer>
+  <p>数据截至 2026-10-22 的“当前阶段”只作历史快照，之后未更新，不是交易指令。所有收益数字都是历史回测，含成本口径见各篇；不代表未来。</p>
+  <p>底表：<a href="来源映射.csv">来源映射.csv</a> · <a href="数字台账.csv">数字台账.csv</a> · <a href="撤回清单.csv">撤回清单.csv</a> · <a href="已否定.md">已否定.md</a> · <a href="总览.md">总览.md</a></p>
+</footer>
+</div>
+<script>
+(function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('button[data-filter]'));
+  var evButtons = Array.prototype.slice.call(document.querySelectorAll('button[data-ev-filter]'));
+  var q = document.getElementById('q');
+  var shown = document.getElementById('shown');
+  var active = 'all';
+  var evActive = 'all';
+  function apply(){
+    var text = (q.value || '').trim().toLowerCase();
+    var n = 0;
+    cards.forEach(function(c){
+      var okCat = active === 'all' || c.getAttribute('data-cat') === active;
+      var okEv = evActive === 'all' || (c.getAttribute('data-ev') || '').indexOf(evActive) !== -1;
+      var okText = !text || (c.getAttribute('data-text') || '').indexOf(text) !== -1;
+      var ok = okCat && okEv && okText;
+      c.style.display = ok ? '' : 'none';
+      if(ok) n++;
+    });
+    shown.textContent = n + ' / ' + cards.length;
+  }
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      buttons.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      active = b.getAttribute('data-filter');
+      apply();
+    });
+  });
+  evButtons.forEach(function(b){
+    b.addEventListener('click', function(){
+      evButtons.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      evActive = b.getAttribute('data-ev-filter');
+      apply();
+    });
+  });
+  q.addEventListener('input', apply);
+  apply();
+})();
+</script>
+</body>
+</html>
