@@ -1,0 +1,17 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+ 周期    特征 分位   样本数     均值绝对      中位绝对     胜率绝对       P10      P90      均值超额      中位超额
+  3  柱体水平 Q1 15243 0.001266 -0.031136 0.437709 -0.244077 0.276370 -0.026643 -0.051802
+  3  柱体水平 Q5 15110 0.020253 -0.012897 0.462078 -0.190830 0.262935 -0.007764 -0.033215
+  3 DIF水平 Q1 15243 0.010941 -0.024116 0.444007 -0.226103 0.283999 -0.016965 -0.041891
+  3 DIF水平 Q5 15110 0.000970 -0.028646 0.434017 -0.227549 0.251582 -0.027053 -0.050787
+ 12  柱体水平 Q1 14223 0.008741 -0.078116 0.411235 -0.434099 0.509258 -0.110228 -0.164989
+ 12  柱体水平 Q5 14101 0.104578  0.012978 0.517907 -0.325764 0.612466 -0.014055 -0.078873
+ 12 DIF水平 Q1 14223 0.062250 -0.021774 0.475357 -0.391892 0.588302 -0.056703 -0.110161
+ 12 DIF水平 Q5 14101 0.026355 -0.064367 0.423445 -0.405286 0.542187 -0.092303 -0.158604

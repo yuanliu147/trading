@@ -1,0 +1,19 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+柱体方向 {'交易日数': 4403, '方向差': np.float64(-0.0011979251238778512), '方向t': np.float64(-2.3784817844219663), '方向差_2010_2017': np.float64(-0.0016452471113431759), '方向差_2018_2026': np.float64(-0.0007148934453961634), '差大于0年份': 5, '年份数': 19, '检验': '柱体方向'}
+绿柱缩短 {'交易日数': 3581, '方向差': np.float64(0.0006147405340490038), '方向t': np.float64(1.0105608922173213), '方向差_2010_2017': np.float64(-8.405662682353514e-06), '方向差_2018_2026': np.float64(0.0011067800097289363), '差大于0年份': 9, '年份数': 19, '检验': '绿柱缩短'}
+红柱放大 {'交易日数': 4099, '方向差': np.float64(-0.003008597986055038), '方向t': np.float64(-5.4482056120403), '方向差_2010_2017': np.float64(-0.002734000868088636), '方向差_2018_2026': np.float64(-0.003274103356833493), '差大于0年份': 3, '年份数': 19, '检验': '红柱放大'}
+DIF>DEA {'交易日数': 4382, '方向差': np.float64(-1.9253663425900374e-05), '方向t': np.float64(-0.021224063097210567), '方向差_2010_2017': np.float64(0.0001108505907674421), '方向差_2018_2026': np.float64(-0.0001588357109710758), '差大于0年份': 9, '年份数': 19, '检验': 'DIF>DEA'}
+柱体上穿0 {'交易日数': 3544, '方向差': np.float64(-0.0013990540804948706), '方向t': np.float64(-2.377376973079425), '方向差_2010_2017': np.float64(-0.0009901405398689285), '方向差_2018_2026': np.float64(-0.001731793348455591), '差大于0年份': 5, '年份数': 19, '检验': '柱体上穿0'}
+ 交易日数       方向差       方向t  方向差_2010_2017  方向差_2018_2026  差大于0年份  年份数      检验
+ 4403 -0.001198 -2.378482      -0.001645      -0.000715       5   19    柱体方向
+ 3581  0.000615  1.010561      -0.000008       0.001107       9   19    绿柱缩短
+ 4099 -0.003009 -5.448206      -0.002734      -0.003274       3   19    红柱放大
+ 4382 -0.000019 -0.021224       0.000111      -0.000159       9   19 DIF>DEA
+ 3544 -0.001399 -2.377377      -0.000990      -0.001732       5   19   柱体上穿0

@@ -1,0 +1,7 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/40_最终数字.py:172: RuntimeWarning: Mean of empty slice
+  mkt = np.nan_to_num(np.nanmean(np.where(z["universe"], r, np.nan), axis=1))
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/40_最终数字.py:269: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  d["评分"] = np.sum(X, axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/40_最终数字.py:270: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  d["评分分位"] = rankq(d["评分"])
+done

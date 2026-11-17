@@ -1,0 +1,72 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:127: RuntimeWarning: All-NaN slice encountered
+  high[p] = np.nanmax(vh[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:128: RuntimeWarning: All-NaN slice encountered
+  low[p] = np.nanmin(vl[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/52_周期.py:36: RuntimeWarning: Mean of empty slice
+  late=float(np.nanmean(dm[ok & (np.arange(len(dm)) >= len(dm) * 0.55)])))
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:127: RuntimeWarning: All-NaN slice encountered
+  high[p] = np.nanmax(vh[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:128: RuntimeWarning: All-NaN slice encountered
+  low[p] = np.nanmin(vl[a:b], axis=0)
+A done
+   维度       方向   状态               类别         n   days      mean         t     early      late         A         B        差值    共同日
+周线KDJ    MACD多    多     MACD多+周线KDJ多 4215820.0 4383.0 -0.006768 -6.351828 -0.006568 -0.006998       NaN       NaN       NaN    NaN
+周线KDJ    MACD空    多     MACD空+周线KDJ多 2376303.0 4221.0 -0.003639 -3.747025 -0.004181 -0.003047       NaN       NaN       NaN    NaN
+周线KDJ    MACD多    空     MACD多+周线KDJ空 2780179.0 4199.0 -0.002635 -3.396635 -0.003240 -0.001984       NaN       NaN       NaN    NaN
+周线KDJ    MACD空    空     MACD空+周线KDJ空 4087079.0 4226.0 -0.003009 -3.341000 -0.004676 -0.001198       NaN       NaN       NaN    NaN
+周线KDJ      DiD 多vs空              NaN       NaN    NaN       NaN -3.733093       NaN       NaN -0.003512 -0.000808 -0.002704 3891.0
+月线KDJ    MACD多    多     MACD多+月线KDJ多 2892220.0 4201.0 -0.004693 -3.405210 -0.003880 -0.005557       NaN       NaN       NaN    NaN
+月线KDJ    MACD空    多     MACD空+月线KDJ多 3569358.0 4214.0 -0.002151 -2.165977 -0.003027 -0.001211       NaN       NaN       NaN    NaN
+月线KDJ    MACD多    空     MACD多+月线KDJ空 4103779.0 4223.0 -0.005285 -6.412613 -0.006401 -0.004071       NaN       NaN       NaN    NaN
+月线KDJ    MACD空    空     MACD空+月线KDJ空 2894024.0 4095.0 -0.002975 -3.026905 -0.004641 -0.001243       NaN       NaN       NaN    NaN
+月线KDJ      DiD 多vs空              NaN       NaN    NaN       NaN -1.290078       NaN       NaN -0.000028  0.001032 -0.001060 3776.0
+周线KDJ   MACD金叉    多    MACD金叉+周线KDJ多  163100.0 1734.0 -0.003880 -3.064842 -0.002294 -0.004789       NaN       NaN       NaN    NaN
+周线KDJ   MACD金叉    空    MACD金叉+周线KDJ空  360936.0 2693.0 -0.001439 -2.006393 -0.000950 -0.001782       NaN       NaN       NaN    NaN
+周线KDJ MACD金叉增量  多-空              NaN       NaN    NaN       NaN -0.711329       NaN       NaN -0.002289 -0.001022 -0.001267 1289.0
+周线KDJ   MACD金叉 K>80 MACD金叉+周线KDJK>80   17954.0   74.0  0.003895  0.800290 -0.000261  0.010722       NaN       NaN       NaN    NaN
+周线KDJ MACD金叉增量 K>80              NaN       NaN    NaN       NaN  2.927616       NaN       NaN  0.003126 -0.005426  0.008553   70.0
+周线KDJ   MACD金叉 K<20 MACD金叉+周线KDJK<20  124960.0 1089.0  0.003224  1.542427  0.005455  0.002140       NaN       NaN       NaN    NaN
+周线KDJ MACD金叉增量 K<20              NaN       NaN    NaN       NaN  2.051584       NaN       NaN  0.003016 -0.003893  0.006909 1032.0
+月线KDJ   MACD金叉    多    MACD金叉+月线KDJ多  245563.0 2508.0 -0.002456 -2.344680 -0.000883 -0.003480       NaN       NaN       NaN    NaN
+月线KDJ   MACD金叉    空    MACD金叉+月线KDJ空  278473.0 2323.0 -0.001812 -2.022800 -0.000787 -0.002441       NaN       NaN       NaN    NaN
+月线KDJ MACD金叉增量  多-空              NaN       NaN    NaN       NaN -0.234587       NaN       NaN -0.001401 -0.001008 -0.000393 1707.0
+月线KDJ   MACD金叉 K>80 MACD金叉+月线KDJK>80   14323.0   44.0 -0.005457 -0.630621 -0.005457       NaN       NaN       NaN       NaN    NaN
+月线KDJ MACD金叉增量 K>80              NaN       NaN    NaN       NaN -1.624494       NaN       NaN -0.006117  0.002585 -0.008702   42.0
+月线KDJ   MACD金叉 K<20 MACD金叉+月线KDJK<20   99967.0  962.0  0.001714  1.034565  0.000137  0.002584       NaN       NaN       NaN    NaN
+月线KDJ MACD金叉增量 K<20              NaN       NaN    NaN       NaN  0.836894       NaN       NaN  0.001758  0.000002  0.001756  889.0
+周线 done 17.510497093200684
+月线 done 17.797701835632324
+周期     维度    方向      状态             类别        n  days      mean         t     early      late         A         B        差值   共同日
+周线     状态 MACD多    KDJ多     MACD多+KDJ多 951644.0 944.0 -0.005174 -4.052511 -0.004788 -0.005636       NaN       NaN       NaN   NaN
+周线     状态 MACD空    KDJ多     MACD空+KDJ多 527354.0 877.0 -0.000199 -0.182239  0.000714 -0.001220       NaN       NaN       NaN   NaN
+周线     状态 MACD多    KDJ空     MACD多+KDJ空 606944.0 923.0 -0.004076 -3.241541 -0.004553 -0.003527       NaN       NaN       NaN   NaN
+周线     状态 MACD空    KDJ空     MACD空+KDJ空 980141.0 913.0 -0.002087 -2.154940 -0.003248 -0.000730       NaN       NaN       NaN   NaN
+周线     状态   DiD    多vs空            NaN      NaN   NaN       NaN -1.626524       NaN       NaN  0.000492  0.002250 -0.001758 825.0
+周线 MACD金叉    过滤    KDJ多    MACD金叉+KDJ多 105331.0 652.0 -0.003735 -2.876874 -0.002145 -0.004844       NaN       NaN       NaN   NaN
+周线 MACD金叉    过滤    KDJ空    MACD金叉+KDJ空   9650.0  77.0  0.001862  0.769541  0.008812  0.000704       NaN       NaN       NaN   NaN
+周线 MACD金叉    过滤 同日KDJ金叉 MACD金叉+同日KDJ金叉  20279.0 218.0  0.001657  0.671516  0.005792  0.000552       NaN       NaN       NaN   NaN
+周线 MACD金叉    增量  KDJ多-空            NaN      NaN   NaN       NaN -0.410856       NaN       NaN  0.000380  0.001476 -0.001096  72.0
+周线  KDJ金叉    过滤   MACD多    KDJ金叉+MACD多 103187.0 725.0 -0.004758 -3.442346 -0.000935 -0.007933       NaN       NaN       NaN   NaN
+周线  KDJ金叉    过滤   MACD空    KDJ金叉+MACD空 147887.0 680.0 -0.000531 -0.460860  0.000013 -0.000974       NaN       NaN       NaN   NaN
+周线  KDJ金叉    增量 MACD多-空            NaN      NaN   NaN       NaN -2.593850       NaN       NaN -0.004651  0.000522 -0.005173 579.0
+月线     状态 MACD多    KDJ多     MACD多+KDJ多 222588.0 209.0 -0.001102 -0.309970  0.000296 -0.002684       NaN       NaN       NaN   NaN
+月线     状态 MACD空    KDJ多     MACD空+KDJ多 110065.0 195.0 -0.009911 -3.219138 -0.010284 -0.009542       NaN       NaN       NaN   NaN
+月线     状态 MACD多    KDJ空     MACD多+KDJ空 151037.0 210.0 -0.002447 -0.749764 -0.002878 -0.001956       NaN       NaN       NaN   NaN
+月线     状态 MACD空    KDJ空     MACD空+KDJ空 220649.0 214.0 -0.011398 -3.236220 -0.010425 -0.012549       NaN       NaN       NaN   NaN
+月线     状态   DiD    多vs空            NaN      NaN   NaN       NaN  0.226058       NaN       NaN  0.002829  0.002119  0.000710 187.0
+月线 MACD金叉    过滤    KDJ多    MACD金叉+KDJ多  16717.0 142.0 -0.002581 -0.556672  0.000247 -0.004317       NaN       NaN       NaN   NaN
+月线 MACD金叉    过滤    KDJ空    MACD金叉+KDJ空   1946.0  14.0       NaN       NaN       NaN       NaN       NaN       NaN       NaN   NaN
+月线 MACD金叉    过滤 同日KDJ金叉 MACD金叉+同日KDJ金叉   4154.0  48.0 -0.010616 -1.179084 -0.022888 -0.006967       NaN       NaN       NaN   NaN
+月线 MACD金叉    增量  KDJ多-空            NaN      NaN   NaN       NaN       NaN       NaN       NaN       NaN       NaN       NaN  13.0
+月线  KDJ金叉    过滤   MACD多    KDJ金叉+MACD多  27768.0 145.0 -0.004149 -0.826232  0.008297 -0.013187       NaN       NaN       NaN   NaN
+月线  KDJ金叉    过滤   MACD空    KDJ金叉+MACD空  31506.0 152.0 -0.012423 -3.713101 -0.011180 -0.013377       NaN       NaN       NaN   NaN
+月线  KDJ金叉    增量 MACD多-空            NaN      NaN   NaN       NaN  1.038133       NaN       NaN -0.005484 -0.011782  0.006299 115.0
+done 17.80286478996277

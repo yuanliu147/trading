@@ -1,0 +1,45 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+panel (4572, 5507)
+kdj done 19.222756147384644
+
+===== horizon 5 =====
+overlap: MACD bull share 0.519, KDJ bull share 0.493, both 0.324, agree 1.485
+MACD多+KDJ多: n=  4407753 mean=-0.323% t=-10.12 early=-0.411% late=-0.231%
+MACD多+KDJ空: n=  2657615 mean=+0.035% t=+1.20 early=+0.156% late=-0.083%
+MACD空+KDJ多: n=  2299783 mean=-0.137% t=-4.46 early=-0.219% late=-0.064%
+MACD空+KDJ空: n=  4252284 mean=-0.082% t=-2.71 early=-0.051% late=-0.112%
+
+===== horizon 20 =====
+overlap: MACD bull share 0.520, KDJ bull share 0.493, both 0.324, agree 1.506
+MACD多+KDJ多: n=  4364696 mean=-0.682% t=-9.25 early=-0.703% late=-0.659%
+MACD多+KDJ空: n=  2631303 mean=-0.415% t=-5.42 early=-0.362% late=-0.466%
+MACD空+KDJ多: n=  2271090 mean=-0.198% t=-2.84 early=-0.291% late=-0.112%
+MACD空+KDJ空: n=  4192292 mean=-0.316% t=-4.23 early=-0.408% late=-0.224%
+
+===== horizon 60 =====
+overlap: MACD bull share 0.518, KDJ bull share 0.493, both 0.323, agree 1.550
+MACD多+KDJ多: n=  4251938 mean=-1.068% t=-8.85 early=-1.150% late=-0.980%
+MACD多+KDJ空: n=  2561058 mean=-0.725% t=-5.74 early=-0.635% late=-0.815%
+MACD空+KDJ多: n=  2229349 mean=-0.416% t=-3.44 early=-0.614% late=-0.232%
+MACD空+KDJ空: n=  4110206 mean=-0.420% t=-3.44 early=-0.629% late=-0.208%
+
+KDJ crosses total: 1242960 1241261
+MACD crosses total: 8041954
+MACD gold & KDJ gold same day: 105814
+KDJ gold & MACD bull same day: 523179
+MACD金叉全部           n= 524036 mean=-0.216% t=-3.90 early=-0.059% late=-0.319%
+MACD金叉+KDJ多        n= 484006 mean=-0.196% t=-3.37 early=-0.027% late=-0.305%
+MACD金叉+KDJ空        n=  40030 mean=+0.583% t=+2.99 early=+0.485% late=+0.620%
+同日双金叉              n= 100026 mean=+0.191% t=+1.30 early=+0.562% late=+0.073%
+KDJ金叉全部            n=1174238 mean=-0.452% t=-10.04 early=-0.452% late=-0.452%
+KDJ金叉+MACD多        n= 495032 mean=-0.574% t=-7.00 early=-0.528% late=-0.604%
+KDJ金叉+MACD空        n= 679206 mean=-0.094% t=-1.47 early=-0.047% late=-0.127%
+KDJ金叉+MACD双上       n= 461356 mean=-0.571% t=-4.28 early=-0.508% late=-0.617%
+done 20.58248805999756

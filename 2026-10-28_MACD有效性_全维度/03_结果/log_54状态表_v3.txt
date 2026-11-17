@@ -1,0 +1,80 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:127: RuntimeWarning: All-NaN slice encountered
+  high[p] = np.nanmax(vh[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:128: RuntimeWarning: All-NaN slice encountered
+  low[p] = np.nanmin(vl[a:b], axis=0)
+四态
+ KDJ  MACD     股票日  交易日      日均超额        中位        t值     正日占比        前期        后期  年数  正年数  有效年数  有效正年数       判定
+KDJ多 MACD多 4190044 4014 -0.006497 -0.015522 -8.638292 0.410563 -0.006392 -0.006592  17    1    17      1     稳健反向
+KDJ多 MACD空 2192381 3708 -0.001832 -0.012867 -2.532460 0.475728 -0.002730 -0.001121  17    7    17      7 均值反向(不稳)
+KDJ空 MACD多 2534948 3847 -0.004220 -0.015066 -5.206168 0.437224 -0.003692 -0.004664  17    3    17      3     稳健反向
+KDJ空 MACD空 4052470 3905 -0.003089 -0.013441 -3.954960 0.477849 -0.004070 -0.002243  17    4    17      4     稳健反向
+DiD K>D: -0.0017644401108004065 -3.4770531806730856 3450
+KDJ方向    K>D          多-0.650 空-0.183 KDJ多增-0.181 t-2.9 空增+0.089 t+1.2 DiD-0.176 t-3.5
+KDJ方向    K<=D         多-0.422 空-0.309 KDJ多增+0.181 t+2.9 空增-0.089 t-1.2 DiD+0.176 t+3.5
+KDJ水平    K>80         多-0.460 空+nan KDJ多增-0.296 t-1.8 空增+nan t+nan DiD+nan t+nan
+KDJ水平    K<20         多+1.528 空-0.223 KDJ多增+1.913 t+3.3 空增-0.159 t-1.3 DiD+1.182 t+5.0
+KDJ水平    K>70         多-0.645 空+0.185 KDJ多增-0.335 t-2.7 空增+0.441 t+1.5 DiD-0.697 t-2.3
+KDJ水平    K<30         多+0.097 空-0.289 KDJ多增+0.340 t+1.3 空增-0.137 t-1.2 DiD+0.192 t+1.6
+KDJ水平    K 50-70      多-0.459 空-0.109 KDJ多增-0.111 t-2.3 空增+0.056 t+0.4 DiD-0.083 t-0.5
+KDJ水平    K 30-50      多-0.270 空-0.227 KDJ多增+0.036 t+0.3 空增-0.072 t-1.0 DiD+0.037 t+0.2
+J极值      J>100        多-0.522 空+nan KDJ多增-0.300 t-2.8 空增+0.159 t+0.6 DiD+0.064 t+0.2
+J极值      J<0          多+0.366 空-0.300 KDJ多增+0.531 t+2.1 空增-0.289 t-3.7 DiD+0.335 t+1.8
+K五分位     KQ1          多-0.298 空-0.250 KDJ多增-0.403 t-2.5 空增-0.185 t-1.8 DiD+0.136 t+1.2
+K-D差分位   GQ1          多-0.354 空-0.327 KDJ多增-0.191 t-2.6 空增-0.267 t-3.1 DiD+0.088 t+1.2
+J五分位     JQ1          多-0.351 空-0.316 KDJ多增-0.382 t-3.3 空增-0.263 t-4.1 DiD+0.084 t+0.8
+K五分位     KQ2          多+0.070 空+0.182 KDJ多增+0.085 t+0.7 空增+0.284 t+5.8 DiD-0.219 t-1.4
+K-D差分位   GQ2          多-0.072 空+0.045 KDJ多增+0.126 t+2.8 空增+0.125 t+3.8 DiD+0.008 t+0.2
+J五分位     JQ2          多-0.000 空+0.162 KDJ多增+0.055 t+0.7 空增+0.276 t+6.3 DiD-0.201 t-2.5
+K五分位     KQ3          多+0.141 空+0.214 KDJ多增+0.296 t+3.5 空增+0.193 t+2.9 DiD+0.152 t+0.9
+K-D差分位   GQ3          多-0.015 空+0.151 KDJ多增+0.222 t+6.8 空增+0.190 t+4.0 DiD+0.055 t+1.0
+J五分位     JQ3          多+0.082 空+0.237 KDJ多增+0.248 t+4.3 空增+0.253 t+5.4 DiD+0.023 t+0.3
+K五分位     KQ4          多+0.007 空+0.046 KDJ多增+0.262 t+4.8 空增-0.089 t-0.7 DiD+0.266 t+1.4
+K-D差分位   GQ4          多-0.096 空+0.149 KDJ多增+0.188 t+5.9 空增+0.146 t+2.7 DiD+0.052 t+0.9
+J五分位     JQ4          多-0.024 空+0.117 KDJ多增+0.266 t+7.3 空增+0.033 t+0.5 DiD+0.185 t+2.1
+K五分位     KQ5          多-0.520 空-0.382 KDJ多增-0.287 t-2.3 空增-0.697 t-2.5 DiD-0.331 t-2.3
+K-D差分位   GQ5          多-0.568 空-0.173 KDJ多增-0.306 t-4.9 空增-0.196 t-2.6 DiD-0.149 t-2.5
+J五分位     JQ5          多-0.519 空-0.332 KDJ多增-0.275 t-3.3 空增-0.532 t-3.3 DiD-0.095 t-1.1
+交叉年龄     0-5日         多-0.423 空-0.158 KDJ多增+0.073 t+1.3 空增+0.144 t+3.1 DiD-0.091 t-1.3
+交叉年龄     6-15日        多-0.335 空-0.177 KDJ多增-0.067 t-1.2 空增-0.123 t-2.5 DiD+0.094 t+1.3
+交叉年龄     16-40日       多+nan 空+nan KDJ多增+nan t+nan 空增+0.320 t+0.9 DiD+nan t+nan
+交叉年龄     41-120日      多+nan 空+nan KDJ多增+nan t+nan 空增+nan t+nan DiD+nan t+nan
+交叉年龄     121-9999日    多+nan 空+nan KDJ多增+nan t+nan 空增+nan t+nan DiD+nan t+nan
+近期金叉     5日内金叉        多-0.660 空-0.126 KDJ多增-0.308 t-6.2 空增+0.100 t+1.8 DiD-0.395 t-6.9
+近期死叉     5日内死叉        多-0.538 空-0.217 KDJ多增-0.042 t-0.8 空增-0.051 t-0.9 DiD+0.044 t+0.7
+近期金叉     10日内金叉       多-0.499 空-0.106 KDJ多增-0.126 t-1.8 空增+0.315 t+4.6 DiD-0.483 t-7.1
+近期死叉     10日内死叉       多-0.470 空-0.221 KDJ多增-0.010 t-0.1 空增-0.026 t-0.4 DiD+0.034 t+0.5
+近期金叉     20日内金叉       多-0.391 空-0.146 KDJ多增-0.398 t-1.7 空增+0.230 t+2.0 DiD-0.446 t-2.6
+近期死叉     20日内死叉       多-0.393 空-0.178 KDJ多增-0.048 t-0.4 空增+0.269 t+1.7 DiD-0.001 t-0.0
+KDJ背离    顶背离          多-0.814 空+nan KDJ多增-0.599 t-4.8 空增+0.288 t+0.7 DiD+0.019 t+0.1
+KDJ背离    底背离          多+0.517 空-0.100 KDJ多增+0.953 t+2.6 空增-0.129 t-1.2 DiD+0.542 t+2.9
+KDJ背离    无背离          多-0.354 空-0.190 KDJ多增+0.407 t+5.1 空增+0.118 t+1.4 DiD+0.203 t+1.4
+周月KDJ    周线KDJ多       多-0.633 空-0.317 KDJ多增-0.414 t-2.9 空增-0.075 t-0.5 DiD-0.242 t-3.3
+周月KDJ    周线KDJ空       多-0.195 空-0.241 KDJ多增+0.414 t+2.9 空增+0.075 t+0.5 DiD+0.242 t+3.3
+周月KDJ    月线KDJ多       多-0.425 空-0.180 KDJ多增+0.024 t+0.1 空增+0.104 t+0.7 DiD-0.096 t-1.2
+周月KDJ    月线KDJ空       多-0.489 空-0.267 KDJ多增-0.024 t-0.1 空增-0.104 t-0.7 DiD+0.096 t+1.2
+saved (43, 37)
+
+综合判定
+绝对判定      MACD增量判定  KDJ增量_多判定
+均值有效(不稳)  不可比       有增量          1
+无效        不可比       有增量          1
+          无显著增量     无显著增量        3
+                    有增量          8
+样本不足      不可比       不可比          3
+稳健反向      不可比       无显著增量        1
+                    负增量          3
+          无显著增量     无显著增量        9
+                    有增量          2
+                    负增量          8
+          有增量       无显著增量        1
+                    有增量          1
+                    负增量          2
+done 44.87477087974548

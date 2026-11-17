@@ -1,0 +1,58 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+KDJ grid
+KDJ 5 3 3 done 19.7
+KDJ 5 5 3 done 27.6
+KDJ 5 3 5 done 35.0
+KDJ 9 3 3 done 42.1
+KDJ 9 5 3 done 49.2
+KDJ 9 3 5 done 56.3
+KDJ 14 3 3 done 63.4
+KDJ 14 5 3 done 70.4
+KDJ 14 3 5 done 77.6
+KDJ 19 3 3 done 84.7
+KDJ 19 5 3 done 92.0
+KDJ 19 3 5 done 99.0
+KDJ 26 3 3 done 106.1
+KDJ 26 5 3 done 113.2
+KDJ 26 3 5 done 120.3
+MACD grid
+MACD 8 17 9 done 124.9
+MACD 12 26 9 done 126.5
+MACD 16 32 9 done 128.2
+MACD 20 40 9 done 129.8
+MACD 6 13 5 done 131.5
+saved (240, 8)
+
+参数稳健汇总
+KDJ  MACD金叉_KDJ多-空              n=15 负=13 正= 2 均值=-0.255% 范围=[-0.58%, +0.06%] t<-2=6 t>2=0
+KDJ  MACD金叉_同日KDJ金叉-非           n=15 负=12 正= 3 均值=-0.087% 范围=[-0.23%, +0.04%] t<-2=5 t>2=0
+KDJ  MACD金叉_K>70-K<=70          n=15 负=10 正= 5 均值=-0.011% 范围=[-0.28%, +0.58%] t<-2=0 t>2=1
+KDJ  MACD金叉_KQ1-KQ2_4           n=15 负= 9 正= 6 均值=-0.026% 范围=[-0.40%, +0.17%] t<-2=2 t>2=0
+KDJ  MACD金叉_KQ5-KQ2_4           n=15 负=15 正= 0 均值=-0.526% 范围=[-0.67%, -0.32%] t<-2=12 t>2=0
+KDJ  KDJ金叉_MACD多-空              n=15 负=15 正= 0 均值=-0.533% 范围=[-0.65%, -0.36%] t<-2=15 t>2=0
+KDJ  KDJ金叉_前5日MACD金叉-无          n=15 负=14 正= 1 均值=-0.190% 范围=[-0.28%, +0.00%] t<-2=12 t>2=0
+KDJ  状态DiD_K>D                  n=15 负=10 正= 5 均值=-0.059% 范围=[-0.20%, +0.04%] t<-2=4 t>2=0
+KDJ  状态DiD_K>70                 n=15 负=15 正= 0 均值=-0.511% 范围=[-1.38%, -0.03%] t<-2=11 t>2=0
+KDJ  状态DiD_KQ3                  n=15 负= 0 正=15 均值=+0.179% 范围=[+0.06%, +0.26%] t<-2=0 t>2=1
+KDJ  状态DiD_KQ1                  n=15 负= 0 正=15 均值=+0.099% 范围=[+0.04%, +0.15%] t<-2=0 t>2=0
+KDJ  状态DiD_KQ5                  n=15 负=15 正= 0 均值=-0.346% 范围=[-0.50%, -0.25%] t<-2=15 t>2=0
+MACD MACD金叉_KDJ多-空              n= 5 负= 5 正= 0 均值=-0.311% 范围=[-0.44%, -0.17%] t<-2=2 t>2=0
+MACD MACD金叉_同日KDJ金叉-非           n= 5 负= 2 正= 3 均值=-0.004% 范围=[-0.28%, +0.23%] t<-2=2 t>2=0
+MACD MACD金叉_K>70-K<=70          n= 5 负= 2 正= 3 均值=-0.028% 范围=[-0.21%, +0.08%] t<-2=0 t>2=0
+MACD MACD金叉_KQ1-KQ2_4           n= 5 负= 3 正= 2 均值=-0.055% 范围=[-0.30%, +0.20%] t<-2=0 t>2=0
+MACD MACD金叉_KQ5-KQ2_4           n= 5 负= 5 正= 0 均值=-0.474% 范围=[-0.57%, -0.41%] t<-2=3 t>2=0
+MACD KDJ金叉_MACD多-空              n= 5 负= 5 正= 0 均值=-0.480% 范围=[-0.56%, -0.28%] t<-2=5 t>2=0
+MACD KDJ金叉_前5日MACD金叉-无          n= 5 负= 4 正= 1 均值=-0.133% 范围=[-0.29%, +0.02%] t<-2=3 t>2=0
+MACD 状态DiD_K>D                  n= 5 负= 5 正= 0 均值=-0.160% 范围=[-0.27%, -0.05%] t<-2=3 t>2=0
+MACD 状态DiD_K>70                 n= 5 负= 5 正= 0 均值=-0.295% 范围=[-0.71%, -0.02%] t<-2=2 t>2=0
+MACD 状态DiD_KQ3                  n= 5 负= 0 正= 5 均值=+0.112% 范围=[+0.07%, +0.19%] t<-2=0 t>2=0
+MACD 状态DiD_KQ1                  n= 5 负= 0 正= 5 均值=+0.090% 范围=[+0.04%, +0.14%] t<-2=0 t>2=0
+MACD 状态DiD_KQ5                  n= 5 负= 5 正= 0 均值=-0.290% 范围=[-0.35%, -0.23%] t<-2=5 t>2=0
+done 131.4986822605133

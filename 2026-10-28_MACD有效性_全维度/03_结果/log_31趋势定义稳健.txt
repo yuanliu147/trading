@@ -1,0 +1,21 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+ 周期           定义  月数    股票月      平均IC    IC_t12  IC_2010_2017  IC_2018_2026  IC大于0占比   Q5_Q1月均
+  3      价<MA200 177 117839  0.061790  3.677842      0.064444      0.059883 0.655367  0.026397
+  3         斜率<0 175 108041  0.051845  3.029723      0.078376      0.033299 0.605714  0.021301
+  3 价<MA200且斜率<0 171  83884  0.071753  4.064463      0.087834      0.061137 0.678363  0.024013
+  3      价>MA200 180 149438 -0.036472 -2.577082     -0.021500     -0.047921 0.350000  0.001181
+  3         斜率>0 184 159230 -0.059270 -4.260631     -0.045035     -0.070465 0.304348 -0.005301
+  3 价>MA200且斜率>0 173 125278 -0.066379 -4.875760     -0.054040     -0.075602 0.277457 -0.010473
+ 12      价<MA200 168 110067  0.078817  3.392603      0.072827      0.083533 0.726190  0.065962
+ 12         斜率<0 166 103323  0.108443  4.926309      0.129059      0.092651 0.819277  0.091979
+ 12 价<MA200且斜率<0 161  79936  0.119826  4.640824      0.135812      0.108432 0.807453  0.096183
+ 12      价>MA200 170 135232 -0.059698 -3.062115     -0.063242     -0.056764 0.282353 -0.030361
+ 12         斜率>0 175 141970 -0.056616 -2.917372     -0.061266     -0.052610 0.314286 -0.020779
+ 12 价>MA200且斜率>0 164 111842 -0.083230 -4.388444     -0.085907     -0.081029 0.213415 -0.044416

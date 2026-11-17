@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/58_生成KDJ交付物.py", line 493, in <module>
+    build_html()
+    ~~~~~~~~~~^^
+  File "/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/58_生成KDJ交付物.py", line 180, in build_html
+    wkp2["N"] = wkp2.KDJ参数.astype(int)
+                ^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/generic.py", line 6206, in __getattr__
+    return object.__getattribute__(self, name)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'KDJ参数'

@@ -1,0 +1,39 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+柱体方向 4378
+   state -0.152% t= -5.08 早 -0.214% 晚 -0.085%
+   state_x_level -0.577% t= -8.46 早 -0.443% 晚 -0.720%
+绿柱缩短 3591
+   state -0.038% t= -1.2 早 -0.107% 晚 +0.017%
+   state_x_level -0.067% t= -0.96 早 -0.048% 晚 -0.082%
+红柱放大 3918
+   state -0.179% t= -5.89 早 -0.220% 晚 -0.141%
+   state_x_level -0.531% t= -7.46 早 -0.386% 晚 -0.663%
+DIF>DEA 4344
+   state -0.226% t= -2.98 早 -0.272% 晚 -0.177%
+   state_x_level -0.412% t= -2.21 早 -0.170% 晚 -0.667%
+柱体上穿0 3171
+   state +0.926% t= 3.71 早 +0.346% 晚 +1.343%
+   state_x_level -4.646% t= -6.92 早 -3.083% 晚 -5.768%
+            项        系数         t  系数_2010_2017  系数_2018_2026  正系数年份  年份数      检验  交易日数
+        level -0.001987 -1.237766     -0.001565     -0.002438      5   19    柱体方向  4378
+        state -0.001518 -5.076866     -0.002139     -0.000853      2   19    柱体方向  4378
+state_x_level -0.005765 -8.464545     -0.004426     -0.007198      0   19    柱体方向  4378
+        level -0.001583 -1.310945     -0.001566     -0.001596      8   19    绿柱缩短  3591
+        state -0.000380 -1.199856     -0.001069      0.000174      6   19    绿柱缩短  3591
+state_x_level -0.000670 -0.964568     -0.000481     -0.000822      9   19    绿柱缩短  3591
+        level -0.000641 -0.497269      0.000045     -0.001266      6   19    红柱放大  3918
+        state -0.001790 -5.892730     -0.002205     -0.001411      1   19    红柱放大  3918
+state_x_level -0.005308 -7.456262     -0.003858     -0.006629      3   19    红柱放大  3918
+        level  0.003979  1.347204      0.006703      0.001102     12   19 DIF>DEA  4344
+        state -0.002259 -2.984111     -0.002723     -0.001769      3   19 DIF>DEA  4344
+state_x_level -0.004116 -2.213856     -0.001695     -0.006672      5   19 DIF>DEA  4344
+        level -0.005418 -2.976850     -0.005880     -0.005086      3   19   柱体上穿0  3171
+        state  0.009261  3.714309      0.003457      0.013432     16   19   柱体上穿0  3171
+state_x_level -0.046456 -6.924679     -0.030832     -0.057684      2   19   柱体上穿0  3171

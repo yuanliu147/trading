@@ -1,0 +1,65 @@
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:168: RuntimeWarning: Mean of empty slice
+  ew = np.nanmean(np.where(P["valid"], ret1, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:171: RuntimeWarning: Mean of empty slice
+  breadth20 = np.nanmean(np.where(P["valid"] & np.isfinite(ma20), c > ma20, np.nan), axis=1)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/macd_core.py:172: RuntimeWarning: Mean of empty slice
+  breadth200 = np.nanmean(np.where(P["valid"] & np.isfinite(ma200), c > ma200, np.nan), axis=1)
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/numpy/lib/_nanfunctions_impl.py:1997: RuntimeWarning: Degrees of freedom <= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:127: RuntimeWarning: All-NaN slice encountered
+  high[p] = np.nanmax(vh[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:128: RuntimeWarning: All-NaN slice encountered
+  low[p] = np.nanmin(vl[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:127: RuntimeWarning: All-NaN slice encountered
+  high[p] = np.nanmax(vh[a:b], axis=0)
+/Users/admin/WorkSpace/trading/2026-10-28_MACD有效性_全维度/02_代码/kdj_core.py:128: RuntimeWarning: All-NaN slice encountered
+  low[p] = np.nanmin(vl[a:b], axis=0)
+base done 11.003026008605957
+W KDJ 5 11.561992168426514
+W KDJ 9 13.252177953720093
+W KDJ 14 15.538033962249756
+W KDJ 19 17.12052321434021
+W KDJ 26 18.68646478652954
+
+周线KDJ(9) 20日
+ KDJ参数  周期      过滤      n  days      mean         t     early      late
+     9  20   周K<20 125010  1090  0.003224  1.543523  0.005693  0.002152
+     9  20   周K<30 220776  1774  0.000239  0.192686  0.000559  0.000087
+     9  20   周K>80  17954    74  0.003895  0.800290 -0.000261  0.010722
+     9  20   周K>70  61428   541 -0.003068 -1.238292 -0.003326 -0.002842
+     9  20   周KDJ多 163100  1734 -0.003880 -3.064842 -0.002161 -0.004773
+     9  20   周KDJ空 360936  2693 -0.001439 -2.006393 -0.000749 -0.001888
+     9  20 周K<20增量 125010  1033  0.006907  2.052650  0.006312  0.007131
+     9  20 周K>80增量  17954    70  0.008553  2.927616  0.005510  0.013398
+     9  20 周KDJ多增量 163100  1289 -0.001267 -0.711329  0.000841 -0.001969
+
+周K<20 增量 参数稳定性
+KDJ参数        5         9         14        19        26
+周期                                                     
+5      0.000509  0.000703  0.000664  0.000753  0.000765
+20     0.007035  0.006907  0.005346  0.004340  0.003547
+60     0.002460  0.005027  0.004638  0.003791  0.002996
+KDJ参数        5         9         14        19        26
+周期                                                     
+5      0.469583  0.677627  0.647146  0.769378  0.888762
+20     2.132655  2.052650  1.723483  1.393274  1.214033
+60     0.446347  0.911643  0.823003  0.653186  0.529448
+
+逐年 周K<20
+   过滤   年份   股票日  交易日      日均超额         t
+周K<20 2011  5579   54  0.006986  1.500296
+周K<20 2012  6198   62  0.006574  2.391543
+周K<20 2013  2365   22 -0.014378 -2.989698
+周K<20 2014  2862   28  0.003007  0.513122
+周K<20 2016  3890   39  0.004279  0.531681
+周K<20 2017  7314   66  0.001932  0.563917
+周K<20 2018 10374   90  0.002448  0.801536
+周K<20 2019  7988   68  0.005013  1.228257
+周K<20 2020  7000   65 -0.009049 -1.811008
+周K<20 2021 11408  109  0.009163  1.532414
+周K<20 2022 11306   85  0.005542  1.375266
+周K<20 2023 12063  111 -0.001906 -0.409495
+周K<20 2024 11574   79  0.006032  1.049670
+周K<20 2025  7447   66  0.000641  0.176379
+周K<20 2026 10902   87 -0.001318 -0.119981
+done 19.81482195854187

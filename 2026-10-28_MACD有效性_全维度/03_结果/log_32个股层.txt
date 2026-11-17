@@ -1,0 +1,39 @@
+[23:06:01] load panel
+[23:06:07] panel 4572 x 5507
+[23:06:09] states/positions done
+[23:06:10] industry coverage 0.591, 32 industries
+[23:06:15] size/vol quintiles done
+[23:06:15] load events
+[23:06:15] events 519111
+[23:06:16] events mapped 519111
+[23:06:16] neutral excess done
+[23:06:16] valuation snapshots
+[23:06:59] valuation merged 1.000
+[23:06:59] build feature matrices
+[23:07:00]   规模_log attached
+[23:07:01]   成交额_log attached
+[23:07:01]   换手20 attached
+[23:07:01]   波动20 attached
+[23:07:02]   Amihud20 attached
+[23:07:03]   价格 attached
+[23:07:03]   年龄_天 attached
+[23:07:05]   beta250 attached
+[23:07:05]   特质波动250 attached
+[23:07:06]   偏度250 attached
+[23:07:07]   最大日涨250 attached
+[23:07:08]   ER60 attached
+[23:07:09]   VR20 attached
+[23:07:11]   AC1_60 attached
+[23:07:12]   MA20择时250 attached
+[23:07:13]   MA60择时250 attached
+[23:07:13]   动量12_1 attached
+[23:07:14]   20日涨幅 attached
+[23:07:14]   60日涨幅 attached
+[23:07:15]   距250日高 attached
+[23:07:16]   ST占比250 attached
+[23:07:16] stock features done
+[23:07:16] per-stock event stats
+[23:07:22] event stats (13628, 16)
+[23:07:22] per-stock timing
+[23:07:25] timing (5507, 31)
+[23:07:38] saved. elapsed 97.4s
