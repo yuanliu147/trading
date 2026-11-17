@@ -1,0 +1,9 @@
+test_constant_negative (__main__.StatisticalTests.test_constant_negative) ... ok
+test_constant_positive_and_identical_pair (__main__.StatisticalTests.test_constant_positive_and_identical_pair) ... ok
+test_frontier_excludes_dominated_and_diagnostic (__main__.StatisticalTests.test_frontier_excludes_dominated_and_diagnostic) ... ok
+test_registered_count_and_exact_controls (__main__.StatisticalTests.test_registered_count_and_exact_controls) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.033s
+
+OK

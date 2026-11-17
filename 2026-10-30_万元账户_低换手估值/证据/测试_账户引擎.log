@@ -1,0 +1,41 @@
+test_atr_entry_continuous_space_ratchets_and_next_open (__main__.AccountEngineTests.test_atr_entry_continuous_space_ratchets_and_next_open) ... ok
+test_atr_missing_signal_window_blocks_entry (__main__.AccountEngineTests.test_atr_missing_signal_window_blocks_entry) ... ok
+test_calendar_cagr_and_2016_first_day_is_not_dropped (__main__.AccountEngineTests.test_calendar_cagr_and_2016_first_day_is_not_dropped) ... ok
+test_current_volume_rejects_whole_order_not_downsizes (__main__.AccountEngineTests.test_current_volume_rejects_whole_order_not_downsizes) ... ok
+test_detail_false_retains_true_completed_round_statistics (__main__.AccountEngineTests.test_detail_false_retains_true_completed_round_statistics) ... ok
+test_dividend_arrives_after_position_fully_sold (__main__.AccountEngineTests.test_dividend_arrives_after_position_fully_sold) ... ok
+test_dividend_bonus_rights_use_same_old_quantity (__main__.AccountEngineTests.test_dividend_bonus_rights_use_same_old_quantity) ... ok
+test_failed_sell_cannot_overfill_slots_or_retry_buy_later (__main__.AccountEngineTests.test_failed_sell_cannot_overfill_slots_or_retry_buy_later) ... ok
+test_future_prices_flags_values_and_actions_cannot_change_past (__main__.AccountEngineTests.test_future_prices_flags_values_and_actions_cannot_change_past) ... ok
+test_half_up_fee_dates_exchanges_and_pressure (__main__.AccountEngineTests.test_half_up_fee_dates_exchanges_and_pressure) ... ok
+test_initial_baseline_next_open_and_t_plus_one (__main__.AccountEngineTests.test_initial_baseline_next_open_and_t_plus_one) ... ok
+test_insufficient_hundred_share_budget_has_no_replacement (__main__.AccountEngineTests.test_insufficient_hundred_share_budget_has_no_replacement) ... ok
+test_keep_pool_holding_without_equal_weight_sales (__main__.AccountEngineTests.test_keep_pool_holding_without_equal_weight_sales) ... ok
+test_limit_up_blocks_buy_but_allows_sale (__main__.AccountEngineTests.test_limit_up_blocks_buy_but_allows_sale) ... ok
+test_locked_bonus_partial_sales_form_one_round (__main__.AccountEngineTests.test_locked_bonus_partial_sales_form_one_round) ... ok
+test_locked_shares_receive_later_actions_and_floor_bonus (__main__.AccountEngineTests.test_locked_shares_receive_later_actions_and_floor_bonus) ... ok
+test_mark_last_raw_close_not_fill_buy_price_and_stale_threshold (__main__.AccountEngineTests.test_mark_last_raw_close_not_fill_buy_price_and_stale_threshold) ... ok
+test_market_daily_exit_next_open_no_daily_refill (__main__.AccountEngineTests.test_market_daily_exit_next_open_no_daily_refill) ... ok
+test_market_full_window_missing_or_equal_does_not_buy (__main__.AccountEngineTests.test_market_full_window_missing_or_equal_does_not_buy) ... ok
+test_missing_row_st_sentinel_is_not_announced_risk (__main__.AccountEngineTests.test_missing_row_st_sentinel_is_not_announced_risk) ... ok
+test_normal_round_and_fee_inclusive_budget (__main__.AccountEngineTests.test_normal_round_and_fee_inclusive_budget) ... ok
+test_only_previous_vavg_sizes_buy_and_partial_sells (__main__.AccountEngineTests.test_only_previous_vavg_sizes_buy_and_partial_sells) ... ok
+test_pool_rank_ceiling_ties_control_and_lagged_admission (__main__.AccountEngineTests.test_pool_rank_ceiling_ties_control_and_lagged_admission) ... ok
+test_price_rounding_is_adverse_and_clamped (__main__.AccountEngineTests.test_price_rounding_is_adverse_and_clamped) ... ok
+test_prior_cash_sharing_and_initial_target_caps (__main__.AccountEngineTests.test_prior_cash_sharing_and_initial_target_caps) ... ok
+test_profit_loss_ratio_counts_rounds_not_partial_fills (__main__.AccountEngineTests.test_profit_loss_ratio_counts_rounds_not_partial_fills) ... ok
+test_quarter_and_half_year_review_schedule (__main__.AccountEngineTests.test_quarter_and_half_year_review_schedule) ... ok
+test_rights_are_abandoned_without_shares_or_cash_payment (__main__.AccountEngineTests.test_rights_are_abandoned_without_shares_or_cash_payment) ... ok
+test_signal_day_restrictions_and_window_boundary (__main__.AccountEngineTests.test_signal_day_restrictions_and_window_boundary) ... ok
+test_st_priority_over_trail_and_valuation (__main__.AccountEngineTests.test_st_priority_over_trail_and_valuation) ... ok
+test_suspension_limit_down_missing_open_postpone_irrevocably (__main__.AccountEngineTests.test_suspension_limit_down_missing_open_postpone_irrevocably) ... ok
+test_tax_debt_is_paid_from_partial_sale (__main__.AccountEngineTests.test_tax_debt_is_paid_from_partial_sale) ... ok
+test_tax_debt_never_overdraws_and_later_dividend_settles (__main__.AccountEngineTests.test_tax_debt_never_overdraws_and_later_dividend_settles) ... ok
+test_total_stale_write_down_has_minus_one_cagr (__main__.AccountEngineTests.test_total_stale_write_down_has_minus_one_cagr) ... ok
+test_trailing_entry_does_not_use_same_day_close (__main__.AccountEngineTests.test_trailing_entry_does_not_use_same_day_close) ... ok
+test_zero_delay_and_zero_lock_available_on_action_day (__main__.AccountEngineTests.test_zero_delay_and_zero_lock_available_on_action_day) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 0.138s
+
+OK

@@ -1,0 +1,26 @@
+{
+  "记录时间": "2026-10-31 00:22:04.297016",
+  "说明": "交付生成脚本按复核意见改写后的最终文件指纹；主流程运行时的代码指纹见运行记录.json",
+  "文件SHA256": {
+    "00A_设计复核补充.json": "61b1377081ceaef6ecfdea83f6d49b8a641d9f194bf4b215afd87902e931566a",
+    "00_研究冻结.json": "608a79df9be585dfce3937be231e7020d6d715654b1674da170ccdbaee38de33",
+    "代码/数据准备.py": "42804ca0beec9190ae4a2c33e8cd814bf0f313972f49a0f8bcf99fda5ec59684",
+    "代码/测试_统计.py": "f3b462da665933785c8650b8ab2017a54e06afbdb087bbdf05aa8878657f22b7",
+    "代码/测试_账户引擎.py": "7d444ada7825967d62b832dab40914ea99fdd1c0092195aed978a2c69ce98e7e",
+    "代码/生成交付.py": "603ddf23cde045dac5b0fc9cfd4970556c48c13592e7013a35dc43f9d0d7cf23",
+    "代码/研究主流程.py": "8c0f18a0d3dee15afb4414ea610dd46d1be50125c3e5111849beaceb5da822d8",
+    "代码/账户引擎.py": "6405508ee3090ba3bbb663177f554e241a44c103f97715976f12b7cf9e266d6b",
+    "结果/全部账户.csv": "1203be45e301d912a3902acd3473f059a868e4fce40b1682c2ce85ad37ba1efa",
+    "结果/全部账户年度.csv": "ecd58514341e85e46a0d45c1b3c031b049f1d221fbef4af3d745cb31274eb9be",
+    "结果/共同日历账户收益.npz": "1c9e3e5898712373abea21a3f5a5ab1bbd5964d10cb199ecad952d6c8ab6d176",
+    "结果/共同日期块统计.csv": "7816b81b54aaab8ea7b8d524a1bab5cbe66a8a6801fc7ee7532529b5fbdda69c",
+    "结果/各种子回撤区间.csv": "cac86324c86b8f8251f35075da4dcc11d2a2aec452012ce319395c11dedcf830",
+    "结果/成本与会计情景.csv": "8250b7e3009cc932224cfe99ad404685a6bd4a1be94eb6ebd3ed6f7a22c8697a",
+    "结果/核心系统中文比较.csv": "29375a184e71ca96e152a995677b0a5d57a5ec07d218a7702bb59de3f9d87544",
+    "结果/系统规则与研究结论.txt": "5d7db19c5d5d1c4aeb9db02bc70aac8ca40c44cbc967d41d92eab030bc2d27d0",
+    "结果/结论.json": "0423e93afd522a25efb145a80e5be83c0b81e6fc72763b4bf16f0ff128ec78ca",
+    "结果/补充核查.json": "361c520c7787e738781c9519486d60d7292a20c084582aa9d6eab0e66b9573be",
+    "结果/逐年种子中位收益.csv": "a87f2e457e7f42a04986fcc68d26984bf3480f9d0fdc006ed8364268d5b847d8",
+    "结果/配置种子分布.csv": "8f4f9e1e3ad2dd604a6cf81ed5b2d80937c0054b8b8d27f4f07038faaa6b3083"
+  }
+}
