@@ -1,0 +1,67 @@
+成交股 178，首轮已核对 81，补拉 97
+login success!
+  10/97 ok=10
+  20/97 ok=20
+  30/97 ok=30
+  40/97 ok=40
+  50/97 ok=50
+  60/97 ok=60
+  70/97 ok=70
+  80/97 ok=80
+  90/97 ok=90
+logout success!
+补拉完成 ok=97/97；价格/成交额差异条数: 18
+     code       date  field     local  baostock  rel_diff
+603906.SH 2017-04-12 amount  66094.56   66095.0  0.000007
+603676.SH 2017-07-25 amount  53212.80   53213.0  0.000004
+603036.SH 2016-12-12 amount 132822.52  132823.0  0.000004
+600228.SH 2020-03-20 amount  83168.28   83168.0  0.000003
+603356.SH 2018-01-25 amount 125495.37  125495.0  0.000003
+603725.SH 2017-09-08 amount 141170.40  141170.0  0.000003
+603321.SH 2017-09-18 amount 149685.36  149685.0  0.000002
+603321.SH 2017-09-20 amount 172228.67  172229.0  0.000002
+603278.SH 2017-11-15 amount 155896.29  155896.0  0.000002
+603058.SH 2016-12-28 amount 153845.28  153845.0  0.000002
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/arrays/arrow/array.py", line 1041, in _evaluate_op_method
+    result = pc_func(self._pa_array, other)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pyarrow/compute.py", line 255, in wrapper
+    return func.call(args, None, memory_pool)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pyarrow/_compute.pyx", line 405, in pyarrow._compute.Function.call
+  File "pyarrow/error.pxi", line 155, in pyarrow.lib.pyarrow_internal_check_status
+  File "pyarrow/error.pxi", line 92, in pyarrow.lib.check_status
+    raise convert_status(status)
+pyarrow.lib.ArrowNotImplementedError: Function 'subtract_checked' has no kernel matching input types (large_string, double)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/admin/WorkSpace/trading/2026-10-24_进攻版_2016_2026_回测与优化/02_代码/01b_补拉核对_限流重试.py", line 125, in <module>
+    main()
+    ~~~~^^
+  File "/Users/admin/WorkSpace/trading/2026-10-24_进攻版_2016_2026_回测与优化/02_代码/01b_补拉核对_限流重试.py", line 119, in main
+    s['close_diff'] = (s.local_close - s.sina_close).abs() / s.sina_close
+                       ~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/ops/common.py", line 85, in new_method
+    return method(self, other)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/arraylike.py", line 198, in __sub__
+    return self._arith_method(other, operator.sub)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/series.py", line 6751, in _arith_method
+    return base.IndexOpsMixin._arith_method(self, other, op)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/base.py", line 1644, in _arith_method
+    result = ops.arithmetic_op(lvalues, rvalues, op)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/ops/array_ops.py", line 279, in arithmetic_op
+    res_values = op(left, right)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/ops/common.py", line 85, in new_method
+    return method(self, other)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/arraylike.py", line 198, in __sub__
+    return self._arith_method(other, operator.sub)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/arrays/arrow/array.py", line 1091, in _arith_method
+    result = self._evaluate_op_method(other, op, ARROW_ARITHMETIC_FUNCS)
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/arrays/arrow/array.py", line 1043, in _evaluate_op_method
+    raise TypeError(self._op_method_error_message(other_original, op)) from err
+TypeError: operation 'sub' not supported for dtype 'str' with dtype 'float64'

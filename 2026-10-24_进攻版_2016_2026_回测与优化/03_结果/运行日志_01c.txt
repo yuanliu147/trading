@@ -1,0 +1,29 @@
+完备性检查股票数: 206
+login success!
+  20/206
+  40/206
+  60/206
+  80/206
+  100/206
+  120/206
+  140/206
+  160/206
+  180/206
+  200/206
+logout success!
+本地缺失 baostock 有效交易日的股票数: 0
+新浪抽查(不复权 close):
+     code date  sina_close  local_close  diff  rel
+000631.SZ  err         NaN          NaN   NaN  NaN
+002053.SZ  err         NaN          NaN   NaN  NaN
+002566.SZ  err         NaN          NaN   NaN  NaN
+002588.SZ  err         NaN          NaN   NaN  NaN
+002367.SZ  err         NaN          NaN   NaN  NaN
+002651.SZ  err         NaN          NaN   NaN  NaN
+002516.SZ  err         NaN          NaN   NaN  NaN
+002296.SZ  err         NaN          NaN   NaN  NaN
+000883.SZ  err         NaN          NaN   NaN  NaN
+002293.SZ  err         NaN          NaN   NaN  NaN
+002590.SZ  err         NaN          NaN   NaN  NaN
+002033.SZ  err         NaN          NaN   NaN  NaN
+超1e-4相对差异数: 0

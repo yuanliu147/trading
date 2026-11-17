@@ -1,0 +1,4 @@
+﻿code,date,em_close,local_close,rel
+000631.SZ,err:ConnectionError,,,
+002367.SZ,err:ConnectionError,,,
+600236.SH,err:ConnectionError,,,
