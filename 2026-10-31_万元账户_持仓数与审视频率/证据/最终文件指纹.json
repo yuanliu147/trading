@@ -1,0 +1,27 @@
+{
+  "生成时间": "2026-10-31T02:10:14+08:00",
+  "文件SHA256": {
+    "00_研究冻结.json": "5bab951d35892158df18accf4ca3e785ce5f239a4fd1281f2068a884779df51d",
+    "代码/账户引擎.py": "c8502ad847a9d6dc78cb800c0072917c5ea8cb5b198fb8f19b58fbb8987e28a8",
+    "代码/测试_账户引擎.py": "3049ef6fa406bfbdc541fd7dbeaca477af5d8e5e691e1d5d632eab3f05ccde0b",
+    "代码/研究主流程.py": "d72a814d8d4731ddca3bbd5d6af0b4ddbeff30d9e066a79e28d34d695665d09b",
+    "代码/生成图表.py": "f8c38264d6dd885a59e9ac236efbc531edcfcf9a2abee5f32a1bda25ed9060e9",
+    "结果/九配置中文比较.csv": "8d9c22b00478f22de77414e75282659a31ba02d36727c6767fa0c10bdf036af4",
+    "结果/配置种子分布.csv": "612649bc8174a2adb3a63d361cb637d62b32837b2d380b674c70219af89ae620",
+    "结果/共同日期块统计.csv": "71ccf8b67f86f51b782113215c374adccd0ab868b57e6b2aa2ef34ba212e673c",
+    "结果/全部账户.csv": "5d9a9bc7a4efa71118834d2620231e617b114291c05436370164244f488f1b1f",
+    "结果/全部账户年度.csv": "238626b94c042b2228322a2e8c6b446e779c1f0d3b19f8cfbd91034860374223",
+    "结果/成本与会计情景.csv": "8edc81ab8d2d6f6a4344f6e99ed45d7f4f4014eb62af69094f587decda910d33",
+    "结果/结论.json": "7b6c8b6ece752c876682e97aae341f93cf814b31d8c3b5a3333caa0e7c5da125",
+    "结果/指数基准.json": "82fa71c6753eb1a075ee7096ae167ffdf3e8e8944a2dbfc33f3fcae0a5d2de8d",
+    "结果/图表_持仓数与频率.html": "e513917387e7876d58d5c0dec09e5228a773837583e2a18ef3ea5a7ca0d12a94",
+    "结果/系统规则与研究结论.txt": "af45ce8cacb6b318f7509c52a468b1232829fa0ca294ef7f553f0f4a92818d06",
+    "证据/设计冻结哈希.json": "ff651716b756408037eb2790467018ccdb39fe1b18139f8c604448e8e21e7fe5",
+    "证据/引擎差异.txt": "c8bdc6e94b8331aadb7b553ab69427c8eabcb14b77e64f0c94c1795853772260",
+    "证据/引擎等价核对.json": "06ebb9cc60986b8763c0d39ce60b7a533deaa6d2ee822ab9b63a8e91700433b6",
+    "证据/全部账户自检.json": "1e8015e7ea0990a9bc08452df5243564d1f1aef1a3e3854aa080640d33413741",
+    "证据/压力账户自检.json": "421d9d8c78a6e40b49e06f200470b0e7f0c931215eb6a62704ad991056546a8d",
+    "证据/运行记录.json": "c6a2b33b0e14b29e9e1d12ac95bde0a35124ad0642f362a2fb254994aa309568",
+    "证据/判定重算.json": "722c07e2b190569a659445b0dc0e2b83c72efac3baece1f12def41df48054487"
+  }
+}

@@ -1,0 +1,13 @@
+--- ../2026-10-30_万元账户_低换手估值/代码/账户引擎.py	2026-10-31 00:10:34
++++ 代码/账户引擎.py	2026-10-31 01:54:02
+@@ -215,8 +215,8 @@
+         assumptions = assumptions if assumptions is not None else Assumptions()
+         if spec.exit_kind not in ('none', 'market', 'trail') or spec.score not in ('both', 'ep', 'bp', 'control'):
+             raise ValueError('未知exit_kind或score')
+-        if spec.months not in (3, 6) or spec.slots < 1 or int(spec.slots) != spec.slots or spec.lag < 0 or int(spec.lag) != spec.lag:
+-            raise ValueError('审视为3/6个月，槽位为正整数，lag为非负整数')
++        if spec.months not in (1, 3, 6) or spec.slots < 1 or int(spec.slots) != spec.slots or spec.lag < 0 or int(spec.lag) != spec.lag:
++            raise ValueError('审视为1/3/6个月，槽位为正整数，lag为非负整数')
+         if spec.score != 'control' and not 0 < spec.band <= 1:
+             raise ValueError('band须在(0,1]')
+         if spec.exit_kind == 'market' and (spec.window < 1 or int(spec.window) != spec.window):
