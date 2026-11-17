@@ -1,0 +1,10 @@
+events: (93563, 51)
+computing stock type ...
+   300
+   600
+   900
+   1200
+feature rows on event dates: 2742820
+type missing: 520
+saved detail
+done

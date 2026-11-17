@@ -1,0 +1,28 @@
+loading cache ...
+detecting events ...
+   200 stocks, 21509 events
+   400 stocks, 40919 events
+   600 stocks, 58018 events
+   800 stocks, 75050 events
+   1000 stocks, 95984 events
+   1200 stocks, 115929 events
+events: (122699, 25) {'UT': 89175, 'PB': 21538, 'TB': 11986}
+after membership: (103145, 26) {'UT': 74905, 'PB': 18087, 'TB': 10153}
+computing outcomes ...
+  outcomes 200 18268
+  outcomes 400 34943
+  outcomes 600 46071
+  outcomes 800 59600
+  outcomes 1000 76993
+  outcomes 1200 91498
+valid outcomes: (93563, 54)
+computing stock type ...
+feature rows on event dates: 2742820
+Traceback (most recent call last):
+  File "/Users/admin/WorkSpace/trading/2026-10-20_交易系统_特征点与仓位/01_特征点事件研究.py", line 346, in <module>
+    print("type missing:", res.type.isna().sum(), flush=True)
+                           ^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/pandas/core/generic.py", line 6206, in __getattr__
+    return object.__getattribute__(self, name)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'type'. Did you mean: 'astype'?
