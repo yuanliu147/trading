@@ -1,0 +1,194 @@
+group,cid,variant,slots,hold,window,capital,cost,delay,seed,n_configs,note,trials_cumulative
+grid,RAND_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,1
+grid,RAND_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,2
+grid,RAND_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,3
+grid,RAND_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,4
+grid,RAND_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,5
+grid,RAND_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,6
+grid,RAND_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,7
+grid,RAND_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,8
+grid,RAND_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,9
+grid,RAND_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,10
+grid,RAND_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,11
+grid,RAND_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,12
+grid,RAND_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,13
+grid,RAND_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,14
+grid,RAND_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,15
+grid,RAND_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,16
+grid,RAND_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,17
+grid,RAND_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,18
+grid,SIZE_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,19
+grid,SIZE_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,20
+grid,SIZE_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,21
+grid,SIZE_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,22
+grid,SIZE_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,23
+grid,SIZE_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,24
+grid,SIZE_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,25
+grid,SIZE_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,26
+grid,SIZE_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,27
+grid,SIZE_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,28
+grid,SIZE_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,29
+grid,SIZE_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,30
+grid,SIZE_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,31
+grid,SIZE_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,32
+grid,SIZE_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,33
+grid,SIZE_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,34
+grid,SIZE_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,35
+grid,SIZE_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,36
+grid,LOWVOL_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,37
+grid,LOWVOL_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,38
+grid,LOWVOL_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,39
+grid,LOWVOL_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,40
+grid,LOWVOL_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,41
+grid,LOWVOL_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,42
+grid,LOWVOL_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,43
+grid,LOWVOL_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,44
+grid,LOWVOL_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,45
+grid,LOWVOL_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,46
+grid,LOWVOL_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,47
+grid,LOWVOL_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,48
+grid,LOWVOL_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,49
+grid,LOWVOL_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,50
+grid,LOWVOL_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,51
+grid,LOWVOL_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,52
+grid,LOWVOL_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,53
+grid,LOWVOL_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,54
+grid,TREND_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,55
+grid,TREND_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,56
+grid,TREND_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,57
+grid,TREND_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,58
+grid,TREND_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,59
+grid,TREND_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,60
+grid,TREND_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,61
+grid,TREND_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,62
+grid,TREND_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,63
+grid,TREND_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,64
+grid,TREND_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,65
+grid,TREND_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,66
+grid,TREND_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,67
+grid,TREND_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,68
+grid,TREND_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,69
+grid,TREND_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,70
+grid,TREND_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,71
+grid,TREND_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,72
+grid,PULLBACK_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,73
+grid,PULLBACK_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,74
+grid,PULLBACK_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,75
+grid,PULLBACK_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,76
+grid,PULLBACK_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,77
+grid,PULLBACK_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,78
+grid,PULLBACK_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,79
+grid,PULLBACK_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,80
+grid,PULLBACK_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,81
+grid,PULLBACK_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,82
+grid,PULLBACK_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,83
+grid,PULLBACK_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,84
+grid,PULLBACK_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,85
+grid,PULLBACK_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,86
+grid,PULLBACK_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,87
+grid,PULLBACK_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,88
+grid,PULLBACK_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,89
+grid,PULLBACK_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,90
+grid,COMBO_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,91
+grid,COMBO_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,92
+grid,COMBO_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,93
+grid,COMBO_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,94
+grid,COMBO_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,95
+grid,COMBO_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,96
+grid,COMBO_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,97
+grid,COMBO_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,98
+grid,COMBO_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,99
+grid,COMBO_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,100
+grid,COMBO_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,101
+grid,COMBO_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,102
+grid,COMBO_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,103
+grid,COMBO_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,104
+grid,COMBO_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,105
+grid,COMBO_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,106
+grid,COMBO_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,107
+grid,COMBO_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,108
+grid,ADVQ12_s5_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,5,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,109
+grid,ADVQ12_s5_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,5,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,110
+grid,ADVQ12_s5_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,5,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,111
+grid,ADVQ12_s5_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,5,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,112
+grid,ADVQ12_s5_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,5,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,113
+grid,ADVQ12_s5_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,5,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,114
+grid,ADVQ12_s10_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,115
+grid,ADVQ12_s10_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,116
+grid,ADVQ12_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,117
+grid,ADVQ12_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,118
+grid,ADVQ12_s10_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,119
+grid,ADVQ12_s10_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,120
+grid,ADVQ12_s20_h20_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,20,20,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,121
+grid,ADVQ12_s20_h20_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,20,20,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,122
+grid,ADVQ12_s20_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,20,40,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,123
+grid,ADVQ12_s20_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,20,40,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,124
+grid,ADVQ12_s20_h60_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,20,60,dev,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,125
+grid,ADVQ12_s20_h60_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,20,60,val,1000000.0,base,0,0,1,7 变体 × 3 仓 × 3 持有 × 2 窗口,126
+stress,RAND_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,0,1,S0_base,127
+stress,RAND_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,0,1,S1_delist30,128
+stress,RAND_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,129
+stress,RAND_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,1000000.0,base,1,0,1,S3_delay1,130
+stress,RAND_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,0,1,S4_persist3,131
+stress,RAND_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,132
+stress,SIZE_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,1000000.0,base,0,0,1,S0_base,133
+stress,SIZE_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,SIZE,10,40,full,1000000.0,base,0,0,1,S1_delist30,134
+stress,SIZE_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,135
+stress,SIZE_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,1000000.0,base,1,0,1,S3_delay1,136
+stress,SIZE_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,SIZE,10,40,full,1000000.0,base,0,0,1,S4_persist3,137
+stress,SIZE_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,138
+stress,LOWVOL_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,40,full,1000000.0,base,0,0,1,S0_base,139
+stress,LOWVOL_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,LOWVOL,10,40,full,1000000.0,base,0,0,1,S1_delist30,140
+stress,LOWVOL_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,141
+stress,LOWVOL_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,40,full,1000000.0,base,1,0,1,S3_delay1,142
+stress,LOWVOL_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,LOWVOL,10,40,full,1000000.0,base,0,0,1,S4_persist3,143
+stress,LOWVOL_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,LOWVOL,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,144
+stress,TREND_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,40,full,1000000.0,base,0,0,1,S0_base,145
+stress,TREND_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,TREND,10,40,full,1000000.0,base,0,0,1,S1_delist30,146
+stress,TREND_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,TREND,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,147
+stress,TREND_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,TREND,10,40,full,1000000.0,base,1,0,1,S3_delay1,148
+stress,TREND_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,TREND,10,40,full,1000000.0,base,0,0,1,S4_persist3,149
+stress,TREND_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,TREND,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,150
+stress,PULLBACK_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,40,full,1000000.0,base,0,0,1,S0_base,151
+stress,PULLBACK_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,PULLBACK,10,40,full,1000000.0,base,0,0,1,S1_delist30,152
+stress,PULLBACK_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,153
+stress,PULLBACK_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,40,full,1000000.0,base,1,0,1,S3_delay1,154
+stress,PULLBACK_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,PULLBACK,10,40,full,1000000.0,base,0,0,1,S4_persist3,155
+stress,PULLBACK_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,PULLBACK,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,156
+stress,COMBO_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,1000000.0,base,0,0,1,S0_base,157
+stress,COMBO_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,COMBO,10,40,full,1000000.0,base,0,0,1,S1_delist30,158
+stress,COMBO_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,159
+stress,COMBO_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,1000000.0,base,1,0,1,S3_delay1,160
+stress,COMBO_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,COMBO,10,40,full,1000000.0,base,0,0,1,S4_persist3,161
+stress,COMBO_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,162
+stress,ADVQ12_s10_h40_c1000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,40,full,1000000.0,base,0,0,1,S0_base,163
+stress,ADVQ12_s10_h40_c1000000_full_d0_base_x0.3_p10_sd0_q0.333_0.333,ADVQ12,10,40,full,1000000.0,base,0,0,1,S1_delist30,164
+stress,ADVQ12_s10_h40_c1000000_full_d0_stress2_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,40,full,1000000.0,stress2,0,0,1,S2_cost2x,165
+stress,ADVQ12_s10_h40_c1000000_full_d1_base_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,40,full,1000000.0,base,1,0,1,S3_delay1,166
+stress,ADVQ12_s10_h40_c1000000_full_d0_base_x0.0_p3_sd0_q0.333_0.333,ADVQ12,10,40,full,1000000.0,base,0,0,1,S4_persist3,167
+stress,ADVQ12_s10_h40_c1000000_full_d0_cap05_x0.0_p10_sd0_q0.333_0.333,ADVQ12,10,40,full,1000000.0,cap05,0,0,1,S5_cap05,168
+capacity,COMBO_s10_h40_c100000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,100000.0,base,0,0,1,cap10wan,169
+capacity,COMBO_s10_h40_c10000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,10000000.0,base,0,0,1,cap1000wan,170
+capacity,COMBO_s10_h40_c100000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,COMBO,10,40,full,100000000.0,base,0,0,1,cap10000wan,171
+capacity,SIZE_s10_h40_c100000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,100000.0,base,0,0,1,cap10wan,172
+capacity,SIZE_s10_h40_c10000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,10000000.0,base,0,0,1,cap1000wan,173
+capacity,SIZE_s10_h40_c100000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,SIZE,10,40,full,100000000.0,base,0,0,1,cap10000wan,174
+capacity,RAND_s10_h40_c100000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,100000.0,base,0,0,1,cap10wan,175
+capacity,RAND_s10_h40_c10000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,10000000.0,base,0,0,1,cap1000wan,176
+capacity,RAND_s10_h40_c100000000_full_d0_base_x0.0_p10_sd0_q0.333_0.333,RAND,10,40,full,100000000.0,base,0,0,1,cap10000wan,177
+neighborhood,COMBO_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.333_0.500,COMBO,10,40,dev,1000000.0,base,0,0,1,sq0.33_vq0.50,178
+neighborhood,COMBO_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.333_0.500,COMBO,10,40,val,1000000.0,base,0,0,1,sq0.33_vq0.50,179
+neighborhood,COMBO_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.500_0.333,COMBO,10,40,dev,1000000.0,base,0,0,1,sq0.50_vq0.33,180
+neighborhood,COMBO_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.500_0.333,COMBO,10,40,val,1000000.0,base,0,0,1,sq0.50_vq0.33,181
+neighborhood,COMBO_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd0_q0.500_0.500,COMBO,10,40,dev,1000000.0,base,0,0,1,sq0.50_vq0.50,182
+neighborhood,COMBO_s10_h40_c1000000_val_d0_base_x0.0_p10_sd0_q0.500_0.500,COMBO,10,40,val,1000000.0,base,0,0,1,sq0.50_vq0.50,183
+rand_seed,RAND_s10_h40_c1000000_full_d0_base_x0.0_p10_sd1_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,1,1,seed1,184
+rand_seed,RAND_s10_h40_c1000000_full_d0_base_x0.0_p10_sd2_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,2,1,seed2,185
+rand_seed,RAND_s10_h40_c1000000_full_d0_base_x0.0_p10_sd3_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,3,1,seed3,186
+rand_seed,RAND_s10_h40_c1000000_full_d0_base_x0.0_p10_sd4_q0.333_0.333,RAND,10,40,full,1000000.0,base,0,4,1,seed4,187
+rand_seed,RAND_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd1_q0.333_0.333,RAND,10,40,dev,1000000.0,base,0,1,1,seed1,188
+rand_seed,RAND_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd2_q0.333_0.333,RAND,10,40,dev,1000000.0,base,0,2,1,seed2,189
+rand_seed,RAND_s10_h40_c1000000_dev_d0_base_x0.0_p10_sd3_q0.333_0.333,RAND,10,40,dev,1000000.0,base,0,3,1,seed3,190
+rand_seed,RAND_s10_h40_c1000000_val_d0_base_x0.0_p10_sd1_q0.333_0.333,RAND,10,40,val,1000000.0,base,0,1,1,seed1,191
+rand_seed,RAND_s10_h40_c1000000_val_d0_base_x0.0_p10_sd2_q0.333_0.333,RAND,10,40,val,1000000.0,base,0,2,1,seed2,192
+rand_seed,RAND_s10_h40_c1000000_val_d0_base_x0.0_p10_sd3_q0.333_0.333,RAND,10,40,val,1000000.0,base,0,3,1,seed3,193

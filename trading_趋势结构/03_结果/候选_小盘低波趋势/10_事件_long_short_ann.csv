@@ -1,0 +1,5 @@
+horizon,spread,turns_per_year,ann_arith,name
+20,0.00921073,12.15,0.11191,size_T1_minus_T3
+20,0.0125293,12.15,0.152231,size_D1_minus_D10
+60,0.0212542,4.05,0.0860795,size_T1_minus_T3
+60,0.0305083,4.05,0.123558,size_D1_minus_D10

@@ -1,0 +1,60 @@
+﻿config_id,variant,carrier,m,delay,cost,note,e_src
+RB001,K1,C1,0.25,0,10.0,阶梯 m=0.25,pub
+RB002,K1,C1,0.5,0,10.0,阶梯 m=0.5,pub
+RB003,K1,C1,0.75,0,10.0,阶梯 m=0.75,pub
+RB004,K1,C1,1.0,0,10.0,阶梯 m=1.0,pub
+RB005,K1,C2,0.25,0,10.0,阶梯 m=0.25,pub
+RB006,K1,C2,0.5,0,10.0,阶梯 m=0.5,pub
+RB007,K1,C2,0.75,0,10.0,阶梯 m=0.75,pub
+RB008,K1,C2,1.0,0,10.0,阶梯 m=1.0,pub
+RB009,K1,C3,0.25,0,10.0,阶梯 m=0.25,pub
+RB010,K1,C3,0.5,0,10.0,阶梯 m=0.5,pub
+RB011,K1,C3,0.75,0,10.0,阶梯 m=0.75,pub
+RB012,K1,C3,1.0,0,10.0,阶梯 m=1.0,pub
+RB013,K1,C1,0.5,0,0.0,延迟0/成本0bp,pub
+RB014,K1,C1,0.5,0,30.0,延迟0/成本30bp,pub
+RB015,K1,C1,0.5,1,0.0,延迟1/成本0bp,pub
+RB016,K1,C1,0.5,1,10.0,延迟1/成本10bp,pub
+RB017,K1,C1,0.5,1,30.0,延迟1/成本30bp,pub
+RB018,K1,C1,0.5,5,0.0,延迟5/成本0bp,pub
+RB019,K1,C1,0.5,5,10.0,延迟5/成本10bp,pub
+RB020,K1,C1,0.5,5,30.0,延迟5/成本30bp,pub
+RB021,K1,C1,0.5,10,0.0,延迟10/成本0bp,pub
+RB022,K1,C1,0.5,10,10.0,延迟10/成本10bp,pub
+RB023,K1,C1,0.5,10,30.0,延迟10/成本30bp,pub
+RB024,K1,C1,0.5,20,0.0,延迟20/成本0bp,pub
+RB025,K1,C1,0.5,20,10.0,延迟20/成本10bp,pub
+RB026,K1,C1,0.5,20,30.0,延迟20/成本30bp,pub
+RB027,K2_state,C3_K2_state,0.5,0,10.0,单票风险+状态降险,pub
+RB028,K2_only,C3_K2_only,1.0,0,10.0,单票风险，不降总暴露,pub
+RB029,K3_state,C3_K3_state,1.0,0,10.0,持仓数10/8/6，不降总暴露,pub
+RB030,K3_only,C3,1.0,0,10.0,持仓数基准10,pub
+RB031,base,C1,0.5,0,10.0,base,pub
+RB032,static,C1,0.5,0,10.0,static,pub
+RB033,volmatch,C1,0.5,0,10.0,volmatch,pub
+RB034,levneutral,C1,0.5,0,10.0,levneutral,pub
+RB035,voltarget,C1,0.5,0,10.0,voltarget,pub
+RB036,base,C2,0.5,0,10.0,base,pub
+RB037,static,C2,0.5,0,10.0,static,pub
+RB038,volmatch,C2,0.5,0,10.0,volmatch,pub
+RB039,levneutral,C2,0.5,0,10.0,levneutral,pub
+RB040,voltarget,C2,0.5,0,10.0,voltarget,pub
+RB041,base,C3,0.5,0,10.0,base,pub
+RB042,static,C3,0.5,0,10.0,static,pub
+RB043,volmatch,C3,0.5,0,10.0,volmatch,pub
+RB044,levneutral,C3,0.5,0,10.0,levneutral,pub
+RB045,voltarget,C3,0.5,0,10.0,voltarget,pub
+RB046,tercile_state,C1,0.5,0,10.0,state三分位同阶梯,pub
+RB047,tercile_B3,C1,0.5,0,10.0,B3三分位同阶梯,pub
+RB048,tercile_P,C1,0.5,0,10.0,P三分位同阶梯,pub
+RB049,tercile_state,C2,0.5,0,10.0,state三分位同阶梯,pub
+RB050,tercile_B3,C2,0.5,0,10.0,B3三分位同阶梯,pub
+RB051,tercile_P,C2,0.5,0,10.0,P三分位同阶梯,pub
+RB052,tercile_state,C3,0.5,0,10.0,state三分位同阶梯,pub
+RB053,tercile_B3,C3,0.5,0,10.0,B3三分位同阶梯,pub
+RB054,tercile_P,C3,0.5,0,10.0,P三分位同阶梯,pub
+RB055,reverse,C1,0.5,0,10.0,反向阶梯,pub
+RB056,duration20,C1,0.5,0,10.0,防守≥20日才降,pub
+RB057,K1,C1,0.5,0,10.0,重建状态,reb
+RB058,K1,C2,0.5,0,10.0,重建状态,reb
+RB059,K1,C3,0.5,0,10.0,重建状态,reb

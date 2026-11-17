@@ -1,0 +1,3 @@
+﻿window,actual_dcalmar,static_calmar,strat_calmar,null_mean,null_p95,p_value,n_iter
+full,0.04126,0.02793,0.06919,-0.00783,0.04181,0.06,200
+val,-0.06565,-0.09544,-0.16109,-0.00682,0.06925,0.89,200

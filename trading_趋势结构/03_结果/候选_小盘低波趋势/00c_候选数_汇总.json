@@ -1,0 +1,60 @@
+{
+  "n_days": 3164,
+  "mean_n_U": 1453.3751580278129,
+  "mean_counts": {
+    "RAND": 1453.3751580278129,
+    "SIZE": 1453.3751580278129,
+    "LOWVOL": 1453.3751580278129,
+    "TREND": 606.1776232616941,
+    "PULLBACK": 169.0353982300885,
+    "COMBO": 40.52054361567636,
+    "ADVQ12": 581.5530973451328
+  },
+  "median_counts": {
+    "RAND": 1391.0,
+    "SIZE": 1391.0,
+    "LOWVOL": 1391.0,
+    "TREND": 489.0,
+    "PULLBACK": 112.0,
+    "COMBO": 23.0,
+    "ADVQ12": 557.0
+  },
+  "zero_day_share": {
+    "RAND": 0.0,
+    "SIZE": 0.0,
+    "LOWVOL": 0.0,
+    "TREND": 0.008849557522123894,
+    "PULLBACK": 0.03286978508217446,
+    "COMBO": 0.031289506953223765,
+    "ADVQ12": 0.0
+  },
+  "p10_counts": {
+    "RAND": 793.3,
+    "SIZE": 793.3,
+    "LOWVOL": 793.3,
+    "TREND": 77.30000000000001,
+    "PULLBACK": 7.0,
+    "COMBO": 4.0,
+    "ADVQ12": 317.3
+  },
+  "meta": {
+    "n_days": 3647,
+    "n_codes": 3117,
+    "size_vs_float_mktcap_median_ratio": 0.9999999974323346,
+    "size_vs_float_mktcap_p10": 0.9203781238926582,
+    "size_vs_float_mktcap_p90": 1.000017962223084,
+    "turn_missing_share": 0.35518788806776114,
+    "fs_pit_missing_share": 0.3435647794685626,
+    "n_corp_actions": 27225,
+    "corp_action_status": {
+      "verified_ths": 25304,
+      "no_ths_cash": 1716,
+      "ths_mismatch_cash": 205
+    },
+    "bench_cagr": {
+      "dev": 0.06912630172662881,
+      "val": 0.01523999392895492,
+      "full": 0.020114873717516968
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "coverage_years": 37,
+  "data_end": "2026-10-26",
+  "analysis_end": "2020-12-31",
+  "checks": {
+    "panel_cells": 17577528,
+    "valid_cells": 9776907,
+    "close_missing_pct_of_panel": 44.37837334123433,
+    "nonpositive_close": 0,
+    "high_lt_low": 0,
+    "open_out_of_range": 0,
+    "zero_amount_rows": 545016,
+    "st_share_pct": 5.092950152844862,
+    "suspended_share_pct": 5.596585914134193,
+    "ret_gt_60pct": 76,
+    "ret_lt_minus60pct": 2,
+    "suspended_flat_close_pct": 99.81450108101095,
+    "codes": 4254,
+    "codes_first_day_after_2010": 2506,
+    "ths_crosscheck_codes": 51,
+    "ths_crosscheck_median_abs_ret_diff": 3.01501654753622e-08,
+    "ths_crosscheck_median_corr": 0.9999999785769118
+  }
+}

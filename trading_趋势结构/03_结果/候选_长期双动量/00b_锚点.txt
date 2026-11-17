@@ -1,0 +1,5 @@
+file=00_预注册_长期双动量.md
+prereg_sha256=c67c0952f386d040e3dd114be0565912d98416109321ac5a8c204d9f42652b51
+hashed_bytes=15307
+registered_at=2026-10-28T23:37:04
+note=hash covers file content up to and including <!-- PREREG_END -->; written before any strategy return was computed

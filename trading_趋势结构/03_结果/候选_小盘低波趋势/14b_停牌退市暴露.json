@@ -1,0 +1,72 @@
+{
+  "RAND": {
+    "n_trips": 760,
+    "share_with_suspension": 0.22105263157894736,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 5.0,
+    "max_susp_days": 48,
+    "ret_with_susp": 0.024648085240605758,
+    "ret_without_susp": 0.0011357540467591004,
+    "n_delisted_trips": 0
+  },
+  "SIZE": {
+    "n_trips": 760,
+    "share_with_suspension": 0.2131578947368421,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 3.0499999999999545,
+    "max_susp_days": 48,
+    "ret_with_susp": 0.028670130456726173,
+    "ret_without_susp": 0.020506446155347514,
+    "n_delisted_trips": 0
+  },
+  "LOWVOL": {
+    "n_trips": 762,
+    "share_with_suspension": 0.19816272965879264,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 2.0,
+    "max_susp_days": 47,
+    "ret_with_susp": -0.02234917892671178,
+    "ret_without_susp": 0.008358499067486964,
+    "n_delisted_trips": 2
+  },
+  "TREND": {
+    "n_trips": 753,
+    "share_with_suspension": 0.3094289508632138,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 7.399999999999977,
+    "max_susp_days": 48,
+    "ret_with_susp": -0.0014994813891728205,
+    "ret_without_susp": -0.039736561854294146,
+    "n_delisted_trips": 0
+  },
+  "PULLBACK": {
+    "n_trips": 745,
+    "share_with_suspension": 0.26308724832214764,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 6.0,
+    "max_susp_days": 48,
+    "ret_with_susp": -0.030562234288963316,
+    "ret_without_susp": -0.007220251757324974,
+    "n_delisted_trips": 1
+  },
+  "COMBO": {
+    "n_trips": 733,
+    "share_with_suspension": 0.22100954979536153,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 5.0,
+    "max_susp_days": 47,
+    "ret_with_susp": -0.0037010702474393094,
+    "ret_without_susp": 0.019441266129656996,
+    "n_delisted_trips": 0
+  },
+  "ADVQ12": {
+    "n_trips": 761,
+    "share_with_suspension": 0.19448094612352168,
+    "median_susp_days": 0.0,
+    "p95_susp_days": 4.0,
+    "max_susp_days": 48,
+    "ret_with_susp": 0.03965575625289952,
+    "ret_without_susp": 0.016902319696503368,
+    "n_delisted_trips": 0
+  }
+}

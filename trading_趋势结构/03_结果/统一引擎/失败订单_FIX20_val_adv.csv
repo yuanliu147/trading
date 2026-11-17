@@ -1,0 +1,9 @@
+﻿code,side,qty,kind,price,tif,tag,decision_date,execute_from,order_id,filled_qty,avg_price,status,reason,triggered,seq
+600531.SH,buy,4100,open,,day,donch60,2016-02-05,2016-02-15,O000027,0,0.0,cancelled,limit_up_open,False,27
+600868.SH,buy,8700,open,,day,donch60,2016-10-25,2016-10-26,O000191,0,0.0,cancelled,limit_up_open,False,191
+600233.SH,sell,1400,open,,gtc,fix20,2016-11-16,2016-11-17,O000197,0,0.0,cancelled,forced_liquidation:sell_persistence_10d,False,197
+600158.SH,buy,2300,open,,day,donch60,2016-12-20,2016-12-21,O000224,0,0.0,cancelled,limit_up_open,False,224
+002300.SZ,buy,3000,open,,day,donch60,2017-01-13,2017-01-16,O000236,0,0.0,cancelled,no_bar_or_suspended,False,236
+600387.SH,sell,3400,open,,gtc,fix20,2017-02-17,2017-02-20,O000254,0,0.0,cancelled,forced_liquidation:sell_persistence_10d,False,254
+601360.SH,buy,700,open,,day,donch60,2018-02-14,2018-02-22,O000492,0,0.0,cancelled,no_bar_or_suspended,False,492
+002243.SZ,buy,1600,open,,day,donch60,2019-01-09,2019-01-10,O000697,1500,19.41,cancelled,open_partial+day_end,False,697

@@ -1,0 +1,36 @@
+cid,policy,exit_days,delay,cost_mult,slots,capital,use_stop,rank_amt_asc,n_configs,note
+L0_GENERIC,L0_GENERIC,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L1_WEEKLY,L1_WEEKLY,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L2_DAILY,L2_DAILY,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L3_PULLBACK,L3_PULLBACK,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L4_VOL,L4_VOL,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L5_SUPPORT,L5_SUPPORT,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L6_BREAKOUT,L6_BREAKOUT,20,0,1.0,10,1000000.0,True,False,1,预注册字面定义（含 sup），样本偏小
+L7_DIRECT,L7_DIRECT,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L8_NONTREND,L8_NONTREND,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+L9_BROKEN,L9_BROKEN,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_d_lo,V_d_lo,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_d_hi,V_d_hi,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_dur10,V_dur10,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_dur25,V_dur25,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_vr075,V_vr075,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_vr100,V_vr100,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_sup2,V_sup2,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_sup5,V_sup5,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_w20,V_w20,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+V_w40,V_w40,20,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+H10,L5_SUPPORT,10,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+H40,L5_SUPPORT,40,0,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+D1,L5_SUPPORT,20,1,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+D2,L5_SUPPORT,20,2,1.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+C2,L5_SUPPORT,20,0,2.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+C3,L5_SUPPORT,20,0,3.0,10,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+S5,L5_SUPPORT,20,0,1.0,5,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+S20,L5_SUPPORT,20,0,1.0,20,1000000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+K20k,L5_SUPPORT,20,0,1.0,10,20000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+K100k,L5_SUPPORT,20,0,1.0,10,100000.0,True,False,1,见 05_组合_汇总.csv 的 dev/val
+NS_L5,L5_SUPPORT,20,0,1.0,10,1000000.0,False,False,1,事后诊断，不用于选参
+NS_L7,L7_DIRECT,20,0,1.0,10,1000000.0,False,False,1,事后诊断，不用于选参
+NS_L0,L0_GENERIC,20,0,1.0,10,1000000.0,False,False,1,事后诊断，不用于选参
+NS_L8,L8_NONTREND,20,0,1.0,10,1000000.0,False,False,1,事后诊断，不用于选参
+SF_L5,L5_SUPPORT,20,0,1.0,10,1000000.0,True,True,1,事后诊断，不用于选参

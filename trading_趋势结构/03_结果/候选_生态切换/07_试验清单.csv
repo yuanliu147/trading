@@ -1,0 +1,2 @@
+generated_at,prereg_sha256,code_sha256,family,configs_selection,configs_sensitivity,n_selection,n_sensitivity,N_for_DSR,window,universe,cost_model,global_registry_rows,notes
+2026-10-28T23:13:51,2a67f02536be6037a69dd4394c9d372f63776092355f7a28b3cb2dc6b44dfb2b,c0f639590137e199e8d45bf1a932fd49c810722343d75c7c76963457736baccb,ECOLOGY-REV-BRK,C1|C2|C3|C4|C5|C6|C7|C8|C9|C10,S1|S2|S3|S4,10,4,14,2008-01-01..2020-12-31,U-MAINBOARD-V1,"C-REAL-V1(10bp slip, historical fees)",6,本族不写中央注册表（由方法负责人独占）；N=14，事件条件格另计 N=32 上界

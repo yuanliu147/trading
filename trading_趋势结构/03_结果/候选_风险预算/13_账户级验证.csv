@@ -1,0 +1,5 @@
+﻿arm,nav_end,n_trades,turnover_ann,flags,n,cagr,vol,sharpe,mdd,calmar,ulcer,worst20
+控制_e=1,168399.0176,1191.0,13.1488,"{'ex_rights_reference_used': 1317, 'prev_close_ref_mismatch': 16, 'forced_liquidation': 21, 'buy_downsize_cash': 19, 'partial_fill_day_order': 19, 'dividend_tax_flat_rate': 34, 'corporate_action_no_trade_skipped': 80}",1217,-0.3003,0.3266,-0.9234,-0.866,-0.3468,0.6061,-0.2775
+状态_e_(周期恒定),302248.096,1196.0,11.2639,"{'ex_rights_reference_used': 1317, 'prev_close_ref_mismatch': 16, 'forced_liquidation': 21, 'dividend_tax_flat_rate': 35, 'corporate_action_no_trade_skipped': 80, 'buy_downsize_cash': 5, 'partial_fill_day_order': 5}",1217,-0.2133,0.2379,-0.8841,-0.7531,-0.2832,0.514,-0.2224
+组合层_e=1,0.1728,,,{},1218,-0.2965,0.3128,-0.9612,-0.8214,-0.361,0.5641,-0.277
+组合层_e_cycle,0.2826,,,{},1218,-0.2237,0.2333,-0.9623,-0.7084,-0.3157,0.4766,-0.2171

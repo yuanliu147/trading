@@ -1,0 +1,4 @@
+﻿code,side,qty,kind,price,tif,tag,decision_date,execute_from,order_id,filled_qty,avg_price,status,reason,triggered,seq
+000533.SZ,sell,9000,open,,gtc,time_20d,2016-10-12,2016-10-13,O000027,0,0.0,cancelled,forced_liquidation:sell_persistence_10d,False,27
+600277.SH,sell,12700,open,,gtc,time_20d,2017-03-27,2017-03-28,O000138,0,0.0,cancelled,forced_liquidation:sell_persistence_10d,False,138
+600315.SH,buy,2800,open,,day,e2,2017-09-20,2017-09-21,O000331,0,0.0,cancelled,no_bar_or_suspended,False,331

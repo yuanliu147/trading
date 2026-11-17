@@ -1,0 +1,72 @@
+[00:13:56] ===== LTM all 开始 =====
+[00:14:00] 面板就绪：3647 日 × 3474 只，7784840 行，用时 3.2s
+[00:14:00] 数据审计开始
+[00:14:02] 数据审计完成：复权恒等最大差 4.312e-15；hfq≠close×factor 中位相对差 0.394；因果最大差 0.000e+00
+[00:14:02] IC / 十分位 / 分层开始
+[00:15:26] IC 完成：27 个 spec×window
+[00:15:34] [1/59] C01 core L=120 skip=0 abs=off 用时 8.5s
+[00:15:43] [2/59] C02 core L=120 skip=0 abs=on 用时 8.9s
+[00:15:52] [3/59] C03 core L=120 skip=5 abs=off 用时 8.7s
+[00:16:00] [4/59] C04 core L=120 skip=5 abs=on 用时 8.6s
+[00:16:09] [5/59] C05 core L=120 skip=20 abs=off 用时 8.6s
+[00:16:17] [6/59] C06 core L=120 skip=20 abs=on 用时 7.8s
+[00:16:25] [7/59] C07 core L=250 skip=0 abs=off 用时 8.3s
+[00:16:33] [8/59] C08 core L=250 skip=0 abs=on 用时 8.1s
+[00:16:41] [9/59] C09 core L=250 skip=5 abs=off 用时 8.1s
+[00:16:49] [10/59] C10 core L=250 skip=5 abs=on 用时 7.9s
+[00:16:58] [11/59] C11 core L=250 skip=20 abs=off 用时 9.0s
+[00:17:07] [12/59] C12 core L=250 skip=20 abs=on 用时 9.1s
+[00:17:17] [13/59] C13 N=5 用时 9.3s
+[00:17:26] [14/59] C14 N=20 用时 9.4s
+[00:17:31] [15/59] C15 R=40 用时 4.9s
+[00:17:34] [16/59] C16 R=60 用时 3.3s
+[00:17:43] [17/59] C17 band=0.25 用时 8.9s
+[00:17:53] [18/59] C18 band=0.50 用时 10.2s
+[00:18:02] [19/59] C19 weekly MA20 permission 用时 9.1s
+[00:18:11] [20/59] C20 monthly MA12 permission 用时 9.0s
+[00:18:21] [21/59] C21 execution delay +1d 用时 9.3s
+[00:18:29] [22/59] C22 cost stress 2x 用时 8.7s
+[00:18:37] [23/59] C23 top ADV tercile universe 用时 7.7s
+[00:18:45] [24/59] C24 short control L=60 skip=0 off 用时 7.9s
+[00:18:53] [25/59] C25 short control L=60 skip=0 on 用时 7.7s
+[00:19:00] [26/59] C26 vol-adjusted score 用时 7.8s
+[00:19:00] [27/59] E01 universe EW buy&hold 用时 0.0s
+[00:19:00] [28/59] E02 10-name hash buy&hold 用时 0.0s
+[00:19:00] [29/59] E03 universe EW R=20 用时 0.0s
+[00:19:00] [30/59] E04 universe EW R=60 用时 0.0s
+[00:19:00] [31/59] CASH cash 0% 用时 0.0s
+[00:19:01] [32/59] R20-1 random N=10 R=20 seed=1 用时 0.6s
+[00:19:02] [33/59] R20-2 random N=10 R=20 seed=2 用时 0.6s
+[00:19:02] [34/59] R20-3 random N=10 R=20 seed=3 用时 0.6s
+[00:19:03] [35/59] R20-4 random N=10 R=20 seed=4 用时 0.6s
+[00:19:03] [36/59] R20-5 random N=10 R=20 seed=5 用时 0.6s
+[00:19:04] [37/59] R20-6 random N=10 R=20 seed=6 用时 0.6s
+[00:19:04] [38/59] R20-7 random N=10 R=20 seed=7 用时 0.6s
+[00:19:05] [39/59] R20-8 random N=10 R=20 seed=8 用时 0.6s
+[00:19:06] [40/59] R60-1 random N=10 R=60 seed=1 用时 0.5s
+[00:19:06] [41/59] R60-2 random N=10 R=60 seed=2 用时 0.5s
+[00:19:06] [42/59] R60-3 random N=10 R=60 seed=3 用时 0.5s
+[00:19:07] [43/59] R60-4 random N=10 R=60 seed=4 用时 0.5s
+[00:19:07] [44/59] R60-5 random N=10 R=60 seed=5 用时 0.5s
+[00:19:08] [45/59] R60-6 random N=10 R=60 seed=6 用时 0.5s
+[00:19:08] [46/59] R60-7 random N=10 R=60 seed=7 用时 0.5s
+[00:19:09] [47/59] R60-8 random N=10 R=60 seed=8 用时 0.5s
+[00:19:09] [48/59] R20F-1 fixed-random N=10 R=20 seed=1 (turnover-matched) 用时 0.5s
+[00:19:10] [49/59] R20F-2 fixed-random N=10 R=20 seed=2 (turnover-matched) 用时 0.5s
+[00:19:11] [50/59] R20F-3 fixed-random N=10 R=20 seed=3 (turnover-matched) 用时 0.6s
+[00:19:11] [51/59] R20F-4 fixed-random N=10 R=20 seed=4 (turnover-matched) 用时 0.6s
+[00:19:12] [52/59] R20F-5 fixed-random N=10 R=20 seed=5 (turnover-matched) 用时 0.5s
+[00:19:12] [53/59] R20F-6 fixed-random N=10 R=20 seed=6 (turnover-matched) 用时 0.5s
+[00:19:13] [54/59] R20F-7 fixed-random N=10 R=20 seed=7 (turnover-matched) 用时 0.5s
+[00:19:13] [55/59] R20F-8 fixed-random N=10 R=20 seed=8 (turnover-matched) 用时 0.5s
+[00:19:14] [56/59] R60F-1 fixed-random N=10 R=60 seed=1 (turnover-matched) 用时 0.6s
+[00:19:14] [57/59] R60F-2 fixed-random N=10 R=60 seed=2 (turnover-matched) 用时 0.5s
+[00:19:15] [58/59] R60F-3 fixed-random N=10 R=60 seed=3 (turnover-matched) 用时 0.5s
+[00:19:15] [59/59] R60F-4 fixed-random N=10 R=60 seed=4 (turnover-matched) 用时 0.5s
+[00:19:15] 全部运行完成，用时 229.7s
+[00:19:17] 组合模拟完成：59 个运行，选择配置 26 个
+[00:19:32] 主配置分层完成：654 笔；绝对动量约束期数=159，正动量股票中位=776，少于 N 的期数=0
+[00:19:32] 统计检验开始
+[00:19:35] DSR=0.038 PBO=0.020
+[00:19:35] 报告已生成
+[00:19:35] ===== LTM all 完成，总用时 338.5s =====

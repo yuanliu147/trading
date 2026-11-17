@@ -1,0 +1,4 @@
+﻿window,n,rho_state_fwdvol,rho_state_fwdret,rho_B3_fwdvol,rho_P_fwdret,rho_vol20_fwdvol,rho_state_fwdvol_ctrl_vol20,rho_B3_fwdvol_ctrl_vol20,rho_state_fwdvol_ctrl_vol60,rho_state_fwdret_ctrl_vol20,rho_state_fwdup_ctrl,rho_state_fwddn_ctrl
+dev,1946,0.2613,-0.0418,0.1678,0.0672,0.5813,0.0363,-0.048,0.1521,-0.059,0.137,-0.0337
+val,1198,0.1563,0.0909,0.3041,-0.0901,0.4789,-0.002,0.1537,0.0921,0.0546,0.0358,-0.0291
+full,3144,0.2179,-0.0021,0.2379,0.0275,0.5995,0.0031,0.0265,0.1169,-0.0322,0.0671,-0.0425

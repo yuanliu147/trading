@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "rows": 8434043,
+    "codes": 3095,
+    "dates": 4132,
+    "start": "2004-01-02",
+    "end": "2020-12-31",
+    "panel_sha": "eb4aac65a980d86d",
+    "code_sha": "f8241e3742952509",
+    "window_start": "2008-01-01",
+    "window_end": "2020-12-31",
+    "adjust": "hfq_rebuilt_from_pct_chg",
+    "cost_model_id": "C-REAL-V1"
+  },
+  "checks": [
+    {
+      "id": "S1",
+      "name": "hfq 日收益 ≡ pct_chg",
+      "status": "pass",
+      "detail": "300 只 / 850,335 行，max|diff|=1.991e-15"
+    }
+  ],
+  "signals": [
+    {
+      "entry": "A_55突破",
+      "raw_signals": 157706,
+      "kept": 55786,
+      "suppressed": 101920
+    },
+    {
+      "entry": "B_趋势回调",
+      "raw_signals": 132571,
+      "kept": 56289,
+      "suppressed": 76282
+    }
+  ],
+  "signal_yearly": [
+    {
+      "year": 2004,
+      "kept": 86,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2005,
+      "kept": 92,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2006,
+      "kept": 878,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2007,
+      "kept": 4339,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2008,
+      "kept": 989,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2009,
+      "kept": 5160,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2010,
+      "kept": 3806,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2011,
+      "kept": 1714,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2012,
+      "kept": 1671,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2013,
+      "kept": 3242,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2014,
+      "kept": 5296,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2015,
+      "kept": 7043,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2016,
+      "kept": 4383,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2017,
+      "kept": 3551,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2018,
+      "kept": 1921,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2019,
+      "kept": 5442,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2020,
+      "kept": 6173,
+      "entry": "A_55突破"
+    },
+    {
+      "year": 2004,
+      "kept": 104,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2005,
+      "kept": 85,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2006,
+      "kept": 726,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2007,
+      "kept": 3343,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2008,
+      "kept": 1081,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2009,
+      "kept": 5579,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2010,
+      "kept": 4125,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2011,
+      "kept": 1916,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2012,
+      "kept": 1772,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2013,
+      "kept": 3546,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2014,
+      "kept": 5303,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2015,
+      "kept": 5786,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2016,
+      "kept": 5456,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2017,
+      "kept": 4104,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2018,
+      "kept": 2077,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2019,
+      "kept": 4787,
+      "entry": "B_趋势回调"
+    },
+    {
+      "year": 2020,
+      "kept": 6499,
+      "entry": "B_趋势回调"
+    }
+  ]
+}

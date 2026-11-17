@@ -1,0 +1,5 @@
+﻿config,n_raw,n_entry,n_rejected,n_symbols,dev,val,filters,note
+L0,1246,1236,10,915,871,276,N55 + atr<=p30 + trend:ma60 + platform<=12% + vol>=1.5x + ext<=12%/6% + first,可行性L0：全条件
+L1,1605,1591,14,1100,1114,334,N55 + atr<=p30 + trend:ma60 + vol>=1.5x + ext<=12%/6% + first,可行性L1：去平台
+L2,2901,2875,26,1546,1917,708,N55 + atr<=p40 + trend:ma60 + vol>=1.5x + ext<=12%/6% + first,可行性L2：去平台+收缩40%
+L3,4396,4336,60,1902,2883,924,N55 + atr<=p40 + trend:ma60 + vol>=1.5x + ext<=20%/10% + first,可行性L3：去平台+收缩40%+延伸放宽到20%/10%
