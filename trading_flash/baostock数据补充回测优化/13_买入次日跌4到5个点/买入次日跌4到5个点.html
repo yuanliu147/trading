@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>买入次日跌4-5个点，后来怎么样了？</title>
+<style>
+:root{--ink:#18202a;--muted:#667085;--line:#e7eaf0;--bg:#f6f7f9;--card:#fff;
+--red:#d64545;--red-soft:#fbeaea;--green:#1f8a5b;--green-soft:#e9f6ef;
+--blue:#2f5f9e;--blue-soft:#eaf1f9;--amber:#b7791f;--amber-soft:#fdf3e3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Microsoft YaHei",sans-serif;
+line-height:1.65;font-size:15px}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 56px}
+header{background:linear-gradient(135deg,#16202b,#26384a);color:#fff;border-radius:16px;padding:30px 32px;margin-bottom:18px}
+header .tag{display:inline-block;font-size:12px;letter-spacing:.08em;color:#c9d6e3;border:1px solid rgba(255,255,255,.25);padding:3px 9px;border-radius:999px;margin-bottom:14px}
+h1{font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:700}
+header p{margin:0;color:#c9d6e3;font-size:14px}
+.callout{background:#fff;border:1px solid var(--line);border-left:5px solid var(--red);border-radius:12px;padding:18px 20px;margin:16px 0 8px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.callout b{color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:16px 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 14px 11px}
+.card .v{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.card .l{font-size:12px;color:var(--muted);margin-top:2px}
+.card .s{font-size:11px;color:var(--muted);margin-top:3px}
+.red{color:var(--red)}.green{color:var(--green)}.blue{color:var(--blue)}.amber{color:var(--amber)}
+section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:16px 0}
+h2{font-size:20px;margin:0 0 12px;letter-spacing:-.01em}
+h3{font-size:15px;margin:18px 0 8px}
+p{margin:8px 0}
+.muted{color:var(--muted)}.small{font-size:12.5px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th{color:var(--muted);font-weight:600;background:#fbfcfd;position:sticky;top:0}
+th:first-child,td:first-child{text-align:left}
+tr:hover td{background:#fafbfc}
+.tbl-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:560px}
+.pill{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11.5px;font-weight:600}
+.pill.red{background:var(--red-soft);color:var(--red)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.gray{background:#f1f3f6;color:#667085}
+.pill.blue{background:var(--blue-soft);color:var(--blue)}
+.bars{display:grid;grid-template-columns:92px 1fr 88px;gap:6px 10px;align-items:center;margin:10px 0 4px}
+.bars .label{font-size:12px;color:var(--muted);text-align:right}
+.bar{height:17px;background:#f1f3f6;border-radius:5px;position:relative}
+.bar .base{position:absolute;left:0;top:0;height:100%;background:#dce1e8;border-radius:5px;z-index:0}
+.bar .event{position:relative;display:block;height:100%;border-radius:5px;background:#d64545;z-index:1}
+.bar .tick{position:absolute;top:-1px;height:19px;width:2px;background:#475467;z-index:2;opacity:.85}
+.bars .value{font-size:12px;font-weight:600;text-align:left;white-space:nowrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.note{background:var(--amber-soft);border:1px solid #f2dfbd;border-radius:10px;padding:12px 14px;font-size:13px;color:#7a5312;margin:12px 0}
+.key{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13px}
+.key b{color:var(--ink)}
+ul{margin:8px 0 4px;padding-left:20px}li{margin:5px 0}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:22px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:1fr}h1{font-size:25px}}
+@media(max-width:560px){.grid{grid-template-columns:repeat(2,1fr)}header{padding:22px}.wrap{padding:16px 12px 40px}}
+</style></head><body><div class="wrap">
+<header>
+<div class="tag">主板恐慌反转 · 买入后路径研究</div>
+<h1>买入次日跌 4–5 个点，后来怎么样了？</h1>
+<p>全部信号前二 1,256 笔｜事件 35 笔｜2005-02 至 2026-10｜+20% 止盈或 15 日到期</p>
+</header>
+
+<div class="note" style="background:#fff7f7;border-color:#f2c9c9;color:#8a2b2b">
+<b>2026-11-02 更新：</b>603778 11/2 最低 6.48 假破 6.72，收盘 6.92 收回，D+3 收 −3.62%；前二第三次还是 603778/605376。注意：本页的 47.1% 是 <b>D+1 当日跌 4–5%</b>，不是当前状态。详见 <a href="当前案例_603778_2026-11-02.html" style="color:#8a2b2b;font-weight:700">11/2 更新</a>｜<a href="当前案例_603778_2026-10-30.html" style="color:#8a2b2b">10/30 快照</a>。
+</div>
+
+<div class="callout">
+<b>有，但不多：35 笔，占 2.8%。</b>它不是死亡判决，但把“典型交易”从 +4.9% 打回 +0.6%：
+最终亏损率从 <b>35.0%</b> 升到 <b>47.1%</b>，中位收益从 <b>+4.9%</b> 降到 <b>+0.6%</b>。
+均值 <b>+3.1%</b> 主要靠 8 笔 +20% 止盈撑着；剩下 26 笔平均 <b>−2.1%</b>。
+</div>
+
+<div class="grid">
+<div class="card"><div class="v">35</div><div class="l">历史事件</div><div class="s">占 1,256 笔的 2.8%</div></div>
+<div class="card"><div class="v red">47.1%</div><div class="l">最终亏损率</div><div class="s">基准 35.0%</div></div>
+<div class="card"><div class="v green">+3.1%</div><div class="l">最终均值</div><div class="s">基准 +4.9%</div></div>
+<div class="card"><div class="v">+0.6%</div><div class="l">最终中位数</div><div class="s">基准 +4.9%</div></div>
+<div class="card"><div class="v">23.5%</div><div class="l">+20% 止盈率</div><div class="s">基准 28.9%</div></div>
+<div class="card"><div class="v amber">8.8%</div><div class="l">最终 ≤ −15%</div><div class="s">基准 7.8%</div></div>
+</div>
+
+<section>
+<h2>先看结论</h2>
+<ul>
+<li><b>不是“跌 4–5% 就完了”，但也不是“跌了更便宜”。</b>事件组最终均值仍为正，中位数却几乎归零；亏损率比基准高 12 个百分点。</li>
+<li><b>均值是右尾撑起来的。</b>8/34 笔最终 +20% 止盈；其余 26 笔平均 −2.1%，其中 3 笔 ≤ −15%。典型交易只是“打平”，不是“稳赚”。</li>
+<li><b>榜一和榜二差很多，但样本太小。</b>榜一事件 17 笔：均值 +6.5%、亏损率 31.3%，和榜一基准差不多；榜二事件 18 笔：均值 +0.1%、亏损率 61.1%，明显更差。Fisher 检验 p≈0.10，不能当铁律。</li>
+<li><b>−4~−5% 不是悬崖，是斜坡。</b>−3~−4% 亏损率 39.0%，−4~−5% 47.1%，−5~−6% 56.7%，&lt;−7% 60.4%。越深越差，但 −4~−5% 只是中间一段。</li>
+<li><b>如果你说的是“大盘”而不是个股：</b>27 笔，全部发生在 2007–2016；2008 年那 8 笔均值 −9.2%、亏损率 87.5%，2015–16 的 11 笔均值 +10.0%、亏损率 36.4%。2017 年后没有同口径样本，不能外推。</li>
+</ul>
+</section>
+
+<section>
+<h2>收益分布：近一半小亏或打平，约四分之一止盈</h2>
+<p class="small muted">红色＝事件组；灰色＝全部信号前二基准；深色竖线＝基准位置。按最终收益（+20% 止盈或 15 日到期）分箱。</p>
+<div class="bars"><div class="label">≤-15%</div><div class="bar"><span class="base" style="width:27.1%"></span><span class="event" style="width:30.6%"></span><span class="tick" style="left:27.1%"></span></div><div class="value">8.8% <span class="muted">/ 7.8%</span></div><div class="label">-15~-10%</div><div class="bar"><span class="base" style="width:20.5%"></span><span class="event" style="width:20.4%"></span><span class="tick" style="left:20.5%"></span></div><div class="value">5.9% <span class="muted">/ 5.9%</span></div><div class="label">-10~-5%</div><div class="bar"><span class="base" style="width:24.6%"></span><span class="event" style="width:30.6%"></span><span class="tick" style="left:24.6%"></span></div><div class="value">8.8% <span class="muted">/ 7.1%</span></div><div class="label">-5~0%</div><div class="bar"><span class="base" style="width:49.0%"></span><span class="event" style="width:81.5%"></span><span class="tick" style="left:49.0%"></span></div><div class="value">23.5% <span class="muted">/ 14.2%</span></div><div class="label">0~+5%</div><div class="bar"><span class="base" style="width:52.6%"></span><span class="event" style="width:40.7%"></span><span class="tick" style="left:52.6%"></span></div><div class="value">11.8% <span class="muted">/ 15.2%</span></div><div class="label">+5~+10%</div><div class="bar"><span class="base" style="width:40.2%"></span><span class="event" style="width:51.0%"></span><span class="tick" style="left:40.2%"></span></div><div class="value">14.7% <span class="muted">/ 11.6%</span></div><div class="label">+10~+20%</div><div class="bar"><span class="base" style="width:32.4%"></span><span class="event" style="width:10.2%"></span><span class="tick" style="left:32.4%"></span></div><div class="value">2.9% <span class="muted">/ 9.3%</span></div><div class="label">+20%止盈</div><div class="bar"><span class="base" style="width:100.0%"></span><span class="event" style="width:81.5%"></span><span class="tick" style="left:100.0%"></span></div><div class="value">23.5% <span class="muted">/ 28.9%</span></div></div>
+<div class="two" style="margin-top:14px">
+<div class="key"><b>事件组：</b>8 笔止盈 +20%；8 笔落在 −5%~0%；3 笔 ≤ −15%；只有 1 笔在 +10%~+20%。分布是“哑铃型”，不是正态。</div>
+<div class="key"><b>基准：</b>28.9% 止盈；14.2% 落在 −5%~0%；7.8% ≤ −15%。事件组把“小赚/小亏”往两端推，尤其是 +20% 和小亏之间。</div>
+</div>
+</section>
+
+<section>
+<h2>和基准比：均值只差 1.8pp，中位数差 4.3pp</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>指标</th><th>事件（35 笔，34 笔有最终收益）</th><th>基准（1,251 笔）</th><th>差异</th></tr></thead>
+<tbody>
+<tr><td>最终均值</td><td class="green">+3.1%</td><td class="green">+4.9%</td><td>−1.8pp</td></tr>
+<tr><td>最终中位数</td><td>+0.6%</td><td>+4.9%</td><td>−4.3pp</td></tr>
+<tr><td>胜率</td><td>52.9%</td><td>64.8%</td><td>−11.9pp</td></tr>
+<tr><td>亏损率</td><td class="red">47.1%</td><td>35.0%</td><td>+12.1pp</td></tr>
+<tr><td>+20% 止盈率</td><td>23.5%</td><td>28.9%</td><td>−5.3pp</td></tr>
+<tr><td>最终 ≤ −10%</td><td>14.7%</td><td>13.8%</td><td>+1.0pp</td></tr>
+<tr><td>最终 ≤ −15%</td><td>8.8%</td><td>7.8%</td><td>+1.0pp</td></tr>
+<tr><td>最大浮亏中位数</td><td class="red">−8.4%</td><td>−4.5%</td><td>−3.9pp</td></tr>
+<tr><td>均值 95% CI</td><td>−1.1% ~ +7.3%</td><td>+4.2% ~ +5.7%</td><td>跨 0</td></tr>
+</tbody></table></div>
+<p class="small muted">收益为后复权、未扣交易成本；双边约 0.35%，扣后事件均值约 +2.8%、中位约 +0.2%。95% CI 跨 0，说明 35 笔样本不足以证明“必赚”或“必亏”。差异列按未四舍五入值计算，个别行与两个显示值相减会差 0.1pp。</p>
+</section>
+
+<section>
+<h2>榜一 vs 榜二：榜二这次明显更差</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>分组</th><th>笔数</th><th>均值</th><th>中位数</th><th>亏损率</th><th>止盈率</th><th>≤ −15%</th></tr></thead>
+<tbody>
+<tr><td>榜一 · 事件</td><td>17</td><td class="green">+6.5%</td><td>+7.1%</td><td>31.3%</td><td>37.5%</td><td>12.5%</td></tr>
+<tr><td>榜一 · 基准</td><td>687</td><td class="green">+5.6%</td><td>+5.9%</td><td>33.2%</td><td>32.0%</td><td>8.0%</td></tr>
+<tr><td>榜二 · 事件</td><td>18</td><td class="green">+0.1%</td><td>−0.8%</td><td class="red">61.1%</td><td>11.1%</td><td>5.6%</td></tr>
+<tr><td>榜二 · 基准</td><td>569</td><td class="green">+4.2%</td><td>+3.9%</td><td>37.2%</td><td>25.0%</td><td>7.6%</td></tr>
+</tbody></table></div>
+<div class="note"><b>别把这个当成“只买榜一”的新证据。</b>榜一事件 17 笔（16 笔有最终收益）、榜二 18 笔，差异 p≈0.10；而且换成“相对买入价跌 4–5%”的口径，榜一均值 +0.8%、亏损率 48%，榜二均值 +2.3%、亏损率 38.9%，方向反过来了。榜一优势对“怎么定义跌 4–5%”很敏感。</div>
+</section>
+
+<section>
+<h2>不是所有下跌都一样：越深越差</h2>
+<p class="small muted">按 D+1 收盘涨跌幅分组，看最终收益。加粗行是本次主口径。</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>D+1 涨跌幅</th><th>笔数</th><th>最终均值</th><th>最终中位数</th><th>亏损率</th><th>止盈率</th><th>≤ −15%</th></tr></thead>
+<tbody><tr><td>&lt;-7%</td><td>53</td><td class="red">−5.3%</td><td class="red">−4.8%</td><td><span class="pill red">60.4%</span></td><td>15.1%</td><td>32.1%</td></tr><tr><td>-7~-6%</td><td>12</td><td class="green">+1.6%</td><td class="red">−2.3%</td><td><span class="pill red">66.7%</span></td><td>25.0%</td><td>8.3%</td></tr><tr><td>-6~-5%</td><td>30</td><td class="green">+0.1%</td><td class="red">−1.7%</td><td><span class="pill red">56.7%</span></td><td>16.7%</td><td>6.7%</td></tr><tr style="font-weight:700;background:#fff7f7"><td>-5~-4%</td><td>35</td><td class="green">+3.1%</td><td class="green">+0.6%</td><td><span class="pill amber">47.1%</span></td><td>23.5%</td><td>8.8%</td></tr><tr><td>-4~-3%</td><td>59</td><td class="green">+3.5%</td><td class="green">+2.0%</td><td><span class="pill green">39.0%</span></td><td>22.0%</td><td>8.5%</td></tr><tr><td>-3~-2%</td><td>111</td><td class="green">+0.4%</td><td class="green">+1.6%</td><td><span class="pill amber">44.6%</span></td><td>16.4%</td><td>14.6%</td></tr><tr><td>-2~-1%</td><td>149</td><td class="green">+1.4%</td><td class="green">+0.4%</td><td><span class="pill amber">49.7%</span></td><td>14.1%</td><td>8.7%</td></tr><tr><td>-1~0%</td><td>133</td><td class="green">+3.2%</td><td class="green">+3.1%</td><td><span class="pill amber">40.2%</span></td><td>19.7%</td><td>6.1%</td></tr><tr><td>0~+1%</td><td>184</td><td class="green">+5.7%</td><td class="green">+6.3%</td><td><span class="pill green">31.7%</span></td><td>29.5%</td><td>7.1%</td></tr><tr><td>+1~+2%</td><td>143</td><td class="green">+5.7%</td><td class="green">+5.8%</td><td><span class="pill green">28.9%</span></td><td>28.2%</td><td>4.9%</td></tr><tr><td>+2~+3%</td><td>96</td><td class="green">+8.0%</td><td class="green">+6.6%</td><td><span class="pill green">20.8%</span></td><td>35.4%</td><td>4.2%</td></tr><tr><td>+3~+4%</td><td>70</td><td class="green">+6.8%</td><td class="green">+7.4%</td><td><span class="pill green">31.4%</span></td><td>35.7%</td><td>4.3%</td></tr><tr><td>+4~+5%</td><td>47</td><td class="green">+10.6%</td><td class="green">+14.0%</td><td><span class="pill green">21.3%</span></td><td>44.7%</td><td>4.3%</td></tr><tr><td>+5~+7%</td><td>52</td><td class="green">+9.6%</td><td class="green">+13.0%</td><td><span class="pill green">19.2%</span></td><td>42.3%</td><td>5.8%</td></tr><tr><td>&gt;+7%</td><td>82</td><td class="green">+16.4%</td><td class="green">+20.0%</td><td><span class="pill green">6.1%</span></td><td>76.8%</td><td>1.2%</td></tr></tbody></table></div>
+<p class="small muted">−5~−4% 的亏损率 47.1%，低于 −5~−6% 的 56.7% 和 &lt;−7% 的 60.4%，但高于 −4~−3% 的 39.0%。这是一条连续梯度，不是“跌到 4% 就反转”的魔法阈值。</p>
+</section>
+
+<section>
+<h2>如果跌的是大盘：27 笔，全部在 2007–2016</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>口径</th><th>笔数</th><th>最终均值</th><th>最终中位数</th><th>亏损率</th><th>止盈率</th><th>≤ −15%</th></tr></thead>
+<tbody><tr><td>大盘 D+1 跌 4–5%</td><td>27</td><td class="green">+3.7%</td><td class="red">−0.8%</td><td class="red">51.9%</td><td>37.0%</td><td>11.1%</td></tr><tr><td>其中：2008 年</td><td>8</td><td class="red">−9.2%</td><td class="red">−10.7%</td><td class="red">87.5%</td><td>12.5%</td><td>37.5%</td></tr><tr><td>其中：非 2008</td><td>19</td><td class="green">+9.1%</td><td class="green">+14.6%</td><td class="">36.8%</td><td>47.4%</td><td>0.0%</td></tr><tr><td>其中：2015–2016</td><td>11</td><td class="green">+10.0%</td><td class="green">+20.0%</td><td class="">36.4%</td><td>54.6%</td><td>0.0%</td></tr><tr><td>其中：2007/2012/2013</td><td>8</td><td class="green">+7.8%</td><td class="green">+4.1%</td><td class="">37.5%</td><td>37.5%</td><td>0.0%</td></tr></tbody></table></div>
+<div class="note"><b>这是“市场状态”问题，不是“跌 4–5%”本身。</b>2008 年那 8 笔几乎全亏（亏损率 87.5%）；2015–16 的 11 笔均值 +10.0%、亏损率 36.4%。2017 年后在已买入交易里没有同口径样本，不能把 2008 的坏或 2015 的好直接套到今天。</div>
+</section>
+
+<section>
+<h2>后来怎么走：次日小反弹，但 5 天内没收回成本</h2>
+<div class="two">
+<div>
+<div class="tbl-wrap"><table>
+<thead><tr><th>观察点</th><th>均值</th><th>中位数</th><th>上涨概率</th></tr></thead>
+<tbody>
+<tr><td>D+2 当日</td><td class="green">+0.6%</td><td class="green">+0.8%</td><td>57.1%</td></tr><tr><td>D+2 累计（相对买入价）</td><td class="red">−2.8%</td><td class="red">−3.0%</td><td>34.3%</td></tr><tr><td>D+3 当日</td><td class="green">+0.2%</td><td class="green">+0.5%</td><td>54.3%</td></tr><tr><td>D+3 累计（相对买入价）</td><td class="red">−2.7%</td><td class="red">−3.0%</td><td>25.7%</td></tr><tr><td>D+5 累计（相对买入价）</td><td class="red">−1.8%</td><td class="red">−3.0%</td><td>35.3%</td></tr>
+</tbody></table></div>
+</div>
+<div class="key">
+<b>读法：</b>D+1 已经跌了 4–5%，D+2 当天平均只反弹 +0.55%，57.1% 上涨；但相对买入价仍平均 −2.78%。到 D+5 仍平均 −1.77%，只有 35.3% 的持仓回到买入价上方。<br><br>
+<b>所以：</b>“次日反弹”是有的，但幅度不足以把“跌 4–5%”一笔勾销；把它当“马上会解套”容易失望。
+</div>
+</div>
+</section>
+
+<section>
+<h2>35 笔明细</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>信号日</th><th>买入日</th><th>代码 / 当前简称</th><th>排名</th><th>次日</th><th>相对买入价</th><th>D+2</th><th>最终</th><th>止盈</th><th>止盈日</th><th>实际</th><th>实盘净收益</th></tr></thead>
+<tbody><tr><td>2007-07-10</td><td>2007-07-13</td><td>sz.000504 南华生物</td><td>1</td><td class="red">−4.4%</td><td class="red">−5.0%</td><td class="green">+7.7%</td><td class="green">+20.0%</td><td>是</td><td>D+14</td><td>—</td><td class="">—</td></tr><tr><td>2007-10-26</td><td>2007-10-31</td><td>sz.000033 新都退</td><td>2</td><td class="red">−4.5%</td><td class="red">−1.2%</td><td class="red">−4.2%</td><td class="green">+4.1%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2007-10-29</td><td>2007-11-01</td><td>sz.000033 新都退</td><td>2</td><td class="red">−4.2%</td><td class="red">−8.7%</td><td class="green">+4.0%</td><td class="red">−2.7%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2007-11-02</td><td>2007-11-07</td><td>sh.600866 星湖科技</td><td>2</td><td class="red">−4.4%</td><td class="red">−5.9%</td><td class="green">+0.4%</td><td class="red">−5.0%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2007-11-06</td><td>2007-11-09</td><td>sh.600981 苏豪汇鸿</td><td>1</td><td class="red">−4.3%</td><td class="red">−4.6%</td><td class="green">+10.0%</td><td class="green">+20.0%</td><td>是</td><td>D+14</td><td>—</td><td class="">—</td></tr><tr><td>2007-11-15</td><td>2007-11-20</td><td>sh.600379 宝光股份</td><td>1</td><td class="red">−4.5%</td><td class="red">−5.5%</td><td class="red">−7.3%</td><td class="red">−0.4%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2007-11-16</td><td>2007-11-21</td><td>sh.600298 安琪酵母</td><td>2</td><td class="red">−4.5%</td><td class="red">−7.3%</td><td class="green">+4.5%</td><td class="green">+20.0%</td><td>是</td><td>D+14</td><td>—</td><td class="">—</td></tr><tr><td>2008-03-18</td><td>2008-03-21</td><td>sz.000069 华侨城A</td><td>2</td><td class="red">−4.1%</td><td class="red">−2.8%</td><td class="green">+4.6%</td><td class="red">−7.6%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2008-04-08</td><td>2008-04-11</td><td>sh.600871 石化油服</td><td>1</td><td class="red">−5.0%</td><td class="green">+0.2%</td><td class="red">−0.5%</td><td class="green">+0.8%</td><td>—</td><td>—</td><td>实盘</td><td class="green">+0.5%</td></tr><tr><td>2008-04-22</td><td>2008-04-25</td><td>sz.000751 锌业股份</td><td>2</td><td class="red">−4.7%</td><td class="red">−2.4%</td><td class="red">−0.6%</td><td class="green">+4.9%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2008-06-06</td><td>2008-06-12</td><td>sh.600376 首开股份</td><td>1</td><td class="red">−4.7%</td><td class="red">−0.5%</td><td class="green">+1.2%</td><td class="red">−17.9%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2008-07-04</td><td>2008-07-09</td><td>sh.600090 退市济堂</td><td>1</td><td class="red">−4.3%</td><td class="red">−2.5%</td><td class="red">−3.0%</td><td class="green">+5.1%</td><td>—</td><td>—</td><td>实盘</td><td class="green">+3.4%</td></tr><tr><td>2011-09-23</td><td>2011-09-28</td><td>sh.600332 白云山</td><td>2</td><td class="red">−4.1%</td><td class="red">−6.3%</td><td class="red">−1.7%</td><td class="red">−13.0%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2011-12-09</td><td>2011-12-14</td><td>sz.002256 兆新股份</td><td>1</td><td class="red">−4.1%</td><td class="red">−6.1%</td><td class="green">+3.1%</td><td class="red">−19.6%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2011-12-15</td><td>2011-12-20</td><td>sz.002102 ST能特</td><td>1</td><td class="red">−4.6%</td><td class="red">−1.7%</td><td class="green">+2.4%</td><td class="red">−3.6%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2011-12-15</td><td>2011-12-20</td><td>sh.600898 *ST美讯</td><td>2</td><td class="red">−4.8%</td><td class="red">−4.4%</td><td class="red">−9.7%</td><td class="red">−13.9%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2011-12-28</td><td>2012-01-04</td><td>sz.000620 盈新发展</td><td>2</td><td class="red">−4.1%</td><td class="red">−7.5%</td><td class="red">−2.3%</td><td class="red">−0.8%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2015-09-02</td><td>2015-09-09</td><td>sh.600571 信雅达</td><td>1</td><td class="red">−5.0%</td><td class="red">−0.8%</td><td class="green">+2.7%</td><td class="red">−5.4%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2015-09-02</td><td>2015-09-09</td><td>sh.600570 恒生电子</td><td>2</td><td class="red">−4.4%</td><td class="green">+4.2%</td><td class="green">+0.8%</td><td class="red">−3.2%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2015-09-11</td><td>2015-09-16</td><td>sz.002260 德奥退</td><td>1</td><td class="red">−4.8%</td><td class="green">+7.6%</td><td class="green">+0.0%</td><td class="green">+20.0%</td><td>是</td><td>D+14</td><td>—</td><td class="">—</td></tr><tr><td>2016-01-22</td><td>2016-01-27</td><td>sz.000062 深圳华强</td><td>2</td><td class="red">−4.4%</td><td class="red">−3.4%</td><td class="green">+7.2%</td><td class="green">+20.0%</td><td>是</td><td>D+14</td><td>—</td><td class="">—</td></tr><tr><td>2016-02-29</td><td>2016-03-03</td><td>sz.002611 东方精工</td><td>2</td><td class="red">−4.3%</td><td class="red">−5.4%</td><td class="green">+2.1%</td><td class="green">+7.6%</td><td>—</td><td>—</td><td>实盘</td><td class="green">+7.3%</td></tr><tr><td>2016-05-12</td><td>2016-05-17</td><td>sz.000062 深圳华强</td><td>1</td><td class="red">−4.3%</td><td class="red">−2.2%</td><td class="green">+1.5%</td><td class="green">+11.0%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2017-05-16</td><td>2017-05-19</td><td>sh.603528 多伦科技</td><td>1</td><td class="red">−4.2%</td><td class="red">−6.0%</td><td class="red">−6.0%</td><td class="green">+20.0%</td><td>是</td><td>D+13</td><td>—</td><td class="">—</td></tr><tr><td>2017-05-17</td><td>2017-05-22</td><td>sz.000912 泸天化</td><td>2</td><td class="red">−4.8%</td><td class="red">−8.4%</td><td class="green">+0.8%</td><td class="red">−2.1%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2017-12-06</td><td>2017-12-11</td><td>sh.603819 神力股份</td><td>2</td><td class="red">−4.3%</td><td class="red">−4.1%</td><td class="green">+1.3%</td><td class="red">−0.9%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2018-10-12</td><td>2018-10-17</td><td>sh.601360 三六零</td><td>2</td><td class="red">−4.2%</td><td class="red">−2.4%</td><td class="green">+2.5%</td><td class="green">+9.7%</td><td>—</td><td>—</td><td>实盘</td><td class="green">+9.5%</td></tr><tr><td>2019-06-10</td><td>2019-06-13</td><td>sh.601519 大智慧</td><td>1</td><td class="red">−4.1%</td><td class="green">+1.1%</td><td class="green">+1.4%</td><td class="green">+20.0%</td><td>是</td><td>D+7</td><td>实盘</td><td class="green">+19.7%</td></tr><tr><td>2024-01-23</td><td>2024-01-26</td><td>sh.601900 南方传媒</td><td>1</td><td class="red">−4.4%</td><td class="red">−3.0%</td><td class="red">−3.3%</td><td class="green">+7.3%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2024-01-23</td><td>2024-01-26</td><td>sh.603196 璞源材料</td><td>2</td><td class="red">−4.6%</td><td class="red">−6.1%</td><td class="red">−2.7%</td><td class="red">−15.6%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2025-01-06</td><td>2025-01-09</td><td>sh.603038 华立股份</td><td>2</td><td class="red">−4.0%</td><td class="red">−2.9%</td><td class="red">−0.7%</td><td class="red">−0.3%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2026-07-01</td><td>2026-07-06</td><td>sh.600408 安泰集团</td><td>2</td><td class="red">−4.0%</td><td class="red">−4.4%</td><td class="red">−0.8%</td><td class="green">+0.4%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2026-07-09</td><td>2026-07-14</td><td>sz.000603 盛达资源</td><td>1</td><td class="red">−4.1%</td><td class="green">+0.1%</td><td class="red">−1.8%</td><td class="green">+20.0%</td><td>是</td><td>D+14</td><td>—</td><td class="">—</td></tr><tr><td>2026-07-24</td><td>2026-07-29</td><td>sh.603216 梦天家居</td><td>1</td><td class="red">−4.1%</td><td class="red">−4.2%</td><td class="green">+4.9%</td><td class="green">+6.9%</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr><tr><td>2026-10-16</td><td>2026-10-21</td><td>sz.000426 兴业银锡</td><td>1</td><td class="red">−4.4%</td><td class="red">−3.3%</td><td class="green">+0.8%</td><td class="">未满15日</td><td>—</td><td>—</td><td>—</td><td class="">—</td></tr></tbody></table></div>
+<p class="small muted">“最终”列是统一规则（+20% 止盈 / 15 日到期）的模拟值；“实盘净收益”列只对 5 笔实际成交有值，5 笔全为正（均值 +8.1%），但不能说明概率。2026-10-16 信号 000426 未满 15 日，最终收益为空。<br>
+名称采用当前股票简称（含当前 ST/退市状态），仅用于识别；信号日已排除风险警示，当前简称不代表信号日状态。</p>
+</section>
+
+<section>
+<h2>口径与边界</h2>
+<div class="two">
+<div class="key">
+<b>样本：</b>1,256 笔信号前二（含退市、信号日排除风险警示），219 笔实际成交；2005-02 至 2026-10。<br>
+<b>买入：</b>信号日 T 收盘后，T+3 开盘；一字涨停/停牌不买。<br>
+<b>持有：</b>15 个交易日；+20% 盘中止盈从 D+1 起算；跌停/停牌顺延。<br>
+<b>事件：</b>D+1 收盘 / D+0 收盘 − 1 ∈ [−5%, −4%)。<br>
+<b>最终收益：</b>+20% 止盈或 15 日到期收盘；后复权；未扣成本。
+</div>
+<div class="key">
+<b>限制 1：</b>35 笔、32 个独立事件日，样本小；均值 95% CI 为 −1.1%~+7.3%，跨 0。<br>
+<b>限制 2：</b>−4~−5% 是事后选的区间；相邻区间表说明它是连续梯度的一段，不是天然阈值。<br>
+<b>限制 3：</b>事件是“买入后”的条件，不是可交易信号；不能用来决定“明天买不买”。<br>
+<b>限制 4：</b>榜一/榜二差异对口径敏感，且 p≈0.10；不要据此改规则。<br>
+<b>限制 5：</b>大盘口径没有 2017 年后的样本；2008 与 2015 的结论相反，取决于市场状态。
+</div>
+</div>
+</section>
+
+<footer>
+数据：baostock 主板日线｜路径：12_买入后证伪_哪天没达标/03_结果/买入后逐日路径.parquet<br>
+历史回测不代表未来，不构成投资建议。生成于 2026-10-29 11:17:34。
+</footer>
+</div></body></html>

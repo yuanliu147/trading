@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-29 11:17:34",
+  "source": "12_买入后证伪_哪天没达标/03_结果/买入后逐日路径.parquet",
+  "trades_all": 1256,
+  "trades_actual": 219,
+  "final_sample": 1251,
+  "date_min": "2005-02-03",
+  "date_max": "2026-10-22",
+  "event_main": "D+1 close / D+0 close - 1 in [-5%, -4%)",
+  "outcome": "+20% intraday take-profit from D+1, else 15-day close; gross of costs",
+  "cost_note": "双边约 0.35%；净均值/净中位数已扣",
+  "partial": "2026-10-16 信号 000426 未满 15 日且未止盈，最终样本 34/35"
+}
