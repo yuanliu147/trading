@@ -1,0 +1,50 @@
+{
+  "同花顺表清单": [
+    {
+      "表": "calc_adjust_factor_daily",
+      "估计行数": 82947442
+    },
+    {
+      "表": "raw_kline_daily",
+      "估计行数": 20976162
+    },
+    {
+      "表": "raw_adjustment_events",
+      "估计行数": 461283
+    },
+    {
+      "表": "stg_adjustment_events",
+      "估计行数": 57709
+    },
+    {
+      "表": "stg_kline_daily",
+      "估计行数": 55676
+    },
+    {
+      "表": "dim_symbol",
+      "估计行数": 5581
+    },
+    {
+      "表": "stg_symbol",
+      "估计行数": 5574
+    },
+    {
+      "表": "_import_batches",
+      "估计行数": 8
+    },
+    {
+      "表": "_meta",
+      "估计行数": 5
+    }
+  ],
+  "日线表": {
+    "名": "calc_adjust_factor_daily",
+    "列": [
+      "thscode",
+      "date",
+      "forward_factor",
+      "backward_factor"
+    ],
+    "行数": 10398127
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "核心不变量_hfq收益等于pct_chg": {
+    "相邻日对": 8249520,
+    "最大偏差": 4.311655199540354e-15,
+    "超0.5bp行": 0
+  },
+  "同花顺库": {
+    "错误": "CatalogException: Catalog Error: Table with name \"information_schema.tables\" does not exist because schema \"information_schema\" does not exist.\n\nLINE 1: SELECT table_name FROM ht.information_schema.tables ORDER BY 1\n  "
+  }
+}
