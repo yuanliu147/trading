@@ -18,8 +18,8 @@ RISK = 0.02
 POS_CAP = 0.30
 MAX_POS = 6
 
-def gen_trades():
-    syms = m.liquid_symbols()
+def gen_trades(main_only=False):
+    syms = m.liquid_symbols(main_only=main_only)
     df, bundles = m.load_bundles(syms)
     regime3 = m.build_regime3(df)
     trades = []
@@ -98,7 +98,10 @@ def simulate(T, close_map):
     return eq, taken, skipped
 
 def main():
-    T, close_map = gen_trades()
+    import sys
+    main_only = "--main" in sys.argv[1:]
+    out = "portfolio_equity_1w_main.csv" if main_only else "portfolio_equity_1w.csv"
+    T, close_map = gen_trades(main_only=main_only)
     print(f"信号总数 {len(T)}（A:{(T.sys=='A').sum()} B:{(T.sys=='B').sum()}）")
     eq, taken, skipped = simulate(T, close_map)
     print(f"成交 {taken} 笔，因仓位/现金不足放弃 {skipped} 笔")
@@ -119,7 +122,7 @@ def main():
     mt["Y"] = mt.index.year; mt["M"] = mt.index.month
     piv = mt.pivot_table(index="Y", columns="M", values="ret").round(1)
     print(piv.to_string())
-    eq.to_csv("portfolio_equity_1w.csv")
+    eq.to_csv(out)
 
 if __name__ == "__main__":
     main()

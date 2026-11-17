@@ -32,7 +32,16 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = "/Users/xianyi/Library/Application Support/hithink-finance/data/market.duckdb"
 
 # ---------- 数据加载 ----------
-def liquid_symbols(min_bars=600, min_med_amt=1e8):
+def is_main_board(thscode):
+    """沪市主板 600/601/603/605，深市主板 000/001/002/003（含原中小板）"""
+    tic = thscode.split(".")[0]
+    if thscode.endswith(".SH"):
+        return tic.startswith(("600", "601", "603", "605"))
+    if thscode.endswith(".SZ"):
+        return tic.startswith(("000", "001", "002", "003"))
+    return False
+
+def liquid_symbols(min_bars=600, min_med_amt=1e8, main_only=False):
     import duckdb
     con = duckdb.connect(DB_PATH, read_only=True)
     rows = con.execute("""
@@ -41,7 +50,10 @@ def liquid_symbols(min_bars=600, min_med_amt=1e8):
           FROM v_daily_qfq GROUP BY thscode
         ) WHERE n >= ? AND med >= ?""", [min_bars, min_med_amt]).fetchall()
     con.close()
-    return [r[0] for r in rows]
+    syms = [r[0] for r in rows]
+    if main_only:
+        syms = [s for s in syms if is_main_board(s)]
+    return syms
 
 def load_stocks(symbols):
     import duckdb
@@ -124,7 +136,8 @@ def limit_pct(thscode):
 def backtest_symbol(o, h, l, c, lim, amt=None, vmed=None, reg_ok=None, sec_ok=None,
                     risk_pct=0.02, ma_n=24, be_tol=0.002, stop_buf=0.001,
                     max_risk_dist=0.06, pause_days=5, comm=0.0001, slip=0.0005,
-                    tp_ratio=1.0, trail=False, vol_mult=None,
+                    tp_ratio=1.0, trail=False, vol_mult=None, vol_lag=0,
+                    no_limitup_entry=False,
                     trend_gate="price", brk_n=2):
     n = len(c)
     if n < ma_n + 10:
@@ -221,6 +234,8 @@ def backtest_symbol(o, h, l, c, lim, amt=None, vmed=None, reg_ok=None, sec_ok=No
                     pos["stop"] = max(pos["stop"], pos["entry"])
                     pos["armed"] = True
                 if h[t] >= pos["tp"]:
+                    if c[t] < pos["stop"]:
+                        pos["conflict"] = 1
                     register_exit(pos["tp"] * (1 - slip), t, "tp")
                 elif c[t] < pos["stop"]:
                     if t == n - 1:
@@ -247,8 +262,11 @@ def backtest_symbol(o, h, l, c, lim, amt=None, vmed=None, reg_ok=None, sec_ok=No
                 blocked = True
             if sec_ok is not None and not sec_ok[t - 1]:
                 blocked = True
-            if (vol_mult is not None and vmed is not None and not np.isnan(vmed[t])
-                    and not amt[t] > vol_mult * vmed[t]):
+            if (vol_mult is not None and vmed is not None and not np.isnan(vmed[t])):
+                a_src = t - vol_lag
+                if a_src < 0 or not amt[a_src] > vol_mult * vmed[t]:
+                    blocked = True
+            if no_limitup_entry and t >= 1 and c[t] >= c[t - 1] * (1 + lim - 0.002):
                 blocked = True
             if trend_ok and breakout and not blocked:
                 level = np.max(h[t - brk_n:t])
@@ -264,7 +282,8 @@ def backtest_symbol(o, h, l, c, lim, amt=None, vmed=None, reg_ok=None, sec_ok=No
                         shares = sh
                         pos = {"entry_i": t, "entry": entry, "stop": stop,
                                "tp": entry + risk * tp_ratio, "shares": sh,
-                               "risk_amt": sh * risk, "eq0": capital, "armed": False}
+                               "risk_amt": sh * risk, "eq0": capital, "armed": False,
+                               "conflict": 0}
                         if c[t] < stop:   # 当天买入即破位，次日开盘离场（T+1）
                             exit_pending = True
 
@@ -444,6 +463,8 @@ SWEEPS_SECTOR = [
 def main():
     args = sys.argv[1:]
     kw = {}
+    main_only = "--main" in args
+    out_sfx = "_main" if main_only else ""
     if "--tp" in args:
         kw["tp_ratio"] = float(args[args.index("--tp") + 1])
     if "--trail" in args:
@@ -498,7 +519,7 @@ def main():
                       f"最大回撤 {np.min(eq/peak-1):.1%} | 买入持有 {df['close'].iloc[-1]/df['close'].iloc[0]-1:+.1%}")
         return
 
-    syms = liquid_symbols()
+    syms = liquid_symbols(main_only=main_only)
     print(f"样本: {len(syms)} 只（≥600根K线且日成交额中位数≥1亿）")
     df, bundles = load_bundles(syms)
     print(f"载入 {len(df)} 行日线")
@@ -525,8 +546,8 @@ def main():
             results.append({"config": name, **s})
             print(fmt_stats(name, s), flush=True)
         pd.DataFrame(results).to_csv(
-            os.path.join(HERE, "ladder_doublek_sweep_sector.csv" if "--sweep2" in args
-                         else "ladder_doublek_sweep.csv"), index=False)
+            os.path.join(HERE, f"ladder_doublek_sweep_sector{out_sfx}.csv" if "--sweep2" in args
+                         else f"ladder_doublek_sweep{out_sfx}.csv"), index=False)
         return
 
     if "--oos" in args or "--switch" in args:
@@ -577,14 +598,14 @@ def main():
         both2 = both.copy(); both2["year"] = both2["exit_date"].dt.year
         for y, g in both2.groupby("year"):
             print(" ", y, fmt_stats("", trade_stats(g)), flush=True)
-        T_mr.to_csv(os.path.join(HERE, "mr_trades.csv"), index=False)
-        T_trend.to_csv(os.path.join(HERE, "trend_up_only_trades.csv"), index=False)
+        T_mr.to_csv(os.path.join(HERE, f"mr_trades{out_sfx}.csv"), index=False)
+        T_trend.to_csv(os.path.join(HERE, f"trend_up_only_trades{out_sfx}.csv"), index=False)
         return
 
     # 默认：基线全市场
     T = run_pooled(bundles)
     print(fmt_stats("全部样本合并（基线1:1）", trade_stats(T)))
-    T.to_csv(os.path.join(HERE, "ladder_doublek_trades_pooled.csv"), index=False)
+    T.to_csv(os.path.join(HERE, f"ladder_doublek_trades_pooled{out_sfx}.csv"), index=False)
 
 if __name__ == "__main__":
     main()
