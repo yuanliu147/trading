@@ -1,0 +1,7 @@
+2026-10-22 分钟/tick 数据可用性检查
+- 目标：验证 T+1 盘中能否在跌停前退出（唯一可能救活反转策略的执行修复）。
+- 尝试：AkShare stock_zh_a_hist_min_em，symbol=000001/300251，2024-01-02 1 分钟。
+- 结果：ConnectionError（RemoteDisconnected），未取得数据。
+- 本地 DuckDB：只有日线 v_daily_hfq，无分钟/tick 表。
+- 同花顺 CLI：Skill 明确分钟 K/tick/Level-2 不在公开能力范围。
+- 结论：当前环境无法验证盘中退出；因此“57.5% 理想版”不能被证明可执行，实盘版 -32.4% 仍是唯一可复现结果。
