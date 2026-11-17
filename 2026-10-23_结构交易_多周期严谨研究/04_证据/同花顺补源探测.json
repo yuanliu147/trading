@@ -1,0 +1,681 @@
+{
+  "purpose": "只读验证同花顺独立服务能否补足指定历史行情及公司行动字段；非投资建议",
+  "service_origin": "https://fuyao.aicubes.cn",
+  "cli_version": "0.1.13",
+  "credential_source": "系统凭据库，default profile；auth.status configured=true；统一及兼容环境变量和用户级 credentials.env 均不存在",
+  "restrictions": [
+    "未调用 baostock",
+    "未更换 IP 或身份",
+    "不安装升级、不修改配置或数据库",
+    "仅指定标的小样本探测",
+    "不以最新 ST 回填历史"
+  ],
+  "requested_history_window": {
+    "from_date": "2017-01-01",
+    "to_date": "2017-01-10",
+    "timezone": "Asia/Shanghai",
+    "adjust": "none",
+    "start_ms": 1483200000000,
+    "end_ms": 1484063999999
+  },
+  "endpoints": {
+    "symbol.search": "/api/meta/tickers/search",
+    "market.history": "/api/a-share/prices/historical",
+    "market.corporate-actions": "/api/a-share/corporate-actions/adjustment-factors"
+  },
+  "observations": [
+    "000040.SZ 首次 market.history 调用后接收脚本尝试将空 stdout 解析为 JSON 而中断；原 stderr 未保存。以下仅为完整捕获错误信封复核一次，不更换凭据、身份或服务。",
+    "成功 CLI 文件信封为 ok/command/data/meta；真实数组位于 data.item，meta.count 等于数组长度，meta.source=remote，meta.truncated=false。带 --output 时 stdout 的 data 仅为 path/format/count 摘要。",
+    "失败 CLI 信封写到 stderr，退出码 2、ok=false；错误原文已保存，不把空 stdout 当空数据。",
+    "安装包 remote-capabilities.js 的 itemOutput 为 z.object({ item: z.array(z.record(z.string(), z.unknown())) }).passthrough()；两个目标接口均使用它，样本缺少字段不是本 CLI 白名单剥离字段导致。"
+  ],
+  "probes": [
+    {
+      "kind": "symbol.search",
+      "symbol": "000040.SZ",
+      "command": "hithink-finance --source remote symbol search --q 000040.SZ --exchange SZ --asset-type a-share --limit 3 --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 0,
+      "captured_at": "2026-10-23T13:55:11.850829+00:00",
+      "envelope": {
+        "ok": true,
+        "command": "symbol.search",
+        "data": {
+          "item": [],
+          "timestamp": 1792742430397
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "7f65c6ea2bc549aa8e9b2b9f081d05e2",
+          "count": 0,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": {
+        "ok": true,
+        "command": "symbol.search",
+        "data": {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json",
+          "format": "json",
+          "count": 0
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "7f65c6ea2bc549aa8e9b2b9f081d05e2",
+          "count": 0,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "kind": "symbol.search",
+      "symbol": "000022.SZ",
+      "command": "hithink-finance --source remote symbol search --q 000022.SZ --exchange SZ --asset-type a-share --limit 3 --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 0,
+      "captured_at": "2026-10-23T13:55:12.169683+00:00",
+      "envelope": {
+        "ok": true,
+        "command": "symbol.search",
+        "data": {
+          "item": [],
+          "timestamp": 1792742430387
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "97262318fdd8486196f78ea198e51f3c",
+          "count": 0,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": {
+        "ok": true,
+        "command": "symbol.search",
+        "data": {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json",
+          "format": "json",
+          "count": 0
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "97262318fdd8486196f78ea198e51f3c",
+          "count": 0,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "kind": "symbol.search",
+      "symbol": "000001.SZ",
+      "command": "hithink-finance --source remote symbol search --q 000001.SZ --exchange SZ --asset-type a-share --limit 3 --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 0,
+      "captured_at": "2026-10-23T13:55:12.560652+00:00",
+      "envelope": {
+        "ok": true,
+        "command": "symbol.search",
+        "data": {
+          "item": [
+            {
+              "thscode": "000001.SZ",
+              "ticker": "000001",
+              "name": "平安银行",
+              "exchange": "SZ",
+              "asset_type": "a-share",
+              "currency": "CNY",
+              "list_date": null,
+              "end_date": null,
+              "last_trade_date": null,
+              "last_delivery_date": null
+            }
+          ],
+          "timestamp": 1792742430397
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "29afec6a36cc4e058e34702420737fb1",
+          "count": 1,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": {
+        "ok": true,
+        "command": "symbol.search",
+        "data": {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json",
+          "format": "json",
+          "count": 1
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "29afec6a36cc4e058e34702420737fb1",
+          "count": 1,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "kind": "market.history",
+      "symbol": "000001.SZ",
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-01-10",
+        "timezone": "Asia/Shanghai",
+        "adjust": "none",
+        "start_ms": 1483200000000,
+        "end_ms": 1484063999999
+      },
+      "command": "hithink-finance --source remote market history --thscode 000001.SZ --start-ms 1483200000000 --end-ms 1484063999999 --adjust none --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 0,
+      "captured_at": "2026-10-23T13:55:39.926408+00:00",
+      "envelope": {
+        "ok": true,
+        "command": "market.history",
+        "data": {
+          "item": [
+            {
+              "date_ms": 1483372800000,
+              "volume": 45984049,
+              "turnover": 420595176.46,
+              "open_price": 9.11,
+              "high_price": 9.18,
+              "low_price": 9.09,
+              "close_price": 9.16
+            },
+            {
+              "date_ms": 1483459200000,
+              "volume": 44932953,
+              "turnover": 411503444.03,
+              "open_price": 9.15,
+              "high_price": 9.18,
+              "low_price": 9.14,
+              "close_price": 9.16
+            },
+            {
+              "date_ms": 1483545600000,
+              "volume": 34437291,
+              "turnover": 315769693.5,
+              "open_price": 9.17,
+              "high_price": 9.18,
+              "low_price": 9.15,
+              "close_price": 9.17
+            },
+            {
+              "date_ms": 1483632000000,
+              "volume": 35815420,
+              "turnover": 327176433.93,
+              "open_price": 9.17,
+              "high_price": 9.17,
+              "low_price": 9.11,
+              "close_price": 9.13
+            },
+            {
+              "date_ms": 1483891200000,
+              "volume": 36108157,
+              "turnover": 329994604,
+              "open_price": 9.13,
+              "high_price": 9.17,
+              "low_price": 9.11,
+              "close_price": 9.15
+            },
+            {
+              "date_ms": 1483977600000,
+              "volume": 24105395,
+              "turnover": 220575131.96,
+              "open_price": 9.15,
+              "high_price": 9.16,
+              "low_price": 9.14,
+              "close_price": 9.15
+            }
+          ],
+          "timestamp": 1483977600000,
+          "thscode": "000001.SZ",
+          "interval": "1d",
+          "adjust": "none"
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "0d06755c5ac743408186cbea07242357",
+          "count": 6,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": {
+        "ok": true,
+        "command": "market.history",
+        "data": {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json",
+          "format": "json",
+          "count": 6
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "0d06755c5ac743408186cbea07242357",
+          "count": 6,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stderr": ""
+    },
+    {
+      "kind": "market.history",
+      "symbol": "000040.SZ",
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-01-10",
+        "timezone": "Asia/Shanghai",
+        "adjust": "none",
+        "start_ms": 1483200000000,
+        "end_ms": 1484063999999
+      },
+      "command": "hithink-finance --source remote market history --thscode 000040.SZ --start-ms 1483200000000 --end-ms 1484063999999 --adjust none --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 2,
+      "captured_at": "2026-10-23T13:56:07.017231+00:00",
+      "envelope": {
+        "ok": false,
+        "command": "market",
+        "error": {
+          "code": "FUYAO_1002",
+          "category": "validation",
+          "message": "Unknown thscode: 000040.SZ",
+          "hint": "Check the command schema and correct the supplied parameters.",
+          "retryable": false,
+          "request_id": "eb0e0b23f26f4277aca7c6da540c4bc7"
+        },
+        "meta": {
+          "cli_version": "0.1.13",
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": null,
+      "stdout_raw": "",
+      "stderr": "{\"ok\":false,\"command\":\"market\",\"error\":{\"code\":\"FUYAO_1002\",\"category\":\"validation\",\"message\":\"Unknown thscode: 000040.SZ\",\"hint\":\"Check the command schema and correct the supplied parameters.\",\"retryable\":false,\"request_id\":\"eb0e0b23f26f4277aca7c6da540c4bc7\"},\"meta\":{\"cli_version\":\"0.1.13\",\"schema_version\":\"1\"}}\n"
+    },
+    {
+      "kind": "market.history",
+      "symbol": "000022.SZ",
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-01-10",
+        "timezone": "Asia/Shanghai",
+        "adjust": "none",
+        "start_ms": 1483200000000,
+        "end_ms": 1484063999999
+      },
+      "command": "hithink-finance --source remote market history --thscode 000022.SZ --start-ms 1483200000000 --end-ms 1484063999999 --adjust none --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 2,
+      "captured_at": "2026-10-23T13:56:07.346624+00:00",
+      "envelope": {
+        "ok": false,
+        "command": "market",
+        "error": {
+          "code": "FUYAO_1002",
+          "category": "validation",
+          "message": "Unknown thscode: 000022.SZ",
+          "hint": "Check the command schema and correct the supplied parameters.",
+          "retryable": false,
+          "request_id": "08ffb4bc080849889040afd803e7b9d4"
+        },
+        "meta": {
+          "cli_version": "0.1.13",
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": null,
+      "stdout_raw": "",
+      "stderr": "{\"ok\":false,\"command\":\"market\",\"error\":{\"code\":\"FUYAO_1002\",\"category\":\"validation\",\"message\":\"Unknown thscode: 000022.SZ\",\"hint\":\"Check the command schema and correct the supplied parameters.\",\"retryable\":false,\"request_id\":\"08ffb4bc080849889040afd803e7b9d4\"},\"meta\":{\"cli_version\":\"0.1.13\",\"schema_version\":\"1\"}}\n"
+    },
+    {
+      "kind": "market.corporate-actions",
+      "symbol": "000001.SZ",
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-12-31",
+        "filter": "ex-date"
+      },
+      "command": "hithink-finance --source remote market corporate-actions --thscode 000001.SZ --from-date 2017-01-01 --to-date 2017-12-31 --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 0,
+      "captured_at": "2026-10-23T13:56:07.681922+00:00",
+      "envelope": {
+        "ok": true,
+        "command": "market.corporate-actions",
+        "data": {
+          "item": [
+            {
+              "ticker": "000001",
+              "ex_date_ms": 1500566400000,
+              "dividend_per_share": 0.158,
+              "per_share_bonus": 0
+            }
+          ],
+          "thscode": "000001.SZ",
+          "ticker": "000001"
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "41b3c390b72b41d49c1a3db292c7e7a6",
+          "count": 1,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": {
+        "ok": true,
+        "command": "market.corporate-actions",
+        "data": {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json",
+          "format": "json",
+          "count": 1
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "41b3c390b72b41d49c1a3db292c7e7a6",
+          "count": 1,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_raw": null,
+      "stderr": ""
+    },
+    {
+      "kind": "market.corporate-actions",
+      "symbol": "000001.SZ",
+      "window": {
+        "from_date": "2016-01-01",
+        "to_date": "2016-12-31",
+        "filter": "ex-date"
+      },
+      "command": "hithink-finance --source remote market corporate-actions --thscode 000001.SZ --from-date 2016-01-01 --to-date 2016-12-31 --format json --output '/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json'",
+      "exit_code": 0,
+      "captured_at": "2026-10-23T13:56:51.284843+00:00",
+      "envelope": {
+        "ok": true,
+        "command": "market.corporate-actions",
+        "data": {
+          "item": [
+            {
+              "ticker": "000001",
+              "ex_date_ms": 1466006400000,
+              "dividend_per_share": 0.153,
+              "per_share_bonus": 0.2
+            }
+          ],
+          "thscode": "000001.SZ",
+          "ticker": "000001"
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "7562f0f86d104713b8d2d5ba6c15d933",
+          "count": 1,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_envelope": {
+        "ok": true,
+        "command": "market.corporate-actions",
+        "data": {
+          "path": "/Users/admin/WorkSpace/trading/2026-10-23_结构交易_多周期严谨研究/04_证据/同花顺补源探测.json",
+          "format": "json",
+          "count": 1
+        },
+        "meta": {
+          "source": "remote",
+          "request_id": "7562f0f86d104713b8d2d5ba6c15d933",
+          "count": 1,
+          "truncated": false,
+          "schema_version": "1"
+        }
+      },
+      "stdout_raw": null,
+      "stderr": ""
+    }
+  ],
+  "execution_controls": {
+    "source": "remote",
+    "environment_overrides": {
+      "HITHINK_FINANCE_NO_UPDATE_CHECK": "1",
+      "HITHINK_FINANCE_NO_SKILL_UPDATE": "1"
+    },
+    "credential_values_read_or_recorded": false,
+    "database_commands_executed": false,
+    "network_probe_cli_invocations": 9,
+    "retained_envelopes": 8,
+    "lost_capture_invocations": 1,
+    "agent_level_replays": 1,
+    "replay_reason": "仅因接收脚本未处理失败信封写入 stderr，对 000040.SZ 原参数完整捕获一次；无权限、认证或网络绕过",
+    "service_internal_http_attempts": "未逐请求插桩，不声称等于 CLI 调用次数"
+  },
+  "probe_summary": [
+    {
+      "kind": "symbol.search",
+      "symbol": "000040.SZ",
+      "exit_code": 0,
+      "ok": true,
+      "window": null,
+      "rows": 0,
+      "data_keys": [
+        "item",
+        "timestamp"
+      ],
+      "fields": []
+    },
+    {
+      "kind": "symbol.search",
+      "symbol": "000022.SZ",
+      "exit_code": 0,
+      "ok": true,
+      "window": null,
+      "rows": 0,
+      "data_keys": [
+        "item",
+        "timestamp"
+      ],
+      "fields": []
+    },
+    {
+      "kind": "symbol.search",
+      "symbol": "000001.SZ",
+      "exit_code": 0,
+      "ok": true,
+      "window": null,
+      "rows": 1,
+      "data_keys": [
+        "item",
+        "timestamp"
+      ],
+      "fields": [
+        "asset_type",
+        "currency",
+        "end_date",
+        "exchange",
+        "last_delivery_date",
+        "last_trade_date",
+        "list_date",
+        "name",
+        "thscode",
+        "ticker"
+      ]
+    },
+    {
+      "kind": "market.history",
+      "symbol": "000001.SZ",
+      "exit_code": 0,
+      "ok": true,
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-01-10",
+        "timezone": "Asia/Shanghai",
+        "adjust": "none",
+        "start_ms": 1483200000000,
+        "end_ms": 1484063999999
+      },
+      "rows": 6,
+      "data_keys": [
+        "item",
+        "timestamp",
+        "thscode",
+        "interval",
+        "adjust"
+      ],
+      "fields": [
+        "close_price",
+        "date_ms",
+        "high_price",
+        "low_price",
+        "open_price",
+        "turnover",
+        "volume"
+      ],
+      "dates": [
+        "2017-01-03",
+        "2017-01-04",
+        "2017-01-05",
+        "2017-01-06",
+        "2017-01-09",
+        "2017-01-10"
+      ],
+      "actual_adjust": "none",
+      "all_ohlc_non_null": true,
+      "prev_close_field_present": false,
+      "historical_status_field_present": false
+    },
+    {
+      "kind": "market.history",
+      "symbol": "000040.SZ",
+      "exit_code": 2,
+      "ok": false,
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-01-10",
+        "timezone": "Asia/Shanghai",
+        "adjust": "none",
+        "start_ms": 1483200000000,
+        "end_ms": 1484063999999
+      },
+      "rows": null,
+      "rows_note": "请求失败，无行情结果；不可解释为该期间无交易",
+      "error": {
+        "code": "FUYAO_1002",
+        "category": "validation",
+        "message": "Unknown thscode: 000040.SZ",
+        "hint": "Check the command schema and correct the supplied parameters.",
+        "retryable": false,
+        "request_id": "eb0e0b23f26f4277aca7c6da540c4bc7"
+      }
+    },
+    {
+      "kind": "market.history",
+      "symbol": "000022.SZ",
+      "exit_code": 2,
+      "ok": false,
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-01-10",
+        "timezone": "Asia/Shanghai",
+        "adjust": "none",
+        "start_ms": 1483200000000,
+        "end_ms": 1484063999999
+      },
+      "rows": null,
+      "rows_note": "请求失败，无行情结果；不可解释为该期间无交易",
+      "error": {
+        "code": "FUYAO_1002",
+        "category": "validation",
+        "message": "Unknown thscode: 000022.SZ",
+        "hint": "Check the command schema and correct the supplied parameters.",
+        "retryable": false,
+        "request_id": "08ffb4bc080849889040afd803e7b9d4"
+      }
+    },
+    {
+      "kind": "market.corporate-actions",
+      "symbol": "000001.SZ",
+      "exit_code": 0,
+      "ok": true,
+      "window": {
+        "from_date": "2017-01-01",
+        "to_date": "2017-12-31",
+        "filter": "ex-date"
+      },
+      "rows": 1,
+      "data_keys": [
+        "item",
+        "thscode",
+        "ticker"
+      ],
+      "fields": [
+        "dividend_per_share",
+        "ex_date_ms",
+        "per_share_bonus",
+        "ticker"
+      ],
+      "ex_dates": [
+        "2017-07-21"
+      ],
+      "nonzero_bonus_rows": 0,
+      "pay_date_fields_present": false,
+      "bonus_listing_date_fields_present": false,
+      "historical_st_fields_present": false
+    },
+    {
+      "kind": "market.corporate-actions",
+      "symbol": "000001.SZ",
+      "exit_code": 0,
+      "ok": true,
+      "window": {
+        "from_date": "2016-01-01",
+        "to_date": "2016-12-31",
+        "filter": "ex-date"
+      },
+      "rows": 1,
+      "data_keys": [
+        "item",
+        "thscode",
+        "ticker"
+      ],
+      "fields": [
+        "dividend_per_share",
+        "ex_date_ms",
+        "per_share_bonus",
+        "ticker"
+      ],
+      "ex_dates": [
+        "2016-06-16"
+      ],
+      "nonzero_bonus_rows": 1,
+      "pay_date_fields_present": false,
+      "bonus_listing_date_fields_present": false,
+      "historical_st_fields_present": false
+    }
+  ],
+  "conclusions": {
+    "can_supply_verified": [
+      "000001.SZ 2017-01-01 至 2017-01-10 的不复权日线 OHLC、volume、turnover，实际 6 行",
+      "000001.SZ 2016、2017 两个年度各 1 条除权事件，仅 ticker/ex_date_ms/dividend_per_share/per_share_bonus；2016 样本 per_share_bonus 非零"
+    ],
+    "cannot_fill_from_tested_interface": [
+      "000040.SZ、000022.SZ 原始历史 OHLC：当前搜索均无匹配且行情返回 FUYAO_1002 Unknown thscode",
+      "prev_close：对照行情字段不存在；不能把普通收盘价平移冒充除权参考前收",
+      "历史交易/停复牌/上市退市合并状态及历史 ST：行情和公司行动样本无此字段；搜索无匹配不证明历史状态",
+      "现金到账/payDate、红股上市或可售日期：含非零送转的样本仍无此字段；不得以 ex_date_ms 替代到账日",
+      "未验证当前 CLI 能可靠覆盖历史全 A；上述历史代码缺失提示幸存者偏差风险"
+    ],
+    "limitations": [
+      "仅核验三个代码和两个公司行动年度，不能外推全服务所有事件绝不提供可选字段",
+      "未对两个未知历史代码追加公司行动请求；停止扩大探测",
+      "本地 v_daily 与 raw_adjustment_events 缺口来自用户/主 Agent 提供，本任务未查询或修改数据库",
+      "不使用最新 ST 回填历史，不作交易或收益结论"
+    ],
+    "only_next_step": "若研究必须精确处理退市/合并与资金到账，保留这些缺口并待获准的交易所或公告事件资料；当前 CLI 探测不足以解除严谨全 A 回测阻断，不再重试 baostock"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "status_code": 200,
+  "data": {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"code\":1,\"msg\":\"success\",\"subCode\":null,\"subMsg\":null,\"data\":{\"answer\":\"|证券代码|证券简称|日期|收盘价|\\n|---|---|---|---|\\n|000001.SZ|平安银行|20170103|9.16|\",\"indicators_params\":{\"收盘价\":{\"交易日期\":\"最新\",\"复权方式\":\"不复权\"}}}}"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 3
+  }
+}
