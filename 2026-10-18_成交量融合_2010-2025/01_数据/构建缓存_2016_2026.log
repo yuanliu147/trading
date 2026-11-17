@@ -1,0 +1,13 @@
+snapshots=195 union_2015+=1358
+turnover to fetch=0
+turnover done fail=0
+duckdb rows=2,833,819 stocks=1284
+stocks=1284 no_turn=2
+index sh000001 上证指数 3107 2014-01-02->2026-10-16
+index sh000905 中证500 3107 2014-01-02->2026-10-16
+index sh000300 沪深300 3107 2014-01-02->2026-10-16
+index sz399006 创业板指 3107 2014-01-02->2026-10-16
+index sh000852 中证1000 2916 2014-10-17->2026-10-16
+index sh000016 上证50 3107 2014-01-02->2026-10-16
+saved /Users/admin/WorkSpace/trading/2026-10-18_成交量融合_2010-2025/01_数据/daily_cache_2016_2026.pkl
+audit saved

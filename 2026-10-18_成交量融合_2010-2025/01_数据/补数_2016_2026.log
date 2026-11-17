@@ -1,0 +1,19 @@
+baostock login start
+login success!
+baostock login 0 success
+membership 2026-01-31 -> 2026-01-26 n=500
+membership 2026-02-28 -> 2026-02-23 n=500
+membership 2026-03-31 -> 2026-03-30 n=500
+membership 2026-04-30 -> 2026-04-27 n=500
+membership 2026-05-31 -> 2026-05-25 n=500
+membership 2026-06-30 -> 2026-06-29 n=500
+membership 2026-07-31 -> 2026-07-27 n=500
+membership 2026-08-31 -> 2026-08-31 n=500
+membership 2026-09-30 -> 2026-09-28 n=500
+membership 2026-10-18 -> 2026-10-12 n=500
+industry 5560 rows, 84 industries
+stocks to fetch: 1358
+50/1358 elapsed=57s chunks=50
+100/1358 elapsed=367s chunks=100
+150/1358 elapsed=685s chunks=150
+200/1358 elapsed=992s chunks=200
