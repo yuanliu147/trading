@@ -1,0 +1,27 @@
+item,value
+evaluable_rows,396
+max_dev_config,SMALLLOWVOL:ADVQ12_s5_h40
+max_dev_cagr,0.203991
+max_dev_mdd,-0.691508
+max_val_config,VCB:VCB-N120_T40
+max_val_cagr,0.08704869
+max_val_dev_cagr,0.08323778
+max_val_mdd,-0.206223
+max_min_cagr_config,VCB:VCB-N120_T40
+max_min_cagr,0.08323778
+A_candidate,0
+B_conditional,5
+grade_counts,"{'C_negative_valid': 364, 'E_underpowered': 42, 'F_unevaluable': 35, 'W_window_mixed': 32, 'B_conditional': 5}"
+N_sel,733
+DSR_N733,0.000662754421907755
+maxstat_min_p,0.07196401799100449
+maxstat_n,16
+holdout_run,
+T0005_dev_cagr,0.04156815775673306
+T0005_dev_mdd,-0.0905350729763279
+T0005_dev_trades,103
+T0005_dev_exposure,0.06911856635353537
+T0005_val_cagr,-0.025342280131277373
+T0005_val_mdd,-0.13797983512013767
+T0005_val_trades,159
+T0005_val_exposure,0.11399544254185535

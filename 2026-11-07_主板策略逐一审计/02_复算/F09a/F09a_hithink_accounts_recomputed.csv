@@ -1,0 +1,7 @@
+stage,capital,path,start,end,equity_start,equity_end,cagr,mdd,years
+development,20000,trading_hithink/初始研究/results/development/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/daily_equity.csv,2018-01-02,2021-12-31,20000.0,79720.61456000002,0.41331205508782154,-0.30402657011708834,3.9972602739726026
+development,50000,trading_hithink/初始研究/results/development/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/daily_equity.csv,2018-01-02,2021-12-31,50000.0,152873.15466000012,0.3225846337095455,-0.23863757458567159,3.9972602739726026
+validation,20000,trading_hithink/初始研究/results/validation/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/daily_equity.csv,2022-01-04,2023-12-29,20000.0,31420.000029999996,0.2557436117214209,-0.15884319568317462,1.9835616438356165
+validation,50000,trading_hithink/初始研究/results/validation/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/daily_equity.csv,2022-01-04,2023-12-29,50000.0,68111.69553999999,0.16864373480299966,-0.16930395937082265,1.9835616438356165
+holdout,20000,trading_hithink/初始研究/results/holdout/accounts/deep_lowamount_h19_h19_p2_c20000_s10_l10/daily_equity.csv,2024-01-02,2026-10-23,20000.0,15611.86782,-0.08442746042301896,-0.42578283799999994,2.808219178082192
+holdout,50000,trading_hithink/初始研究/results/holdout/accounts/deep_lowamount_h19_h19_p2_c50000_s10_l10/daily_equity.csv,2024-01-02,2026-10-23,50000.0,35513.38311999999,-0.11469737564639393,-0.4705027688000002,2.808219178082192

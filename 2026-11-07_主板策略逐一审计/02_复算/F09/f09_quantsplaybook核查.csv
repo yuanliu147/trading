@@ -1,0 +1,6 @@
+项,原称,复核,判定,备注
+LICENSE,无(null),None,一致,
+最近提交,2026-10-03,2026-10-03,一致,"star 现=6860（审计时6,776，自然增长）"
+文件构成,"2,183文件/65notebook/289py/83PDF",2183/65/289/83,一致,
+RSRS T日信号吃T日收益(1日前视),存在,存在=True,一致,同notebook的MA/BBANDS用shift(-1)正确口径；前视仅限RSRS系策略函数
+RRG shift(1)+次日开盘+万3,存在,存在=True,一致,weights.shift(1)、price=adjopen(后复权开盘)、fees=3e-4

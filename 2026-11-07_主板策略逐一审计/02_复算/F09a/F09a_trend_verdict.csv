@@ -1,0 +1,2 @@
+verdict,n_candidates,holdout_run,holdout_window,dev_window,val_window,evidence_level
+NO_CANDIDATE,0,False,2021-01-01..2025-12-31,2008-01-01..2015-12-31,2016-01-01..2020-12-31,描述性开发/验证（E1-EVID 未建立、E2-EVID 未运行、E3 不存在）；不是样本外验证，不是完整预注册分档。入场规则的 E1/E2 记为 E1-ENTRY/E2-ENTRY。
